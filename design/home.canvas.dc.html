@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>JUP LIFE Home</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Montserrat:ital,wght@0,400;0,600;1,400&amp;display=swap">
+<style>
+body{margin:0;background:#FBF7F0;color:#5A3E2B;font-family:Montserrat,system-ui,sans-serif;font-size:17px;line-height:1.6}
+a{color:#A9532F}a:hover{color:#8E4426}
+*{box-sizing:border-box}
+.serif{font-family:"DM Serif Display",Georgia,serif;font-weight:400}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 24px;border-radius:999px;font:600 16px/1.2 Montserrat,sans-serif;text-decoration:none;cursor:pointer;border:2px solid #A9532F;transition:background .2s,color .2s,transform .2s}
+.btn-primary{background:#A9532F;color:#FBF7F0}.btn-primary:hover{background:#8E4426;border-color:#8E4426;color:#FBF7F0}
+.btn-outline{background:transparent;color:#A9532F}.btn-outline:hover{background:#A9532F;color:#FBF7F0}
+.btn-sm{min-height:44px;padding:10px 18px;font-size:15px}
+.lift{transition:transform .2s,box-shadow .2s}.lift:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(90,62,43,.16)}
+.band{height:8px;border-radius:999px;background:#9CAF88;margin:0}
+.ph{color:#A9532F;font-weight:600}
+.leader{flex:1 1 auto;border-bottom:2px dotted rgba(251,247,240,.45);margin:0 10px 6px;min-width:16px}
+.field{display:flex;flex-direction:column;gap:6px;font-size:15px;font-weight:600}
+.field input,.field select,.field textarea{font:400 16px Montserrat,sans-serif;color:#5A3E2B;background:#fff;border:1.5px solid #B9A48E;border-radius:10px;padding:12px 14px;min-height:48px}
+.field input:focus,.field select:focus,.field textarea:focus,.btn:focus-visible,.faq-q:focus-visible{outline:3px solid #A9532F;outline-offset:2px}
+.faq-q{all:unset;box-sizing:border-box;display:flex;width:100%;justify-content:space-between;align-items:center;gap:16px;padding:20px 0;cursor:pointer;font:600 18px/1.4 Montserrat,sans-serif;color:#5A3E2B}
+.foot a{color:#FBF7F0}.foot a:hover{color:#E9D9C2}
+@media (prefers-reduced-motion: reduce){.lift,.btn{transition:none}.lift:hover{transform:none}}
+</style>
+</helmet>
+
+<div style="background: #FBF7F0; color: #5A3E2B; min-height: 100vh">
+
+<!-- Header -->
+<header style="border-bottom: 1px solid rgba(90,62,43,.12)">
+<div style="max-width: 1200px; margin: 0 auto; padding: 14px clamp(16px, 4vw, 48px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px">
+<a href="#top" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #5A3E2B">
+<img src="/_blob/a3b868b09b002d654d9fe1fcadde3124" alt="" style="width: 64px; height: 37px; object-fit: contain">
+<span style="display: flex; flex-direction: column; line-height: 1.1"><span class="serif" style="font-size: 24px">JUP LIFE</span><span style="font-size: 12px; font-weight: 600; letter-spacing: .08em">by Mrs. Smash</span></span>
+</a>
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px">
+<a href="#shop" style="color: #5A3E2B; font-weight: 600; text-decoration: none; padding: 10px 0">Shop</a>
+<a href="#wholesale" style="color: #5A3E2B; font-weight: 600; text-decoration: none; padding: 10px 0">Wholesale &amp; Samples</a>
+<button type="button" class="btn btn-primary btn-sm" onClick="{{openSample}}">Get a free Half Dozen</button>
+</nav>
+</div>
+</header>
+
+<main id="top">
+
+<!-- 1. Hero -->
+<section style="max-width: 1200px; margin: 0 auto; padding: clamp(32px, 6vw, 88px) clamp(16px, 4vw, 48px); display: flex; flex-wrap: wrap; align-items: center; gap: 40px 64px">
+<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<p class="eyebrow">Fresh baked daily · Jupiter, FL</p>
+<h1 class="serif" style="margin: 0; font-size: clamp(44px, 6.4vw, 84px); line-height: 1.02; letter-spacing: -.01em">Fresh baked.<br>Built different.</h1>
+<p style="margin: 0; font-size: clamp(17px, 1.6vw, 20px); max-width: 30em">Washable TPU coasters and coastal pieces, 3D-printed in small seasonal batches in Jupiter, FL.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; padding-top: 4px">
+<a href="#shop" class="btn btn-primary">Shop the Batch</a>
+<button type="button" class="btn btn-outline" onClick="{{openSample}}">Get a free Half Dozen</button>
+</div>
+<p style="margin: 0; font-size: 15px">Samples are on the house for bars and restaurants.</p>
+</div>
+
+<!-- Today's Batch board (rendered from batch JSON) -->
+<div style="position: relative; flex: 1 1 380px; min-width: 0; padding: clamp(0px, 3vw, 36px); border-radius: 24px; background: #EFE3D0">
+<div aria-hidden="true" style="position: absolute; inset: 0; border-radius: 24px; overflow: hidden"><img src="/_blob/fd0bac565ea26af3ab2cd4c2717aab47" alt="" fetchpriority="high" style="width: 100%; height: 100%; object-fit: cover; object-position: 60% 60%; filter: blur(3px) saturate(1.05); transform: scale(1.06)"><span style="position: absolute; inset: 0; background: rgba(251,247,240,.18)"></span></div>
+<img src="/_blob/ac5949240676f11dcfda48e7ec53b87e" alt="Fresh baked daily. JUP LIFE, built different." style="position: absolute; z-index: 2; top: -34px; left: -30px; width: clamp(92px, 9vw, 128px); height: auto; transform: rotate(-10deg); filter: drop-shadow(0 6px 12px rgba(90,62,43,.28))">
+<div style="position: relative; overflow: hidden; background: #2B2B2B; color: #FBF7F0; border: 8px solid #7A5A40; border-radius: 18px; padding: 28px clamp(20px, 3vw, 32px) 24px; box-shadow: 0 18px 40px rgba(90,62,43,.22)">
+<sc-if value="{{hasSpecial}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; top: 26px; right: -46px; transform: rotate(35deg); background: #A9532F; color: #FBF7F0; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 6px 52px">Chef's Special: {{batch.chefs_special}}</div>
+</sc-if>
+<p class="eyebrow" style="color: #E9D9C2">{{batchDate}} · Batch #{{batchNo}}</p>
+<h2 class="serif" style="margin: 6px 0 2px; font-size: clamp(32px, 3.4vw, 42px); line-height: 1.1">Today's Batch</h2>
+<p style="margin: 0 0 18px; font-size: 16px; color: #E9D9C2">{{batch.tray}} is out of the oven.</p>
+<div style="border-top: 2px dotted rgba(251,247,240,.35); padding-top: 14px; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{batch.flavors}}" as="f" hint-placeholder-count="5">
+<div style="display: flex; align-items: flex-end; font-size: 17px">
+<span aria-hidden="true" style="flex: 0 0 auto; width: 18px; height: 18px; border-radius: 999px; background: {{f.hex}}; box-shadow: 0 0 0 2px rgba(251,247,240,.85); margin: 0 12px 4px 2px"></span>
+<span style="font-weight: 600">{{f.name}}</span>
+<span class="leader"></span>
+<span style="font-style: italic; color: #E9D9C2">{{f.note}}</span>
+</div>
+</sc-for>
+</div>
+<p style="margin: 20px 0 0; padding-top: 12px; border-top: 2px dotted rgba(251,247,240,.35); font-size: 14px; color: #E9D9C2; text-align: center">Locally grown in Jupiter, FL.</p>
+</div>
+</div>
+</section>
+
+<div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px)"><div class="band" role="presentation"></div></div>
+
+<!-- 2. This week's tray -->
+<section id="shop" style="max-width: 1200px; margin: 0 auto; padding: clamp(48px, 6vw, 88px) clamp(16px, 4vw, 48px); display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px">
+<div>
+<p class="eyebrow">The Fall Tray + always on</p>
+<h2 class="serif" style="margin: 6px 0 0; font-size: clamp(34px, 4vw, 52px); line-height: 1.1">This week's tray.</h2>
+</div>
+<a href="#shop" style="font-weight: 600; padding: 10px 0">See the whole batch →</a>
+</div>
+<figure style="margin: 0; position: relative">
+<img src="/_blob/4d601d19703ad8b3911f256af7ba093c" alt="The Fall Tray flavor board: Pumpkin, Cinnamon, Cranberry, Maple, Rhubarb and Sunflower pop coasters on a wood tray" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1400 / 352; border-radius: 14px">
+<figcaption style="margin-top: 8px; font-size: 13px; font-weight: 600">The Fall Tray flavor board · Studio rendering</figcaption>
+</figure>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 32px 24px">
+<sc-for list="{{products}}" as="p" hint-placeholder-count="5">
+<article class="lift" style="position: relative; display: flex; flex-direction: column; background: #FFFDF9; border-radius: 14px; box-shadow: 0 4px 14px rgba(90,62,43,.10); overflow: visible">
+<!-- hang-tag top: kraft strip, punched hole, sage band string -->
+<div style="position: relative; height: 40px; background: #C9A67A; border-radius: 14px 14px 0 0; display: flex; align-items: center; padding-left: 18px">
+<span aria-hidden="true" style="width: 14px; height: 14px; border-radius: 999px; background: #FBF7F0; box-shadow: inset 0 1px 2px rgba(90,62,43,.35)"></span>
+<span aria-hidden="true" style="position: absolute; left: 20px; top: -14px; width: 10px; height: 30px; border-radius: 999px; background: #9CAF88; transform: rotate(-18deg)"></span>
+</div>
+<sc-if value="{{p.hasImg}}" hint-placeholder-val="{{ true }}">
+<figure style="margin: 16px 16px 0; position: relative">
+<img src="{{p.img}}" alt="{{p.alt}}" loading="lazy" style="display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; background: #F3EADC">
+<figcaption style="position: absolute; left: 8px; bottom: 8px; background: rgba(251,247,240,.92); color: #5A3E2B; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px">Studio rendering</figcaption>
+</figure>
+</sc-if>
+<sc-if value="{{p.noImg}}" hint-placeholder-val="{{ false }}">
+<div style="margin: 16px 16px 0; aspect-ratio: 4 / 3; border-radius: 10px; background: #F3EADC; border: 1.5px dashed #C9A67A; display: flex; align-items: center; justify-content: center; text-align: center; padding: 16px; font-size: 14px" class="ph">{{p.photo}}</div>
+</sc-if>
+<div style="padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1 1 auto">
+<sc-if value="{{p.hasSwatches}}" hint-placeholder-val="{{ false }}">
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; font-weight: 600">
+<sc-for list="{{p.swatches}}" as="s" hint-placeholder-count="5">
+<li style="display: flex; align-items: center; gap: 6px"><span aria-hidden="true" style="width: 14px; height: 14px; border-radius: 999px; background: {{s.hex}}"></span>{{s.name}}</li>
+</sc-for>
+</ul>
+</sc-if>
+<h3 class="serif" style="margin: 0; font-size: 26px; line-height: 1.15">{{p.name}}</h3>
+<p style="margin: 0; font-size: 16px">{{p.line}}</p>
+<sc-if value="{{p.material}}" hint-placeholder-val="{{ false }}">
+<p style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .02em">{{p.material}}</p>
+</sc-if>
+<div style="margin-top: auto; padding-top: 8px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<sc-if value="{{p.price}}" hint-placeholder-val="{{ true }}">
+<span class="serif" style="font-size: 28px">{{p.price}}</span>
+<button type="button" class="btn btn-primary btn-sm" onClick="{{p.act}}">{{p.cta}}</button>
+</sc-if>
+<sc-if value="{{p.ask}}" hint-placeholder-val="{{ false }}">
+<button type="button" class="btn btn-outline btn-sm" onClick="{{p.act}}">Ask about this batch</button>
+</sc-if>
+</div>
+<sc-if value="{{p.tiktok}}" hint-placeholder-val="{{ false }}">
+<a href="#" style="font-size: 14px; font-weight: 600">Also on TikTok Shop ↗ <span class="ph">[[TIKTOK_SHOP_URL]]</span></a>
+</sc-if>
+</div>
+</article>
+</sc-for>
+
+<!-- custom logo CTA card -->
+<article class="lift" style="grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px 40px; background: #2B2B2B; color: #FBF7F0; border-radius: 14px; padding: clamp(24px, 3vw, 36px) clamp(20px, 3vw, 40px)">
+<div style="flex: 1 1 420px; display: flex; flex-direction: column; gap: 12px">
+<p class="eyebrow" style="color: #E9D9C2">Custom logo coasters</p>
+<h3 class="serif" style="margin: 0; font-size: 34px; line-height: 1.1">Your logo, fresh baked.</h3>
+<p style="margin: 0; font-size: 16px; color: #F1E7D8">From 100 coasters. Start with a free Half Dozen and try them on your bar.</p>
+</div>
+<button type="button" class="btn btn-primary" style="align-self: flex-start" onClick="{{openSample}}">Get a free Half Dozen</button>
+</article>
+</div>
+</section>
+
+<!-- 2b. Out of the oven: tap-to-play shorts, no autoplay -->
+<section aria-labelledby="oven-h" style="background: #F3EADC">
+<div style="max-width: 1200px; margin: 0 auto; padding: clamp(48px, 6vw, 80px) clamp(16px, 4vw, 48px); display: flex; flex-direction: column; gap: 28px">
+<div>
+<p class="eyebrow">Watch the batch</p>
+<h2 id="oven-h" class="serif" style="margin: 6px 0 0; font-size: clamp(34px, 4vw, 52px); line-height: 1.1">Out of the oven.</h2>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 24px 20px; max-width: 980px">
+<figure style="margin: 0">
+<video controls preload="none" playsinline poster="/_blob/238bbbffc048f679f15c9b06fa804f49" aria-label="Fresh Baked: a coaster printing in the studio, then the finished pieces under glass domes" style="display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 14px; background: #2B2B2B"><source src="/_blob/984273e46e36021a368916c039b21f44" type="video/mp4"></video>
+<figcaption style="margin-top: 10px; display: flex; flex-direction: column"><strong style="font-size: 16px">Fresh baked.</strong><span style="font-size: 13px">From the printer to the dome · 15 s</span></figcaption>
+</figure>
+<figure style="margin: 0">
+<video controls preload="none" playsinline poster="/_blob/72a9eea05e2730e531121e60181b9ef5" aria-label="Coaster party: colorful coasters tumble onto a beach bar and drinks land on them" style="display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 14px; background: #2B2B2B"><source src="/_blob/7a1c78567421599b0df717078a65f04a" type="video/mp4"></video>
+<figcaption style="margin-top: 10px; display: flex; flex-direction: column"><strong style="font-size: 16px">Coaster party.</strong><span style="font-size: 13px">Made for the bar · 15 s</span></figcaption>
+</figure>
+<figure style="margin: 0">
+<video controls preload="none" playsinline poster="/_blob/5345a9cc6a65cb30e9faa5c40f593584" aria-label="Built different: stack bands at sunset, by a bonfire and snapped onto a wrist" style="display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 14px; background: #2B2B2B"><source src="/_blob/02f102ccabb9d30c3ee4bb5eeef26e8e" type="video/mp4"></video>
+<figcaption style="margin-top: 10px; display: flex; flex-direction: column"><strong style="font-size: 16px">Snap. Stack. Go.</strong><span style="font-size: 13px">Stack Bands · 23 s</span></figcaption>
+</figure>
+</div>
+<p style="margin: 0; font-size: 13px">Studio renderings.</p>
+</div>
+</section>
+
+<div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px)"><div class="band" role="presentation"></div></div>
+
+<!-- 3. Quality by design -->
+<section style="max-width: 1200px; margin: 0 auto; padding: clamp(48px, 6vw, 88px) clamp(16px, 4vw, 48px); display: flex; flex-direction: column; gap: 40px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px 48px">
+<div style="flex: 1 1 380px; max-width: 640px">
+<p class="eyebrow">Why we're built different</p>
+<h2 class="serif" style="margin: 6px 0 10px; font-size: clamp(34px, 4vw, 52px); line-height: 1.1">Quality by design.</h2>
+<p style="margin: 0; font-size: 18px">We're a small studio that bakes in batches, not an assembly line.</p>
+</div>
+<figure style="flex: 0 1 300px; margin: 0; position: relative">
+<img src="/_blob/0006a8cb5b5e299a4eaed96c499a2aa3" alt="Hands flexing a pumpkin-orange TPU coaster" loading="lazy" style="display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 14px">
+<figcaption style="position: absolute; left: 10px; bottom: 10px; background: rgba(251,247,240,.92); color: #5A3E2B; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px">Studio rendering · flexible TPU 95A</figcaption>
+</figure>
+</div>
+<ul style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px 32px">
+<li style="display: flex; flex-direction: column; gap: 10px; padding: 8px 0">
+<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5A3E2B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 28h34l-3 7H8z"></path><circle cx="13" cy="22" r="4.5"></circle><circle cx="22" cy="21" r="4.5"></circle><circle cx="31" cy="22" r="4.5"></circle></svg>
+<strong style="font-size: 18px">Small batches.</strong>
+<span style="font-size: 16px">Every tray is designed in-house, seasonal, and baked fresh. No assembly line.</span>
+</li>
+<li style="display: flex; flex-direction: column; gap: 10px; padding: 8px 0">
+<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5A3E2B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M26 6l6 6-16 16-8 2 2-8z"></path><path d="M22 10l6 6"></path><path d="M5 37c4-4 7-4 10 0s7 4 10 0 7-4 10 0"></path></svg>
+<strong style="font-size: 18px">Designed in Jupiter.</strong>
+<span style="font-size: 16px">Our own design team builds every piece for single-color TPU, tested on our own printers.</span>
+</li>
+<li style="display: flex; flex-direction: column; gap: 10px; padding: 8px 0">
+<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5A3E2B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="6" width="30" height="32" rx="3"></rect><path d="M7 14h30"></path><path d="M18 14v6h8v-6"></path><path d="M13 32h18"></path></svg>
+<strong style="font-size: 18px">Our own studio.</strong>
+<span style="font-size: 16px">A fleet of 20 printers, Bambu P1S and Qidi Max 4, plus in-house compute.</span>
+</li>
+<li style="display: flex; flex-direction: column; gap: 10px; padding: 8px 0">
+<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5A3E2B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="20" cy="30" rx="15" ry="6"></ellipse><path d="M5 30v3c0 3.3 6.7 6 15 6s15-2.7 15-6v-3"></path><path d="M32 5c3 4 5 7 5 9a5 5 0 0 1-10 0c0-2 2-5 5-9z"></path></svg>
+<strong style="font-size: 18px">Built to be used.</strong>
+<span style="font-size: 16px">Flexible TPU 95A. Washable, dishwasher safe, made for daily use.</span>
+</li>
+<li style="display: flex; flex-direction: column; gap: 10px; padding: 8px 0">
+<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5A3E2B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 6h22v32H14L6 22z"></path><circle cx="14" cy="22" r="2.5"></circle><path d="M21 22l4 4 7-8"></path></svg>
+<strong style="font-size: 18px">Checked before it ships.</strong>
+<span style="font-size: 16px">Every piece is <span class="ph">[[CONFIRM: hand-checked]]</span> before it leaves the studio.</span>
+</li>
+</ul>
+<figure style="margin: 0; position: relative">
+<img src="/_blob/82254aa8b783c658e74e0336bc65e9b5" alt="Mrs. Smash's Studio: printers and filament wall behind glass domes of hibiscus, sunflower, ocean wave and jelly bean coasters" loading="lazy" style="display: block; width: 100%; aspect-ratio: 3 / 2; max-height: 620px; object-fit: cover; border-radius: 14px">
+<figcaption style="position: absolute; left: 12px; bottom: 12px; background: rgba(251,247,240,.92); color: #5A3E2B; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px">Studio rendering</figcaption>
+</figure>
+</section>
+
+<!-- 4. The Half Dozen -->
+<section style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px) clamp(48px, 6vw, 88px)">
+<div style="background: #C9A67A; border-radius: 24px; padding: clamp(16px, 3vw, 32px); display: flex; flex-wrap: wrap; gap: clamp(16px, 3vw, 32px); align-items: stretch">
+<figure style="flex: 1 1 420px; margin: 0; position: relative; min-width: 0">
+<img src="/_blob/a7ef878cf8ba4fe864fc9841968e0e72" alt="The Half Dozen: a windowed kraft box of coasters wrapped in a sage TPU band with the Mrs. Smash tag" style="display: block; width: 100%; height: 100%; min-height: 300px; object-fit: cover; border-radius: 16px">
+<img src="/_blob/177598fa0eb04e4d90ec0311bc5068f7" alt="The box opened: six coasters in tissue, a Today's Batch card, sage band and tag" loading="lazy" style="position: absolute; right: 14px; bottom: 40px; width: 38%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; border: 4px solid #FBF7F0; box-shadow: 0 10px 24px rgba(43,43,43,.3)">
+<figcaption style="position: absolute; left: 12px; bottom: 12px; background: rgba(251,247,240,.92); color: #5A3E2B; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px">Studio rendering</figcaption>
+</figure>
+<div style="flex: 1 1 380px; background: #FBF7F0; border-radius: 16px; padding: clamp(24px, 4vw, 48px); display: flex; flex-direction: column; gap: 16px; justify-content: center">
+<p class="eyebrow">The Half Dozen</p>
+<h2 class="serif" style="margin: 0; font-size: clamp(32px, 3.6vw, 46px); line-height: 1.1">Six coasters. One little box. On the house.</h2>
+<p style="margin: 0; font-size: 17px">Windowed kraft box, sage TPU band, the Mrs. Smash tag, and a Today's Batch menu card inside.</p>
+<div><button type="button" class="btn btn-primary" onClick="{{openSample}}">Get a free Half Dozen</button></div>
+</div>
+</div>
+</section>
+
+<div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px)"><div class="band" role="presentation"></div></div>
+
+<!-- 5. For restaurants -->
+<section id="wholesale" style="max-width: 1200px; margin: 0 auto; padding: clamp(48px, 6vw, 88px) clamp(16px, 4vw, 48px); display: flex; flex-wrap: wrap; align-items: center; gap: 40px 64px">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<p class="eyebrow">For restaurants &amp; bars</p>
+<h2 class="serif" style="margin: 0; font-size: clamp(34px, 4vw, 52px); line-height: 1.1">Your logo, fresh baked.</h2>
+<p style="margin: 0; font-size: 18px; max-width: 28em">Custom-logo coasters for bars and restaurants in Jupiter, Palm Beach County and beyond.</p>
+<a href="#wholesale" style="font-weight: 600; padding: 10px 0; align-self: flex-start">Wholesale &amp; samples →</a>
+<figure style="margin: 8px 0 0; position: relative">
+<img src="/_blob/217f8a3659392d46381f75225b0ce54a" alt="A lemon spritz on a sage coaster beside a cinnamon coaster, on a beachside table at golden hour" loading="lazy" style="display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 14px">
+<figcaption style="position: absolute; left: 12px; bottom: 12px; background: rgba(251,247,240,.92); color: #5A3E2B; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px">Studio rendering</figcaption>
+</figure>
+</div>
+<!-- Chalkboard price board (live text) -->
+<div style="flex: 1 1 380px; min-width: 0; background: #2B2B2B; color: #FBF7F0; border: 8px solid #7A5A40; border-radius: 18px; padding: 28px clamp(20px, 3vw, 36px); box-shadow: 0 18px 40px rgba(90,62,43,.22)">
+<h3 class="serif" style="margin: 0; font-size: 34px; text-align: center">By the batch</h3>
+<p style="margin: 2px 0 16px; text-align: center; font-size: 15px; color: #E9D9C2">price per coaster</p>
+<dl style="margin: 0; display: flex; flex-direction: column; gap: 12px; font-size: 19px">
+<div style="display: flex; align-items: flex-end"><dt style="font-weight: 600">100 coasters</dt><span class="leader" aria-hidden="true"></span><dd style="margin: 0; font-weight: 600">$2.00 ea</dd></div>
+<div style="display: flex; align-items: flex-end"><dt style="font-weight: 600">500</dt><span class="leader" aria-hidden="true"></span><dd style="margin: 0; font-weight: 600">$1.60 ea</dd></div>
+<div style="display: flex; align-items: flex-end"><dt style="font-weight: 600">1,000</dt><span class="leader" aria-hidden="true"></span><dd style="margin: 0; font-weight: 600">$1.20 ea</dd></div>
+<div style="display: flex; align-items: flex-end"><dt style="font-weight: 600">Samples</dt><span class="leader" aria-hidden="true"></span><dd style="margin: 0; font-style: italic; color: #F1C9A0">on the house</dd></div>
+</dl>
+<p style="margin: 20px 0 0; padding-top: 12px; border-top: 2px dotted rgba(251,247,240,.35); font-size: 14px; color: #E9D9C2; text-align: center">Locally grown in Jupiter, FL.</p>
+</div>
+</section>
+
+<div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px)"><div class="band" role="presentation"></div></div>
+
+<!-- 6. Meet Mrs. Smash -->
+<section style="max-width: 1200px; margin: 0 auto; padding: clamp(48px, 6vw, 88px) clamp(16px, 4vw, 48px); display: flex; flex-wrap: wrap; align-items: center; gap: 32px 64px">
+<figure style="flex: 0 1 380px; margin: 0; position: relative">
+<img src="/_blob/e4dfe3cc987bc1a76a6952ec4b90119c" alt="The Mrs. Smash tag: sage TPU with two beach chairs and a wave" loading="lazy" style="display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 14px">
+<figcaption style="position: absolute; left: 12px; bottom: 12px; background: rgba(251,247,240,.92); color: #5A3E2B; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px">Studio rendering · <span class="ph">[[DEE PORTRAIT]]</span> to swap in</figcaption>
+</figure>
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<p class="eyebrow">Meet Mrs. Smash</p>
+<h2 class="serif" style="margin: 0; font-size: clamp(34px, 4vw, 52px); line-height: 1.1">A little piece of our happy place.</h2>
+<p style="margin: 0; font-size: 18px; max-width: 32em">Dee is Mrs. Smash: mom of four, wife to one, and the heart of the studio. She and Smash bake every batch right here in Jupiter.</p>
+</div>
+</section>
+
+<!-- 7. FAQ -->
+<section style="max-width: 820px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px) clamp(56px, 7vw, 104px)">
+<h2 class="serif" style="margin: 0 0 12px; font-size: clamp(32px, 3.6vw, 44px)">Good questions.</h2>
+<div style="border-top: 1.5px solid rgba(90,62,43,.2)">
+<sc-for list="{{faqs}}" as="q" hint-placeholder-count="4">
+<div style="border-bottom: 1.5px solid rgba(90,62,43,.2)">
+<h3 style="margin: 0"><button type="button" class="faq-q" aria-expanded="{{q.expanded}}" onClick="{{q.toggle}}"><span>{{q.q}}</span><span aria-hidden="true" style="font-size: 24px; font-weight: 400; color: #A9532F">{{q.sign}}</span></button></h3>
+<sc-if value="{{q.open}}" hint-placeholder-val="{{ false }}">
+<p style="margin: 0; padding: 0 0 20px; font-size: 16px; max-width: 40em">{{q.a}} <span class="ph">{{q.ph}}</span></p>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</section>
+</main>
+
+<!-- 8. Footer -->
+<footer class="foot" style="background: #5A3E2B; color: #FBF7F0">
+<div style="max-width: 1200px; margin: 0 auto; padding: 56px clamp(16px, 4vw, 48px) 32px; display: flex; flex-wrap: wrap; gap: 40px 64px; justify-content: space-between">
+<div style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 12px">
+<div style="background: #FBF7F0; border-radius: 12px; padding: 10px 14px; align-self: flex-start"><img src="/_blob/a3b868b09b002d654d9fe1fcadde3124" alt="JUP LIFE" style="width: 110px; height: 64px; object-fit: contain; display: block"></div>
+<span class="serif" style="font-size: 28px; line-height: 1.1">JUP LIFE<br><span style="font-size: 18px">by Mrs. Smash</span></span>
+<span style="font-size: 16px; color: #F1E7D8">Fresh baked. Built different.</span>
+</div>
+<nav aria-label="Footer" style="flex: 0 1 200px; display: flex; flex-direction: column; gap: 8px; font-size: 16px">
+<a href="#shop">Shop</a>
+<a href="#wholesale">Wholesale &amp; Samples</a>
+<a href="#">Shipping &amp; Returns</a>
+<a href="#">Privacy</a>
+</nav>
+<address style="flex: 1 1 280px; font-style: normal; display: flex; flex-direction: column; gap: 8px; font-size: 16px">
+<span>Wholesale: call Smash, <a href="tel:+15615327120">561-532-7120</a></span>
+<span>Say hello: <a href="mailto:hello@juplifestudio.com">hello@juplifestudio.com</a></span>
+<span>Email Dee: <a href="mailto:dee@juplifestudio.com">dee@juplifestudio.com</a></span>
+<span>Text us: <a href="sms:+15615818015">561-581-8015</a></span>
+<span>X: <a href="#">@juplifestudio</a></span>
+</address>
+</div>
+<div style="max-width: 1200px; margin: 0 auto; padding: 16px clamp(16px, 4vw, 48px) 28px; border-top: 1px solid rgba(251,247,240,.2); display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; font-size: 14px; color: #F1E7D8">
+<span>Made in Jupiter, FL</span>
+<span>© 2026 JUP LIFE by Mrs. Smash</span>
+</div>
+</footer>
+
+<!-- Modal: sample request -->
+<sc-if value="{{modalOpen}}" hint-placeholder-val="{{ false }}">
+<div onKeyDown="{{modalKey}}" style="position: fixed; inset: 0; z-index: 50; background: rgba(43,43,43,.55); display: flex; align-items: center; justify-content: center; padding: 16px">
+<div role="dialog" aria-modal="true" aria-labelledby="hd-title" style="position: relative; width: 100%; max-width: 560px; max-height: calc(100vh - 32px); overflow-y: auto; background: #FBF7F0; border-radius: 18px; padding: clamp(24px, 4vw, 40px); box-shadow: 0 30px 60px rgba(43,43,43,.35)">
+<button type="button" aria-label="Close" onClick="{{closeSample}}" style="position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border: 0; border-radius: 999px; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#5A3E2B" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16"></path></svg></button>
+<sc-if value="{{showForm}}" hint-placeholder-val="{{ true }}">
+<p class="eyebrow">Samples are on the house</p>
+<h2 id="hd-title" class="serif" style="margin: 4px 0 20px; font-size: 34px; line-height: 1.1">Get a free Half Dozen</h2>
+<form onSubmit="{{submit}}" style="display: flex; flex-direction: column; gap: 14px">
+<label class="field">Request type
+<select name="type" value="{{reqType}}" onChange="{{setType}}"><option value="Half Dozen sample">Half Dozen sample</option><option value="Product question">Product question</option><option value="Custom">Custom order</option></select></label>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px">
+<label class="field">Name*<input name="name" required autocomplete="name"></label>
+<label class="field">Business*<input name="business" required autocomplete="organization"></label>
+<label class="field">City*<input name="city" required autocomplete="address-level2"></label>
+<label class="field">Email*<input name="email" type="email" required autocomplete="email"></label>
+<label class="field">Phone<input name="phone" type="tel" autocomplete="tel"></label>
+<label class="field">Logo (optional)<input name="logo" type="file" accept=".png,.jpg,.jpeg,.svg,.pdf" style="padding: 10px"></label>
+</div>
+<span style="font-size: 13px">PNG, JPG, SVG or PDF, up to 4 MB.</span>
+<input type="hidden" name="source_page" value="/">
+<button type="submit" class="btn btn-primary" style="margin-top: 6px">Send my Half Dozen</button>
+</form>
+</sc-if>
+<sc-if value="{{sent}}" hint-placeholder-val="{{ false }}">
+<h2 class="serif" style="margin: 8px 0 12px; font-size: 34px; line-height: 1.1">It's on the tray.</h2>
+<p style="margin: 0 0 20px">We'll be in touch within <span class="ph">[[RESPONSE TIME]]</span>.</p>
+<button type="button" class="btn btn-outline" onClick="{{closeSample}}">Back to the batch</button>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":5600}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { modalOpen: false, sent: false, reqType: 'Half Dozen sample', openFaq: 0 };
+  }
+  renderVals() {
+    // Today's Batch: swap this JSON daily (same shape as batch.yaml)
+    const batch = {
+      date: '2026-10-22',
+      tray: 'The Fall Tray',
+      batch_no: '',
+      chefs_special: '',
+      flavors: [
+        { name: 'Pumpkin', hex: '#E8731E', note: 'fall harvest' },
+        { name: 'Cinnamon', hex: '#A0522D', note: 'warm & spicy' },
+        { name: 'Cranberry', hex: '#9B1B30', note: 'tart pick' },
+        { name: 'Maple', hex: '#C8862A', note: 'fresh tapped' },
+        { name: 'Rhubarb', hex: '#C93A5B', note: 'garden crisp' },
+        { name: 'Sunflower', hex: '#F6C21C', note: 'the hero' }
+      ]
+    };
+    const d = new Date(batch.date + 'T12:00:00');
+    const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+    const mons = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    const batchDate = days[d.getDay()] + ' ' + mons[d.getMonth()] + ' ' + d.getDate();
+
+    const open = (type) => () => this.setState({ modalOpen: true, sent: false, reqType: type });
+    const openSample = open('Half Dozen sample');
+    const ask = open('Product question');
+    const tpu = 'TPU 95A · washable · dishwasher safe';
+
+    const products = [
+      { name: 'Fall Tray Pop Coasters', line: 'Pop coasters in this season’s tray flavors.', photo: '[[PHOTO: Fall Tray Pop coasters]]', img: '/_blob/5f92bd649d470e15194dd5b6eebf97ae', alt: 'A stack of pumpkin-orange flower coasters with cinnamon sticks and fall leaves', swatches: batch.flavors, material: tpu, ask: true },
+      { name: 'Stack Bands', line: 'Snap. Stack. Go. Fall 3-packs: Harvest, Berry Pie and Coastal Batch.', photo: '[[PHOTO: Stack Bands]]', img: '/_blob/8825915ae074730705f6510e1bbd473a', alt: 'The Harvest stack band 3-pack in Pumpkin, Cinnamon and Maple', ask: true },
+      { name: '6-Coaster Set + Case', line: 'Six coasters and a case to keep them in.', photo: '[[PHOTO: 6-coaster set + case]]', img: '/_blob/4743ef461971b0d28aacd4b3234a0bff', alt: 'Six yellow flower coasters stacked in a white printed case', material: tpu, price: '$29', cta: 'Add to bag', tiktok: true },
+      { name: 'The Gigi', line: 'A flexible band with our JI monogram pressed in. Wear one or stack a few.', photo: '[[PHOTO: The Gigi]]', img: '/_blob/e315967f3fb97273bbcaa0fdb7045906', alt: 'A teal Gigi band with a repeating JI monogram, in palm-leaf shadow', ask: true },
+      { name: 'Tide Soap Dish', line: 'Draining wave ridges, swappable inserts.', photo: '[[PHOTO: photo_tide_dish_lime_wave.jpg]]', img: '/_blob/62e98bf8a7e126a09525494fb1892531', alt: 'A lime-green Tide soap dish with wave ridges and drain holes, holding a bar of soap', ask: true },
+      { name: 'Tide Hand Soap Dispenser', line: 'TPU housing, PETG refill bottle, square-wave base.', photo: '[[PHOTO: photo_tide_dispenser_tpu_fade_1.jpg]]', img: '/_blob/db38a30e47d0fe1991298bb366eeb780', alt: 'A Tide hand soap dispenser fading from lime to amber, with wave texture and a square base', material: 'TPU housing · PETG bottle: wash by hand', ask: true }
+    ].map((p) => ({
+      ...p,
+      hasSwatches: !!(p.swatches && p.swatches.length),
+      hasImg: !!p.img,
+      noImg: !p.img,
+      img: p.img || '',
+      alt: p.alt || '',
+      swatches: p.swatches || [],
+      material: p.material || '',
+      price: p.price || '',
+      ask: !!p.ask,
+      tiktok: !!p.tiktok,
+      act: p.ask ? ask : () => {}
+    }));
+
+    const faqData = [
+      { q: 'What are they made of?', a: 'TPU 95A, a flexible printed material. Each listing says if a piece is PLA or PETG.', ph: '' },
+      { q: 'Are they dishwasher safe?', a: 'Yes. TPU pieces are washable and dishwasher safe. Wash PLA and PETG pieces by hand.', ph: '[[CONFIRM: top-rack / temperature guidance]]' },
+      { q: 'Can I get my logo on them?', a: 'Yes, from 100 coasters. Start with a free Half Dozen.', ph: '' },
+      { q: 'How fast do you ship?', a: '', ph: '[[CONFIRM: retail dispatch and wholesale lead times]]' }
+    ];
+    const faqs = faqData.map((f, i) => {
+      const isOpen = this.state.openFaq === i;
+      return { ...f, open: isOpen, expanded: isOpen ? 'true' : 'false', sign: isOpen ? '−' : '+',
+        toggle: () => this.setState({ openFaq: isOpen ? -1 : i }) };
+    });
+
+    return {
+      batch,
+      batchDate,
+      batchNo: batch.batch_no || '____',
+      hasSpecial: !!batch.chefs_special,
+      products,
+      faqs,
+      openSample,
+      modalOpen: this.state.modalOpen,
+      showForm: !this.state.sent,
+      sent: this.state.sent,
+      reqType: this.state.reqType,
+      setType: (e) => this.setState({ reqType: e.target.value }),
+      closeSample: () => this.setState({ modalOpen: false }),
+      modalKey: (e) => { if (e.key === 'Escape') this.setState({ modalOpen: false }); },
+      submit: (e) => { e.preventDefault(); if (e.target.checkValidity()) this.setState({ sent: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

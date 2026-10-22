@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-22",
+  "tray": "The Fall Tray",
+  "batch_no": "",
+  "chefs_special": "",
+  "flavors": [
+    {
+      "name": "Pumpkin",
+      "hex": "#E8731E",
+      "note": "fall harvest"
+    },
+    {
+      "name": "Cinnamon",
+      "hex": "#A0522D",
+      "note": "warm & spicy"
+    },
+    {
+      "name": "Cranberry",
+      "hex": "#9B1B30",
+      "note": "tart pick"
+    },
+    {
+      "name": "Maple",
+      "hex": "#C8862A",
+      "note": "fresh tapped"
+    },
+    {
+      "name": "Rhubarb",
+      "hex": "#C93A5B",
+      "note": "garden crisp"
+    },
+    {
+      "name": "Sunflower",
+      "hex": "#F6C21C",
+      "note": "the hero"
+    }
+  ]
+}

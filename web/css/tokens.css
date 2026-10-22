@@ -1,0 +1,41 @@
+/* JUP LIFE design tokens. Site chrome uses ONLY the six core colors.
+   Ingredient colors appear only on flavor swatches, always next to the flavor name. */
+:root {
+  /* core */
+  --cream: #FBF7F0;       /* page background */
+  --cocoa: #5A3E2B;       /* all text, footer bg (9.1:1 on cream) */
+  --kraft: #C9A67A;       /* tags, cards, box section. Cocoa text on kraft = LARGE/BOLD ONLY (4.3:1) */
+  --sage: #9CAF88;        /* TPU band divider, secondary accents. No text on sage. */
+  --terracotta: #A9532F;  /* primary buttons (cream text 5.3:1), links */
+  --chalkboard: #2B2B2B;  /* price board + Today's Batch board (cream text 13.3:1) */
+
+  /* derived (same family, used sparingly) */
+  --terracotta-hover: #8E4426;
+  --cream-deep: #F3EADC;  /* photo wells, video section bg */
+  --cream-muted: #E9D9C2; /* secondary text on chalkboard */
+  --board-frame: #7A5A40; /* wood frame around chalkboards */
+
+  /* ingredient colors: swatches only */
+  --fl-pumpkin: #E8731E; --fl-cinnamon: #A0522D; --fl-cranberry: #9B1B30; --fl-maple: #C8862A; --fl-rhubarb: #C93A5B;
+  --fl-blueberry: #3F5BB8; --fl-peach: #FFB07C; --fl-keylime: #A8D94A; --fl-watermelon: #F2546B; --fl-coconut: #F4EFE3;
+  --fl-seasalt: #7FD1C2; --fl-sunflower: #F6C21C;
+
+  /* type */
+  --font-serif: "DM Serif Display", Georgia, serif;
+  --font-sans: "Montserrat", system-ui, sans-serif;
+  --fs-body: 17px;
+  --lh-body: 1.6;
+
+  /* shape + space (8px grid) */
+  --space: 8px;
+  --radius-card: 14px;
+  --radius-pill: 999px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --maxw: 1200px;
+  --shadow-soft: 0 4px 14px rgba(90, 62, 43, .10);
+  --shadow-lift: 0 14px 30px rgba(90, 62, 43, .16);
+  --shadow-board: 0 18px 40px rgba(90, 62, 43, .22);
+
+  /* motion */
+  --dur: 200ms;
+}

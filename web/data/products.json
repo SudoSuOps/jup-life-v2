@@ -1,0 +1,150 @@
+{
+  "_note": "Display data for cards. Prices here are DISPLAY ONLY. Checkout charges come from Stripe Price IDs mapped server-side in api/app/catalog.py. Never invent prices: null = 'Ask about this batch'.",
+  "products": [
+    {
+      "sku": "fall-pop-coasters",
+      "name": "Fall Tray Pop Coasters",
+      "line": "Pop coasters in this season's tray flavors.",
+      "price": null,
+      "material": "TPU 95A · washable · dishwasher safe",
+      "swatches": "batch",
+      "img": "img/pop-coasters-pumpkin.webp",
+      "home": true,
+      "shop": true,
+      "alt": "A stack of pumpkin-orange flower coasters with cinnamon sticks and fall leaves"
+    },
+    {
+      "sku": "stack-bands-fall",
+      "name": "Stack Bands",
+      "line": "Snap. Stack. Go. Fall 3-packs: Harvest, Berry Pie and Coastal Batch.",
+      "price": null,
+      "material": null,
+      "combos": [
+        {
+          "name": "Harvest",
+          "flavors": [
+            "Pumpkin",
+            "Cinnamon",
+            "Maple"
+          ]
+        },
+        {
+          "name": "Berry Pie",
+          "flavors": [
+            "Cranberry",
+            "Rhubarb",
+            "Maple"
+          ]
+        },
+        {
+          "name": "Coastal Batch",
+          "flavors": [
+            "Sea Salt",
+            "Pumpkin",
+            "Rhubarb"
+          ]
+        }
+      ],
+      "summer_combos": [
+        {
+          "name": "Sunset",
+          "flavors": [
+            "Peach",
+            "Watermelon",
+            "Key Lime"
+          ]
+        },
+        {
+          "name": "Berry Coast",
+          "flavors": [
+            "Blueberry",
+            "Coconut",
+            "Sea Salt"
+          ]
+        },
+        {
+          "name": "Coastal Batch",
+          "flavors": [
+            "Sea Salt",
+            "Peach",
+            "Coconut"
+          ]
+        }
+      ],
+      "img": "img/stack-bands-harvest.webp",
+      "board": "img/stack-bands-board.webp",
+      "home": true,
+      "shop": true,
+      "alt": "The Harvest stack band 3-pack in Pumpkin, Cinnamon and Maple"
+    },
+    {
+      "sku": "six-set-case",
+      "name": "6-Coaster Set + Case",
+      "line": "Six coasters and a case to keep them in.",
+      "price": 29,
+      "material": "TPU 95A · washable · dishwasher safe",
+      "tiktok": "[[TIKTOK_SHOP_URL]]",
+      "img": "img/six-set-case.webp",
+      "home": true,
+      "shop": true,
+      "alt": "Six yellow flower coasters stacked in a white printed case"
+    },
+    {
+      "sku": "gigi",
+      "name": "The Gigi",
+      "line": "A flexible band with our JI monogram pressed in. Wear one or stack a few.",
+      "price": null,
+      "material": null,
+      "img": "img/gigi-teal.webp",
+      "gallery": [
+        "img/gigi-earthtone-stack.webp",
+        "img/gigi-brunch.webp"
+      ],
+      "home": true,
+      "shop": true,
+      "alt": "A teal Gigi band with a repeating JI monogram, in palm-leaf shadow"
+    },
+    {
+      "sku": "tide-soap-dish",
+      "name": "Tide Soap Dish",
+      "line": "Draining wave ridges, swappable inserts.",
+      "price": null,
+      "material": null,
+      "img": "img/tide-soap-dish.webp",
+      "gallery": [
+        "img/soapdish-inserts.webp",
+        "img/soapdish-vanity.webp"
+      ],
+      "home": true,
+      "shop": true,
+      "alt": "A lime-green Tide soap dish with wave ridges and drain holes, holding a bar of soap"
+    },
+    {
+      "sku": "tide-dispenser",
+      "name": "Tide Hand Soap Dispenser",
+      "line": "TPU housing, PETG refill bottle, square-wave base.",
+      "price": null,
+      "material": "TPU housing · PETG bottle: wash by hand",
+      "img": "img/tide-dispenser.webp",
+      "gallery": [
+        "img/tide-trio.webp",
+        "img/tide-hotel-bath.webp"
+      ],
+      "home": true,
+      "shop": true,
+      "alt": "A Tide hand soap dispenser fading from lime to amber, with wave texture and a square base"
+    },
+    {
+      "sku": "readers",
+      "name": "The Readers",
+      "line": "Thumb page holder plus stand.",
+      "price": 19,
+      "material": null,
+      "img": null,
+      "photo_placeholder": "[[PHOTO: The Readers]]",
+      "home": false,
+      "shop": true,
+      "alt": ""
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{% from "partials/_macros.html" import sample_form, sample_success, contacts %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{% endblock %}</title>
+<meta name="description" content="{% block description %}{% endblock %}">
+<link rel="canonical" href="{{ site_url }}{{ page.path if page.path != '/404' else '/' }}">
+{% if page.path == '/404' %}<meta name="robots" content="noindex">{% endif %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JUP LIFE by Mrs. Smash">
+<meta property="og:title" content="{% block ogtitle %}{{ self.title() }}{% endblock %}">
+<meta property="og:description" content="{% block ogdesc %}{{ self.description() }}{% endblock %}">
+<meta property="og:url" content="{{ site_url }}{{ page.path }}">
+<meta property="og:image" content="{{ site_url }}/img/og-hero.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#FBF7F0">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/dm-serif-display-400.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/montserrat-400.woff2" crossorigin>
+<link rel="stylesheet" href="{{ css_href }}">
+{% block head %}{% endblock %}
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="JUP LIFE by Mrs. Smash, home">
+      <img src="/img/logo.png" alt="" width="64" height="37">
+      <span><b>JUP LIFE</b><small>by Mrs. Smash</small></span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="/shop"{% if page.nav == 'shop' %} aria-current="page"{% endif %}>Shop</a>
+      <a href="/wholesale"{% if page.nav == 'wholesale' %} aria-current="page"{% endif %}>Wholesale &amp; Samples</a>
+      <button type="button" class="bag-btn" data-open-bag aria-label="Bag, 0 items">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="bag-count" data-bag-count>0</span>
+      </button>
+      <button type="button" class="btn btn-primary btn-sm" data-open-sample>Get a free Half Dozen</button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+{% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="wrap top">
+    <div class="stack" style="flex:1 1 260px;gap:12px">
+      <div class="logo-chip"><img src="/img/logo.png" alt="JUP LIFE" width="110" height="64"></div>
+      <span class="serif" style="font-size:28px;line-height:1.1">JUP LIFE<br><span style="font-size:18px">by Mrs. Smash</span></span>
+      <span style="color:#F1E7D8">Fresh baked. Built different.</span>
+    </div>
+    <nav aria-label="Footer" class="stack" style="flex:0 1 200px;gap:8px">
+      <a href="/shop">Shop</a>
+      <a href="/wholesale">Wholesale &amp; Samples</a>
+      <a href="/shipping-returns">Shipping &amp; Returns</a>
+      <a href="/privacy">Privacy</a>
+    </nav>
+    <div style="flex:1 1 280px">{{ contacts() }}</div>
+  </div>
+  <div class="wrap legal"><span>Made in Jupiter, FL</span><span>© 2026 JUP LIFE by Mrs. Smash</span></div>
+</footer>
+
+<dialog id="sample-dlg" aria-labelledby="sample-h">
+  <button type="button" class="dlg-close" data-close aria-label="Close"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#5A3E2B" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16"/></svg></button>
+  <div data-sample>
+    <div data-form-view>
+      <p class="eyebrow">Samples are on the house</p>
+      <h2 id="sample-h" style="font-size:34px;margin:4px 0 20px">Get a free Half Dozen</h2>
+      {{ sample_form(select=True) }}
+    </div>
+    {{ sample_success(closable=True) }}
+  </div>
+</dialog>
+
+<dialog id="bag-dlg" aria-labelledby="bag-h">
+  <button type="button" class="dlg-close" data-close aria-label="Close"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#5A3E2B" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16"/></svg></button>
+  <h2 id="bag-h" style="font-size:34px;margin:4px 0 16px">Your bag</h2>
+  <ul class="bag-list" data-bag-list></ul>
+  <p data-bag-empty style="margin:0 0 16px">Nothing on the tray yet.</p>
+  <p style="display:flex;justify-content:space-between;font-weight:600;margin:0 0 16px"><span>Subtotal</span><span data-bag-subtotal>$0.00</span></p>
+  <p style="font-size:13px;margin:0 0 16px">Shipping and tax are calculated at checkout.</p>
+  <p role="alert" data-bag-error style="margin:0 0 8px;color:#9B1B30;font-weight:600"></p>
+  <button type="button" class="btn btn-primary" data-checkout style="width:100%">Checkout</button>
+</dialog>
+
+<script src="{{ js_src }}" defer></script>
+</body>
+</html>

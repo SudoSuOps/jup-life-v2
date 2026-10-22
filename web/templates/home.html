@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% from "partials/_macros.html" import card, cta_strip, batch_board, price_board %}
+{% block title %}JUP LIFE | Custom Coasters, Jupiter FL · Fresh Baked{% endblock %}
+{% block description %}Washable TPU coasters and coastal pieces, 3D-printed in small seasonal batches in Jupiter, FL. Custom logo coasters for restaurants and bars. Samples are on the house.{% endblock %}
+{% block ogtitle %}JUP LIFE · Fresh baked. Built different.{% endblock %}
+{% block ogdesc %}Washable TPU coasters, 3D-printed in small seasonal batches in Jupiter, FL.{% endblock %}
+{% block head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "JUP LIFE by Mrs. Smash",
+  "url": "{{ site_url }}/",
+  "image": "{{ site_url }}/img/og-hero.jpg",
+  "logo": "{{ site_url }}/img/logo.png",
+  "telephone": "+1-561-532-7120",
+  "email": "hello@juplifestudio.com",
+  "address": { "@type": "PostalAddress", "addressLocality": "Jupiter", "addressRegion": "FL", "addressCountry": "US" },
+  "areaServed": ["Jupiter, FL", "Tequesta, FL", "Palm Beach Gardens, FL", "Juno Beach, FL", "Palm Beach County, FL"],
+  "sameAs": ["https://x.com/juplifestudio"]
+}
+</script>
+{% endblock %}
+{% block content %}
+<div class="wrap">
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="hero-copy">
+      <p class="eyebrow">Fresh baked daily · Jupiter, FL</p>
+      <h1 id="hero-h">Fresh baked.<br>Built different.</h1>
+      <p class="lede">Washable TPU coasters and coastal pieces, 3D-printed in small seasonal batches in Jupiter, FL.</p>
+      <div class="btn-row">
+        <a href="/shop" class="btn btn-primary">Shop the Batch</a>
+        <button type="button" class="btn btn-outline" data-open-sample>Get a free Half Dozen</button>
+      </div>
+      <p style="margin:0;font-size:15px">Samples are on the house for bars and restaurants.</p>
+    </div>
+
+    <div class="hero-art">
+      <div class="bg" aria-hidden="true">
+        {# desktop only: mobile gets a 1px pixel, so no hero bytes are downloaded #}
+        <picture><source media="(min-width: 900px)" srcset="/img/hero-dome-800.webp 800w, /img/hero-dome-1600.webp 1600w" sizes="600px"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" width="1600" height="900"></picture>
+      </div>
+      {{ pic("img/seal-fresh-baked.webp", "Fresh baked daily. JUP LIFE, built different.", sizes="128px", lazy=False, cls="seal") }}
+      {{ batch_board() }}
+    </div>
+  </section>
+</div>
+
+<script type="application/json" id="batch-data">
+{{ batch_json }}
+</script>
+
+<div class="wrap"><hr class="band"></div>
+
+<section class="wrap section stack reveal" style="gap:32px" aria-labelledby="tray-h">
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px">
+    <div>
+      <p class="eyebrow">{{ batch.tray }} + always on</p>
+      <h2 id="tray-h" style="margin-top:6px">This week's tray.</h2>
+    </div>
+    <a href="/shop" style="font-weight:600;padding:10px 0">See the whole batch →</a>
+  </div>
+
+  <figure style="margin:0">
+    {{ pic("img/flavor-board-" ~ season ~ ".webp", batch.tray ~ " flavor board on a wood tray", sizes="(min-width: 1200px) 1104px, calc(100vw - 32px)", style="width:100%;height:auto;border-radius:14px") }}
+    <figcaption style="margin-top:8px;font-size:13px;font-weight:600">{{ batch.tray }} flavor board · Studio rendering</figcaption>
+  </figure>
+
+  <div class="tray-grid">
+    {% for p in products if p.home %}{{ card(p) }}
+    {% endfor %}
+    {{ cta_strip() }}
+  </div>
+</section>
+
+<section class="oven" aria-labelledby="oven-h">
+  <div class="wrap section stack reveal" style="gap:28px">
+    <div>
+      <p class="eyebrow">Watch the batch</p>
+      <h2 id="oven-h" style="margin-top:6px">Out of the oven.</h2>
+    </div>
+    <div class="video-grid">
+      <figure>
+        <video controls preload="none" playsinline poster="/img/poster-fresh-baked.webp" aria-label="Fresh Baked: a coaster printing in the studio, then the finished pieces under glass domes"><source src="/video/fresh-baked.mp4" type="video/mp4"></video>
+        <figcaption><strong>Fresh baked.</strong>From the printer to the dome · 15 s</figcaption>
+      </figure>
+      <figure>
+        <video controls preload="none" playsinline poster="/img/poster-coaster-party.webp" aria-label="Coaster party: colorful coasters tumble onto a beach bar and drinks land on them"><source src="/video/coaster-party.mp4" type="video/mp4"></video>
+        <figcaption><strong>Coaster party.</strong>Made for the bar · 15 s</figcaption>
+      </figure>
+      <figure>
+        <video controls preload="none" playsinline poster="/img/poster-built-different.webp" aria-label="Built different: stack bands at sunset, by a bonfire and snapped onto a wrist"><source src="/video/built-different.mp4" type="video/mp4"></video>
+        <figcaption><strong>Snap. Stack. Go.</strong>Stack Bands · 23 s</figcaption>
+      </figure>
+    </div>
+    <p style="margin:0;font-size:13px">Studio renderings.</p>
+  </div>
+</section>
+
+<div class="wrap" style="padding-top:clamp(48px,6vw,88px)"><hr class="band"></div>
+
+<section class="wrap section stack reveal" style="gap:40px" aria-labelledby="quality-h">
+  <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 48px">
+    <div style="flex:1 1 380px;max-width:640px">
+      <p class="eyebrow">Why we're built different</p>
+      <h2 id="quality-h" style="margin:6px 0 10px">Quality by design.</h2>
+      <p style="margin:0;font-size:18px">We're a small studio that bakes in batches, not an assembly line.</p>
+    </div>
+    <figure style="flex:0 1 300px;margin:0;position:relative">
+      {{ pic("img/flex-closeup.webp", "Hands flexing a pumpkin-orange TPU coaster", sizes="300px", style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:14px") }}
+      <figcaption class="render-cap">Studio rendering · flexible TPU 95A</figcaption>
+    </figure>
+  </div>
+  <ul class="beats">
+    <li><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M5 28h34l-3 7H8z"/><circle cx="13" cy="22" r="4.5"/><circle cx="22" cy="21" r="4.5"/><circle cx="31" cy="22" r="4.5"/></svg>
+      <div><strong>Small batches.</strong><span>Every tray is designed in-house, seasonal, and baked fresh. No assembly line.</span></div></li>
+    <li><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M26 6l6 6-16 16-8 2 2-8z"/><path d="M22 10l6 6"/><path d="M5 37c4-4 7-4 10 0s7 4 10 0 7-4 10 0"/></svg>
+      <div><strong>Designed in Jupiter.</strong><span>Our own design team builds every piece for single-color TPU, tested on our own printers.</span></div></li>
+    <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="7" y="6" width="30" height="32" rx="3"/><path d="M7 14h30"/><path d="M18 14v6h8v-6"/><path d="M13 32h18"/></svg>
+      <div><strong>Our own studio.</strong><span>A fleet of 20 printers, Bambu P1S and Qidi Max 4, plus in-house compute.</span></div></li>
+    <li><svg viewBox="0 0 44 44" aria-hidden="true"><ellipse cx="20" cy="30" rx="15" ry="6"/><path d="M5 30v3c0 3.3 6.7 6 15 6s15-2.7 15-6v-3"/><path d="M32 5c3 4 5 7 5 9a5 5 0 0 1-10 0c0-2 2-5 5-9z"/></svg>
+      <div><strong>Built to be used.</strong><span>Flexible TPU 95A. Washable, dishwasher safe, made for daily use.</span></div></li>
+    <li><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M14 6h22v32H14L6 22z"/><circle cx="14" cy="22" r="2.5"/><path d="M21 22l4 4 7-8"/></svg>
+      <div><strong>Checked before it ships.</strong><span>Every piece is {{ ph('hand_checked', 'CONFIRM: hand-checked') }} before it leaves the studio.</span></div></li>
+  </ul>
+  <figure style="margin:0;position:relative">
+    {{ pic("img/studio-vision.webp", "Mrs. Smash's Studio: printers and filament wall behind glass domes of hibiscus, sunflower, ocean wave and jelly bean coasters", sizes="(min-width: 1200px) 1104px, calc(100vw - 32px)", style="width:100%;aspect-ratio:3/2;max-height:620px;object-fit:cover;border-radius:14px") }}
+    <figcaption class="render-cap">Studio rendering</figcaption>
+  </figure>
+</section>
+
+<section class="wrap reveal" style="padding-bottom:clamp(48px,6vw,88px)" aria-labelledby="hd-h">
+  <div class="halfdozen">
+    <figure>
+      {{ pic("img/halfdozen-box.webp", "The Half Dozen: a windowed kraft box of coasters wrapped in a sage TPU band with the Mrs. Smash tag", sizes="(min-width: 900px) 560px, calc(100vw - 64px)") }}
+      {{ pic("img/halfdozen-open.webp", "The box opened: six coasters in tissue, a Today's Batch card, sage band and tag", sizes="220px", cls="inset") }}
+      <figcaption class="render-cap" style="left:12px;bottom:12px">Studio rendering</figcaption>
+    </figure>
+    <div class="copy">
+      <p class="eyebrow">The Half Dozen</p>
+      <h2 id="hd-h">Six coasters. One little box. On the house.</h2>
+      <p style="margin:0">Windowed kraft box, sage TPU band, the Mrs. Smash tag, and a Today's Batch menu card inside.</p>
+      <div><button type="button" class="btn btn-primary" data-open-sample>Get a free Half Dozen</button></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><hr class="band"></div>
+
+<section class="wrap section split reveal" aria-labelledby="rest-h">
+  <div class="stack" style="gap:16px">
+    <p class="eyebrow">For restaurants &amp; bars</p>
+    <h2 id="rest-h">Your logo, fresh baked.</h2>
+    <p style="margin:0;font-size:18px;max-width:28em">Custom-logo coasters for bars and restaurants in Jupiter, Palm Beach County and beyond.</p>
+    <a href="/wholesale" style="font-weight:600;padding:10px 0;align-self:flex-start">Wholesale &amp; samples →</a>
+    <figure style="margin:8px 0 0;position:relative">
+      {{ pic("img/restaurant-drink.webp", "A lemon spritz on a sage coaster beside a cinnamon coaster, on a beachside table at golden hour", sizes="(min-width: 900px) 520px, calc(100vw - 32px)", style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px") }}
+      <figcaption class="render-cap">Studio rendering</figcaption>
+    </figure>
+  </div>
+  {{ price_board() }}
+</section>
+
+<div class="wrap"><hr class="band"></div>
+
+<section class="wrap section reveal" style="display:flex;flex-wrap:wrap;align-items:center;gap:32px 64px" aria-labelledby="dee-h">
+  <figure style="flex:0 1 380px;margin:0;position:relative">
+    {% if have_ph('dee_portrait') %}
+    {{ pic(site.placeholders.dee_portrait, "Dee, Mrs. Smash, at the studio", sizes="380px", style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:14px") }}
+    {% else %}
+    {{ pic("img/mrs-smash-tag.webp", "The Mrs. Smash tag: sage TPU with two beach chairs and a wave", sizes="380px", style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:14px") }}
+    <figcaption class="render-cap">Studio rendering · <span class="ph">[[DEE PORTRAIT]]</span> to swap in</figcaption>
+    {% endif %}
+  </figure>
+  <div class="stack" style="flex:1 1 380px;min-width:0;gap:16px">
+    <p class="eyebrow">Meet Mrs. Smash</p>
+    <h2 id="dee-h">A little piece of our happy place.</h2>
+    <p style="margin:0;font-size:18px;max-width:32em">Dee is Mrs. Smash: mom of four, wife to one, and the heart of the studio. She and Smash bake every batch right here in Jupiter.</p>
+  </div>
+</section>
+
+<section class="wrap faq reveal" style="padding-bottom:clamp(56px,7vw,104px)" aria-labelledby="faq-h">
+  <h2 id="faq-h" style="font-size:clamp(32px,3.6vw,44px);margin-bottom:12px">Good questions.</h2>
+  <details open><summary>What are they made of?</summary><p>TPU 95A, a flexible printed material. Each listing says if a piece is PLA or PETG.</p></details>
+  <details><summary>Are they dishwasher safe?</summary><p>Yes. TPU pieces are washable and dishwasher safe. {{ ph('dishwasher_guidance', 'CONFIRM: top-rack / temperature guidance') }} Wash PLA and PETG pieces by hand.</p></details>
+  <details><summary>Can I get my logo on them?</summary><p>Yes, from 100 coasters. Start with a free Half Dozen.</p></details>
+  <details><summary>How fast do you ship?</summary><p>{{ ph('lead_times', 'CONFIRM: retail dispatch and wholesale lead times') }}</p></details>
+</section>
+{% endblock %}

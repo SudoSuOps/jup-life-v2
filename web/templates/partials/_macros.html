@@ -1,0 +1,133 @@
+{# Shared components: card, batch board, price board, sample form, contacts #}
+
+{% macro swatch_list(items) %}
+<ul class="swatches" aria-label="Flavors">
+  {% for f in items %}<li><i style="background:{{ f.hex }}"></i>{{ f.name }}</li>{% endfor %}
+</ul>
+{% endmacro %}
+
+{% macro card(p, shop=False) %}
+<article class="card">
+  <div class="tag" aria-hidden="true"></div>
+  {% if p.img %}
+  <figure>{{ pic(p.img, p.alt, sizes="(min-width: 640px) 360px, calc(100vw - 64px)") }}<figcaption class="render-cap">Studio rendering</figcaption></figure>
+  {% if shop and p.gallery %}
+  <div class="thumbs">{% for g in p.gallery %}{{ pic(g, "", sizes="64px") }}{% endfor %}</div>
+  {% endif %}
+  {% elif p.sku == 'readers' and have_ph('readers_photo') %}
+  <figure>{{ pic(site.placeholders.readers_photo, "The Readers thumb page holder and stand", sizes="360px") }}</figure>
+  {% else %}
+  <div class="well"><span class="ph">{{ p.photo_placeholder }}</span></div>
+  {% endif %}
+  <div class="body">
+    {% if p.swatches == 'batch' %}{{ swatch_list(batch.flavors) }}{% endif %}
+    <h3 class="serif">{{ p.name }}</h3>
+    <p>{{ p.line }}</p>
+    {% if shop and p.combos_now %}
+    <ul class="combos" aria-label="3-pack combos">{% for c in p.combos_now %}<li><b>{{ c.name }}:</b> {{ c.flavors | join(', ') }}</li>{% endfor %}</ul>
+    {% endif %}
+    {% if p.material %}<p class="material">{{ p.material }}</p>{% endif %}
+    <div class="buy">
+      {% if p.price %}
+      <span class="price">${{ p.price }}</span><button type="button" class="btn btn-primary btn-sm" data-add-to-bag data-sku="{{ p.sku }}" data-name="{{ p.name }}" data-price="{{ p.price }}">Add to bag</button>
+      {% else %}
+      <button type="button" class="btn btn-outline btn-sm" data-open-sample data-type="Product question" data-product="{{ p.name }}">Ask about this batch</button>
+      {% endif %}
+    </div>
+    {% if p.tiktok %}
+    {% if have_ph('tiktok_shop_url') %}<a href="{{ site.placeholders.tiktok_shop_url }}" rel="noopener" style="font-size:14px;font-weight:600">Also on TikTok Shop ↗</a>
+    {% else %}<span style="font-size:14px;font-weight:600">Also on TikTok Shop ↗ <span class="ph">[[TIKTOK_SHOP_URL]]</span></span>{% endif %}
+    {% endif %}
+  </div>
+</article>
+{% endmacro %}
+
+{% macro cta_strip() %}
+<div class="cta-strip">
+  <div>
+    <p class="eyebrow" style="color:var(--cream-muted)">Custom logo coasters</p>
+    <h3>Your logo, fresh baked.</h3>
+    <p>From 100 coasters. Start with a free Half Dozen and try them on your bar.</p>
+  </div>
+  <button type="button" class="btn btn-primary" data-open-sample>Get a free Half Dozen</button>
+</div>
+{% endmacro %}
+
+{% macro batch_board() %}
+{# Pre-rendered; js/main.js re-renders the same markup from #batch-data #}
+<section class="board" id="todays-batch" aria-labelledby="batch-h" data-batch-board>
+  {% if batch.chefs_special %}<div class="ribbon">Chef's Special: {{ batch.chefs_special }}</div>{% endif %}
+  <p class="eyebrow muted"><span data-batch-date>{{ batch_date }}</span> · Batch #<span data-batch-no>{{ batch.batch_no or '____' }}</span></p>
+  <h2 id="batch-h">Today's Batch</h2>
+  <p class="muted" style="margin:0 0 18px;font-size:16px"><span data-batch-tray>{{ batch.tray }}</span> is out of the oven.</p>
+  <ul class="rows" data-batch-rows>
+    {% for f in batch.flavors[:6] %}<li class="row"><span class="swatch" style="background:{{ f.hex }}" aria-hidden="true"></span><span class="name">{{ f.name }}</span><span class="leader" aria-hidden="true"></span><span class="muted" style="font-style:italic">{{ f.note }}</span></li>
+    {% endfor %}
+  </ul>
+  <p class="foot">Locally grown in Jupiter, FL.</p>
+</section>
+{% endmacro %}
+
+{% macro price_board(id='price-h') %}
+{# Chalkboard price board: live text, never an image #}
+<section class="board price-board" aria-labelledby="{{ id }}">
+  <h3 id="{{ id }}" style="text-align:center;font-size:34px;margin:0">By the batch</h3>
+  <p class="muted" style="margin:2px 0 16px;text-align:center;font-size:15px">price per coaster</p>
+  <dl>
+    {% for t in site.tiers %}<div class="row"><dt>{{ t.qty }}</dt><span class="leader" aria-hidden="true"></span><dd>{{ t.price }}</dd></div>
+    {% endfor %}
+    <div class="row"><dt>Samples</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">on the house</dd></div>
+  </dl>
+  <p class="foot">Locally grown in Jupiter, FL.</p>
+</section>
+{% endmacro %}
+
+{% macro sample_form(type='Half Dozen sample', select=False, submit='Send my Half Dozen', notes_ph='Product, quantity, colors, anything else') %}
+<form class="form" data-sample-form action="/api/sample-request" method="post" enctype="multipart/form-data" novalidate>
+  {% if select %}
+  <label class="field">Request type
+    <select name="request_type">
+      <option>Half Dozen sample</option>
+      <option>Product question</option>
+      <option value="Custom">Custom order</option>
+    </select>
+  </label>
+  {% else %}
+  <input type="hidden" name="request_type" value="{{ type }}">
+  {% endif %}
+  <div class="grid">
+    <label class="field">Name*<input name="name" required autocomplete="name"></label>
+    <label class="field">Business*<input name="business" required autocomplete="organization"></label>
+    <label class="field">City*<input name="city" required autocomplete="address-level2"></label>
+    <label class="field">Email*<input name="email" type="email" required autocomplete="email"></label>
+    <label class="field">Phone<input name="phone" type="tel" autocomplete="tel"></label>
+    <label class="field">Logo (optional)<input name="logo" type="file" accept=".png,.jpg,.jpeg,.svg,.pdf,image/png,image/jpeg,image/svg+xml,application/pdf" style="padding:10px"></label>
+  </div>
+  <label class="field">Notes<textarea name="notes" rows="3" placeholder="{{ notes_ph }}"></textarea></label>
+  <span style="font-size:13px">Logo: PNG, JPG, SVG or PDF, up to 4 MB.</span>
+  <input type="hidden" name="source_page" value="/">
+  <input type="hidden" name="product" value="">
+  <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+  <p class="field" role="alert" data-form-error style="margin:0"></p>
+  <button type="submit" class="btn btn-primary" style="margin-top:6px">{{ submit }}</button>
+</form>
+{% endmacro %}
+
+{% macro sample_success(closable=False) %}
+<div data-success-view hidden>
+  <h2 style="font-size:34px;margin:8px 0 12px" tabindex="-1">It's on the tray.</h2>
+  <p style="margin:0 0 20px">We'll be in touch within {{ ph('response_time', 'RESPONSE TIME') }}.</p>
+  {% if closable %}<button type="button" class="btn btn-outline" data-close>Back to the batch</button>{% endif %}
+</div>
+{% endmacro %}
+
+{% macro contacts() %}
+<address>
+  <span>Wholesale: call Smash, <a href="tel:+15615327120">561-532-7120</a></span>
+  <span>Say hello: <a href="mailto:hello@juplifestudio.com">hello@juplifestudio.com</a></span>
+  <span>Email Dee: <a href="mailto:dee@juplifestudio.com">dee@juplifestudio.com</a></span>
+  <span>Text us: <a href="sms:+15615818015">561-581-8015</a></span>
+  <span>X: <a href="https://x.com/juplifestudio" rel="noopener">@juplifestudio</a></span>
+  <span>TikTok Shop: {% if have_ph('tiktok_shop_url') %}<a href="{{ site.placeholders.tiktok_shop_url }}" rel="noopener">JUP LIFE on TikTok Shop</a>{% else %}<span class="ph">[[TIKTOK_SHOP_URL]]</span>{% endif %}</span>
+</address>
+{% endmacro %}

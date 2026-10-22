@@ -1,0 +1,6 @@
+# Copy to .dev.vars for local `wrangler pages dev`. Never commit .dev.vars.
+STRIPE_SECRET_KEY=sk_test_xxx
+STRIPE_WEBHOOK_SECRET=whsec_xxx
+STRIPE_PRICE_SIX_SET_CASE=price_xxx
+STRIPE_PRICE_READERS=price_xxx
+RESEND_API_KEY=

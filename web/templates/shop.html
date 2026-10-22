@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% from "partials/_macros.html" import card, cta_strip %}
+{% block title %}Shop the Batch | Washable TPU Coasters | JUP LIFE{% endblock %}
+{% block description %}The current tray plus the always-on favorites: washable TPU coasters, the 6-Coaster Set + Case, The Readers and more, 3D-printed in Jupiter, FL.{% endblock %}
+{% block head %}
+{% for p in products if p.price %}
+<script type="application/ld+json">
+{{ product_ld(p) }}
+</script>
+{% endfor %}
+{% endblock %}
+{% block content %}
+<div class="wrap page-head">
+  <p class="eyebrow">{{ batch.tray }} + always on</p>
+  <h1>The Batch.</h1>
+  <p class="lede">The current tray, plus the always-on favorites.</p>
+  <p class="banner" role="status" data-checkout-banner="success" hidden>It's on the tray. Your order is in.</p>
+  <p class="banner" role="status" data-checkout-banner="cancel" hidden>No worries, your bag is saved.</p>
+</div>
+
+<section class="wrap section stack" style="gap:32px;padding-top:32px" aria-labelledby="tray-h">
+  <h2 id="tray-h" class="sr-only">The current tray and always-on favorites</h2>
+  <figure style="margin:0">
+    {{ pic("img/flavor-board-" ~ season ~ ".webp", batch.tray ~ " flavor board on a wood tray", sizes="(min-width: 1200px) 1104px, calc(100vw - 32px)", lazy=False, style="width:100%;height:auto;border-radius:14px") }}
+    <figcaption style="margin-top:8px;font-size:13px;font-weight:600">{{ batch.tray }} flavor board · Studio rendering</figcaption>
+  </figure>
+  <div class="tray-grid">
+    {% for p in products if p.shop %}{{ card(p, shop=True) }}
+    {% endfor %}
+    {{ cta_strip() }}
+  </div>
+</section>
+{% endblock %}

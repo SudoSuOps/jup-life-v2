@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% from "partials/_macros.html" import price_board, sample_form, sample_success, contacts %}
+{% block title %}Custom Logo Coasters for Restaurants | Palm Beach County{% endblock %}
+{% block description %}Washable, dishwasher-safe TPU 95A coasters with your logo, made in Jupiter, FL. Price by the batch from 100 coasters. Samples are on the house.{% endblock %}
+{% block ogtitle %}Your logo, fresh baked. Custom coasters for restaurants and bars{% endblock %}
+{% block content %}
+<div class="wrap">
+  <section class="hero" aria-labelledby="ws-h" style="padding-bottom:clamp(32px,5vw,64px)">
+    <div class="hero-copy">
+      <p class="eyebrow">Wholesale &amp; samples</p>
+      <h1 id="ws-h">Your logo,<br>fresh baked.</h1>
+      <p class="lede">Washable, dishwasher-safe TPU 95A coasters with your logo, made in Jupiter, FL.</p>
+      <div class="btn-row"><button type="button" class="btn btn-primary" data-open-sample>Get a free Half Dozen</button></div>
+    </div>
+    <div class="hero-photo" style="flex:1 1 380px;min-width:0">
+      {{ pic("img/restaurant-drink.webp", "A lemon spritz on a sage coaster beside a cinnamon coaster, on a beachside table at golden hour", sizes="(min-width: 900px) 520px, calc(100vw - 32px)", lazy=False) }}
+      <span class="render-cap">Studio rendering</span>
+    </div>
+  </section>
+</div>
+
+<div class="wrap"><hr class="band"></div>
+
+<section class="wrap section split reveal" aria-labelledby="price-h">
+  <div class="stack" style="gap:16px">
+    <p class="eyebrow">Price by the batch</p>
+    <h2>Simple pricing.</h2>
+    <p style="margin:0;font-size:18px;max-width:28em">Custom-logo coasters start at 100. The more you bake, the less each one costs.</p>
+    <p style="margin:0">Logo setup, shipping and lead time: {{ ph('logo_terms', 'CONFIRM') }}.</p>
+  </div>
+  {{ price_board() }}
+</section>
+
+<div class="wrap"><hr class="band"></div>
+
+<section class="wrap section stack reveal" style="gap:32px" aria-labelledby="how-h">
+  <h2 id="how-h">How it works.</h2>
+  <ol class="steps">
+    <li><strong>Request a Half Dozen</strong><span>Tell us who you are. Samples are on the house.</span></li>
+    <li><strong>Try it on your bar</strong><span>Six coasters in a little kraft box, ready for your tables.</span></li>
+    <li><strong>Send your logo</strong><span>PNG, JPG, SVG or PDF. We take it from there.</span></li>
+    <li><strong>We bake your batch</strong><span>Bulk ships in closed kraft boxes.</span></li>
+  </ol>
+  <figure style="margin:0;position:relative;max-width:760px">
+    {{ pic("img/bulk-boxes.webp", "Closed kraft boxes of coasters ready to ship", sizes="(min-width: 800px) 760px, calc(100vw - 32px)", style="width:100%;height:auto;border-radius:14px") }}
+    <figcaption class="render-cap">Studio rendering</figcaption>
+  </figure>
+</section>
+
+<section class="wrap reveal" style="padding-bottom:clamp(48px,6vw,88px)" aria-labelledby="req-h">
+  <div class="panel" id="request" data-sample>
+    <div data-form-view>
+      <p class="eyebrow">Samples are on the house</p>
+      <h2 id="req-h" style="font-size:34px;margin:4px 0 20px">Get a free Half Dozen</h2>
+      {{ sample_form(type='Half Dozen sample', submit='Send my Half Dozen') }}
+    </div>
+    {{ sample_success() }}
+  </div>
+</section>
+
+<div class="wrap"><hr class="band"></div>
+
+<section class="wrap section reveal" aria-labelledby="custom-h">
+  <div class="panel" data-sample>
+    <div data-form-view>
+      <p class="eyebrow">Custom orders</p>
+      <h2 id="custom-h" style="font-size:34px;margin:4px 0 8px">Something else in mind?</h2>
+      <p style="margin:0 0 20px">Team colors, event gifts, monograms. Tell us the recipe.</p>
+      {{ sample_form(type='Custom', submit='Tell us the recipe', notes_ph='Colors, quantity, the occasion, your logo or monogram') }}
+    </div>
+    {{ sample_success() }}
+  </div>
+</section>
+
+<section class="wrap" style="padding-bottom:clamp(56px,7vw,104px)" aria-labelledby="contact-h">
+  <div class="contact-strip">
+    <div class="stack" style="gap:8px">
+      <p class="eyebrow">Talk to a human</p>
+      <h2 id="contact-h" style="font-size:34px">Call Smash.</h2>
+    </div>
+    {{ contacts() }}
+  </div>
+</section>
+{% endblock %}

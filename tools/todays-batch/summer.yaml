@@ -1,0 +1,17 @@
+season: The Summer Tray
+harvest: Jun 2027
+date:                          # optional, e.g. 2027-06-05
+batch_no: ""
+chefs_special: "Sunflower Pop, limited batch"
+flavors:
+  - {name: Blueberry,  color: "#3F5BB8", note: sun ripened}
+  - {name: Peach,      color: "#FFB07C", note: orchard fresh}
+  - {name: Key Lime,   color: "#A8D94A", note: zesty pick}
+  - {name: Watermelon, color: "#F2546B", note: juicy slice}
+  - {name: Coconut,    color: "#F4EFE3", note: island cream}
+  - {name: Sea Salt,   color: "#7FD1C2", note: always in season}
+tiers:
+  - {qty: 100,  price: 2.00}
+  - {qty: 500,  price: 1.60}
+  - {qty: 1000, price: 1.20}
+samples_free: true

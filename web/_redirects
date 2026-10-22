@@ -1,0 +1,10 @@
+/restaurants /wholesale 301
+/restaurants/* /wholesale 301
+/collection /shop 301
+/collection/* /shop 301
+/collections /shop 301
+/collections/* /shop 301
+/weddings /shop 301
+/weddings/* /shop 301
+/coming-soon /shop 301
+/coming-soon/* /shop 301
