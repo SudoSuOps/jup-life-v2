@@ -1,11 +1,11 @@
 {
-  "_note": "Display data for cards. Prices here are DISPLAY ONLY. Checkout charges come from Stripe Price IDs mapped server-side in api/app/catalog.py. Never invent prices: null = 'Ask about this batch'.",
+  "_note": "Display data for cards. Prices here are DISPLAY ONLY. Checkout charges come from Stripe Price IDs mapped server-side in functions/_lib.js. Never invent prices: null = 'Ask about this batch'.",
   "products": [
     {
       "sku": "fall-pop-coasters",
       "name": "Fall Tray Pop Coasters",
       "line": "Pop coasters in this season's tray flavors.",
-      "price": null,
+      "price": 29,
       "material": "TPU 95A · washable · dishwasher safe",
       "swatches": "batch",
       "img": "img/pop-coasters-pumpkin.webp",
@@ -93,7 +93,7 @@
       "sku": "gigi",
       "name": "The Gigi",
       "line": "A flexible band with our JI monogram pressed in. Wear one or stack a few.",
-      "price": null,
+      "price": 9,
       "material": null,
       "img": "img/gigi-teal.webp",
       "gallery": [
@@ -114,7 +114,7 @@
       "sku": "tide-soap-dish",
       "name": "Tide Soap Dish",
       "line": "Draining wave ridges, swappable inserts.",
-      "price": null,
+      "price": 14,
       "material": null,
       "img": "img/tide-soap-dish.webp",
       "gallery": [
@@ -135,7 +135,7 @@
       "sku": "tide-dispenser",
       "name": "Tide Hand Soap Dispenser",
       "line": "TPU housing, PETG refill bottle, square-wave base.",
-      "price": null,
+      "price": 21,
       "material": "TPU housing · PETG bottle: wash by hand",
       "img": "img/tide-dispenser.webp",
       "gallery": [
@@ -156,7 +156,7 @@
       "sku": "readers",
       "name": "The Readers",
       "line": "Thumb page holder plus stand.",
-      "price": 19,
+      "price": null,
       "material": null,
       "img": null,
       "photo_placeholder": "[[PHOTO: The Readers]]",
