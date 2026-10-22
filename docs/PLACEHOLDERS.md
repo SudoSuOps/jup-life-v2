@@ -4,7 +4,6 @@ Each shows on the page as visible terracotta `[[...]]` text (`.ph` class). `grep
 
 | Placeholder | Where | Needed from owner |
 |---|---|---|
-| `[[TIKTOK_SHOP_URL]]` | 6-Coaster Set card, footer | TikTok Shop listing URL |
 | `[[CONFIRM: hand-checked]]` | Quality by design, beat 5 | Confirm the claim wording |
 | `[[CONFIRM: top-rack / temperature guidance]]` | FAQ | Dishwasher guidance for TPU |
 | `[[CONFIRM: retail dispatch and wholesale lead times]]` | FAQ, Wholesale | Lead times |

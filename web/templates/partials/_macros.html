@@ -34,10 +34,6 @@
       <button type="button" class="btn btn-outline btn-sm" data-open-sample data-type="Product question" data-product="{{ p.name }}">Ask about this batch</button>
       {% endif %}
     </div>
-    {% if p.tiktok %}
-    {% if have_ph('tiktok_shop_url') %}<a href="{{ site.placeholders.tiktok_shop_url }}" rel="noopener" style="font-size:14px;font-weight:600">Also on TikTok Shop ↗</a>
-    {% else %}<span style="font-size:14px;font-weight:600">Also on TikTok Shop ↗ <span class="ph">[[TIKTOK_SHOP_URL]]</span></span>{% endif %}
-    {% endif %}
   </div>
 </article>
 {% endmacro %}
@@ -139,7 +135,6 @@
   <span>Email Dee: <a href="mailto:dee@juplifestudio.com">dee@juplifestudio.com</a></span>
   <span>Text us: <a href="sms:+15615818015">561-581-8015</a></span>
   <span>X: <a href="https://x.com/juplifestudio" rel="noopener">@juplifestudio</a></span>
-  <span>TikTok Shop: {% if have_ph('tiktok_shop_url') %}<a href="{{ site.placeholders.tiktok_shop_url }}" rel="noopener">JUP LIFE on TikTok Shop</a>{% else %}<span class="ph">[[TIKTOK_SHOP_URL]]</span>{% endif %}</span>
 </address>
 {% endmacro %}
 
