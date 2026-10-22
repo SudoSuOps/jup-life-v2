@@ -89,6 +89,17 @@
       "alt": "Six yellow flower coasters stacked in a white printed case"
     },
     {
+      "sku": "half-dozen",
+      "name": "The Half Dozen",
+      "line": "An assorted box of six coasters in a windowed kraft box with a sage band, the Mrs. Smash tag and a Today's Batch card. Free U.S. shipping.",
+      "price": 39,
+      "material": "TPU 95A · washable · dishwasher safe",
+      "img": "img/halfdozen-box.webp",
+      "home": false,
+      "shop": true,
+      "alt": "The Half Dozen: a windowed kraft box of assorted coasters wrapped in a sage TPU band with the Mrs. Smash tag"
+    },
+    {
       "sku": "gigi",
       "name": "The Gigi",
       "line": "A flexible band with our JI monogram pressed in. Wear one or stack a few.",
