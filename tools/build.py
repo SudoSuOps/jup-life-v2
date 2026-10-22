@@ -302,6 +302,7 @@ def main() -> int:
         + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod><priority>{pr}</priority></url>\n" for u, pr in urls) + "</urlset>\n")
     (DIST / "robots.txt").write_text(robots_txt(site["site_url"], indexable))
     (DIST / "llms.txt").write_text(llms_txt(site, products, batch))
+    shutil.copytree(WEB / "root", DIST, dirs_exist_ok=True)  # favicon, touch icons, manifest
     shutil.copy(WEB / "_headers", DIST / "_headers")
     shutil.copy(WEB / "_redirects", DIST / "_redirects")
     (DIST / "_routes.json").write_text(json.dumps({"version": 1, "include": ["/api/*"], "exclude": []}))
