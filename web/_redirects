@@ -8,3 +8,7 @@
 /weddings/* /shop 301
 /coming-soon /shop 301
 /coming-soon/* /shop 301
+/success /shop 301
+/success/* /shop 301
+/ecosystem /  301
+/ecosystem/* / 301
