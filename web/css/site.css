@@ -257,3 +257,5 @@ dialog::backdrop { background: rgba(43,43,43,.55); }
 .drops-form input[type=email] { flex: 1 1 220px; font: 400 16px var(--font-sans); color: var(--cocoa); background: #fff; border: 1.5px solid var(--kraft); border-radius: 10px; padding: 12px 14px; min-height: 48px; }
 .drops-msg { flex-basis: 100%; margin: 0; min-height: 1.4em; font-weight: 600; color: var(--cream); }
 .drops-msg.bad { color: #FFB4A8; }
+
+.field[hidden], [data-mode][hidden] { display: none; }

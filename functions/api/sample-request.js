@@ -2,7 +2,7 @@
 import { allow, clientIp, fail, json, notify } from '../_lib.js';
 
 const MAX_LOGO = 4 * 1024 * 1024;
-const TYPES = new Set(['Half Dozen sample', 'Product question', 'Custom']);
+const TYPES = new Set(['Sample', 'Half Dozen sample', 'Product question', 'Custom']);
 const LOGO = {
   png: { mime: ['image/png'], magic: [0x89, 0x50, 0x4e, 0x47] },
   jpg: { mime: ['image/jpeg'], magic: [0xff, 0xd8] },
@@ -38,7 +38,10 @@ export async function onRequestPost({ request, env }) {
   rec.request_type = TYPES.has(fd.get('request_type')) ? fd.get('request_type') : 'Half Dozen sample';
   const seg = fd.get('segment');
   if (SEGMENTS.has(seg)) rec.segment = seg;
-  if (!rec.name || !rec.business || !(rec.city || rec.address) || !EMAIL.test(rec.email)) return fail(422, 'Please fill in the required fields.');
+  // A retail sample is one coaster to a street address; everything else is a business request.
+  const retail = rec.request_type === 'Sample';
+  const missing = retail ? !rec.address : !rec.business || !(rec.city || rec.address);
+  if (!rec.name || missing || !EMAIL.test(rec.email)) return fail(422, 'Please fill in the required fields.');
 
   let attachments;
   const logo = fd.get('logo');
@@ -55,7 +58,7 @@ export async function onRequestPost({ request, env }) {
 
   const id = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14) + '-' + crypto.randomUUID().slice(0, 6);
   const sent = await notify(env, {
-    subject: `[${rec.request_type}${rec.segment ? ' · ' + rec.segment : ''}] ${rec.business} · ${rec.city || rec.address}`,
+    subject: `[${rec.request_type}${rec.segment ? ' · ' + rec.segment : ''}] ${rec.business || rec.name} · ${rec.city || rec.address}`,
     text: [`id: ${id}`, ...Object.entries(rec).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`), attachments ? 'logo: attached' : ''].filter(Boolean).join('\n'),
     replyTo: rec.email,
     attachments,

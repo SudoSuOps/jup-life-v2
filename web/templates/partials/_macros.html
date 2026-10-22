@@ -103,7 +103,8 @@
   {% if select %}
   <label class="field">Request type
     <select name="request_type">
-      <option>Half Dozen sample</option>
+      <option value="Sample">Free sample (1 coaster)</option>
+      <option value="Half Dozen sample">Half Dozen for your business (wholesale)</option>
       <option>Product question</option>
       <option value="Custom">Custom order</option>
     </select>
@@ -124,19 +125,20 @@
     </label>
     {% endif %}
     <label class="field">Name*<input name="name" required autocomplete="name"></label>
-    <label class="field">Business*<input name="business" required autocomplete="organization"></label>
-    <label class="field">City*<input name="city" required autocomplete="address-level2"></label>
+    <label class="field" data-mode="biz">Business*<input name="business" required autocomplete="organization"></label>
+    <label class="field" data-mode="biz">City*<input name="city" required autocomplete="address-level2"></label>
+    <label class="field" data-mode="sample" hidden>Shipping address*<input name="address" required autocomplete="street-address" placeholder="Street, city, state, ZIP" disabled></label>
     <label class="field">Email*<input name="email" type="email" required autocomplete="email"></label>
     <label class="field">Phone<input name="phone" type="tel" autocomplete="tel"></label>
-    <label class="field">Logo (optional)<input name="logo" type="file" accept=".png,.jpg,.jpeg,.svg,.pdf,image/png,image/jpeg,image/svg+xml,application/pdf" style="padding:10px"></label>
+    <label class="field" data-mode="biz">Logo (optional)<input name="logo" type="file" accept=".png,.jpg,.jpeg,.svg,.pdf,image/png,image/jpeg,image/svg+xml,application/pdf" style="padding:10px"></label>
   </div>
   <label class="field">Notes<textarea name="notes" rows="3" placeholder="{{ notes_ph }}"></textarea></label>
-  <span style="font-size:13px">Logo: PNG, JPG, SVG or PDF, up to 4 MB.</span>
+  <span style="font-size:13px" data-mode="biz">Logo: PNG, JPG, SVG or PDF, up to 4 MB.</span>
   <input type="hidden" name="source_page" value="/">
   <input type="hidden" name="product" value="">
   <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
   <p class="field" role="alert" data-form-error style="margin:0"></p>
-  <button type="submit" class="btn btn-primary" style="margin-top:6px">{{ submit }}</button>
+  <button type="submit" class="btn btn-primary" style="margin-top:6px" data-submit>{{ submit }}</button>
 </form>
 {% endmacro %}
 

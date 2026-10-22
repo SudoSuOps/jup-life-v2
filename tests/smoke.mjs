@@ -37,9 +37,19 @@ for (const path of ['/', '/shop', '/wholesale']) {
 
 // "Ask about this batch" preselects Product question + product
 await page.goto(BASE + '/shop', { waitUntil: 'networkidle0' });
-await page.click('[data-type="Product question"][data-product="The Gigi"]');
+await page.click('[data-type="Product question"][data-product="Stack Bands"]');
 assert.equal(await page.$eval('#sample-dlg [name=request_type]', (e) => e.value), 'Product question');
-assert.equal(await page.$eval('#sample-dlg [name=product]', (e) => e.value), 'The Gigi');
+assert.equal(await page.$eval('#sample-dlg [name=product]', (e) => e.value), 'Stack Bands');
+// retail sample = one coaster + shipping address; wholesale keeps business/city/logo
+await page.keyboard.press('Escape');
+await page.click('.site-header [data-open-sample]');
+assert.equal(await page.$eval('#sample-dlg [name=request_type]', (e) => e.value), 'Sample');
+assert.match(await page.$eval('#sample-dlg [data-dlg-title]', (e) => e.textContent), /free sample/i);
+assert.equal(await page.$eval('#sample-dlg [name=address]', (e) => !e.disabled && e.offsetParent !== null), true);
+assert.equal(await page.$eval('#sample-dlg [name=business]', (e) => e.disabled && e.offsetParent === null), true);
+ok('retail sample modal shows address, hides business');
+await page.keyboard.press('Escape');
+await page.click('[data-type="Product question"][data-product="Stack Bands"]');
 // required validation
 await page.click('#sample-dlg [type=submit]');
 assert.match(await page.$eval('#sample-dlg [data-form-error]', (e) => e.textContent), /required/i);
@@ -73,7 +83,7 @@ ok('wholesale form: required check fires, segment preset');
 await page.goto(BASE + '/', { waitUntil: 'networkidle0' });
 const vis = await page.$$eval('[data-open-sample]', (bs) => bs.some((b) => { const r = b.getBoundingClientRect(); return r.top >= 0 && r.bottom <= innerHeight && r.width > 0; }));
 assert.equal(vis, true);
-ok('"Get a free Half Dozen" above the fold at 375x667');
+ok('"Get a free sample" above the fold at 375x667');
 
 assert.deepEqual(errors.filter((e) => !/api\/|Failed to load resource/.test(e)), []);
 ok('no script errors');

@@ -132,3 +132,9 @@ test('order email: lists items, ship-to name, total and a dashboard link', () =>
   for (const bit of ['1 x The Gigi', 'Gift Person', '1 Main St', 'Jupiter, FL 33469', '+15615550000', 'dashboard.stripe.com/payments/pi_9']) assert.ok(text.includes(bit), bit);
   assert.ok(orderEmail(s, []).text.includes('line items unavailable'));
 });
+
+test('sample: retail Sample needs an address (no business), business types still need business + city', async () => {
+  assert.equal((await sample({ request: form({ request_type: 'Sample', business: '', city: '', address: '1 Main St, Jupiter, FL 33469' }), env: {} })).status, 200);
+  assert.equal((await sample({ request: form({ request_type: 'Sample', business: '', city: '', address: '' }), env: {} })).status, 422);
+  assert.equal((await sample({ request: form({ request_type: 'Half Dozen sample', business: '', city: 'Jupiter' }), env: {} })).status, 422);
+});

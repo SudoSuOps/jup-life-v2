@@ -70,10 +70,30 @@
     if (!dlg) return;
     wireClose(dlg);
     const form = $('[data-sample-form]', dlg);
+    const COPY = {
+      'Sample': ['sample', 'One coaster, on the house', 'Get a free sample', 'Send my sample'],
+      'Half Dozen sample': ['biz', 'Samples are on the house', 'Get a free Half Dozen', 'Send my Half Dozen'],
+      'Product question': ['biz', 'Ask us anything', 'Ask about this batch', 'Send my question'],
+      Custom: ['biz', 'Baked to order', 'Custom order', 'Send my request'],
+    };
+    // Retail samples are one coaster shipped to an address; business requests keep business/city/logo.
+    const applyType = () => {
+      const [mode, eyebrow, title, submit] = COPY[form.request_type.value] || COPY['Half Dozen sample'];
+      $$('[data-mode]', form).forEach((el) => {
+        const on = el.dataset.mode === mode;
+        el.hidden = !on;
+        $$('input', el).forEach((i) => { i.disabled = !on; });
+      });
+      $('[data-dlg-eyebrow]', dlg).textContent = eyebrow;
+      $('[data-dlg-title]', dlg).textContent = title;
+      $('[data-submit]', form).textContent = submit;
+    };
+    form.request_type.addEventListener('change', applyType);
     $$('[data-open-sample]').forEach((btn) => btn.addEventListener('click', () => {
       $('[data-form-view]', dlg).hidden = false; $('[data-success-view]', dlg).hidden = true;
       $('[data-form-error]', dlg).textContent = '';
       form.request_type.value = btn.dataset.type || 'Half Dozen sample';
+      applyType();
       form.product.value = btn.dataset.product || '';
       if (form.segment && btn.dataset.segment) form.segment.value = btn.dataset.segment;
       if (btn.dataset.product && !form.notes.value) form.notes.value = `About: ${btn.dataset.product}`;
