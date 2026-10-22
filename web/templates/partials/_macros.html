@@ -49,6 +49,26 @@
 </div>
 {% endmacro %}
 
+{% macro drops_band() %}
+<section class="drops" aria-labelledby="drops-h">
+  <div class="wrap drops-in">
+    <div class="drops-copy">
+      <p class="eyebrow" style="color:var(--cream-muted)">JUP LIFE Drops</p>
+      <h2 id="drops-h">First dibs on the next batch.</h2>
+      <p>New trays, seasonal flavors and small-batch specials, straight from the oven. A note when something's fresh. No spam, unsubscribe anytime.</p>
+    </div>
+    <form class="drops-form" data-drops-form action="/api/drops" method="post" novalidate>
+      <label class="sr" for="drops-email">Email address</label>
+      <input id="drops-email" type="email" name="email" placeholder="you@email.com" autocomplete="email" required>
+      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
+      <input type="hidden" name="source_page" value="">
+      <button type="submit" class="btn btn-primary">Save me a spot</button>
+      <p class="drops-msg" data-drops-msg role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+{% endmacro %}
+
 {% macro batch_board() %}
 {# Pre-rendered; js/main.js re-renders the same markup from #batch-data #}
 <section class="board" id="todays-batch" aria-labelledby="batch-h" data-batch-board>

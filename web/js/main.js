@@ -192,5 +192,26 @@
     els.forEach((e) => io.observe(e));
   }
 
-  renderBatch(); initSample(); initBag(); initReveal();
+  /* ---------- Drops signup ---------- */
+  function initDrops() {
+    $$('[data-drops-form]').forEach((form) => {
+      const msg = $('[data-drops-msg]', form);
+      form.source_page.value = location.pathname;
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        msg.className = 'drops-msg'; msg.textContent = '';
+        if (!form.checkValidity()) { msg.classList.add('bad'); msg.textContent = 'Please enter a valid email address.'; form.email.focus(); return; }
+        const btn = $('[type=submit]', form); btn.disabled = true;
+        try {
+          const res = await fetch(`${API}/drops`, { method: 'POST', body: new FormData(form) });
+          if (!res.ok) throw new Error((await res.json().catch(() => ({}))).detail || 'Something went wrong. Try again.');
+          form.reset(); form.source_page.value = location.pathname;
+          msg.textContent = "You're on the list. We'll send word when the next tray comes out.";
+        } catch (ex) { msg.classList.add('bad'); msg.textContent = ex.message; }
+        finally { btn.disabled = false; }
+      });
+    });
+  }
+
+  renderBatch(); initSample(); initBag(); initDrops(); initReveal();
 })();

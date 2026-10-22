@@ -167,6 +167,70 @@ def build_assets() -> tuple[str, str]:
     return f"/css/{cname}", f"/js/{jname}"
 
 
+# ------------------------------------------------------------------ seo / geo
+def _ld(obj: dict) -> str:
+    return '<script type="application/ld+json">\n' + json.dumps(obj, indent=2, ensure_ascii=False).replace("</", "<\\/") + "\n</script>\n"
+
+
+def add_ld(page_html: str, path: str, base: str, crumbs: dict) -> str:
+    """Inject WebSite, BreadcrumbList and FAQPage JSON-LD. FAQ is read from the page's own <details>,
+    skipping any answer that still holds a [[placeholder]], so the schema always matches visible copy."""
+    blocks = []
+    if path == "/":
+        blocks.append(_ld({"@context": "https://schema.org", "@type": "WebSite", "name": "JUP LIFE by Mrs. Smash", "url": f"{base}/"}))
+    if path in crumbs:
+        blocks.append(_ld({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{base}/"},
+            {"@type": "ListItem", "position": 2, "name": crumbs[path], "item": f"{base}{path}"}]}))
+    qa = []
+    for q, a in re.findall(r"<details><summary>(.*?)</summary><p>(.*?)</p></details>", page_html, re.S):
+        if "[[" in a or "[[" in q:
+            continue
+        txt = lambda x: html.unescape(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", x))).strip()
+        qa.append({"@type": "Question", "name": txt(q), "acceptedAnswer": {"@type": "Answer", "text": txt(a)}})
+    if qa:
+        blocks.append(_ld({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": qa}))
+    return page_html.replace("</head>", "".join(blocks) + "</head>", 1) if blocks else page_html
+
+
+AI_BOTS = ("GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-SearchBot", "Claude-User", "PerplexityBot",
+           "Perplexity-User", "Google-Extended", "Applebot-Extended", "CCBot")
+
+
+def robots_txt(base: str, indexable: bool) -> str:
+    if not indexable:
+        return "User-agent: *\nDisallow: /\n"
+    bots = "".join(f"User-agent: {b}\nAllow: /\nDisallow: /api/\n\n" for b in AI_BOTS)
+    return f"User-agent: *\nAllow: /\nDisallow: /api/\n\n{bots}Sitemap: {base}/sitemap.xml\n"
+
+
+def llms_txt(site: dict, products: list, batch: dict) -> str:
+    base = site["site_url"]
+    lines = [
+        "# JUP LIFE by Mrs. Smash", "",
+        "> JUP LIFE is a small 3D-printing studio in Jupiter, Florida that bakes washable TPU coasters and coastal home pieces "
+        "in small seasonal batches, sold retail online and wholesale with custom logos to restaurants, bars, boutique hotels, "
+        "rentals and event hosts in Palm Beach County and beyond.", "",
+        "## Key facts",
+        "- Location: Jupiter, FL (serves Jupiter, Tequesta, Palm Beach Gardens, Juno Beach and Palm Beach County; ships within the US)",
+        "- Material: flexible TPU 95A, washable; TPU pieces are dishwasher safe",
+        "- Wholesale: custom logo coasters from 100 pieces; free Half Dozen sample on request; a mockup is sent before printing",
+        f"- Current tray: {batch.get('tray', '')}",
+        "- Contact: hello@juplifestudio.com, call 561-532-7120, text 561-581-8015", "",
+        "## Pages",
+        f"- [Home]({base}/): who we are, the current tray, quality, FAQ",
+        f"- [Shop]({base}/shop): retail products with prices and checkout",
+        f"- [Wholesale & Samples]({base}/wholesale): custom logo coasters for restaurants, bars, hotels, rentals and events, price tiers, free sample",
+        f"- [Shipping & Returns]({base}/shipping-returns)",
+        f"- [Privacy]({base}/privacy)", "", "## Products"]
+    for p in products:
+        if p.get("shop"):
+            price = f"${p['price']}" if p.get("price") else "ask about this batch"
+            lines.append(f"- {p['name']} ({price}): {p['line']}")
+    lines += ["", "## Wholesale price tiers (per coaster)"] + [f"- {t['qty']}: {t['price']}" for t in site.get("tiers", [])]
+    return "\n".join(lines) + "\n"
+
+
 # ------------------------------------------------------------------ render
 def main() -> int:
     if DIST.exists():
@@ -196,12 +260,15 @@ def main() -> int:
         return Markup(html.escape(val)) if val else Markup(f'<span class="ph">[[{html.escape(label)}]]</span>')
 
     def product_ld(p: dict) -> Markup:
-        ld = {"@context": "https://schema.org", "@type": "Product", "name": p["name"], "description": p["line"],
-              "brand": {"@type": "Brand", "name": "JUP LIFE"},
+        ld = {"@context": "https://schema.org", "@type": "Product", "name": p["name"], "description": p["line"], "sku": p["sku"],
+              "brand": {"@type": "Brand", "name": "JUP LIFE"}, "category": "Home & Garden",
+              "manufacturer": {"@type": "Organization", "name": "JUP LIFE by Mrs. Smash"},
               "offers": {"@type": "Offer", "price": f"{p['price']:.2f}", "priceCurrency": "USD",
-                         "availability": "https://schema.org/InStock", "url": f"{site['site_url']}/shop"}}
-        if p.get("img"):
-            ld["image"] = f"{site['site_url']}/{p['img']}"
+                         "availability": "https://schema.org/InStock", "itemCondition": "https://schema.org/NewCondition",
+                         "url": f"{site['site_url']}/shop"}}
+        imgs = [p["img"]] + [g["img"] for g in p.get("gallery", [])] if p.get("img") else []
+        if imgs:
+            ld["image"] = [f"{site['site_url']}/{i}" for i in imgs]
         return Markup(json.dumps(ld, indent=2).replace("</", "<\\/"))
 
     env.globals.update(pic=pic, product_ld=product_ld, by_sku={p['sku']: p for p in products}, flavor_hex=FLAVOR_HEX, indexable=indexable, ph=ph, site=site, batch=batch, batch_date=batch_date_label(batch["date"]),
@@ -217,16 +284,18 @@ def main() -> int:
         "shipping-returns.html": ("shipping_returns.html", {"path": "/shipping-returns", "nav": ""}),
         "404.html": ("not_found.html", {"path": "/404", "nav": ""}),
     }
+    crumbs = {"/shop": "Shop", "/wholesale": "Wholesale & Samples"}
     for out, (tpl, ctx) in pages.items():
-        (DIST / out).write_text(env.get_template(tpl).render(page=ctx))
+        page_html = env.get_template(tpl).render(page=ctx)
+        (DIST / out).write_text(add_ld(page_html, ctx["path"], site["site_url"], crumbs))
 
-    urls = [f"{site['site_url']}{p}" for p in ("/", "/shop", "/wholesale")]
+    today = date.today().isoformat()
+    urls = [(f"{site['site_url']}{p}", pr) for p, pr in (("/", "1.0"), ("/shop", "0.9"), ("/wholesale", "0.9"), ("/shipping-returns", "0.3"), ("/privacy", "0.2"))]
     (DIST / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        + "".join(f"  <url><loc>{u}</loc></url>\n" for u in urls) + "</urlset>\n")
-    (DIST / "robots.txt").write_text(
-        f"User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: {site['site_url']}/sitemap.xml\n" if indexable
-        else "User-agent: *\nDisallow: /\n")
+        + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod><priority>{pr}</priority></url>\n" for u, pr in urls) + "</urlset>\n")
+    (DIST / "robots.txt").write_text(robots_txt(site["site_url"], indexable))
+    (DIST / "llms.txt").write_text(llms_txt(site, products, batch))
     shutil.copy(WEB / "_headers", DIST / "_headers")
     shutil.copy(WEB / "_redirects", DIST / "_redirects")
     (DIST / "_routes.json").write_text(json.dumps({"version": 1, "include": ["/api/*"], "exclude": []}))

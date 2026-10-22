@@ -244,3 +244,16 @@ dialog::backdrop { background: rgba(43,43,43,.55); }
 .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
 .chips li { background: #FFFDF9; border: 1.5px solid var(--kraft); border-radius: var(--radius-pill); padding: 10px 18px; font-weight: 600; }
 .cap-plain { margin-top: 8px; font-size: 13px; font-weight: 600; }
+
+/* Drops signup */
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.drops { background: var(--chalkboard); color: var(--cream); }
+.drops-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px 48px; padding-block: clamp(40px, 5vw, 72px); }
+.drops-copy { flex: 1 1 380px; display: flex; flex-direction: column; gap: 10px; }
+.drops h2 { margin: 0; font: 400 clamp(28px, 4vw, 40px)/1.1 var(--font-serif); }
+.drops-copy p:last-child { margin: 0; color: #F1E7D8; max-width: 34em; }
+.drops-form { flex: 1 1 360px; display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; }
+.drops-form input[type=email] { flex: 1 1 220px; font: 400 16px var(--font-sans); color: var(--cocoa); background: #fff; border: 1.5px solid var(--kraft); border-radius: 10px; padding: 12px 14px; min-height: 48px; }
+.drops-msg { flex-basis: 100%; margin: 0; min-height: 1.4em; font-weight: 600; color: var(--cream); }
+.drops-msg.bad { color: #FFB4A8; }

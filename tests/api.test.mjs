@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { onRequestPost as checkout } from '../functions/api/checkout.js';
 import { onRequestPost as webhook, verifyStripe } from '../functions/api/stripe/webhook.js';
+import { onRequestPost as drops } from '../functions/api/drops.js';
 import { onRequestPost as sample } from '../functions/api/sample-request.js';
 import { resetThrottle } from '../functions/_lib.js';
 
@@ -100,4 +101,19 @@ test('sample: logo type, size, magic bytes, svg scripts', async () => {
   assert.equal((await sample({ request: form({}, f('notpng', 'l.png', 'image/png')), env: {} })).status, 400);
   assert.equal((await sample({ request: form({}, f('<svg><script>1</script></svg>', 'l.svg', 'image/svg+xml')), env: {} })).status, 400);
   assert.equal((await sample({ request: form({}, f(new Uint8Array(4 * 1024 * 1024 + 1), 'l.pdf', 'application/pdf')), env: {} })).status, 413);
+});
+
+test('drops: validates email, honeypot, adds to audience and notifies', async () => {
+  const calls = [];
+  globalThis.fetch = async (url, init) => { calls.push({ url, body: init.body }); return new Response('{}', { status: 200 }); };
+  const form = (o) => { const fd = new FormData(); for (const [k, v] of Object.entries(o)) fd.set(k, v); return post('/api/drops', fd); };
+  const e = { RESEND_API_KEY: 're_x', RESEND_AUDIENCE_ID: 'aud_1' };
+  assert.equal((await drops({ request: form({ email: 'nope' }), env: e })).status, 422);
+  assert.equal((await drops({ request: form({ email: 'a@b.co', website: 'bot' }), env: e })).status, 200);
+  assert.equal(calls.length, 0);
+  const r = await drops({ request: form({ email: 'Dee@Example.com', source_page: '/shop' }), env: e });
+  assert.equal(r.status, 200);
+  assert.ok(calls[0].url.endsWith('/audiences/aud_1/contacts'));
+  assert.equal(JSON.parse(calls[0].body).email, 'dee@example.com');
+  assert.ok(calls.some((c) => c.url.endsWith('/emails')));
 });
