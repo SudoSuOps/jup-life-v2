@@ -117,7 +117,10 @@ test('drops: validates email, honeypot, adds to audience and notifies', async ()
   assert.deepEqual(JSON.parse(calls[0].body).segments, [{ id: 'seg_1' }]);
   assert.equal(JSON.parse(calls[0].body).email, 'dee@example.com');
   const mails = calls.filter((c) => c.url.endsWith('/emails')).map((c) => JSON.parse(c.body));
-  assert.ok(mails.some((m) => m.to.includes('dee@example.com') && /Drops list/.test(m.subject)), 'welcome email to subscriber');
+  const w = mails.find((m) => m.to.includes('dee@example.com') && /Drops list/.test(m.subject));
+  assert.ok(w, 'welcome email to subscriber');
+  assert.match(w.html, /You&#39;re|You're on the list/);
+  assert.ok(w.html.includes('https://x.test/img/logo.png') && w.html.includes('/shop') && w.text.includes('/shop'), 'branded html + text');
   assert.ok(mails.some((m) => /Drops signup/.test(m.subject)), 'studio notification');
 });
 
