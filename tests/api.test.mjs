@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { onRequestPost as checkout } from '../functions/api/checkout.js';
-import { onRequestPost as webhook, verifyStripe } from '../functions/api/stripe/webhook.js';
+import { onRequestPost as webhook, verifyStripe, orderEmail } from '../functions/api/stripe/webhook.js';
 import { onRequestPost as drops } from '../functions/api/drops.js';
 import { onRequestPost as sample } from '../functions/api/sample-request.js';
 import { resetThrottle } from '../functions/_lib.js';
@@ -115,5 +115,16 @@ test('drops: validates email, honeypot, adds to audience and notifies', async ()
   assert.equal(r.status, 200);
   assert.ok(calls[0].url.endsWith('/audiences/aud_1/contacts'));
   assert.equal(JSON.parse(calls[0].body).email, 'dee@example.com');
-  assert.ok(calls.some((c) => c.url.endsWith('/emails')));
+  const mails = calls.filter((c) => c.url.endsWith('/emails')).map((c) => JSON.parse(c.body));
+  assert.ok(mails.some((m) => m.to.includes('dee@example.com') && /Drops list/.test(m.subject)), 'welcome email to subscriber');
+  assert.ok(mails.some((m) => /Drops signup/.test(m.subject)), 'studio notification');
+});
+
+test('order email: lists items, ship-to name, total and a dashboard link', () => {
+  const s = { id: 'cs_1', amount_total: 900, currency: 'usd', livemode: true, payment_intent: 'pi_9', customer_details: { name: 'Buyer', email: 'b@x.co', phone: '+15615550000' },
+    shipping_details: { name: 'Gift Person', address: { line1: '1 Main St', city: 'Jupiter', state: 'FL', postal_code: '33469', country: 'US' } } };
+  const { subject, text } = orderEmail(s, [{ quantity: 1, description: 'The Gigi', amount_total: 900 }]);
+  assert.match(subject, /The Gigi · 9\.00 USD/);
+  for (const bit of ['1 x The Gigi', 'Gift Person', '1 Main St', 'Jupiter, FL 33469', '+15615550000', 'dashboard.stripe.com/payments/pi_9']) assert.ok(text.includes(bit), bit);
+  assert.ok(orderEmail(s, []).text.includes('line items unavailable'));
 });

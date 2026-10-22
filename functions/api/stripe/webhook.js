@@ -25,6 +25,42 @@ export async function verifyStripe(payload, header, secret, now = Date.now() / 1
   return sigs.some((s) => safeEqual(s, expected));
 }
 
+const money = (cents, cur) => `${((cents || 0) / 100).toFixed(2)} ${String(cur || 'usd').toUpperCase()}`;
+
+// Line items are not in the webhook payload; ask Stripe. Returns [] if that fails, so the email still goes out.
+async function lineItems(id, env) {
+  if (!env.STRIPE_SECRET_KEY || !id) return [];
+  try {
+    const r = await fetch(`https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(id)}/line_items?limit=50`, {
+      headers: { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}` },
+    });
+    if (!r.ok) { console.error('line_items failed', r.status); return []; }
+    return (await r.json()).data || [];
+  } catch (e) { console.error('line_items error', String(e)); return []; }
+}
+
+export function orderEmail(s, items = []) {
+  const who = s.customer_details || {};
+  const sd = s.shipping_details || s.collected_information?.shipping_details || {};
+  const a = sd.address || who.address || {};
+  const cityLine = [[a.city, a.state].filter(Boolean).join(', '), a.postal_code].filter(Boolean).join(' ');
+  const shipTo = [sd.name || who.name, a.line1, a.line2, cityLine, a.country].filter(Boolean);
+  const what = items.length
+    ? items.map((i) => `${i.quantity} x ${i.description}  (${money(i.amount_total, s.currency)})`)
+    : ['(line items unavailable, see the Stripe dashboard)'];
+  const short = items.length ? items.map((i) => (i.quantity > 1 ? `${i.quantity}x ` : '') + i.description).join(', ') : 'order';
+  const dash = s.payment_intent ? `https://dashboard.stripe.com/${s.livemode === false ? 'test/' : ''}payments/${s.payment_intent}` : '';
+  const text = [
+    'NEW JUP LIFE ORDER', '',
+    'ITEMS', ...what, '',
+    `TOTAL  ${money(s.amount_total, s.currency)}${s.livemode === false ? '  (TEST MODE)' : ''}`, '',
+    'SHIP TO', ...shipTo, who.phone ? `Phone: ${who.phone}` : '', '',
+    'CUSTOMER', [who.name, who.email].filter(Boolean).join(' · '), '',
+    `Order ${s.id}`, dash,
+  ].filter((l, i, arr) => l !== '' || arr[i - 1] !== '').join('\n').trim();
+  return { subject: `New order: ${short} · ${money(s.amount_total, s.currency)}`, text };
+}
+
 export async function onRequestPost({ request, env }) {
   const payload = await request.text();
   if (!(await verifyStripe(payload, request.headers.get('stripe-signature'), env.STRIPE_WEBHOOK_SECRET))) return fail(400, 'bad signature');
@@ -34,19 +70,10 @@ export async function onRequestPost({ request, env }) {
 
   if (event.type === 'checkout.session.completed') {
     const s = event.data?.object || {};
-    const who = s.customer_details || {};
-    const ship = s.shipping_details?.address || s.customer_details?.address || {};
-    console.log('order paid', s.id, s.amount_total, who.email);
-    await notify(env, {
-      subject: `New order: ${s.id}`,
-      text: [
-        `Paid ${((s.amount_total || 0) / 100).toFixed(2)} ${String(s.currency || '').toUpperCase()}`,
-        `Customer: ${who.name || ''} <${who.email || ''}> ${who.phone || ''}`.trim(),
-        `Ship to: ${[ship.line1, ship.line2, ship.city, ship.state, ship.postal_code, ship.country].filter(Boolean).join(', ')}`,
-        'See the Stripe dashboard for line items.',
-      ].join('\n'),
-      replyTo: who.email || undefined,
-    });
+    console.log('order paid', s.id, s.amount_total, s.customer_details?.email);
+    const items = await lineItems(s.id, env);
+    const { subject, text } = orderEmail(s, items);
+    await notify(env, { subject, text, replyTo: s.customer_details?.email || undefined });
   }
   return json({ received: true });
 }
