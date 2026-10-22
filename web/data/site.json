@@ -21,12 +21,12 @@
   "placeholders": {
     "response_time": "",
     "hand_checked": "",
-    "dishwasher_guidance": "",
-    "lead_times": "",
+    "dishwasher_guidance": "Run them in the dishwasher on a normal cycle. Avoid extended or high-heat modes.",
+    "lead_times": "Shipping is free on all U.S. orders. Orders leave our Jupiter studio within 2–3 business days.",
     "logo_terms": "",
     "readers_photo": "",
     "wholesale_lead_time": "",
-    "top_rack": "",
+    "top_rack": "Run them in the dishwasher on a normal cycle. Avoid extended or high-heat modes.",
     "logo_setup_terms": ""
   }
 }

@@ -213,7 +213,8 @@ def llms_txt(site: dict, products: list, batch: dict) -> str:
         "rentals and event hosts in Palm Beach County and beyond.", "",
         "## Key facts",
         "- Location: Jupiter, FL (serves Jupiter, Tequesta, Palm Beach Gardens, Juno Beach and Palm Beach County; ships within the US)",
-        "- Material: flexible TPU 95A, washable; TPU pieces are dishwasher safe",
+        "- Material: flexible TPU 95A, washable; TPU pieces are dishwasher safe (normal dishwasher cycle, avoid extended or high-heat modes)",
+        "- Shipping: free on all U.S. orders; orders leave the studio within 2-3 business days",
         "- Wholesale: custom logo coasters from 100 pieces; free Half Dozen sample on request; a mockup is sent before printing",
         f"- Current tray: {batch.get('tray', '')}",
         "- Contact: hello@juplifestudio.com, call 561-532-7120, text 561-581-8015", "",
@@ -265,6 +266,11 @@ def main() -> int:
               "manufacturer": {"@type": "Organization", "name": "JUP LIFE by Mrs. Smash"},
               "offers": {"@type": "Offer", "price": f"{p['price']:.2f}", "priceCurrency": "USD",
                          "availability": "https://schema.org/InStock", "itemCondition": "https://schema.org/NewCondition",
+                         "shippingDetails": {"@type": "OfferShippingDetails",
+                                             "shippingRate": {"@type": "MonetaryAmount", "value": "0", "currency": "USD"},
+                                             "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "US"},
+                                             "deliveryTime": {"@type": "ShippingDeliveryTime",
+                                                              "handlingTime": {"@type": "QuantitativeValue", "minValue": 2, "maxValue": 3, "unitCode": "DAY"}}},
                          "url": f"{site['site_url']}/shop"}}
         imgs = [p["img"]] + [g["img"] for g in p.get("gallery", [])] if p.get("img") else []
         if imgs:
