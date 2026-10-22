@@ -74,6 +74,20 @@ test('sample: valid, missing field, honeypot, throttle', async () => {
   assert.equal((await sample({ request: form(), env: env2 })).status, 429);
 });
 
+test('sample: segment kept when valid, dropped when not, goes in the email subject', async () => {
+  const sent = [];
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = async (u, init) => { sent.push(JSON.parse(init.body)); return new Response('{}', { status: 200 }); };
+  const env = { RESEND_API_KEY: 'k' };
+  await sample({ request: form({ segment: 'Hotel or rental', request_type: 'Product question' }), env });
+  await sample({ request: form({ segment: '<b>x</b>' }), env });
+  globalThis.fetch = realFetch;
+  assert.equal(sent[0].subject, '[Product question · Hotel or rental] B · C');
+  assert.match(sent[0].text, /segment: Hotel or rental/);
+  assert.equal(sent[1].subject, '[Half Dozen sample] B · C');
+  assert.doesNotMatch(sent[1].text, /segment/);
+});
+
 test('sample: logo type, size, magic bytes, svg scripts', async () => {
   const f = (bytes, name, type) => new File([bytes], name, { type });
   assert.equal((await sample({ request: form({}, f(new Uint8Array([0x89, 0x50, 0x4e, 0x47, 1]), 'l.png', 'image/png')), env: {} })).status, 200);

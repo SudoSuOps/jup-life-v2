@@ -2,9 +2,18 @@
   "_note": "Open placeholders. Empty string = still open: the page shows a visible [[...]] marker. Fill a value and rebuild; the marker disappears. Launch gate: zero '[[' in dist/.",
   "site_url": "https://juplifestudio.com",
   "tiers": [
-    { "qty": "100 coasters", "price": "$2.00 ea" },
-    { "qty": "500", "price": "$1.60 ea" },
-    { "qty": "1,000", "price": "$1.20 ea" }
+    {
+      "qty": "100 coasters",
+      "price": "$2.00 ea"
+    },
+    {
+      "qty": "500",
+      "price": "$1.60 ea"
+    },
+    {
+      "qty": "1,000",
+      "price": "$1.20 ea"
+    }
   ],
   "placeholders": {
     "tiktok_shop_url": "",
@@ -13,7 +22,6 @@
     "dishwasher_guidance": "",
     "lead_times": "",
     "logo_terms": "",
-    "dee_portrait": "",
     "readers_photo": ""
   }
 }

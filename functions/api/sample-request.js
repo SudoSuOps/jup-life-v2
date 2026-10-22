@@ -10,6 +10,7 @@ const LOGO = {
   pdf: { mime: ['application/pdf'], magic: [0x25, 0x50, 0x44, 0x46] },
   svg: { mime: ['image/svg+xml'], magic: null },
 };
+const SEGMENTS = new Set(['Restaurant or bar', 'Hotel or rental', 'Event or gifting', 'Custom', 'Just me']);
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const clean = (v, n) => (typeof v === 'string' ? v.replace(/[\x00-\x08\x0b\x0c\x0e-\x1f]/g, '').trim().slice(0, n) : '');
@@ -35,6 +36,8 @@ export async function onRequestPost({ request, env }) {
     product: clean(fd.get('product'), 120), source_page: clean(fd.get('source_page'), 200),
   };
   rec.request_type = TYPES.has(fd.get('request_type')) ? fd.get('request_type') : 'Half Dozen sample';
+  const seg = fd.get('segment');
+  if (SEGMENTS.has(seg)) rec.segment = seg;
   if (!rec.name || !rec.business || !rec.city || !EMAIL.test(rec.email)) return fail(422, 'Please fill in the required fields.');
 
   let attachments;
@@ -52,7 +55,7 @@ export async function onRequestPost({ request, env }) {
 
   const id = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14) + '-' + crypto.randomUUID().slice(0, 6);
   const sent = await notify(env, {
-    subject: `[${rec.request_type}] ${rec.business} · ${rec.city}`,
+    subject: `[${rec.request_type}${rec.segment ? ' · ' + rec.segment : ''}] ${rec.business} · ${rec.city}`,
     text: [`id: ${id}`, ...Object.entries(rec).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`), attachments ? 'logo: attached' : ''].filter(Boolean).join('\n'),
     replyTo: rec.email,
     attachments,

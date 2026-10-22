@@ -1,84 +1,141 @@
 {% extends "base.html" %}
-{% from "partials/_macros.html" import price_board, sample_form, sample_success, contacts %}
+{% from "partials/_macros.html" import price_board, sample_form, sample_success %}
 {% block title %}Custom Logo Coasters for Restaurants | Palm Beach County{% endblock %}
 {% block description %}Washable, dishwasher-safe TPU 95A coasters with your logo, made in Jupiter, FL. Price by the batch from 100 coasters. Samples are on the house.{% endblock %}
 {% block ogtitle %}Your logo, fresh baked. Custom coasters for restaurants and bars{% endblock %}
 {% block content %}
-<div class="wrap">
-  <section class="hero" aria-labelledby="ws-h" style="padding-bottom:clamp(32px,5vw,64px)">
-    <div class="hero-copy">
-      <p class="eyebrow">Wholesale &amp; samples</p>
-      <h1 id="ws-h">Your logo,<br>fresh baked.</h1>
-      <p class="lede">Washable, dishwasher-safe TPU 95A coasters with your logo, made in Jupiter, FL.</p>
-      <div class="btn-row"><button type="button" class="btn btn-primary" data-open-sample>Get a free Half Dozen</button></div>
+<section class="wrap page-hero split" aria-labelledby="ws-h">
+  <div class="stack" style="gap:20px">
+    <p class="eyebrow">Wholesale &amp; samples · Palm Beach County</p>
+    <h1 id="ws-h">Your logo, fresh baked.</h1>
+    <p class="lede">Washable, dishwasher-safe TPU 95A coasters with your logo, made in Jupiter, FL.</p>
+    <div class="btn-row">
+      <a href="#request" class="btn btn-primary" data-fill-form="#request" data-type="Half Dozen sample">Get a free Half Dozen</a>
+      <a href="tel:+15615327120" class="btn btn-outline">Call Smash · 561-532-7120</a>
     </div>
-    <div class="hero-photo" style="flex:1 1 380px;min-width:0">
-      {{ pic("img/restaurant-drink.webp", "A lemon spritz on a sage coaster beside a cinnamon coaster, on a beachside table at golden hour", sizes="(min-width: 900px) 520px, calc(100vw - 32px)", lazy=False) }}
-      <span class="render-cap">Studio rendering</span>
+    <p style="margin:0;font-size:15px">From 100 coasters. Samples are on the house.</p>
+  </div>
+  <figure style="margin:0;position:relative">
+    {{ pic("img/restaurant-drink.webp", "A lemon spritz on a sage coaster beside a cinnamon coaster, on a beachside table at golden hour", sizes="(min-width: 900px) 520px, calc(100vw - 32px)", lazy=False, priority=True, style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:24px") }}
+    <figcaption class="render-cap">Studio rendering</figcaption>
+  </figure>
+</section>
+
+<div class="wrap"><hr class="band"></div>
+
+<section class="wrap section stack reveal" style="gap:32px" aria-labelledby="serve-h">
+  <div class="shelf-head">
+    <div>
+      <p class="eyebrow">Who we bake for</p>
+      <h2 id="serve-h" style="margin-top:6px">Baked for your place.</h2>
+      <p>Small batches in your colors, designed in-house and printed on our own fleet in Jupiter.</p>
     </div>
-  </section>
-</div>
+  </div>
+  <div class="serve-grid">
+    <article class="serve">
+      <figure>{{ pic("img/restaurant-drink.webp", "", sizes="(min-width: 1000px) 280px, (min-width: 560px) 45vw, 100vw") }}<figcaption class="render-cap">Studio rendering</figcaption></figure>
+      <div class="body">
+        <h3>Restaurants &amp; bars</h3>
+        <p>Custom-logo coasters that go from the bar to the dishwasher and back.</p>
+        <ul><li>Your logo, from 100 coasters</li><li>House colors or this season's tray</li></ul>
+        <a class="go" href="#request" data-fill-form="#request" data-type="Half Dozen sample" data-segment="Restaurant or bar">Start with a free Half Dozen →</a>
+      </div>
+    </article>
+    <article class="serve">
+      <figure>{{ pic("img/tide-hotel-bath.webp", "", sizes="(min-width: 1000px) 280px, (min-width: 560px) 45vw, 100vw") }}<figcaption class="render-cap">Studio rendering</figcaption></figure>
+      <div class="body">
+        <h3>Hotels &amp; rentals</h3>
+        <p>Coasters, Tide soap dishes and dispensers in your colors, for rooms, lobbies and bars.</p>
+        <ul><li>Logo coasters for rooms and the bar</li><li>Tide Soap Dish + Hand Soap Dispenser sets</li></ul>
+        <a class="go" href="#request" data-fill-form="#request" data-type="Product question" data-segment="Hotel or rental">Ask about a hotel batch →</a>
+      </div>
+    </article>
+    <article class="serve">
+      <figure>{{ pic("img/halfdozen-open.webp", "", sizes="(min-width: 1000px) 280px, (min-width: 560px) 45vw, 100vw") }}<figcaption class="render-cap">Studio rendering</figcaption></figure>
+      <div class="body">
+        <h3>Events &amp; gifting</h3>
+        <p>Team colors, event gifts and party favors, boxed in kraft with the Mrs. Smash tag.</p>
+        <ul><li>Coasters, Stack Bands and the Gigi</li><li>Your names, dates or colors</li></ul>
+        <a class="go" href="#request" data-fill-form="#request" data-type="Custom" data-segment="Event or gifting">Plan an event batch →</a>
+      </div>
+    </article>
+    <article class="serve">
+      <figure>{{ pic("img/studio-vision.webp", "", sizes="(min-width: 1000px) 280px, (min-width: 560px) 45vw, 100vw") }}<figcaption class="render-cap">Studio rendering</figcaption></figure>
+      <div class="body">
+        <h3>Custom by design</h3>
+        <p>Something else in mind? Monograms, shapes, one-off pieces. Tell us the recipe.</p>
+        <ul><li>Designed in-house for TPU</li><li>Tested on our own printers</li></ul>
+        <a class="go" href="#request" data-fill-form="#request" data-type="Custom" data-segment="Custom">Tell us the recipe →</a>
+      </div>
+    </article>
+  </div>
+</section>
 
 <div class="wrap"><hr class="band"></div>
 
 <section class="wrap section split reveal" aria-labelledby="price-h">
   <div class="stack" style="gap:16px">
     <p class="eyebrow">Price by the batch</p>
-    <h2>Simple pricing.</h2>
-    <p style="margin:0;font-size:18px;max-width:28em">Custom-logo coasters start at 100. The more you bake, the less each one costs.</p>
-    <p style="margin:0">Logo setup, shipping and lead time: {{ ph('logo_terms', 'CONFIRM') }}.</p>
+    <h2>Simple pricing, per coaster.</h2>
+    <p style="margin:0;font-size:18px;max-width:28em">Custom-logo coasters for bars and restaurants in Jupiter, Palm Beach County and beyond.</p>
+    <p style="margin:0;font-size:15px">Logo setup, shipping and lead time: {{ ph('logo_terms', 'CONFIRM') }}</p>
+    <figure style="margin:8px 0 0;position:relative">
+      {{ pic("img/halfdozen-box.webp", "The Half Dozen sample box: windowed kraft box, sage TPU band and the Mrs. Smash tag", sizes="(min-width: 900px) 520px, calc(100vw - 32px)", style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px") }}
+      <figcaption class="render-cap">Studio rendering · the Half Dozen</figcaption>
+    </figure>
   </div>
-  {{ price_board() }}
+  {{ price_board('price-h') }}
 </section>
 
-<div class="wrap"><hr class="band"></div>
-
-<section class="wrap section stack reveal" style="gap:32px" aria-labelledby="how-h">
-  <h2 id="how-h">How it works.</h2>
-  <ol class="steps">
-    <li><strong>Request a Half Dozen</strong><span>Tell us who you are. Samples are on the house.</span></li>
-    <li><strong>Try it on your bar</strong><span>Six coasters in a little kraft box, ready for your tables.</span></li>
-    <li><strong>Send your logo</strong><span>PNG, JPG, SVG or PDF. We take it from there.</span></li>
-    <li><strong>We bake your batch</strong><span>Bulk ships in closed kraft boxes.</span></li>
-  </ol>
-  <figure style="margin:0;position:relative;max-width:760px">
-    {{ pic("img/bulk-boxes.webp", "Closed kraft boxes of coasters ready to ship", sizes="(min-width: 800px) 760px, calc(100vw - 32px)", style="width:100%;height:auto;border-radius:14px") }}
-    <figcaption class="render-cap">Studio rendering</figcaption>
-  </figure>
+<section class="oven" aria-labelledby="how-h">
+  <div class="wrap section stack reveal" style="gap:28px">
+    <div>
+      <p class="eyebrow">How it works</p>
+      <h2 id="how-h" style="margin-top:6px">From sample to batch.</h2>
+    </div>
+    <ol class="steps">
+      <li><strong>Request a Half Dozen.</strong><span>Six coasters in a little kraft box, on the house.</span></li>
+      <li><strong>Try it on your bar.</strong><span>Set drinks on them, run them through service, see how they feel.</span></li>
+      <li><strong>Send your logo.</strong><span>PNG, JPG, SVG or PDF. We design it for single-color TPU.</span></li>
+      <li><strong>We bake your batch.</strong><span>Printed in Jupiter. Bulk ships in closed kraft boxes.</span></li>
+    </ol>
+    <figure style="margin:0;position:relative;max-width:560px">
+      {{ pic("img/bulk-boxes.webp", "Bulk coasters stacked in closed kraft boxes, banded in terracotta with a Mrs. Smash tag", sizes="(min-width: 600px) 560px, calc(100vw - 32px)", style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px") }}
+      <figcaption class="render-cap">Studio rendering · bulk ships in closed kraft boxes</figcaption>
+    </figure>
+  </div>
 </section>
 
-<section class="wrap reveal" style="padding-bottom:clamp(48px,6vw,88px)" aria-labelledby="req-h">
-  <div class="panel" id="request" data-sample>
-    <div data-form-view>
+<section id="request" class="wrap section reveal" style="scroll-margin-top:16px" aria-labelledby="req-h">
+  <div class="split" style="align-items:flex-start">
+    <div class="stack" style="gap:16px;flex:1 1 320px">
       <p class="eyebrow">Samples are on the house</p>
-      <h2 id="req-h" style="font-size:34px;margin:4px 0 20px">Get a free Half Dozen</h2>
-      {{ sample_form(type='Half Dozen sample', submit='Send my Half Dozen') }}
+      <h2 id="req-h">Get a free Half Dozen.</h2>
+      <p style="margin:0;font-size:18px">Tell us about your place and we'll bake you a box.</p>
+      <div class="notice" style="margin-top:8px">
+        <p class="serif" style="margin:0 0 6px;font-size:24px;font-weight:400">Something else in mind?</p>
+        <p style="margin:0;font-weight:400">Team colors, event gifts, monograms. Tell us the recipe.</p>
+        <p style="margin:12px 0 0"><a href="#request" data-fill-form="#request" data-type="Custom" data-segment="Custom">Switch to a custom order →</a></p>
+      </div>
     </div>
-    {{ sample_success() }}
+    <div class="form-card" data-form-box style="flex:1 1 520px">
+      <div data-form-view>
+        {{ sample_form(select=True, segment=True, notes_ph='Quantities, colors, dates, the recipe') }}
+      </div>
+      {{ sample_success() }}
+    </div>
   </div>
 </section>
 
-<div class="wrap"><hr class="band"></div>
-
-<section class="wrap section reveal" aria-labelledby="custom-h">
-  <div class="panel" data-sample>
-    <div data-form-view>
-      <p class="eyebrow">Custom orders</p>
-      <h2 id="custom-h" style="font-size:34px;margin:4px 0 8px">Something else in mind?</h2>
-      <p style="margin:0 0 20px">Team colors, event gifts, monograms. Tell us the recipe.</p>
-      {{ sample_form(type='Custom', submit='Tell us the recipe', notes_ph='Colors, quantity, the occasion, your logo or monogram') }}
-    </div>
-    {{ sample_success() }}
-  </div>
-</section>
-
-<section class="wrap" style="padding-bottom:clamp(56px,7vw,104px)" aria-labelledby="contact-h">
+<section class="wrap reveal" style="padding-bottom:clamp(56px,7vw,104px)" aria-label="Wholesale contacts">
   <div class="contact-strip">
-    <div class="stack" style="gap:8px">
-      <p class="eyebrow">Talk to a human</p>
-      <h2 id="contact-h" style="font-size:34px">Call Smash.</h2>
-    </div>
-    {{ contacts() }}
+    <p class="serif" style="margin:0;font-size:28px">Rather talk it through?</p>
+    <ul>
+      <li>Wholesale: call Smash, <a href="tel:+15615327120">561-532-7120</a></li>
+      <li>Text us: <a href="sms:+15615818015">561-581-8015</a></li>
+      <li><a href="mailto:hello@juplifestudio.com">hello@juplifestudio.com</a></li>
+      <li><a href="mailto:dee@juplifestudio.com">dee@juplifestudio.com</a></li>
+    </ul>
   </div>
 </section>
 {% endblock %}

@@ -12,7 +12,7 @@
   {% if p.img %}
   <figure>{{ pic(p.img, p.alt, sizes="(min-width: 640px) 360px, calc(100vw - 64px)") }}<figcaption class="render-cap">Studio rendering</figcaption></figure>
   {% if shop and p.gallery %}
-  <div class="thumbs">{% for g in p.gallery %}{{ pic(g, "", sizes="64px") }}{% endfor %}</div>
+  <div class="thumbs">{% for g in p.gallery %}{{ pic(g.img, g.alt, sizes="64px") }}{% endfor %}</div>
   {% endif %}
   {% elif p.sku == 'readers' and have_ph('readers_photo') %}
   <figure>{{ pic(site.placeholders.readers_photo, "The Readers thumb page holder and stand", sizes="360px") }}</figure>
@@ -24,7 +24,7 @@
     <h3 class="serif">{{ p.name }}</h3>
     <p>{{ p.line }}</p>
     {% if shop and p.combos_now %}
-    <ul class="combos" aria-label="3-pack combos">{% for c in p.combos_now %}<li><b>{{ c.name }}:</b> {{ c.flavors | join(', ') }}</li>{% endfor %}</ul>
+    <ul class="combos" aria-label="{{ season | capitalize }} 3-pack combos">{% for c in p.combos_now %}<li><b>{{ c.name }}</b>{% for f in c.flavors %}<i style="background:{{ flavor_hex[f] }}"></i>{{ f }} {% endfor %}</li>{% endfor %}</ul>
     {% endif %}
     {% if p.material %}<p class="material">{{ p.material }}</p>{% endif %}
     <div class="buy">
@@ -82,7 +82,7 @@
 </section>
 {% endmacro %}
 
-{% macro sample_form(type='Half Dozen sample', select=False, submit='Send my Half Dozen', notes_ph='Product, quantity, colors, anything else') %}
+{% macro sample_form(type='Half Dozen sample', select=False, submit='Send my Half Dozen', notes_ph='Product, quantity, colors, anything else', segment=False) %}
 <form class="form" data-sample-form action="/api/sample-request" method="post" enctype="multipart/form-data" novalidate>
   {% if select %}
   <label class="field">Request type
@@ -96,6 +96,17 @@
   <input type="hidden" name="request_type" value="{{ type }}">
   {% endif %}
   <div class="grid">
+    {% if segment %}
+    <label class="field">Who's it for?
+      <select name="segment">
+        <option>Restaurant or bar</option>
+        <option>Hotel or rental</option>
+        <option>Event or gifting</option>
+        <option>Custom</option>
+        <option>Just me</option>
+      </select>
+    </label>
+    {% endif %}
     <label class="field">Name*<input name="name" required autocomplete="name"></label>
     <label class="field">Business*<input name="business" required autocomplete="organization"></label>
     <label class="field">City*<input name="city" required autocomplete="address-level2"></label>
@@ -114,7 +125,7 @@
 {% endmacro %}
 
 {% macro sample_success(closable=False) %}
-<div data-success-view hidden>
+<div data-success-view hidden tabindex="-1">
   <h2 style="font-size:34px;margin:8px 0 12px" tabindex="-1">It's on the tray.</h2>
   <p style="margin:0 0 20px">We'll be in touch within {{ ph('response_time', 'RESPONSE TIME') }}.</p>
   {% if closable %}<button type="button" class="btn btn-outline" data-close>Back to the batch</button>{% endif %}

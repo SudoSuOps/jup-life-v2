@@ -97,8 +97,14 @@
       "material": null,
       "img": "img/gigi-teal.webp",
       "gallery": [
-        "img/gigi-earthtone-stack.webp",
-        "img/gigi-brunch.webp"
+        {
+          "img": "img/gigi-earthtone-stack.webp",
+          "alt": "Gigi bands in teal, terracotta, sand, cream and sage on a wood tray"
+        },
+        {
+          "img": "img/gigi-brunch.webp",
+          "alt": "A teal Gigi on a wrist at a beachside brunch"
+        }
       ],
       "home": true,
       "shop": true,
@@ -112,8 +118,14 @@
       "material": null,
       "img": "img/tide-soap-dish.webp",
       "gallery": [
-        "img/soapdish-inserts.webp",
-        "img/soapdish-vanity.webp"
+        {
+          "img": "img/soapdish-inserts.webp",
+          "alt": "Swappable Tide soap dish inserts in lime and terracotta beside a sand base"
+        },
+        {
+          "img": "img/soapdish-vanity.webp",
+          "alt": "A Tide soap dish on a stone vanity"
+        }
       ],
       "home": true,
       "shop": true,
@@ -127,8 +139,14 @@
       "material": "TPU housing · PETG bottle: wash by hand",
       "img": "img/tide-dispenser.webp",
       "gallery": [
-        "img/tide-trio.webp",
-        "img/tide-hotel-bath.webp"
+        {
+          "img": "img/tide-trio.webp",
+          "alt": "Three Tide dispensers in sage, terracotta and sand"
+        },
+        {
+          "img": "img/tide-hotel-bath.webp",
+          "alt": "A Tide dispenser and soap dish beside a hotel bathroom sink"
+        }
       ],
       "home": true,
       "shop": true,

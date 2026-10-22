@@ -6,7 +6,7 @@ The brand, copy and layout are **decided**. Build what's specified here; don't r
 Read in this order before writing code:
 1. `docs/BRIEF.md`: the original brief (source of truth for copy, tokens, guardrails, SEO, acceptance)
 2. `docs/AMENDMENTS.md`: decisions made after the brief (these override it)
-3. `web/index.html` + `web/css/*` + `web/js/main.js`: the **approved, working Home page**. Treat it as the reference implementation and component library.
+3. `web/index.html`, `web/shop.html`, `web/wholesale.html` + `web/css/*` + `web/js/main.js`: the **approved, working pages**. Treat them as the reference implementation and component library.
 4. `design/screens/*.png`: approved renders at 1440 and 375 px
 5. `docs/PLACEHOLDERS.md`: open `[[...]]` items. Show them visibly; never invent values.
 
@@ -18,8 +18,8 @@ Read in this order before writing code:
 | Sample-request modal (`<dialog>`) | ✅ Done. Posts to `/api/sample-request`. |
 | Bag + Stripe Checkout (client) | ✅ Done in `main.js` (localStorage bag → `POST /api/checkout` → redirect). |
 | API: checkout, webhook, sample intake | ✅ Done in `api/` (FastAPI, 5 passing tests). |
-| Shop `/shop` | ⬜ **Build** (spec below) |
-| Wholesale & Samples `/wholesale` | ⬜ **Build** (spec below) |
+| Shop `/shop` ("the bakery case") | ✅ Done in `web/shop.html`: Today's tray, Always on the shelf, Baked to order, checkout banners, Product JSON-LD. |
+| Wholesale & Samples `/wholesale` | ✅ Done in `web/wholesale.html`: who we bake for (Restaurants & bars, Hotels & rentals, Events & gifting, Custom by design), price board, how it works, inline form with "Who's it for?", custom orders, contact strip. |
 | Shared header/footer/modal partials + build step | ⬜ **Build** |
 | Self-hosted fonts, OG image, sitemap, robots, redirects | ⬜ **Build** |
 | Stripe live config + webhook endpoint | ⬜ **Configure** (owner supplies keys/price IDs) |
@@ -45,8 +45,8 @@ juplife-site/
 
 ## Build tasks (in order)
 
-1. **Templates + build step.** Create `tools/build.py` (Jinja2) and `web/templates/`. Extract header, footer, both dialogs, the product card, the chalkboard board and the price board from `index.html` into partials. Output `dist/index.html` byte-for-byte equivalent in structure to the current page. Cards render from `products.json` (`home: true` for Home, `shop: true` for Shop).
-2. **Shop `/shop`** (`<title>Shop the Batch | Washable TPU Coasters | JUP LIFE</title>`)
+1. **Templates + build step.** The three pages currently duplicate header, footer and dialogs. Create `tools/build.py` (Jinja2) and `web/templates/`. Extract header, footer, both dialogs, the product card, the chalkboard board and the price board from `index.html` into partials. Output `dist/index.html` byte-for-byte equivalent in structure to the current page. Cards render from `products.json` (`home: true` for Home, `shop: true` for Shop).
+2. **Shop `/shop`**: ✅ built in `web/shop.html`; port into templates. Original spec for reference: (`<title>Shop the Batch | Washable TPU Coasters | JUP LIFE</title>`)
    - H1 "The Batch." Sub: "The current tray, plus the always-on favorites."
    - Current tray: the Fall flavor board image (`img/flavor-board-fall.webp`) + the Fall Tray Pop Coasters card (swatches from batch).
    - Always-on cards from `products.json` where `shop: true`, in file order, then the custom-logo CTA strip (opens the modal).
@@ -56,7 +56,7 @@ juplife-site/
    - `?checkout=success` → show a cream banner "It's on the tray. Your order is in." (bag already clears in JS). `?checkout=cancel` → "No worries, your bag is saved."
    - Product + Offer JSON-LD for the two priced items (6-Coaster Set + Case $29, The Readers $19).
    - Summer assets (`flavor-board-summer.webp`, `trio-peach-sage-cream.webp`) are **for the next tray swap**. Don't show them until batch.json says Summer.
-3. **Wholesale & Samples `/wholesale`** (`<title>Custom Logo Coasters for Restaurants | Palm Beach County</title>`)
+3. **Wholesale & Samples `/wholesale`**: ✅ built in `web/wholesale.html` (plus a "Who we bake for" section the owner asked for); port into templates. Original spec for reference: (`<title>Custom Logo Coasters for Restaurants | Palm Beach County</title>`)
    1. Hero: H1 "Your logo, fresh baked." Sub "Washable, dishwasher-safe TPU 95A coasters with your logo, made in Jupiter, FL." + [Get a free Half Dozen]. Image: `restaurant-drink.webp`.
    2. Price board (reuse partial). Note under it: "Logo setup, shipping and lead time: `[[CONFIRM]]`."
    3. How it works, 4 numbered steps: Request a Half Dozen → Try it on your bar → Send your logo → We bake your batch ("bulk ships in closed kraft boxes", image `bulk-boxes.webp`).

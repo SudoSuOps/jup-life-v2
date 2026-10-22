@@ -17,7 +17,17 @@ These override the brief where they conflict.
   - `built-different.mp4` is the owner's 30 s "Built different" cut **with the "Meet The Gigi." segment (≈17.7–23.9 s) removed** because it shows a gold metal-chain bracelet (brief bans metal-chain imagery). Do not restore the original.
 - **Quality by design**: flex close-up render beside the heading; the studio-vision render (`studio-vision.webp`, the brief's optional `bakery_studio_vision.jpg`) full width under the five beats.
 - **For restaurants**: beach-table drink render under the copy.
-- **Meet Mrs. Smash**: the Mrs. Smash TPU tag render stands in until `[[DEE PORTRAIT]]` arrives.
+- **Meet Mrs. Smash**: real portrait of Dee (`img/dee-portrait.webp`) with the Mrs. Smash tag as a small sticker. The source photo was **retouched**: the sunglasses' lens wordmark was removed, the temple stripe recolored to plain navy, and the crop sits above her name badge (which carried another business's logo). This keeps the brief's "no other brands' marks" rule. Don't swap in the unretouched original.
+
+## Shop = "the bakery case"
+- Eyebrow "The bakery case · Jupiter, FL", H1 "The Batch." + Today's Batch board in the hero.
+- Sections: **Today's tray** (Fall flavor board, Pop Coasters, Stack Bands with combo swatches) → **Always on the shelf** ("The everyday bakes": 6-Coaster Set $29, The Readers $19, The Gigi, Tide Soap Dish, Tide Dispenser; extra shots as small thumbnails, no carousel) → **Baked to order** CTA strip.
+- `?checkout=success|cancel` banners.
+
+## Wholesale = "who we bake for"
+- New section **"Baked for your place."** with 4 audience tiles: Restaurants & bars, Hotels & rentals (coasters + Tide dish/dispenser sets), Events & gifting (team colors, gifts, favors), Custom by design (monograms, shapes, one-offs). Each tile's link prefills the inline form's order type + "Who's it for?".
+- Inline form gained **"Who's it for?"** (`segment`: Restaurant or bar / Hotel or rental / Event or gifting / Custom / Just me). API stores it and puts it in the notification subject.
+- Hero adds a "Call Smash · 561-532-7120" button.
 
 ## Products added
 - **Stack Bands**: 3-packs by the batch. Fall: Harvest (Pumpkin/Cinnamon/Maple), Berry Pie (Cranberry/Rhubarb/Maple), Coastal Batch (Sea Salt/Pumpkin/Rhubarb). Summer: Sunset (Peach/Watermelon/Key Lime), Berry Coast (Blueberry/Coconut/Sea Salt), Coastal Batch (Sea Salt/Peach/Coconut). Price: Ask about this batch. Material: unconfirmed, so no material line and no dishwasher claim.

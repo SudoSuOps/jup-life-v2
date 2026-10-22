@@ -62,6 +62,15 @@ assert.equal(await page.$eval('[data-checkout-banner="success"]', (e) => !e.hidd
 assert.equal(await page.$eval('[data-bag-count]', (e) => e.textContent), '0');
 ok('bag add/qty/checkout POST (only sku+qty), success banner, bag cleared');
 
+// wholesale audience tiles prefill the inline form
+await page.goto(BASE + '/wholesale', { waitUntil: 'networkidle0' });
+await page.click('[data-segment="Event or gifting"]');
+assert.equal(await page.$eval('#request [name=segment]', (e) => e.value), 'Event or gifting');
+assert.equal(await page.$eval('#request [name=request_type]', (e) => e.value), 'Custom');
+await page.click('#request [type=submit]');
+assert.match(await page.$eval('#request [data-form-error]', (e) => e.textContent), /required/i);
+ok('wholesale tiles prefill order type + who\'s it for; required check fires');
+
 // above the fold at 375x667
 await page.goto(BASE + '/', { waitUntil: 'networkidle0' });
 const vis = await page.$$eval('[data-open-sample]', (bs) => bs.some((b) => { const r = b.getBoundingClientRect(); return r.top >= 0 && r.bottom <= innerHeight && r.width > 0; }));

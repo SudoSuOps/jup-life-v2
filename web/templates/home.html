@@ -165,12 +165,8 @@
 
 <section class="wrap section reveal" style="display:flex;flex-wrap:wrap;align-items:center;gap:32px 64px" aria-labelledby="dee-h">
   <figure style="flex:0 1 380px;margin:0;position:relative">
-    {% if have_ph('dee_portrait') %}
-    {{ pic(site.placeholders.dee_portrait, "Dee, Mrs. Smash, at the studio", sizes="380px", style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:14px") }}
-    {% else %}
-    {{ pic("img/mrs-smash-tag.webp", "The Mrs. Smash tag: sage TPU with two beach chairs and a wave", sizes="380px", style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:14px") }}
-    <figcaption class="render-cap">Studio rendering · <span class="ph">[[DEE PORTRAIT]]</span> to swap in</figcaption>
-    {% endif %}
+    {{ pic("img/dee-portrait.webp", "Dee, Mrs. Smash, smiling in sunglasses on a sunny Jupiter morning", sizes="380px", style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:14px") }}
+    {{ pic("img/mrs-smash-tag.webp", "", sizes="120px", style="position:absolute;right:10px;bottom:-16px;width:30%;aspect-ratio:1/1;object-fit:cover;border-radius:12px;border:4px solid var(--cream);box-shadow:0 10px 24px rgba(43,43,43,.25);transform:rotate(6deg)") }}
   </figure>
   <div class="stack" style="flex:1 1 380px;min-width:0;gap:16px">
     <p class="eyebrow">Meet Mrs. Smash</p>

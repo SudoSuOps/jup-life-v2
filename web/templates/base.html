@@ -39,7 +39,8 @@
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
         <span class="bag-count" data-bag-count>0</span>
       </button>
-      <button type="button" class="btn btn-primary btn-sm" data-open-sample>Get a free Half Dozen</button>
+      {% if page.nav == 'wholesale' %}<a href="#request" class="btn btn-primary btn-sm" data-fill-form="#request" data-type="Half Dozen sample">Get a free Half Dozen</a>
+      {% else %}<button type="button" class="btn btn-primary btn-sm" data-open-sample>Get a free Half Dozen</button>{% endif %}
     </nav>
   </div>
 </header>

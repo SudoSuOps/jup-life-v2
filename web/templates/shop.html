@@ -1,7 +1,9 @@
 {% extends "base.html" %}
-{% from "partials/_macros.html" import card, cta_strip %}
+{% from "partials/_macros.html" import card, batch_board %}
 {% block title %}Shop the Batch | Washable TPU Coasters | JUP LIFE{% endblock %}
-{% block description %}The current tray plus the always-on favorites: washable TPU coasters, the 6-Coaster Set + Case, The Readers and more, 3D-printed in Jupiter, FL.{% endblock %}
+{% block description %}The bakery case: this season's tray of washable TPU coasters, Stack Bands, the 6-Coaster Set + Case, Tide soap dishes and more. 3D-printed in small batches in Jupiter, FL.{% endblock %}
+{% block ogtitle %}Shop the Batch · JUP LIFE{% endblock %}
+{% block ogdesc %}Fresh from the bakery case in Jupiter, FL.{% endblock %}
 {% block head %}
 {% for p in products if p.price %}
 <script type="application/ld+json">
@@ -10,24 +12,76 @@
 {% endfor %}
 {% endblock %}
 {% block content %}
-<div class="wrap page-head">
-  <p class="eyebrow">{{ batch.tray }} + always on</p>
-  <h1>The Batch.</h1>
-  <p class="lede">The current tray, plus the always-on favorites.</p>
-  <p class="banner" role="status" data-checkout-banner="success" hidden>It's on the tray. Your order is in.</p>
-  <p class="banner" role="status" data-checkout-banner="cancel" hidden>No worries, your bag is saved.</p>
-</div>
+{% set tray_skus = ['fall-pop-coasters', 'stack-bands-fall'] %}
+{% set shelf_skus = ['six-set-case', 'readers', 'gigi', 'tide-soap-dish', 'tide-dispenser'] %}
+<section class="wrap page-hero" aria-labelledby="shop-h">
+  <div class="notice" data-checkout-banner="success" hidden role="status" style="margin:0 0 24px">It's on the tray. Your order is in. A receipt is on its way to your inbox.</div>
+  <div class="notice" data-checkout-banner="cancel" hidden role="status" style="margin:0 0 24px">No worries, your bag is saved.</div>
+  <div class="split">
+    <div class="stack" style="gap:18px">
+      <p class="eyebrow">The bakery case · Jupiter, FL</p>
+      <h1 id="shop-h">The Batch.</h1>
+      <p class="lede">The current tray, plus the always-on favorites.</p>
+      <div class="btn-row">
+        <a href="#tray" class="btn btn-primary">See today's tray</a>
+        <a href="#shelf" class="btn btn-outline">Always on the shelf</a>
+      </div>
+    </div>
+    {{ batch_board() }}
+  </div>
+</section>
 
-<section class="wrap section stack" style="gap:32px;padding-top:32px" aria-labelledby="tray-h">
-  <h2 id="tray-h" class="sr-only">The current tray and always-on favorites</h2>
+<script type="application/json" id="batch-data">
+{{ batch_json }}
+</script>
+
+<div class="wrap"><hr class="band"></div>
+
+<section id="tray" class="wrap section stack reveal" style="gap:32px" aria-labelledby="tray-h">
+  <div class="shelf-head">
+    <div>
+      <p class="eyebrow">Today's tray</p>
+      <h2 id="tray-h" style="margin-top:6px">{{ batch.tray }}.</h2>
+      <p>Seasonal colorways, baked in small batches. When the tray's gone, it's gone.</p>
+    </div>
+  </div>
   <figure style="margin:0">
     {{ pic("img/flavor-board-" ~ season ~ ".webp", batch.tray ~ " flavor board on a wood tray", sizes="(min-width: 1200px) 1104px, calc(100vw - 32px)", lazy=False, style="width:100%;height:auto;border-radius:14px") }}
     <figcaption style="margin-top:8px;font-size:13px;font-weight:600">{{ batch.tray }} flavor board · Studio rendering</figcaption>
   </figure>
   <div class="tray-grid">
-    {% for p in products if p.shop %}{{ card(p, shop=True) }}
+    {% for sku in tray_skus %}{{ card(by_sku[sku], shop=True) }}
     {% endfor %}
-    {{ cta_strip() }}
+  </div>
+</section>
+
+<div class="wrap"><hr class="band"></div>
+
+<section id="shelf" class="wrap section stack reveal" style="gap:32px" aria-labelledby="shelf-h">
+  <div class="shelf-head">
+    <div>
+      <p class="eyebrow">Always on the shelf</p>
+      <h2 id="shelf-h" style="margin-top:6px">The everyday bakes.</h2>
+      <p>Favorites we keep in the case all year.</p>
+    </div>
+  </div>
+  <div class="tray-grid">
+    {% for sku in shelf_skus %}{{ card(by_sku[sku], shop=True) }}
+    {% endfor %}
+  </div>
+</section>
+
+<section class="wrap reveal" style="padding-bottom:clamp(56px,7vw,104px)" aria-labelledby="order-h">
+  <div class="cta-strip">
+    <div>
+      <p class="eyebrow" style="color:var(--cream-muted)">Baked to order</p>
+      <h3 id="order-h">Your logo, fresh baked.</h3>
+      <p>Custom-logo coasters from 100. Hotels, events and custom pieces too. Start with a free Half Dozen.</p>
+    </div>
+    <div class="btn-row">
+      <button type="button" class="btn btn-primary" data-open-sample>Get a free Half Dozen</button>
+      <a href="/wholesale" class="btn btn-outline" style="color:var(--cream);border-color:var(--cream)">Wholesale &amp; samples</a>
+    </div>
   </div>
 </section>
 {% endblock %}

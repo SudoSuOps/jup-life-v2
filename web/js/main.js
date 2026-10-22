@@ -53,19 +53,48 @@
     dlg.addEventListener('close', () => lastFocus?.focus?.());
   }
 
-  /* ---------- Sample request (modal + inline forms share this) ---------- */
-  function wireForm(wrap) {
-    const form = $('[data-sample-form]', wrap);
-    const err = $('[data-form-error]', wrap);
-    const formView = $('[data-form-view]', wrap);
-    const okView = $('[data-success-view]', wrap);
+  /* ---------- Sample request (modal + any inline [data-sample-form]) ---------- */
+  function initSample() {
+    // every form with [data-sample-form] lives inside a container holding [data-form-view] + [data-success-view]
+    $$('[data-sample-form]').forEach(wireForm);
+
+    // inline-form shortcuts: <a data-fill-form="#request" data-type="Custom" data-segment="Event">
+    $$('[data-fill-form]').forEach((a) => a.addEventListener('click', () => {
+      const form = $(`${a.dataset.fillForm} [data-sample-form]`) || $(a.dataset.fillForm);
+      if (!form) return;
+      if (a.dataset.type) form.request_type.value = a.dataset.type;
+      if (a.dataset.segment && form.segment) form.segment.value = a.dataset.segment;
+    }));
+
+    const dlg = $('#sample-dlg');
+    if (!dlg) return;
+    wireClose(dlg);
+    const form = $('[data-sample-form]', dlg);
+    $$('[data-open-sample]').forEach((btn) => btn.addEventListener('click', () => {
+      $('[data-form-view]', dlg).hidden = false; $('[data-success-view]', dlg).hidden = true;
+      $('[data-form-error]', dlg).textContent = '';
+      form.request_type.value = btn.dataset.type || 'Half Dozen sample';
+      form.product.value = btn.dataset.product || '';
+      if (form.segment && btn.dataset.segment) form.segment.value = btn.dataset.segment;
+      if (btn.dataset.product && !form.notes.value) form.notes.value = `About: ${btn.dataset.product}`;
+      openDlg(dlg);
+    }));
+  }
+
+  function wireForm(form) {
+    const box = form.closest('[data-form-box]') || form.closest('dialog') || form.parentElement.parentElement;
+    const err = $('[data-form-error]', box);
+    const formView = $('[data-form-view]', box);
+    const okView = $('[data-success-view]', box);
     form.source_page.value = location.pathname;
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       err.textContent = '';
       if (!form.checkValidity()) {
+        const bad = $$(':invalid', form)[0];
         err.textContent = 'Please fill in the required fields.';
-        $$(':invalid', form)[0]?.focus();
+        bad?.focus();
         return;
       }
       const file = form.logo.files[0];
@@ -78,33 +107,11 @@
         form.reset();
         form.source_page.value = location.pathname;
         formView.hidden = true; okView.hidden = false;
-        ($('[data-close]', okView) || $('h2', okView))?.focus();
+        ($('[data-close]', okView) || okView).focus?.();
       } catch (ex) {
         err.textContent = typeof ex.message === 'string' ? ex.message : 'Something went wrong. Try again or email hello@juplifestudio.com.';
       } finally { btn.disabled = false; }
     });
-    return { form, err, formView, okView };
-  }
-
-  function initSample() {
-    const dlg = $('#sample-dlg');
-    $$('[data-sample]').forEach((wrap) => { if (!dlg || !dlg.contains(wrap)) wireForm(wrap); });
-    if (!dlg) return;
-    wireClose(dlg);
-    const { form, err, formView, okView } = wireForm($('[data-sample]', dlg));
-    $$('[data-open-sample]').forEach((btn) => btn.addEventListener('click', () => {
-      formView.hidden = false; okView.hidden = true; err.textContent = '';
-      form.request_type.value = btn.dataset.type || 'Half Dozen sample';
-      form.product.value = btn.dataset.product || '';
-      if (btn.dataset.product && !form.notes.value) form.notes.value = `About: ${btn.dataset.product}`;
-      openDlg(dlg);
-    }));
-  }
-
-  /* ---------- Checkout return banner (/shop?checkout=success|cancel) ---------- */
-  function initBanner() {
-    const state = new URLSearchParams(location.search).get('checkout');
-    $$('[data-checkout-banner]').forEach((el) => { el.hidden = el.dataset.checkoutBanner !== state; });
   }
 
   /* ---------- Bag + Stripe Checkout ---------- */
@@ -168,8 +175,10 @@
         btn.disabled = false; btn.textContent = 'Checkout';
       }
     });
-    // Returning from Stripe success page clears the bag
-    if (new URLSearchParams(location.search).get('checkout') === 'success') { bag = []; saveBag(bag); }
+    // Returning from Stripe: success clears the bag; show the matching banner if the page has one
+    const status = new URLSearchParams(location.search).get('checkout');
+    if (status === 'success') { bag = []; saveBag(bag); }
+    if (status) { const b = $(`[data-checkout-banner="${status}"]`); if (b) b.hidden = false; }
     renderBag();
   }
 
@@ -183,5 +192,5 @@
     els.forEach((e) => io.observe(e));
   }
 
-  renderBatch(); initSample(); initBag(); initBanner(); initReveal();
+  renderBatch(); initSample(); initBag(); initReveal();
 })();

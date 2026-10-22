@@ -29,6 +29,9 @@ WEB = ROOT / "web"
 DIST = ROOT / "dist"
 WIDTHS = (400, 800, 1200, 1600)
 HAS_AVIF = features.check("avif")
+FLAVOR_HEX = {"Pumpkin": "#E8731E", "Cinnamon": "#A0522D", "Cranberry": "#9B1B30", "Maple": "#C8862A", "Rhubarb": "#C93A5B",
+              "Blueberry": "#3F5BB8", "Peach": "#FFB07C", "Key Lime": "#A8D94A", "Watermelon": "#F2546B", "Coconut": "#F4EFE3",
+              "Sea Salt": "#7FD1C2", "Sunflower": "#F6C21C"}
 PIXEL = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
 
 
@@ -201,7 +204,7 @@ def main() -> int:
             ld["image"] = f"{site['site_url']}/{p['img']}"
         return Markup(json.dumps(ld, indent=2).replace("</", "<\\/"))
 
-    env.globals.update(pic=pic, product_ld=product_ld, indexable=indexable, ph=ph, site=site, batch=batch, batch_date=batch_date_label(batch["date"]),
+    env.globals.update(pic=pic, product_ld=product_ld, by_sku={p['sku']: p for p in products}, flavor_hex=FLAVOR_HEX, indexable=indexable, ph=ph, site=site, batch=batch, batch_date=batch_date_label(batch["date"]),
                        season=season, products=products, css_href=css_href, js_src=js_src,
                        site_url=site["site_url"], have_ph=lambda k: bool(site["placeholders"].get(k)),
                        batch_json=Markup(json.dumps(batch, indent=2, ensure_ascii=False).replace("</", "<\\/")))
