@@ -54,7 +54,7 @@
   </div>
   <figure style="margin:0">
     {{ pic("img/flavor-board-" ~ season ~ ".webp", batch.tray ~ " flavor board on a wood tray", sizes="(min-width: 1200px) 1104px, calc(100vw - 32px)", lazy=False, style="width:100%;height:auto;border-radius:14px") }}
-    <figcaption style="margin-top:8px;font-size:13px;font-weight:600">{{ batch.tray }} flavor board · Studio rendering</figcaption>
+    <figcaption style="margin-top:8px;font-size:13px;font-weight:600">{{ batch.tray }} flavor board</figcaption>
   </figure>
   <div class="tray-grid">
     {% for sku in tray_skus %}{{ card(by_sku[sku], shop=True) }}
