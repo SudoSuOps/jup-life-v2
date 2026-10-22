@@ -19,3 +19,7 @@ Each shows on the page as visible terracotta `[[...]]` text (`.ph` class). `grep
 | `og-hero.jpg` | `<meta property="og:image">` | `banner_Website_hero_1920x800.png` or approve a cut from the hero render |
 | Stripe | `api/.env` | Live secret key, webhook secret, Price IDs for 6-Coaster Set ($29) and The Readers ($19) |
 | Email provider | `api/.env` | Resend API key + verified juplifestudio.com sender (or swap `notify()` for their provider) |
+| `[[CONFIRM claim]]` "Doesn't chip" | Wholesale, Built for service | Approve or cut (outside the brief's allowed claims) |
+| `[[PLACEHOLDER: wholesale lead time]]` | Wholesale FAQ | Lead time |
+| `[[CONFIRM logo setup terms]]` | Wholesale FAQ | Setup fee / terms |
+| Full-res originals (wholesale) | `ws-step-*`, `ws-bulk-boxes-studio` | Cut from the contact sheet at 380 px |

@@ -19,7 +19,7 @@ Read in this order before writing code:
 | Bag + Stripe Checkout (client) | ✅ Done in `main.js` (localStorage bag → `POST /api/checkout` → redirect). |
 | API: checkout, webhook, sample intake | ✅ Done in `api/` (FastAPI, 5 passing tests). |
 | Shop `/shop` ("the bakery case") | ✅ Done in `web/shop.html`: Today's tray, Always on the shelf, Baked to order, checkout banners, Product JSON-LD. |
-| Wholesale & Samples `/wholesale` | ✅ Done in `web/wholesale.html`: who we bake for (Restaurants & bars, Hotels & rentals, Events & gifting, Custom by design), price board, how it works, inline form with "Who's it for?", custom orders, contact strip. |
+| Wholesale & Samples `/wholesale` ("The Bakery Counter, for restaurants") | ✅ Done in `web/wholesale.html` per `docs/WHOLESALE_SPEC.md`: hero, Taste/Order/Delivered strip, price board with batch totals, Built for service, Your logo our oven, Who it's for, FAQ (+FAQPage JSON-LD), sample form with Address, sample modal. |
 | Shared header/footer/modal partials + build step | ⬜ **Build** |
 | Self-hosted fonts, OG image, sitemap, robots, redirects | ⬜ **Build** |
 | Stripe live config + webhook endpoint | ⬜ **Configure** (owner supplies keys/price IDs) |

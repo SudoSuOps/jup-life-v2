@@ -88,6 +88,11 @@ test('sample: segment kept when valid, dropped when not, goes in the email subje
   assert.doesNotMatch(sent[1].text, /segment/);
 });
 
+test('sample: address works in place of city, one of the two is required', async () => {
+  assert.equal((await sample({ request: form({ city: '', address: '1 Main St, Jupiter FL' }), env: {} })).status, 200);
+  assert.equal((await sample({ request: form({ city: '', address: '' }), env: {} })).status, 422);
+});
+
 test('sample: logo type, size, magic bytes, svg scripts', async () => {
   const f = (bytes, name, type) => new File([bytes], name, { type });
   assert.equal((await sample({ request: form({}, f(new Uint8Array([0x89, 0x50, 0x4e, 0x47, 1]), 'l.png', 'image/png')), env: {} })).status, 200);

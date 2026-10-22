@@ -31,14 +31,14 @@ export async function onRequestPost({ request, env }) {
   }
 
   const rec = {
-    name: clean(fd.get('name'), 120), business: clean(fd.get('business'), 160), city: clean(fd.get('city'), 120),
+    name: clean(fd.get('name'), 120), business: clean(fd.get('business'), 160), city: clean(fd.get('city'), 120), address: clean(fd.get('address'), 300),
     email: clean(fd.get('email'), 200), phone: clean(fd.get('phone'), 40), notes: clean(fd.get('notes'), 2000),
     product: clean(fd.get('product'), 120), source_page: clean(fd.get('source_page'), 200),
   };
   rec.request_type = TYPES.has(fd.get('request_type')) ? fd.get('request_type') : 'Half Dozen sample';
   const seg = fd.get('segment');
   if (SEGMENTS.has(seg)) rec.segment = seg;
-  if (!rec.name || !rec.business || !rec.city || !EMAIL.test(rec.email)) return fail(422, 'Please fill in the required fields.');
+  if (!rec.name || !rec.business || !(rec.city || rec.address) || !EMAIL.test(rec.email)) return fail(422, 'Please fill in the required fields.');
 
   let attachments;
   const logo = fd.get('logo');
@@ -55,7 +55,7 @@ export async function onRequestPost({ request, env }) {
 
   const id = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14) + '-' + crypto.randomUUID().slice(0, 6);
   const sent = await notify(env, {
-    subject: `[${rec.request_type}${rec.segment ? ' · ' + rec.segment : ''}] ${rec.business} · ${rec.city}`,
+    subject: `[${rec.request_type}${rec.segment ? ' · ' + rec.segment : ''}] ${rec.business} · ${rec.city || rec.address}`,
     text: [`id: ${id}`, ...Object.entries(rec).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`), attachments ? 'logo: attached' : ''].filter(Boolean).join('\n'),
     replyTo: rec.email,
     attachments,

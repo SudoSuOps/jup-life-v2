@@ -4,15 +4,18 @@
   "tiers": [
     {
       "qty": "100 coasters",
-      "price": "$2.00 ea"
+      "price": "$2.00 ea",
+      "total": "$200"
     },
     {
       "qty": "500",
-      "price": "$1.60 ea"
+      "price": "$1.60 ea",
+      "total": "$800"
     },
     {
       "qty": "1,000",
-      "price": "$1.20 ea"
+      "price": "$1.20 ea",
+      "total": "$1,200"
     }
   ],
   "placeholders": {
@@ -22,6 +25,10 @@
     "dishwasher_guidance": "",
     "lead_times": "",
     "logo_terms": "",
-    "readers_photo": ""
+    "readers_photo": "",
+    "wholesale_lead_time": "",
+    "top_rack": "",
+    "logo_setup_terms": "",
+    "claim_chip": ""
   }
 }
