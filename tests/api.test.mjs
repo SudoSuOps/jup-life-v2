@@ -107,13 +107,14 @@ test('drops: validates email, honeypot, adds to audience and notifies', async ()
   const calls = [];
   globalThis.fetch = async (url, init) => { calls.push({ url, body: init.body }); return new Response('{}', { status: 200 }); };
   const form = (o) => { const fd = new FormData(); for (const [k, v] of Object.entries(o)) fd.set(k, v); return post('/api/drops', fd); };
-  const e = { RESEND_API_KEY: 're_x', RESEND_AUDIENCE_ID: 'aud_1' };
+  const e = { RESEND_API_KEY: 're_x', RESEND_SEGMENT_ID: 'seg_1' };
   assert.equal((await drops({ request: form({ email: 'nope' }), env: e })).status, 422);
   assert.equal((await drops({ request: form({ email: 'a@b.co', website: 'bot' }), env: e })).status, 200);
   assert.equal(calls.length, 0);
   const r = await drops({ request: form({ email: 'Dee@Example.com', source_page: '/shop' }), env: e });
   assert.equal(r.status, 200);
-  assert.ok(calls[0].url.endsWith('/audiences/aud_1/contacts'));
+  assert.ok(calls[0].url.endsWith('/v1/contacts') || calls[0].url.endsWith('api.resend.com/contacts'));
+  assert.deepEqual(JSON.parse(calls[0].body).segments, [{ id: 'seg_1' }]);
   assert.equal(JSON.parse(calls[0].body).email, 'dee@example.com');
   const mails = calls.filter((c) => c.url.endsWith('/emails')).map((c) => JSON.parse(c.body));
   assert.ok(mails.some((m) => m.to.includes('dee@example.com') && /Drops list/.test(m.subject)), 'welcome email to subscriber');

@@ -1,5 +1,5 @@
-// POST /api/drops (form or JSON): JUP LIFE Drops email list. Adds the address to a Resend audience
-// when RESEND_AUDIENCE_ID is set, and always tells the studio so no signup is lost.
+// POST /api/drops (form or JSON): JUP LIFE Drops email list. Adds the address to Resend contacts
+// when RESEND_API_KEY is set, and always tells the studio so no signup is lost.
 import { allow, clientIp, fail, json, notify, siteUrl } from '../_lib.js';
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -45,22 +45,25 @@ export async function onRequestPost({ request, env }) {
   source = typeof source === 'string' ? source.slice(0, 200) : '';
 
   let listed = false;
-  if (env.RESEND_API_KEY && env.RESEND_AUDIENCE_ID) {
+  if (env.RESEND_API_KEY) {
+    // Resend contacts are global now; RESEND_SEGMENT_ID (optional) also files the contact in a segment.
+    const body = { email, unsubscribed: false };
+    if (env.RESEND_SEGMENT_ID) body.segments = [{ id: env.RESEND_SEGMENT_ID }];
     try {
-      const r = await fetch(`https://api.resend.com/audiences/${encodeURIComponent(env.RESEND_AUDIENCE_ID)}/contacts`, {
+      const r = await fetch('https://api.resend.com/contacts', {
         method: 'POST',
         headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, unsubscribed: false }),
+        body: JSON.stringify(body),
       });
       listed = r.ok;
-      if (!r.ok) console.error('drops audience failed', r.status, (await r.text()).slice(0, 300));
-    } catch (e) { console.error('drops audience error', String(e)); }
+      if (!r.ok) console.error('drops contact failed', r.status, (await r.text()).slice(0, 300));
+    } catch (e) { console.error('drops contact error', String(e)); }
   }
 
   await welcome(env, email, siteUrl(env, request));
   await notify(env, {
     subject: `[Drops signup] ${email}`,
-    text: `New JUP LIFE Drops signup\n\nEmail: ${email}\nPage: ${source || 'unknown'}\nAdded to Resend audience: ${listed ? 'yes' : 'no (email this to the list by hand)'}`,
+    text: `New JUP LIFE Drops signup\n\nEmail: ${email}\nPage: ${source || 'unknown'}\nAdded to Resend contacts: ${listed ? 'yes' : 'no (add this address by hand)'}`,
     replyTo: email,
   });
   return json({ ok: true });

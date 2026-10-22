@@ -28,7 +28,8 @@ CHROME=/path/to/chrome npm run smoke     # browser smoke test against the runnin
 | `STRIPE_PRICE_TIDE_SOAP_DISH` | `price_...` for Tide Soap Dish ($14) |
 | `STRIPE_PRICE_TIDE_DISPENSER` | `price_...` for Tide Hand Soap Dispenser ($21) |
 | `STRIPE_PRICE_READERS` | `price_...` for The Readers ($19) |
-| `RESEND_API_KEY` | secret. Empty = requests/orders are only logged |
+| `RESEND_API_KEY` | secret. Empty = requests/orders are only logged. Needs Full access to save Drops signups as contacts |
+| `RESEND_SEGMENT_ID` | optional. Resend segment (Contacts > Segments) to file Drops signups in |
 | `NOTIFY_TO`, `NOTIFY_FROM`, `SHIP_COUNTRIES` | defaults in `wrangler.jsonc` |
 | `SITE_URL` | **build + runtime.** The domain this deploy lives on, e.g. `https://staging-domain.com`. Drives canonicals, sitemap, OG and Stripe return URLs. Unset = Pages URL / request origin |
 | `INDEXABLE` | **build.** Leave unset on staging (pages are `noindex`, robots disallows all). Set `1` together with `SITE_URL=https://juplifestudio.com` at launch |
