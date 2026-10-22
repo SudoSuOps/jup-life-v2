@@ -160,7 +160,7 @@
       "img": null,
       "photo_placeholder": "[[PHOTO: The Readers]]",
       "home": false,
-      "shop": true,
+      "shop": false,
       "alt": ""
     }
   ]

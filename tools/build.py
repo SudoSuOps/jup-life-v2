@@ -215,7 +215,7 @@ def llms_txt(site: dict, products: list, batch: dict) -> str:
         "- Location: Jupiter, FL (serves Jupiter, Tequesta, Palm Beach Gardens, Juno Beach and Palm Beach County; ships within the US)",
         "- Material: flexible TPU 95A, washable; TPU pieces are dishwasher safe (normal dishwasher cycle, avoid extended or high-heat modes)",
         "- Shipping: free on all U.S. orders; orders leave the studio within 2-3 business days",
-        "- Wholesale: custom logo coasters from 100 pieces; free Half Dozen sample on request; a mockup is sent before printing",
+        "- Wholesale: custom logo coasters from 100 pieces; free Half Dozen sample on request; a sample print is made for approval before the batch is printed",
         f"- Current tray: {batch.get('tray', '')}",
         "- Contact: hello@juplifestudio.com, call 561-532-7120, text 561-581-8015", "",
         "## Pages",
