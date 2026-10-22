@@ -13,6 +13,7 @@ from __future__ import annotations
 import hashlib
 import html
 import json
+import os
 import re
 import shutil
 import sys
@@ -169,6 +170,9 @@ def main() -> int:
         shutil.rmtree(DIST)
     DIST.mkdir()
     site = load_json("site.json")
+    # Staging-safe: SITE_URL (else Cloudflare's CF_PAGES_URL) sets canonicals/OG/sitemap; pages stay noindex unless INDEXABLE=1.
+    site["site_url"] = (os.environ.get("SITE_URL") or os.environ.get("CF_PAGES_URL") or site["site_url"]).rstrip("/")
+    indexable = os.environ.get("INDEXABLE") == "1"
     products = load_json("products.json")["products"]
     batch = load_batch()
     summer = "summer" in batch["tray"].lower()
@@ -197,7 +201,7 @@ def main() -> int:
             ld["image"] = f"{site['site_url']}/{p['img']}"
         return Markup(json.dumps(ld, indent=2).replace("</", "<\\/"))
 
-    env.globals.update(pic=pic, product_ld=product_ld, ph=ph, site=site, batch=batch, batch_date=batch_date_label(batch["date"]),
+    env.globals.update(pic=pic, product_ld=product_ld, indexable=indexable, ph=ph, site=site, batch=batch, batch_date=batch_date_label(batch["date"]),
                        season=season, products=products, css_href=css_href, js_src=js_src,
                        site_url=site["site_url"], have_ph=lambda k: bool(site["placeholders"].get(k)),
                        batch_json=Markup(json.dumps(batch, indent=2, ensure_ascii=False).replace("</", "<\\/")))
@@ -217,12 +221,15 @@ def main() -> int:
     (DIST / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{u}</loc></url>\n" for u in urls) + "</urlset>\n")
-    (DIST / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: {site['site_url']}/sitemap.xml\n")
+    (DIST / "robots.txt").write_text(
+        f"User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: {site['site_url']}/sitemap.xml\n" if indexable
+        else "User-agent: *\nDisallow: /\n")
     shutil.copy(WEB / "_headers", DIST / "_headers")
     shutil.copy(WEB / "_redirects", DIST / "_redirects")
     (DIST / "_routes.json").write_text(json.dumps({"version": 1, "include": ["/api/*"], "exclude": []}))
 
     left = sorted(f.name for f in DIST.glob("*.html") if "[[" in f.read_text())
+    print(f"site_url={site['site_url']} indexable={indexable}")
     print(f"built {len(pages)} pages, {len(MANIFEST)} images (avif={'yes' if HAS_AVIF else 'no'}), season={season}")
     if left:
         print(f"open [[placeholders]] still showing on: {', '.join(left)}")

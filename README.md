@@ -25,7 +25,9 @@ CHROME=/path/to/chrome npm run smoke     # browser smoke test against the runnin
 | `STRIPE_PRICE_SIX_SET_CASE` | `price_...` for the $29 6-Coaster Set + Case |
 | `STRIPE_PRICE_READERS` | `price_...` for The Readers ($19) |
 | `RESEND_API_KEY` | secret. Empty = requests/orders are only logged |
-| `NOTIFY_TO`, `NOTIFY_FROM`, `SITE_URL`, `SHIP_COUNTRIES` | defaults in `wrangler.jsonc` |
+| `NOTIFY_TO`, `NOTIFY_FROM`, `SHIP_COUNTRIES` | defaults in `wrangler.jsonc` |
+| `SITE_URL` | **build + runtime.** The domain this deploy lives on, e.g. `https://staging-domain.com`. Drives canonicals, sitemap, OG and Stripe return URLs. Unset = Pages URL / request origin |
+| `INDEXABLE` | **build.** Leave unset on staging (pages are `noindex`, robots disallows all). Set `1` together with `SITE_URL=https://juplifestudio.com` at launch |
 
 Stripe webhook endpoint: `https://juplifestudio.com/api/stripe/webhook`, event `checkout.session.completed`.
 Items with no price ID configured are not purchasable (they show "Ask about this batch").

@@ -3,7 +3,6 @@
   "pages_build_output_dir": "./dist",
   "compatibility_date": "2026-10-01",
   "vars": {
-    "SITE_URL": "https://juplifestudio.com",
     "SHIP_COUNTRIES": "US",
     "NOTIFY_TO": "hello@juplifestudio.com,dee@juplifestudio.com",
     "NOTIFY_FROM": "JUP LIFE <hello@juplifestudio.com>"

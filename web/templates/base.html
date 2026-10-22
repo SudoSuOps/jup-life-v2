@@ -7,7 +7,7 @@
 <title>{% block title %}{% endblock %}</title>
 <meta name="description" content="{% block description %}{% endblock %}">
 <link rel="canonical" href="{{ site_url }}{{ page.path if page.path != '/404' else '/' }}">
-{% if page.path == '/404' %}<meta name="robots" content="noindex">{% endif %}
+{% if page.path == '/404' or not indexable %}<meta name="robots" content="noindex">{% endif %}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="JUP LIFE by Mrs. Smash">
 <meta property="og:title" content="{% block ogtitle %}{{ self.title() }}{% endblock %}">
