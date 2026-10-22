@@ -27,7 +27,7 @@ CHROME=/path/to/chrome npm run smoke     # browser smoke test against the runnin
 | `STRIPE_PRICE_GIGI` | `price_...` for The Gigi ($9) |
 | `STRIPE_PRICE_TIDE_SOAP_DISH` | `price_...` for Tide Soap Dish ($14) |
 | `STRIPE_PRICE_TIDE_DISPENSER` | `price_...` for Tide Hand Soap Dispenser ($21) |
-| `STRIPE_PRICE_READERS` | `price_...` for The Readers (not in Stripe yet; card shows "Ask about this batch") |
+| `STRIPE_PRICE_READERS` | `price_...` for The Readers ($19) |
 | `RESEND_API_KEY` | secret. Empty = requests/orders are only logged |
 | `NOTIFY_TO`, `NOTIFY_FROM`, `SHIP_COUNTRIES` | defaults in `wrangler.jsonc` |
 | `SITE_URL` | **build + runtime.** The domain this deploy lives on, e.g. `https://staging-domain.com`. Drives canonicals, sitemap, OG and Stripe return URLs. Unset = Pages URL / request origin |

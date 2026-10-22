@@ -10,7 +10,7 @@
 <article class="card">
   <div class="tag" aria-hidden="true"></div>
   {% if p.img %}
-  <figure>{{ pic(p.img, p.alt, sizes="(min-width: 640px) 360px, calc(100vw - 64px)") }}</figure>
+  <figure>{{ pic(p.img, p.alt, sizes="(min-width: 640px) 360px, calc(100vw - 64px)") }}{% if p.render %}<figcaption class="render-cap">Studio rendering</figcaption>{% endif %}</figure>
   {% if shop and p.gallery %}
   <div class="thumbs">{% for g in p.gallery %}{{ pic(g.img, g.alt, sizes="64px") }}{% endfor %}</div>
   {% endif %}

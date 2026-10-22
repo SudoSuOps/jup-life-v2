@@ -154,14 +154,20 @@
     {
       "sku": "readers",
       "name": "The Readers",
-      "line": "Thumb page holder plus stand.",
-      "price": null,
+      "line": "A thumb page holder with a coastal cradle to rest it in. One more chapter.",
+      "price": 19,
       "material": null,
-      "img": null,
-      "photo_placeholder": "[[PHOTO: The Readers]]",
+      "img": "img/readers-cradle.webp",
       "home": false,
-      "shop": false,
-      "alt": ""
+      "shop": true,
+      "alt": "A gold driftwood-pattern Readers page holder resting in a sand-colored cradle engraved One More Chapter, beside a book on a sunlit beach table",
+      "gallery": [
+        {
+          "img": "img/readers-one-more-chapter.webp",
+          "alt": "The Readers gold driftwood-pattern page holder resting in its sand-colored One More Chapter cradle, with the empty cradle inset"
+        }
+      ],
+      "render": true
     }
   ]
 }
