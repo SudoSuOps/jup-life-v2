@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "partials/_macros.html" import sample_success %}
+{% from "partials/_macros.html" import sample_success, short %}
 {% block title %}Custom Logo Coasters for Restaurants | Palm Beach County{% endblock %}
 {% block description %}The Bakery Counter for restaurants and bars: custom washable TPU coasters with your logo, designed in Jupiter, FL. From 100 coasters at $2.00 ea. Samples are on the house.{% endblock %}
 {% block ogtitle %}Fresh baked for your bar · JUP LIFE Wholesale{% endblock %}
@@ -106,7 +106,22 @@
   </figure>
 </section>
 
-<div class="wrap"><hr class="band"></div>
+<section class="oven" aria-labelledby="bar-h">
+  <div class="wrap section stack reveal" style="gap:28px">
+    <div>
+      <p class="eyebrow">Watch it on the bar</p>
+      <h2 id="bar-h" style="margin-top:6px">Out on the bar.</h2>
+    </div>
+    <div class="video-grid">
+      {{ short('ws-one-love', 'One love, one coaster.', 'Night on the beach bar · 30 s', 'One love, one coaster: coasters stacked on a moonlit beach bar, a drink set down on a teal coaster') }}
+      {{ short('ws-drinks-down', 'Drinks down, hands up.', 'Made for service · 30 s', 'Drinks down, hands up: friends toast at a string-lit beach bar and set drinks on coasters') }}
+      {{ short('ws-spa-day', 'Spa-day sink.', 'Rental edition · 15 s', 'Spa-day sink, rental edition: a coral soap dish and dispenser on a marble vanity, hands being washed') }}
+    </div>
+    <p style="margin:0;font-size:13px">Studio renderings.</p>
+  </div>
+</section>
+
+<div class="wrap" style="padding-top:clamp(48px,6vw,88px)"><hr class="band"></div>
 
 <section class="wrap section stack reveal" style="gap:24px" aria-labelledby="who-h">
   <div class="split" style="align-items:flex-end">

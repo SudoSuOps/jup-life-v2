@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "partials/_macros.html" import card, batch_board %}
+{% from "partials/_macros.html" import card, batch_board, short %}
 {% block title %}Shop the Batch | Washable TPU Coasters | JUP LIFE{% endblock %}
 {% block description %}The bakery case: this season's tray of washable TPU coasters, Stack Bands, the 6-Coaster Set + Case, Tide soap dishes and more. 3D-printed in small batches in Jupiter, FL.{% endblock %}
 {% block ogtitle %}Shop the Batch · JUP LIFE{% endblock %}
@@ -37,7 +37,7 @@
 
 <div class="wrap" style="padding-bottom:clamp(32px,4vw,56px)">
   <figure style="margin:0;position:relative">
-    <img src="/img/studio-counter-800.webp" srcset="/img/studio-counter-800.webp 800w, /img/studio-counter-1600.webp 1600w" sizes="(min-width: 1248px) 1152px, 100vw" alt="The JUP LIFE bakery counter: coasters under glass domes and stacked on wood trays, printers and filament behind" width="1600" height="900" decoding="async" style="width:100%;aspect-ratio:16/9;max-height:560px;object-fit:cover;border-radius:24px">
+    <img src="/img/bakery-dome-800.webp" srcset="/img/bakery-dome-800.webp 800w, /img/bakery-dome-1600.webp 1600w" sizes="(min-width: 1248px) 1152px, 100vw" alt="The JUP LIFE bakery counter: a glass dome over stacks of terracotta, sage and cream coasters, a wood tray beside kraft boxes, printers by the window" width="1600" height="900" decoding="async" style="width:100%;aspect-ratio:16/9;max-height:560px;object-fit:cover;object-position:60% 50%;border-radius:24px">
     <figcaption class="render-cap">Studio rendering · the bakery counter</figcaption>
   </figure>
 </div>
@@ -78,7 +78,21 @@
   </div>
 </section>
 
-<section class="wrap reveal" style="padding-bottom:clamp(56px,7vw,104px)" aria-labelledby="order-h">
+<section class="oven" aria-labelledby="oven-h">
+  <div class="wrap section stack reveal" style="gap:28px">
+    <div>
+      <p class="eyebrow">Watch the batch</p>
+      <h2 id="oven-h" style="margin-top:6px">Out of the oven.</h2>
+    </div>
+    <div class="video-grid">
+      {{ short('shop-baked-daily', 'Baked daily in Jupiter.', 'Fresh from the tray · 15 s', 'Baked daily in Jupiter: a hand in an oven mitt slides a tray of colorful coasters, with sunflower coasters, out of an oven') }}
+      {{ short('shop-fresh-out', 'Fresh out the oven.', 'Inside the studio · 15 s', 'Fresh out the oven: shelves of printers in a bright studio, a coaster printing on a plate') }}
+    </div>
+    <p style="margin:0;font-size:13px">Studio renderings.</p>
+  </div>
+</section>
+
+<section class="wrap reveal" style="padding-block:clamp(48px,6vw,88px)" aria-labelledby="order-h">
   <div class="cta-strip">
     <div>
       <p class="eyebrow" style="color:var(--cream-muted)">Baked to order</p>

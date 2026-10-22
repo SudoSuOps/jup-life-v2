@@ -142,3 +142,10 @@
   <span>TikTok Shop: {% if have_ph('tiktok_shop_url') %}<a href="{{ site.placeholders.tiktok_shop_url }}" rel="noopener">JUP LIFE on TikTok Shop</a>{% else %}<span class="ph">[[TIKTOK_SHOP_URL]]</span>{% endif %}</span>
 </address>
 {% endmacro %}
+
+{% macro short(slug, title, sub, label) %}
+<figure>
+  <video controls preload="none" playsinline poster="/img/poster-{{ slug }}.webp" aria-label="{{ label }}"><source src="/video/{{ slug }}.mp4" type="video/mp4"></video>
+  <figcaption><strong>{{ title }}</strong>{{ sub }}</figcaption>
+</figure>
+{% endmacro %}

@@ -45,3 +45,9 @@ Built to `docs/WHOLESALE_SPEC.md`. Deviations / decisions:
 - Modal and bag use native `<dialog>` (focus containment + Esc built in). FAQ uses `<details>/<summary>` (zero JS).
 - Payments: Stripe Checkout (hosted) via `POST /api/checkout`, server-side sku→Price ID mapping, verified webhook.
 - Form intake: `POST /api/sample-request` (multipart) with honeypot, per-IP throttle, logo type/size/magic-byte checks, SVG script rejection; notifications via Resend HTTP API (optional; logs otherwise).
+
+## photos-v3 (Oct 22, owner folder)
+- Full-size photos replace the contact-sheet cuts: `ws-hero-bar`, `studio-counter`, `tide-dispenser`, `gigi-teal`, `ws-logo-mockup-example`. New `bakery-dome-*` (cake dome + kraft boxes) is the Shop banner.
+- Shorts (re-encoded to ~1.5-4 MB, posters generated, tap-to-play, never autoplay): **Wholesale "Out on the bar"**: `ws-one-love` (short01), `ws-drinks-down` (short09), `ws-spa-day` (short07, hotel/rental). **Shop "Out of the oven"**: `shop-baked-daily` (short02), `shop-fresh-out` (short01 (1)).
+- Not used: `short02 (1)` (first half of the Home "Built different" cut, a duplicate). Checked every short for metal-chain imagery and other brands: none.
+- Still contact-sheet cuts (no full-size in the folder): the three wholesale step photos and `ws-bulk-boxes-studio`.
