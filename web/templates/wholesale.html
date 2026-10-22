@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% from "partials/_macros.html" import sample_success, short %}
 {% block title %}Custom Logo Coasters for Restaurants | Palm Beach County{% endblock %}
-{% block description %}The Bakery Counter for restaurants and bars: custom washable TPU coasters with your logo, designed in Jupiter, FL. From 100 coasters at $2.00 ea. Samples are on the house.{% endblock %}
+{% block description %}The Bakery Counter for restaurants and bars: custom washable TPU coasters with your logo, designed in Jupiter, FL. From 100 coasters at $2.00 ea. Samples available by request.{% endblock %}
 {% block ogtitle %}Fresh baked for your bar · JUP LIFE Wholesale{% endblock %}
-{% block ogdesc %}Custom washable TPU coasters with your logo. From $2.00 ea. Samples on the house.{% endblock %}
+{% block ogdesc %}Custom washable TPU coasters with your logo. From $2.00 ea. Samples available by request.{% endblock %}
 {% block head %}<link rel="preload" as="image" href="/img/ws-hero-bar-800.webp" imagesrcset="/img/ws-hero-bar-800.webp 800w, /img/ws-hero-bar-1600.webp 1600w" imagesizes="100vw">{% endblock %}
 {% block content %}
 <section class="ws-hero" aria-labelledby="ws-h">
@@ -33,7 +33,7 @@
   <ol class="step-strip" style="list-style:none;margin:0;padding:0">
     <li class="step-card">
       {{ pic("img/ws-step-taste.webp", "The Half Dozen: six coasters in a windowed kraft box with a sage band and the Mrs. Smash tag", sizes="(min-width: 800px) 360px, 100vw") }}
-      <div class="body"><span class="num">Step 1</span><h3>Taste.</h3><p>We send a free Half Dozen: six coasters in a windowed kraft box. Samples are on the house.</p></div>
+      <div class="body"><span class="num">Step 1</span><h3>Taste.</h3><p>We send a Half Dozen: six coasters in a windowed kraft box. Samples are available by request.</p></div>
     </li>
     <li class="step-card">
       {{ pic("img/ws-step-order.webp", "A pencil sketch of a sunrise-over-waves logo beside a sage coaster with the same design", sizes="(min-width: 800px) 360px, 100vw") }}
@@ -63,7 +63,7 @@
       <dl>
         {% for t in site.tiers %}<div class="row"><dt>{{ t.qty if 'coaster' in t.qty else t.qty ~ ' coasters' }}</dt><span class="leader" aria-hidden="true"></span><dd>{{ t.total }} <small>({{ t.price }})</small></dd></div>
         {% endfor %}
-        <div class="row"><dt>Samples</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">on the house</dd></div>
+        <div class="row"><dt>Samples</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">by request</dd></div>
       </dl>
       <p class="foot">Locally grown in Jupiter, FL.</p>
     </section>
@@ -145,7 +145,7 @@
 <section class="wrap faq reveal" style="padding-bottom:clamp(48px,6vw,88px)" aria-labelledby="faq-h">
   <h2 id="faq-h" style="font-size:clamp(32px,3.6vw,44px);margin-bottom:12px">Counter questions.</h2>
   <details open><summary>How long does a batch take?</summary><p>{{ ph('wholesale_lead_time', 'PLACEHOLDER: wholesale lead time') }}</p></details>
-  <details><summary>Is there a minimum?</summary><p>Wholesale batches start at 100 coasters. Samples are free.</p></details>
+  <details><summary>Is there a minimum?</summary><p>Wholesale batches start at 100 coasters. Samples are available by request.</p></details>
   <details><summary>What colors can I pick?</summary><p>Our colorways are named after ingredients (pumpkin, blueberry, peach, sage, cinnamon and more), and they change with Today's Batch. Ask about matching your brand.</p></details>
   <details><summary>Can you do my logo?</summary><p>Yes. {{ ph('logo_setup_terms', 'CONFIRM logo setup terms') }}</p></details>
   <details><summary>Can I wash them?</summary><p>Yes. They're washable and dishwasher-safe TPU. {{ ph('top_rack', 'CONFIRM top-rack') }}</p></details>
@@ -156,7 +156,7 @@
     <div class="split" style="align-items:flex-start">
       <div class="stack" style="gap:18px;flex:1 1 340px">
         <p class="eyebrow">The Half Dozen</p>
-        <h2 id="req-h">Samples are on the house.</h2>
+        <h2 id="req-h">Samples are available by request.</h2>
         <p style="margin:0;font-size:18px">Six coasters, one little box. Tell us where to send it.</p>
         <figure style="margin:0;position:relative">
           {{ pic("img/ws-bulk-boxes-studio.webp", "Kraft boxes stacked on a cart in the studio, printers along the wall", sizes="(min-width: 900px) 440px, calc(100vw - 32px)", style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px") }}
