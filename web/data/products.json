@@ -91,13 +91,24 @@
     {
       "sku": "half-dozen",
       "name": "The Half Dozen",
-      "line": "An assorted box of six coasters in a windowed kraft box with a sage band, the Mrs. Smash tag and a Today's Batch card. Free U.S. shipping.",
-      "price": 39,
+      "line": "Six assorted coasters in a windowed kraft box with a sage band, the Mrs. Smash tag and a Today's Batch card. Free U.S. shipping.",
+      "price": 29,
       "material": "TPU 95A · washable · dishwasher safe",
       "img": "img/halfdozen-box.webp",
       "home": false,
       "shop": true,
       "alt": "The Half Dozen: a windowed kraft box of assorted coasters wrapped in a sage TPU band with the Mrs. Smash tag"
+    },
+    {
+      "sku": "bakers-dozen",
+      "name": "The Baker's Dozen",
+      "line": "Thirteen assorted coasters, one for everyone at the table and one to spare. Free U.S. shipping.",
+      "price": 39,
+      "material": "TPU 95A · washable · dishwasher safe",
+      "img": "img/halfdozen-open.webp",
+      "home": false,
+      "shop": true,
+      "alt": "The Baker's Dozen: a box of thirteen assorted coasters"
     },
     {
       "sku": "gigi",
