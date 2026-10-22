@@ -72,6 +72,7 @@
     const form = $('[data-sample-form]', dlg);
     const COPY = {
       'Sample': ['sample', 'One coaster, by request', 'Get a free sample', 'Send my sample'],
+      'Half Dozen order': ['biz', "We'll confirm details and pricing", 'Order a Half Dozen', 'Send my order'],
       'Half Dozen sample': ['biz', 'Available by request', 'Get a free Half Dozen', 'Send my Half Dozen'],
       'Product question': ['biz', 'Ask us anything', 'Ask about this batch', 'Send my question'],
       Custom: ['biz', 'Baked to order', 'Custom order', 'Send my request'],

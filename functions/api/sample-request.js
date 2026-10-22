@@ -2,7 +2,7 @@
 import { allow, clientIp, fail, json, notify } from '../_lib.js';
 
 const MAX_LOGO = 4 * 1024 * 1024;
-const TYPES = new Set(['Sample', 'Half Dozen sample', 'Product question', 'Custom']);
+const TYPES = new Set(['Sample', 'Half Dozen order', 'Half Dozen sample', 'Product question', 'Custom']);
 const LOGO = {
   png: { mime: ['image/png'], magic: [0x89, 0x50, 0x4e, 0x47] },
   jpg: { mime: ['image/jpeg'], magic: [0xff, 0xd8] },
