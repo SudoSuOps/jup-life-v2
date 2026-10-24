@@ -215,11 +215,12 @@ def llms_txt(site: dict, products: list, batch: dict) -> str:
         "- Location: Jupiter, FL (serves Jupiter, Tequesta, Palm Beach Gardens, Juno Beach and Palm Beach County; ships within the US)",
         "- Material: flexible TPU 95A, washable; TPU pieces are dishwasher safe (normal dishwasher cycle, avoid extended or high-heat modes)",
         "- Shipping: free on all U.S. orders; orders leave the studio within 2-3 business days",
-        "- Wholesale: custom logo coasters from 100 pieces; Half Dozen sample available by request for businesses (retail customers can request one coaster); a sample print is made for approval before the batch is printed",
+        "- Wholesale: custom logo coasters from 100 pieces; venues get 6 free sample coasters and retail buyers can request 1 free sample coaster. The Half Dozen is the $29 retail box only. A sample print is made for approval before the batch is printed, and the batch ships within 10 days of approval",
         f"- Current tray: {batch.get('tray', '')}",
         "- Contact: hello@juplifestudio.com, call 561-532-7120, text 561-581-8015", "",
         "## Pages",
         f"- [Home]({base}/): who we are, the current tray, quality, FAQ",
+        f"- [About]({base}/about): Dee, Mrs. Smash, and the Jupiter studio",
         f"- [Shop]({base}/shop): retail products with prices and checkout",
         f"- [Wholesale & Samples]({base}/wholesale): custom logo coasters for restaurants, bars, hotels, rentals and events, price tiers, free sample",
         f"- [Shipping & Returns]({base}/shipping-returns)",
@@ -288,15 +289,16 @@ def main() -> int:
         "wholesale.html": ("wholesale.html", {"path": "/wholesale", "nav": "wholesale"}),
         "privacy.html": ("privacy.html", {"path": "/privacy", "nav": ""}),
         "shipping-returns.html": ("shipping_returns.html", {"path": "/shipping-returns", "nav": ""}),
+        "about.html": ("about.html", {"path": "/about", "nav": "about"}),
         "404.html": ("not_found.html", {"path": "/404", "nav": ""}),
     }
-    crumbs = {"/shop": "Shop", "/wholesale": "Wholesale & Samples"}
+    crumbs = {"/shop": "Shop", "/wholesale": "Wholesale & Samples", "/about": "About"}
     for out, (tpl, ctx) in pages.items():
         page_html = env.get_template(tpl).render(page=ctx)
         (DIST / out).write_text(add_ld(page_html, ctx["path"], site["site_url"], crumbs))
 
     today = date.today().isoformat()
-    urls = [(f"{site['site_url']}{p}", pr) for p, pr in (("/", "1.0"), ("/shop", "0.9"), ("/wholesale", "0.9"), ("/shipping-returns", "0.3"), ("/privacy", "0.2"))]
+    urls = [(f"{site['site_url']}{p}", pr) for p, pr in (("/", "1.0"), ("/shop", "0.9"), ("/wholesale", "0.9"), ("/about", "0.6"), ("/shipping-returns", "0.3"), ("/privacy", "0.2"))]
     (DIST / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod><priority>{pr}</priority></url>\n" for u, pr in urls) + "</urlset>\n")
@@ -312,6 +314,19 @@ def main() -> int:
     print(f"built {len(pages)} pages, {len(MANIFEST)} images (avif={'yes' if HAS_AVIF else 'no'}), season={season}")
     if left:
         print(f"open [[placeholders]] still showing on: {', '.join(left)}")
+    blank_batch = []
+    for f in DIST.rglob("*"):
+        if not f.is_file() or f.suffix.lower() not in {".html", ".js", ".txt", ".xml", ".css", ".json"}:
+            continue
+        try:
+            body = f.read_text(encoding="utf-8")
+        except UnicodeError:
+            continue
+        if "____" in body:
+            blank_batch.append(str(f.relative_to(DIST)))
+    if blank_batch:
+        print("build failed: placeholder ____ still in dist: " + ", ".join(blank_batch))
+        return 1
     return 0
 
 

@@ -24,7 +24,19 @@
       const mon = d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
       $('[data-batch-date]', board).textContent = `${day} ${mon} ${d.getDate()}`;
     }
-    $('[data-batch-no]', board).textContent = b.batch_no || '____';
+    const dateEl = $('[data-batch-date]', board);
+    let noEl = $('[data-batch-no]', board);
+    if (b.batch_no) {
+      if (!noEl && dateEl) {
+        dateEl.insertAdjacentHTML('afterend', ' · Batch #<span data-batch-no></span>');
+        noEl = $('[data-batch-no]', board);
+      }
+      if (noEl) noEl.textContent = b.batch_no;
+    } else if (noEl) {
+      const prev = noEl.previousSibling;
+      if (prev && prev.nodeType === Node.TEXT_NODE && prev.textContent.includes('Batch #')) prev.remove();
+      noEl.remove();
+    }
     $('[data-batch-tray]', board).textContent = b.tray;
     const ul = $('[data-batch-rows]', board);
     ul.replaceChildren(...(b.flavors || []).slice(0, 6).map((f) => {
@@ -54,47 +66,86 @@
   }
 
   /* ---------- Sample request (modal + any inline [data-sample-form]) ---------- */
+  // Retail = 1 free sample coaster. Wholesale/venue = 6 free sample coasters.
+  // "The Half Dozen" is only the $29 box, never the free sample.
+  function bindBuyer(form, dlg) {
+    const apply = () => {
+      const buyer = form.querySelector('[name=buyer_type]:checked')?.value === 'wholesale' ? 'wholesale' : 'retail';
+      const qty = form.querySelector('[data-sample-qty]');
+      if (qty) qty.value = buyer === 'wholesale' ? '6' : '1';
+      const wholesale = buyer === 'wholesale';
+      $$('[data-wholesale-only]', form).forEach((el) => {
+        el.hidden = !wholesale;
+        $$('input, textarea, select', el).forEach((i) => { i.disabled = !wholesale; });
+      });
+      $$('[data-retail-only]', form).forEach((el) => {
+        el.hidden = wholesale;
+        $$('input, textarea, select', el).forEach((i) => { i.disabled = wholesale; });
+      });
+      const rt = form.request_type?.value || 'Sample';
+      const submit = $('[data-submit]', form);
+      const sampleType = rt === 'Sample' || rt === 'Half Dozen sample' || rt === 'Free sample (1 coaster)';
+      if (dlg && sampleType) {
+        const eye = $('[data-dlg-eyebrow]', dlg);
+        if (eye) eye.textContent = wholesale ? 'Free venue sample' : 'One coaster, on us';
+        const title = $('[data-dlg-title]', dlg);
+        if (title) title.textContent = wholesale ? 'Free 6-coaster sample for your venue' : 'Get a free sample coaster';
+        if (submit) submit.textContent = wholesale ? 'Send my free venue sample' : 'Send my free sample coaster';
+      } else if (dlg) {
+        const COPY = {
+          'Half Dozen order': ["We'll confirm details and pricing", 'Buy The Half Dozen ($29)', 'Send my order'],
+          'Product question': ['Ask us anything', 'Ask about this batch', 'Send my question'],
+          'Custom order': ['Baked to order', 'Custom order', 'Send my request'],
+          Custom: ['Baked to order', 'Custom order', 'Send my request'],
+        };
+        const [eyebrow, title, label] = COPY[rt] || COPY['Product question'];
+        const eye = $('[data-dlg-eyebrow]', dlg);
+        if (eye) eye.textContent = eyebrow;
+        const h = $('[data-dlg-title]', dlg);
+        if (h) h.textContent = title;
+        if (submit) submit.textContent = label;
+      } else if (submit && sampleType) {
+        submit.textContent = wholesale ? 'Send my free venue sample' : 'Send my free sample coaster';
+      }
+    };
+    $$('[name=buyer_type]', form).forEach((r) => r.addEventListener('change', apply));
+    if (form.request_type && form.request_type.tagName === 'SELECT') form.request_type.addEventListener('change', apply);
+    apply();
+    form._applyBuyer = apply;
+  }
+
   function initSample() {
     // every form with [data-sample-form] lives inside a container holding [data-form-view] + [data-success-view]
-    $$('[data-sample-form]').forEach(wireForm);
+    $$('[data-sample-form]').forEach((form) => {
+      wireForm(form);
+      bindBuyer(form, form.closest('dialog'));
+    });
 
     // inline-form shortcuts: <a data-fill-form="#request" data-type="Custom" data-segment="Event">
     $$('[data-fill-form]').forEach((a) => a.addEventListener('click', () => {
       const form = $(`${a.dataset.fillForm} [data-sample-form]`) || $(a.dataset.fillForm);
       if (!form) return;
-      if (a.dataset.type) form.request_type.value = a.dataset.type;
+      if (a.dataset.type && form.request_type) form.request_type.value = a.dataset.type;
       if (a.dataset.segment && form.segment) form.segment.value = a.dataset.segment;
+      if (a.dataset.buyer === 'retail' || a.dataset.buyer === 'wholesale') {
+        const radio = form.querySelector(`[name=buyer_type][value="${a.dataset.buyer}"]`);
+        if (radio) radio.checked = true;
+      }
+      form._applyBuyer?.();
     }));
 
     const dlg = $('#sample-dlg');
     if (!dlg) return;
     wireClose(dlg);
     const form = $('[data-sample-form]', dlg);
-    const COPY = {
-      'Sample': ['sample', 'One coaster, by request', 'Get a free sample', 'Send my sample'],
-      'Half Dozen order': ['biz', "We'll confirm details and pricing", 'Order a Half Dozen', 'Send my order'],
-      'Half Dozen sample': ['biz', 'Available by request', 'Get a free Half Dozen', 'Send my Half Dozen'],
-      'Product question': ['biz', 'Ask us anything', 'Ask about this batch', 'Send my question'],
-      Custom: ['biz', 'Baked to order', 'Custom order', 'Send my request'],
-    };
-    // Retail samples are one coaster shipped to an address; business requests keep business/city/logo.
-    const applyType = () => {
-      const [mode, eyebrow, title, submit] = COPY[form.request_type.value] || COPY['Half Dozen sample'];
-      $$('[data-mode]', form).forEach((el) => {
-        const on = el.dataset.mode === mode;
-        el.hidden = !on;
-        $$('input', el).forEach((i) => { i.disabled = !on; });
-      });
-      $('[data-dlg-eyebrow]', dlg).textContent = eyebrow;
-      $('[data-dlg-title]', dlg).textContent = title;
-      $('[data-submit]', form).textContent = submit;
-    };
-    form.request_type.addEventListener('change', applyType);
     $$('[data-open-sample]').forEach((btn) => btn.addEventListener('click', () => {
       $('[data-form-view]', dlg).hidden = false; $('[data-success-view]', dlg).hidden = true;
       $('[data-form-error]', dlg).textContent = '';
-      form.request_type.value = btn.dataset.type || 'Half Dozen sample';
-      applyType();
+      form.request_type.value = btn.dataset.type || 'Sample';
+      const buyer = btn.dataset.buyer === 'wholesale' ? 'wholesale' : 'retail';
+      const radio = form.querySelector(`[name=buyer_type][value="${buyer}"]`);
+      if (radio) radio.checked = true;
+      form._applyBuyer?.();
       form.product.value = btn.dataset.product || '';
       if (form.segment && btn.dataset.segment) form.segment.value = btn.dataset.segment;
       if (btn.dataset.product && !form.notes.value) form.notes.value = `About: ${btn.dataset.product}`;
@@ -118,7 +169,7 @@
         bad?.focus();
         return;
       }
-      const file = form.logo.files[0];
+      const file = form.logo && !form.logo.disabled ? form.logo.files[0] : null;
       if (file && file.size > 4 * 1024 * 1024) { err.textContent = 'Logo must be 4 MB or smaller.'; return; }
       const btn = $('[type=submit]', form);
       btn.disabled = true;
@@ -127,6 +178,7 @@
         if (!res.ok) throw new Error((await res.json().catch(() => ({}))).detail || 'Something went wrong.');
         form.reset();
         form.source_page.value = location.pathname;
+        form._applyBuyer?.();
         formView.hidden = true; okView.hidden = false;
         ($('[data-close]', okView) || okView).focus?.();
       } catch (ex) {

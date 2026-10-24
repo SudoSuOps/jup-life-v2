@@ -24,6 +24,7 @@ export const resetThrottle = () => hits.clear();
 // Server-side catalog: the ONLY source of what can be charged. Items with no price ID are not purchasable.
 export function sellables(env) {
   const items = [
+    // TODO(Smash): which $29 product is primary (6+case, The Half Dozen box, or 12 with no case) is unresolved. Do not pick one or change prices.
     { sku: 'six-set-case', name: 'The Hibiscus Set (6 coasters + case)', price: env.STRIPE_PRICE_SIX_SET_CASE, max: 20 },
     { sku: 'fall-pop-coasters', name: 'Fall Tray Pop Coasters (12, no case)', price: env.STRIPE_PRICE_FALL_POP_COASTERS, max: 20 },
     { sku: 'gigi', name: 'The Gigi', price: env.STRIPE_PRICE_GIGI, max: 20 },
