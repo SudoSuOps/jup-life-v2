@@ -62,7 +62,7 @@ Divider: a rounded **sage TPU band** line (8 px, full pill shape) between sectio
    - Five proof beats, each with a kraft line icon (1.5 px cocoa stroke, simple and hand-drawn) and a bold title plus one line:
      - **Small batches.** (icon: bakery tray) "Every tray is designed in-house, seasonal, and baked fresh. No assembly line."
      - **Designed in Jupiter.** (icon: pencil + wave) "Our own design team builds every piece for single-color TPU, tested on our own printers."
-     - **Our own studio.** (icon: printer) "A fleet of 20 printers, Bambu P1S and Qidi Max 4, plus in-house compute."
+     - **Our own studio.** (icon: printer) "A fleet of 30 printers: 10 Bambu P1S, 10 Qidi Max 4 and 10 Prusa Core One, plus in-house compute."
      - **Built to be used.** (icon: coaster + water drop) "Flexible TPU 95A. Washable, dishwasher safe, made for daily use."
      - **Checked before it ships.** (icon: kraft tag with check) "Every piece is [[CONFIRM: hand-checked]] before it leaves the studio."
    - Layout: on mobile, a single column of icon-left rows with 16 px gaps. On desktop, a 5-up row (or 3 + 2) with the sage TPU band divider above and below. Optional image: `bakery_studio_vision.jpg` (caption "Studio rendering").
