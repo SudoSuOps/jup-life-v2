@@ -7,6 +7,20 @@ const C = { cream: '#FBF7F0', deep: '#F3EADC', cocoa: '#5A3E2B', kraft: '#C9A67A
 const SERIF = "'DM Serif Display', Georgia, 'Times New Roman', serif";
 const SANS = "Montserrat, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif";
 
+// Customer confirmation after a sample request. Retail is 1 coaster; a venue is 6. Never call either "The Half Dozen".
+export function sampleConfirmationCopy(buyer) {
+  if (buyer === 'wholesale') {
+    return {
+      heading: 'Your 6 free venue sample coasters are being baked.',
+      paragraphs: ["We'll reach out about your logo within one business day."],
+    };
+  }
+  return {
+    heading: 'Your free sample coaster is on the way.',
+    paragraphs: [],
+  };
+}
+
 export function brandedEmail({ base, preheader = '', eyebrow = '', heading, paragraphs = [], cta, signoff = [], footnote = '' }) {
   const p = (t) => `<p style="margin:0 0 16px;font:400 16px/1.6 ${SANS};color:${C.cocoa}">${esc(t)}</p>`;
   const button = cta

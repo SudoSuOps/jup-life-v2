@@ -13,13 +13,15 @@
 <meta property="og:title" content="{% block ogtitle %}{{ self.title() }}{% endblock %}">
 <meta property="og:description" content="{% block ogdesc %}{{ self.description() }}{% endblock %}">
 <meta property="og:url" content="{{ site_url }}{{ page.path }}">
-<meta property="og:image" content="{{ site_url }}/img/og-hero.jpg">
-<meta property="og:image:width" content="1200">
+<meta property="og:image" content="{% block ogimage %}{{ site_url }}/img/og-hero.jpg{% endblock %}">
+{% block ogdims %}<meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+{% endblock %}
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@juplifestudio">
 <meta name="twitter:title" content="{{ self.ogtitle() }}">
 <meta name="twitter:description" content="{{ self.ogdesc() }}">
-<meta name="twitter:image" content="{{ site_url }}/img/og-hero.jpg">
+<meta name="twitter:image" content="{{ self.ogimage() }}">
 <meta name="theme-color" content="#FBF7F0">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -46,7 +48,7 @@
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
         <span class="bag-count" data-bag-count>0</span>
       </button>
-      {% if page.nav == 'wholesale' %}<button type="button" class="btn btn-primary btn-sm" data-open-sample>Get a free Half Dozen</button>{% else %}<button type="button" class="btn btn-primary btn-sm" data-open-sample data-type="Sample">Get a free sample</button>{% endif %}
+      {% if page.nav == 'wholesale' %}<button type="button" class="btn btn-primary btn-sm" data-open-sample data-type="Sample" data-buyer="wholesale">Get a free venue sample</button>{% else %}<button type="button" class="btn btn-primary btn-sm" data-open-sample data-type="Sample" data-buyer="retail">Get a free sample coaster</button>{% endif %}
     </nav>
   </div>
 </header>
@@ -66,6 +68,9 @@
     <nav aria-label="Footer" class="stack" style="flex:0 1 200px;gap:8px">
       <a href="/shop">Shop</a>
       <a href="/wholesale">Wholesale &amp; Samples</a>
+      <a href="/about">About</a>
+      <a href="https://www.tiktok.com/@juplifestudio" rel="noopener" target="_blank">TikTok Shop</a>
+      <a href="https://x.com/juplifestudio" rel="noopener" target="_blank">X</a>
       <a href="/shipping-returns">Shipping &amp; Returns</a>
       <a href="/privacy">Privacy</a>
     </nav>
@@ -79,7 +84,7 @@
   <div data-sample>
     <div data-form-view>
       <p class="eyebrow" data-dlg-eyebrow>Available by request</p>
-      <h2 id="sample-h" style="font-size:34px;margin:4px 0 20px" data-dlg-title>Get a free Half Dozen</h2>
+      <h2 id="sample-h" style="font-size:34px;margin:4px 0 20px" data-dlg-title>Get a free sample coaster</h2>
       {{ sample_form(select=True) }}
     </div>
     {{ sample_success(closable=True) }}

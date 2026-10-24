@@ -1,5 +1,6 @@
 {
   "_note": "Display data for cards. Prices here are DISPLAY ONLY. Checkout charges come from Stripe Price IDs mapped server-side in functions/_lib.js. Never invent prices: null = 'Ask about this batch'.",
+  "_todo_primary_29": "TODO(Smash): which $29 product is primary (6 coasters + case, The Half Dozen box, or 12 coasters with no case) is unresolved. Do not pick a primary $29 product or change these prices. The Readers ($19, with stand) and The Gigi ($9) are already listed.",
   "products": [
     {
       "sku": "fall-pop-coasters",
