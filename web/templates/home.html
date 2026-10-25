@@ -5,21 +5,25 @@
 {% block ogtitle %}Custom 3D-Printed Coasters in Jupiter, FL{% endblock %}
 {% block ogdesc %}{{ self.description() }}{% endblock %}
 {% block head %}
+{# TODO(Smash): publishing the street address in structured data is on hold. Do not add streetAddress or postalCode until Smash OKs a public address. #}
 <!-- TODO(owner): add geo once coordinates are confirmed. Do not invent latitude or longitude.
      "geo": { "@type": "GeoCoordinates", "latitude": "", "longitude": "" }
 -->
 <!-- TODO(owner): add openingHoursSpecification once studio hours are confirmed. Do not invent hours. -->
-<!-- TODO(owner): TikTok Shop URL not available yet. Append it to LocalBusiness sameAs when the link exists. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
+  "@type": ["LocalBusiness", "Store"],
+  "@id": "{{ site_url }}/#business",
   "name": "JUP LIFE by Mrs. Smash",
+  "description": "Coaster bakery in Jupiter, FL: custom washable TPU logo coasters for restaurants and bars.",
   "url": "{{ site_url }}/",
   "image": "{{ site_url }}/img/og-hero.jpg",
   "logo": "{{ site_url }}/img/logo.png",
   "telephone": "+1-561-532-7120",
   "email": "hello@juplifestudio.com",
+  "priceRange": "$$",
+  "founder": { "@type": "Person", "name": "Dee (Mrs. Smash)" },
   "address": { "@type": "PostalAddress", "addressLocality": "Jupiter", "addressRegion": "FL", "addressCountry": "US" },
   "areaServed": [
     "Jupiter, FL",
@@ -29,7 +33,7 @@
     "West Palm Beach, FL",
     "Palm Beach County, FL"
   ],
-  "sameAs": ["https://x.com/juplifestudio"]
+  "sameAs": ["https://x.com/juplifestudio", "https://www.tiktok.com/@juplifestudio"]
 }
 </script>
 {% endblock %}
@@ -43,9 +47,10 @@
       <p class="lede">3D printed coasters and coastal pieces, baked in small seasonal batches. Custom bar coasters and restaurant coasters from JUP LIFE Studio.</p>
       <div class="btn-row">
         <a href="/shop" class="btn btn-primary">Shop the Batch</a>
-        <button type="button" class="btn btn-outline" data-open-sample data-type="Sample">Get a free sample</button>
+        <button type="button" class="btn btn-outline" data-open-sample data-type="Sample" data-buyer="retail">Get a free sample</button>
       </div>
       <p style="margin:0;font-size:15px">Retail buyers get 1 free sample coaster. Wholesale buyers get 6 free sample coasters.</p>
+      <p style="margin:0;font-size:15px"><a href="/wholesale">Restaurants: wholesale pricing →</a></p>
     </div>
 
     <div class="hero-art">
@@ -128,8 +133,8 @@
       <div><strong>Small batches.</strong><span>Every tray is designed in-house, seasonal, and baked fresh. No assembly line.</span></div></li>
     <li><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M26 6l6 6-16 16-8 2 2-8z"/><path d="M22 10l6 6"/><path d="M5 37c4-4 7-4 10 0s7 4 10 0 7-4 10 0"/></svg>
       <div><strong>Designed in Jupiter.</strong><span>Our own design team builds every piece for single-color TPU, tested on our own printers.</span></div></li>
-    <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="7" y="6" width="30" height="32" rx="3"/><path d="M7 14h30"/><path d="M18 14v6h8v-6"/><path d="M13 32h18"/></svg>
-      <div><strong>Our own studio.</strong><span>A fleet of 30 printers: 10 Bambu P1S, 10 Qidi Max 4 and 10 Prusa Core One, plus in-house compute.</span></div></li>
+    <li id="studio"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="7" y="6" width="30" height="32" rx="3"/><path d="M7 14h30"/><path d="M18 14v6h8v-6"/><path d="M13 32h18"/></svg>
+      <div><strong>Our own studio.</strong><span>A fleet of 30 printers — 10 Bambu P1S, 10 Qidi Max 4 and 10 Prusa Core One — baking every day in Jupiter.</span></div></li>
     <li><svg viewBox="0 0 44 44" aria-hidden="true"><ellipse cx="20" cy="30" rx="15" ry="6"/><path d="M5 30v3c0 3.3 6.7 6 15 6s15-2.7 15-6v-3"/><path d="M32 5c3 4 5 7 5 9a5 5 0 0 1-10 0c0-2 2-5 5-9z"/></svg>
       <div><strong>Built to be used.</strong><span>Flexible TPU 95A. Washable, dishwasher safe, made for daily use.</span></div></li>
     <li><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M14 6h22v32H14L6 22z"/><circle cx="14" cy="22" r="2.5"/><path d="M21 22l4 4 7-8"/></svg>
@@ -150,7 +155,8 @@
     <div class="copy">
       <p class="eyebrow">The Half Dozen</p>
       <h2 id="hd-h">Six coasters. One little box.</h2>
-      <p style="margin:0">An assorted box for anyone, and the perfect tryout for restaurants, bars, hotels and event hosts: a windowed kraft box, sage TPU band, the Mrs. Smash tag, and a Today's Batch menu card inside.</p>
+      {# TODO(Smash): which $29 product is primary (6 coasters + case, The Half Dozen box, or 12 coasters with no case) is unresolved. Do not pick a primary $29 product or change prices. #}
+      <p style="margin:0">An assorted box of six, fresh from today's batch: windowed kraft box, sage TPU band, the Mrs. Smash tag and a Today's Batch menu card inside. Run a bar? <a href="/wholesale">Get 6 free sample coasters</a>.</p>
       <div class="buy" style="gap:16px"><span class="price">$29</span><button type="button" class="btn btn-primary" data-add-to-bag data-sku="half-dozen" data-name="The Half Dozen" data-price="29">Order a Half Dozen</button><span class="muted">6 assorted · free U.S. shipping · <a href="/shop">Want 13? The Baker's Dozen is $39</a></span></div>
     </div>
   </div>
@@ -191,7 +197,7 @@
   <h2 id="faq-h" style="font-size:clamp(32px,3.6vw,44px);margin-bottom:12px">Good questions.</h2>
   <details open><summary>What are they made of?</summary><p>TPU 95A, a flexible printed material. Each listing says if a piece is PLA or PETG.</p></details>
   <details><summary>Are they dishwasher safe?</summary><p>Yes. TPU pieces are washable and dishwasher safe. {{ ph('dishwasher_guidance', 'CONFIRM: top-rack / temperature guidance') }} Wash PLA and PETG pieces by hand.</p></details>
-  <details><summary>Can I get my logo on them?</summary><p>Yes, from 100 coasters. Wholesale buyers get 6 free sample coasters. Retail buyers get 1 free sample coaster.</p></details>
+  <details><summary>Can I get my logo on them?</summary><p>Yes, from 100 coasters. Wholesale buyers get 6 free sample coasters. Retail buyers get 1 free sample coaster. Request them on our <a href="/wholesale">Wholesale page</a>.</p></details>
   <details><summary>How fast do you ship?</summary><p>{{ ph('lead_times', 'CONFIRM: retail dispatch and wholesale lead times') }}</p></details>
 </section>
 {% endblock %}

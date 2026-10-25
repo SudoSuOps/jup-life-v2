@@ -238,6 +238,7 @@ dialog::backdrop { background: rgba(43,43,43,.55); }
 .step-card .num { font: 600 13px var(--font-sans); letter-spacing: .12em; text-transform: uppercase; color: var(--terracotta); }
 .step-card h3 { margin: 0; font: 400 30px/1.1 var(--font-serif); }
 .step-card p { margin: 0; font-size: 16px; }
+.price-board h3 { margin: 0 0 12px; }
 .price-board .row dd { display: flex; gap: 10px; align-items: baseline; }
 .price-board .row dd small { font-size: 14px; color: var(--cream-muted); font-weight: 400; }
 .service { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px 32px; }
@@ -260,4 +261,39 @@ dialog::backdrop { background: rgba(43,43,43,.55); }
 .drops-msg { flex-basis: 100%; margin: 0; min-height: 1.4em; font-weight: 600; color: var(--cream); }
 .drops-msg.bad { color: #FFB4A8; }
 
-.field[hidden], [data-mode][hidden] { display: none; }
+.field[hidden], [data-mode][hidden], [data-wholesale-only][hidden], [data-retail-only][hidden] { display: none; }
+fieldset.buyer-type { border: 0; margin: 0; padding: 0; gap: 8px; }
+fieldset.buyer-type legend { padding: 0; }
+fieldset.buyer-type label { font-weight: 500; display: flex; align-items: flex-start; gap: 10px; }
+fieldset.buyer-type input { width: 20px; height: 20px; min-height: 0; margin-top: 2px; flex: 0 0 auto; accent-color: var(--terracotta); }
+@media (max-width: 899px) {
+  /* About and Contact share the header with the sample button. Keep that bar short
+     so the wholesale tier table still starts on a 375px screen. */
+  .site-header .wrap { padding-block: 8px; gap: 4px 12px; }
+  .brand img { width: 48px; height: 28px; }
+  .brand b { font-size: 20px; }
+  .nav { gap: 0 12px; }
+  .nav a:not(.btn) { padding: 4px 0; font-size: 14px; }
+  .nav .btn-sm { min-height: 36px; padding: 6px 12px; font-size: 14px; }
+  /* Hero copy, then the tier table, then the longer lede and photo.
+     display: contents lets the table sit under the CTA on a 375px screen. */
+  .ws-fold { display: flex; flex-direction: column; }
+  .ws-fold > .ws-hero,
+  .ws-hero .over,
+  .ws-hero .over > .wrap,
+  .ws-hero .panel { display: contents; }
+  .ws-hero .eyebrow { order: 1; padding: 2px var(--gutter) 0; font-size: 11px; letter-spacing: .08em; }
+  .ws-hero h1 { order: 2; padding-inline: var(--gutter); font-size: 30px; line-height: 1.05; }
+  .ws-hero .btn-row { order: 3; padding: 2px var(--gutter) 0; gap: 8px; }
+  .ws-hero .btn-row .btn { min-height: 40px; padding: 8px 14px; font-size: 14px; }
+  .ws-fold > .ws-price { order: 4; }
+  .ws-hero .lede { order: 5; padding: 16px var(--gutter) 0; }
+  .ws-hero .panel > p:last-child { order: 6; padding: 8px var(--gutter) 0; }
+  .ws-fold .photo { order: 7; }
+  .ws-price.section { padding-top: 2px; padding-bottom: 20px; }
+  .ws-price .split { flex-direction: column; }
+  .ws-price .price-board { order: -1; padding: 6px 12px 6px; border-width: 5px; }
+  .ws-price .price-board h3 { font-size: 20px; line-height: 1.1; margin: 0 0 2px; }
+  .ws-price .price-board dl { gap: 2px; font-size: 15px; }
+  .ws-price .board .foot { margin: 6px 0 0; padding-top: 4px; }
+}

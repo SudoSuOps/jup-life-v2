@@ -33,6 +33,9 @@
       {% else %}
       <button type="button" class="btn btn-outline btn-sm" data-open-sample data-type="Product question" data-product="{{ p.name }}">Ask about this batch</button>
       {% endif %}
+      {% if p.sku in ['readers', 'fall-pop-coasters', 'six-set-case', 'half-dozen', 'bakers-dozen'] %}
+      <a class="btn btn-outline btn-sm" href="https://www.tiktok.com/@juplifestudio" rel="noopener" target="_blank">Also on TikTok Shop</a>
+      {% endif %}
     </div>
   </div>
 </article>
@@ -45,7 +48,7 @@
     <h3>Your logo, fresh baked.</h3>
     <p>From 100 coasters. Wholesale buyers get 6 free sample coasters to try on the bar.</p>
   </div>
-  <button type="button" class="btn btn-primary" data-open-sample data-type="Half Dozen sample">Get 6 free sample coasters</button>
+  <button type="button" class="btn btn-primary" data-open-sample data-type="Half Dozen sample" data-buyer="wholesale">Get 6 free sample coasters</button>
 </div>
 {% endmacro %}
 
@@ -73,7 +76,7 @@
 {# Pre-rendered; js/main.js re-renders the same markup from #batch-data #}
 <section class="board" id="todays-batch" aria-labelledby="batch-h" data-batch-board>
   {% if batch.chefs_special %}<div class="ribbon">Chef's Special: {{ batch.chefs_special }}</div>{% endif %}
-  <p class="eyebrow muted"><span data-batch-date>{{ batch_date }}</span> · Batch #<span data-batch-no>{{ batch.batch_no or '____' }}</span></p>
+  <p class="eyebrow muted"><span data-batch-date>{{ batch_date }}</span>{% if batch.batch_no %} · Batch #<span data-batch-no>{{ batch.batch_no }}</span>{% endif %}</p>
   <h2 id="batch-h">Today's Batch</h2>
   <p class="muted" style="margin:0 0 18px;font-size:16px"><span data-batch-tray>{{ batch.tray }}</span> is out of the oven.</p>
   <ul class="rows" data-batch-rows>
@@ -99,8 +102,15 @@
 </section>
 {% endmacro %}
 
-{% macro sample_form(type='Half Dozen sample', select=False, submit='Send my samples', notes_ph='Product, quantity, colors, anything else', segment=False) %}
+{% macro sample_form(type='Sample', buyer='retail', select=False, submit=None, notes_ph='Product, quantity, colors, anything else', segment=False) %}
+{% set label = submit or ('Send my 6 free samples' if buyer == 'wholesale' else 'Send my sample') %}
 <form class="form" data-sample-form action="/api/sample-request" method="post" enctype="multipart/form-data" novalidate>
+  <fieldset class="field buyer-type" data-buyer-type>
+    <legend>I'm buying for</legend>
+    <label><input type="radio" name="buyer_type" value="retail" {% if buyer == 'retail' %}checked{% endif %}> Myself: 1 free sample coaster</label>
+    <label><input type="radio" name="buyer_type" value="wholesale" {% if buyer == 'wholesale' %}checked{% endif %}> My restaurant, bar or venue: 6 free sample coasters</label>
+  </fieldset>
+  <input type="hidden" name="sample_qty" value="{{ 6 if buyer == 'wholesale' else 1 }}" data-sample-qty>
   {% if select %}
   <label class="field">Request type
     <select name="request_type">
@@ -127,20 +137,20 @@
     </label>
     {% endif %}
     <label class="field">Name*<input name="name" required autocomplete="name"></label>
-    <label class="field" data-mode="biz">Business*<input name="business" required autocomplete="organization"></label>
-    <label class="field" data-mode="biz">City*<input name="city" required autocomplete="address-level2"></label>
-    <label class="field" data-mode="sample" hidden>Shipping address*<input name="address" required autocomplete="street-address" placeholder="Street, city, state, ZIP" disabled></label>
+    <label class="field" data-wholesale-only {% if buyer != 'wholesale' %}hidden{% endif %}>Business*<input name="business" required autocomplete="organization" {% if buyer != 'wholesale' %}disabled{% endif %}></label>
+    <label class="field" data-retail-only {% if buyer == 'wholesale' %}hidden{% endif %}>Shipping address*<input name="address" required autocomplete="street-address" placeholder="Street, city, state, ZIP" {% if buyer == 'wholesale' %}disabled{% endif %}></label>
     <label class="field">Email*<input name="email" type="email" required autocomplete="email"></label>
     <label class="field">Phone<input name="phone" type="tel" autocomplete="tel"></label>
-    <label class="field" data-mode="biz">Logo (optional)<input name="logo" type="file" accept=".png,.jpg,.jpeg,.svg,.pdf,image/png,image/jpeg,image/svg+xml,application/pdf" style="padding:10px"></label>
+    <label class="field" data-wholesale-only {% if buyer != 'wholesale' %}hidden{% endif %}>Logo (optional)<input name="logo" type="file" accept=".png,.jpg,.jpeg,.svg,.pdf,image/png,image/jpeg,image/svg+xml,application/pdf" style="padding:10px" {% if buyer != 'wholesale' %}disabled{% endif %}></label>
   </div>
+  <label class="field" data-wholesale-only {% if buyer != 'wholesale' %}hidden{% endif %}>Venue address*<input name="address" required autocomplete="street-address" placeholder="Venue address" {% if buyer != 'wholesale' %}disabled{% endif %}></label>
   <label class="field">Notes<textarea name="notes" rows="3" placeholder="{{ notes_ph }}"></textarea></label>
-  <span style="font-size:13px" data-mode="biz">Logo: PNG, JPG, SVG or PDF, up to 4 MB.</span>
+  <span style="font-size:13px" data-wholesale-only {% if buyer != 'wholesale' %}hidden{% endif %}>Logo: PNG, JPG, SVG or PDF, up to 4 MB.</span>
   <input type="hidden" name="source_page" value="/">
   <input type="hidden" name="product" value="">
   <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
   <p class="field" role="alert" data-form-error style="margin:0"></p>
-  <button type="submit" class="btn btn-primary" style="margin-top:6px" data-submit>{{ submit }}</button>
+  <button type="submit" class="btn btn-primary" style="margin-top:6px" data-submit>{{ label }}</button>
 </form>
 {% endmacro %}
 
@@ -158,7 +168,8 @@
   <span>Say hello: <a href="mailto:hello@juplifestudio.com">hello@juplifestudio.com</a></span>
   <span>Email Dee: <a href="mailto:dee@juplifestudio.com">dee@juplifestudio.com</a></span>
   <span>Text us: <a href="sms:+15615818015">561-581-8015</a></span>
-  <span>X: <a href="https://x.com/juplifestudio" rel="noopener">@juplifestudio</a></span>
+  <span><a href="https://www.tiktok.com/@juplifestudio" rel="noopener" target="_blank">TikTok Shop</a></span>
+  <span><a href="https://x.com/juplifestudio" rel="noopener" target="_blank">X</a></span>
 </address>
 {% endmacro %}
 

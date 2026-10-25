@@ -85,7 +85,9 @@ test('sample: segment kept when valid, dropped when not, goes in the email subje
   globalThis.fetch = realFetch;
   assert.equal(sent[0].subject, '[Product question · Hotel or rental] B · C');
   assert.match(sent[0].text, /segment: Hotel or rental/);
-  assert.equal(sent[1].subject, '[Half Dozen sample] B · C');
+  assert.equal(sent[1].subject, 'Sample request: Venue (6)');
+  assert.match(sent[1].text, /buyer_type: wholesale/);
+  assert.match(sent[1].text, /qty: 6/);
   assert.doesNotMatch(sent[1].text, /segment/);
 });
 
@@ -137,4 +139,38 @@ test('sample: retail Sample needs an address (no business), business types still
   assert.equal((await sample({ request: form({ request_type: 'Sample', business: '', city: '', address: '1 Main St, Jupiter, FL 33469' }), env: {} })).status, 200);
   assert.equal((await sample({ request: form({ request_type: 'Sample', business: '', city: '', address: '' }), env: {} })).status, 422);
   assert.equal((await sample({ request: form({ request_type: 'Half Dozen sample', business: '', city: 'Jupiter' }), env: {} })).status, 422);
+});
+
+test('sample: qty is 1 for retail, 6 for wholesale, legacy types map, spoofed sample_qty is ignored', async () => {
+  const sent = [];
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = async (u, init) => { sent.push(JSON.parse(init.body)); return new Response('{}', { status: 200 }); };
+  const env = { RESEND_API_KEY: 'k', SITE_URL: 'https://juplifestudio.com' };
+  const retail = { buyer_type: 'retail', request_type: 'Sample', business: '', city: '', address: '1 Main St', sample_qty: '50' };
+  const venue = { buyer_type: 'wholesale', request_type: 'Sample', address: '1 Bar St', sample_qty: '50' };
+  const legacyVenue = { request_type: 'Half Dozen sample', sample_qty: '50' };
+  const legacyRetail = { request_type: 'Free sample (1 coaster)', business: '', city: '', address: '1 Main St', sample_qty: '50' };
+  assert.equal((await sample({ request: form(retail), env })).status, 200);
+  assert.equal((await sample({ request: form(venue), env })).status, 200);
+  assert.equal((await sample({ request: form(legacyVenue), env })).status, 200);
+  assert.equal((await sample({ request: form(legacyRetail), env })).status, 200);
+  globalThis.fetch = realFetch;
+  const studio = sent.filter((m) => String(m.subject).startsWith('Sample request:'));
+  const confirm = sent.filter((m) => /free sample coaster|venue sample coasters/i.test(m.subject));
+  assert.equal(studio.length, 4);
+  assert.equal(studio[0].subject, 'Sample request: Retail (1)');
+  assert.match(studio[0].text, /qty: 1/);
+  assert.match(studio[0].text, /buyer_type: retail/);
+  assert.doesNotMatch(studio[0].text, /sample_qty|qty: 50|\b50\b/);
+  assert.equal(studio[1].subject, 'Sample request: Venue (6)');
+  assert.match(studio[1].text, /qty: 6/);
+  assert.match(studio[1].text, /buyer_type: wholesale/);
+  assert.doesNotMatch(studio[1].text, /qty: 50/);
+  assert.equal(studio[2].subject, 'Sample request: Venue (6)');
+  assert.match(studio[2].text, /qty: 6/);
+  assert.equal(studio[3].subject, 'Sample request: Retail (1)');
+  assert.match(studio[3].text, /qty: 1/);
+  assert.match(confirm[0].html, /Your free sample coaster is on the way\./);
+  assert.match(confirm[1].html, /Your 6 free venue sample coasters are being baked\./);
+  assert.match(confirm[1].text, /We'll reach out about your logo within one business day\./);
 });

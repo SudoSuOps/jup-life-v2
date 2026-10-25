@@ -1,8 +1,8 @@
 # JUP LIFE Today's Batch: edit these fields only. Everything else is locked brand copy.
 season: The Fall Tray          # shown in the divider
 harvest: Oct 2026              # "Harvested ___"
-date: 2026-10-22               # optional; prints "THU OCT 22" and dates the files. Remove for no date.
-batch_no: ""                   # blank prints a write-in line: Batch # ________
+date: 2026-10-24               # optional; prints "SAT OCT 24" and dates the files. Remove for no date.
+batch_no: "042"                # blank hides the number on the site; the print card still leaves a write-in line
 chefs_special: ""              # blank = no ribbon
 flavors:                       # up to 6; note must fit at 6 pt on the card (script warns)
   - {name: Pumpkin,   color: "#E8731E", note: fall harvest}

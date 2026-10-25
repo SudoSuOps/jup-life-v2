@@ -73,7 +73,6 @@
       <p>Favorites we keep in the case all year.</p>
     </div>
   </div>
-  <!-- TODO(owner): TikTok Shop URL not available yet. Add an "Also on TikTok Shop" link on the priced cards, starting with the 6-coaster set, when the URL is known. -->
   <div class="tray-grid">
     {% for sku in shelf_skus %}{{ card(by_sku[sku], shop=True) }}
     {% endfor %}
@@ -102,7 +101,7 @@
       <p>Custom logo coasters from 100 for restaurants and bars. Wholesale buyers get 6 free sample coasters. Retail buyers get 1 free sample coaster.</p>
     </div>
     <div class="btn-row">
-      <button type="button" class="btn btn-primary" data-open-sample data-type="Half Dozen sample">Get 6 free sample coasters</button>
+      <button type="button" class="btn btn-primary" data-open-sample data-type="Half Dozen sample" data-buyer="wholesale">Get 6 free sample coasters</button>
       <a href="/wholesale" class="btn btn-outline" style="color:var(--cream);border-color:var(--cream)">Wholesale &amp; samples</a>
     </div>
   </div>
