@@ -87,10 +87,10 @@
       const sampleType = rt === 'Sample' || rt === 'Half Dozen sample' || rt === 'Free sample (1 coaster)';
       if (dlg && sampleType) {
         const eye = $('[data-dlg-eyebrow]', dlg);
-        if (eye) eye.textContent = wholesale ? 'Free venue sample' : 'One coaster, on us';
+        if (eye) eye.textContent = wholesale ? '6 free sample coasters for wholesale buyers' : '1 free sample coaster for retail buyers';
         const title = $('[data-dlg-title]', dlg);
-        if (title) title.textContent = wholesale ? 'Free 6-coaster sample for your venue' : 'Get a free sample coaster';
-        if (submit) submit.textContent = wholesale ? 'Send my free venue sample' : 'Send my free sample coaster';
+        if (title) title.textContent = wholesale ? 'Get 6 free sample coasters' : 'Get a free sample';
+        if (submit) submit.textContent = wholesale ? 'Send my 6 free samples' : 'Send my sample';
       } else if (dlg) {
         const COPY = {
           'Half Dozen order': ["We'll confirm details and pricing", 'Buy The Half Dozen ($29)', 'Send my order'],
@@ -105,11 +105,21 @@
         if (h) h.textContent = title;
         if (submit) submit.textContent = label;
       } else if (submit && sampleType) {
-        submit.textContent = wholesale ? 'Send my free venue sample' : 'Send my free sample coaster';
+        submit.textContent = wholesale ? 'Send my 6 free samples' : 'Send my sample';
       }
     };
     $$('[name=buyer_type]', form).forEach((r) => r.addEventListener('change', apply));
-    if (form.request_type && form.request_type.tagName === 'SELECT') form.request_type.addEventListener('change', apply);
+    if (form.request_type && form.request_type.tagName === 'SELECT') {
+      form.request_type.addEventListener('change', () => {
+        const rt = form.request_type.value;
+        const want = rt === 'Half Dozen sample' ? 'wholesale' : (rt === 'Sample' || rt === 'Free sample (1 coaster)' ? 'retail' : '');
+        if (want) {
+          const radio = form.querySelector(`[name=buyer_type][value="${want}"]`);
+          if (radio) radio.checked = true;
+        }
+        apply();
+      });
+    }
     apply();
     form._applyBuyer = apply;
   }
@@ -141,8 +151,10 @@
     $$('[data-open-sample]').forEach((btn) => btn.addEventListener('click', () => {
       $('[data-form-view]', dlg).hidden = false; $('[data-success-view]', dlg).hidden = true;
       $('[data-form-error]', dlg).textContent = '';
-      form.request_type.value = btn.dataset.type || 'Sample';
-      const buyer = btn.dataset.buyer === 'wholesale' ? 'wholesale' : 'retail';
+      const type = btn.dataset.type || 'Sample';
+      form.request_type.value = type;
+      let buyer = btn.dataset.buyer;
+      if (buyer !== 'wholesale' && buyer !== 'retail') buyer = type === 'Half Dozen sample' ? 'wholesale' : 'retail';
       const radio = form.querySelector(`[name=buyer_type][value="${buyer}"]`);
       if (radio) radio.checked = true;
       form._applyBuyer?.();

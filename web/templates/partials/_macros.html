@@ -46,9 +46,9 @@
   <div>
     <p class="eyebrow" style="color:var(--cream-muted)">Custom logo coasters</p>
     <h3>Your logo, fresh baked.</h3>
-    <p>From 100 coasters. Venues get 6 free sample coasters, with your logo when you send art, so you can try them on your bar.</p>
+    <p>From 100 coasters. Wholesale buyers get 6 free sample coasters to try on the bar.</p>
   </div>
-  <button type="button" class="btn btn-primary" data-open-sample data-type="Sample" data-buyer="wholesale">Get a free venue sample</button>
+  <button type="button" class="btn btn-primary" data-open-sample data-type="Half Dozen sample" data-buyer="wholesale">Get 6 free sample coasters</button>
 </div>
 {% endmacro %}
 
@@ -56,7 +56,7 @@
 <section class="drops" aria-labelledby="drops-h">
   <div class="wrap drops-in">
     <div class="drops-copy">
-      <p class="eyebrow" style="color:var(--cream-muted)">JUP LIFE Drops</p>
+      <p class="eyebrow" style="color:var(--cream-muted)">JUP LIFE Studio Drops</p>
       <h2 id="drops-h">First dibs on the next batch.</h2>
       <p>New trays, seasonal flavors and small-batch specials, straight from the oven. A note when something's fresh. No spam, unsubscribe anytime.</p>
     </div>
@@ -95,28 +95,30 @@
   <dl>
     {% for t in site.tiers %}<div class="row"><dt>{{ t.qty }}</dt><span class="leader" aria-hidden="true"></span><dd>{{ t.price }}</dd></div>
     {% endfor %}
-    <div class="row"><dt>Samples</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">by request</dd></div>
+    <div class="row"><dt>Retail sample</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">1 free</dd></div>
+    <div class="row"><dt>Wholesale sample</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">6 free</dd></div>
   </dl>
   <p class="foot">Locally grown in Jupiter, FL.</p>
 </section>
 {% endmacro %}
 
 {% macro sample_form(type='Sample', buyer='retail', select=False, submit=None, notes_ph='Product, quantity, colors, anything else', segment=False) %}
-{% set label = submit or ('Send my free venue sample' if buyer == 'wholesale' else 'Send my free sample coaster') %}
+{% set label = submit or ('Send my 6 free samples' if buyer == 'wholesale' else 'Send my sample') %}
 <form class="form" data-sample-form action="/api/sample-request" method="post" enctype="multipart/form-data" novalidate>
   <fieldset class="field buyer-type" data-buyer-type>
     <legend>I'm buying for</legend>
-    <label><input type="radio" name="buyer_type" value="retail" {% if buyer == 'retail' %}checked{% endif %}> Myself: free sample coaster (1)</label>
-    <label><input type="radio" name="buyer_type" value="wholesale" {% if buyer == 'wholesale' %}checked{% endif %}> My restaurant, bar or venue: free 6-coaster sample</label>
+    <label><input type="radio" name="buyer_type" value="retail" {% if buyer == 'retail' %}checked{% endif %}> Myself: 1 free sample coaster</label>
+    <label><input type="radio" name="buyer_type" value="wholesale" {% if buyer == 'wholesale' %}checked{% endif %}> My restaurant, bar or venue: 6 free sample coasters</label>
   </fieldset>
   <input type="hidden" name="sample_qty" value="{{ 6 if buyer == 'wholesale' else 1 }}" data-sample-qty>
   {% if select %}
   <label class="field">Request type
     <select name="request_type">
-      <option value="Sample">Free sample (1 coaster for me / 6 for my venue)</option>
-      <option value="Half Dozen order">Buy The Half Dozen ($29)</option>
-      <option value="Product question">Product question</option>
-      <option value="Custom order">Custom order</option>
+      <option value="Sample">1 free sample coaster (retail)</option>
+      <option value="Half Dozen order">Order a Half Dozen</option>
+      <option value="Half Dozen sample">6 free sample coasters (wholesale)</option>
+      <option>Product question</option>
+      <option value="Custom">Custom order</option>
     </select>
   </label>
   {% else %}

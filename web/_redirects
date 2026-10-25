@@ -12,5 +12,3 @@
 /success/* /shop 301
 /ecosystem /  301
 /ecosystem/* / 301
-# /about is a real page. /contact has no page of its own.
-/contact /wholesale#request 301

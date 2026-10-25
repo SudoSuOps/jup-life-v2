@@ -8,6 +8,12 @@
 <meta name="description" content="{% block description %}{% endblock %}">
 <link rel="canonical" href="{{ site_url }}{{ page.path if page.path != '/404' else '/' }}">
 {% if page.path == '/404' or not indexable %}<meta name="robots" content="noindex">{% endif %}
+<!-- TODO(owner): paste the Bing Webmaster msvalidate.01 content value, then uncomment.
+<meta name="msvalidate.01" content="">
+-->
+<!-- TODO(owner): paste the Google Search Console google-site-verification content value, then uncomment.
+<meta name="google-site-verification" content="">
+-->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="JUP LIFE by Mrs. Smash">
 <meta property="og:title" content="{% block ogtitle %}{{ self.title() }}{% endblock %}">
@@ -44,11 +50,13 @@
     <nav class="nav" aria-label="Main">
       <a href="/shop"{% if page.nav == 'shop' %} aria-current="page"{% endif %}>Shop</a>
       <a href="/wholesale"{% if page.nav == 'wholesale' %} aria-current="page"{% endif %}>Wholesale &amp; Samples</a>
+      <a href="/about"{% if page.nav == 'about' %} aria-current="page"{% endif %}>About</a>
+      <a href="/contact"{% if page.nav == 'contact' %} aria-current="page"{% endif %}>Contact</a>
       <button type="button" class="bag-btn" data-open-bag aria-label="Bag, 0 items">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
         <span class="bag-count" data-bag-count>0</span>
       </button>
-      {% if page.nav == 'wholesale' %}<button type="button" class="btn btn-primary btn-sm" data-open-sample data-type="Sample" data-buyer="wholesale">Get a free venue sample</button>{% else %}<button type="button" class="btn btn-primary btn-sm" data-open-sample data-type="Sample" data-buyer="retail">Get a free sample coaster</button>{% endif %}
+      {% if page.nav == 'wholesale' %}<button type="button" class="btn btn-primary btn-sm" data-open-sample data-type="Half Dozen sample" data-buyer="wholesale">6 free samples</button>{% else %}<button type="button" class="btn btn-primary btn-sm" data-open-sample data-type="Sample" data-buyer="retail">1 free sample</button>{% endif %}
     </nav>
   </div>
 </header>
@@ -61,7 +69,7 @@
 <footer class="site-footer">
   <div class="wrap top">
     <div class="stack" style="flex:1 1 260px;gap:12px">
-      <div class="logo-chip"><img src="/img/logo.png" alt="JUP LIFE" width="110" height="64"></div>
+      <div class="logo-chip"><img src="/img/logo.png" alt="JUP LIFE by Mrs. Smash" width="110" height="64"></div>
       <span class="serif" style="font-size:28px;line-height:1.1">JUP LIFE<br><span style="font-size:18px">by Mrs. Smash</span></span>
       <span style="color:#F1E7D8">Fresh baked. Built different.</span>
     </div>
@@ -69,6 +77,8 @@
       <a href="/shop">Shop</a>
       <a href="/wholesale">Wholesale &amp; Samples</a>
       <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      <a href="/palm-beach-county">Palm Beach County</a>
       <a href="https://www.tiktok.com/@juplifestudio" rel="noopener" target="_blank">TikTok Shop</a>
       <a href="https://x.com/juplifestudio" rel="noopener" target="_blank">X</a>
       <a href="/shipping-returns">Shipping &amp; Returns</a>
@@ -83,8 +93,8 @@
   <button type="button" class="dlg-close" data-close aria-label="Close"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#5A3E2B" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16"/></svg></button>
   <div data-sample>
     <div data-form-view>
-      <p class="eyebrow" data-dlg-eyebrow>Available by request</p>
-      <h2 id="sample-h" style="font-size:34px;margin:4px 0 20px" data-dlg-title>Get a free sample coaster</h2>
+      <p class="eyebrow" data-dlg-eyebrow>1 free sample coaster for retail buyers</p>
+      <h2 id="sample-h" style="font-size:34px;margin:4px 0 20px" data-dlg-title>Get a free sample</h2>
       {{ sample_form(select=True) }}
     </div>
     {{ sample_success(closable=True) }}

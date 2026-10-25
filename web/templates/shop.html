@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% from "partials/_macros.html" import card, batch_board, short %}
-{% block title %}Shop Washable Coasters, The Readers & The Gigi | JUP LIFE, Jupiter FL{% endblock %}
-{% block description %}The bakery case: this season's tray of washable TPU coasters, Stack Bands, the Hibiscus Set (6 coasters + case), Tide soap dishes and more. 3D-printed in small batches in Jupiter, FL.{% endblock %}
-{% block ogtitle %}Shop the Batch · JUP LIFE{% endblock %}
-{% block ogdesc %}Fresh from the bakery case in Jupiter, FL.{% endblock %}
+{% block title %}Shop 3D Printed Coasters in Jupiter, FL | JUP LIFE Studio{% endblock %}
+{% block description %}Shop 3D printed coasters and custom bar coasters from JUP LIFE Studio in Jupiter, FL. The Hibiscus Set is six coasters with the case for $29. The Readers page holder and cradle is $19.{% endblock %}
+{% block ogtitle %}Shop 3D Printed Coasters in Jupiter, FL{% endblock %}
+{% block ogdesc %}{{ self.description() }}{% endblock %}
 {% block head %}
 {% for p in products if p.price %}
 <script type="application/ld+json">
@@ -20,8 +20,9 @@
   <div class="split">
     <div class="stack" style="gap:18px">
       <p class="eyebrow">The bakery case · Jupiter, FL</p>
-      <h1 id="shop-h">The Batch.</h1>
-      <p class="lede">The current tray, plus the always-on favorites.</p>
+      <h1 id="shop-h">Shop 3D Printed Coasters in Jupiter, FL</h1>
+      <p class="subhead">The Batch.</p>
+      <p class="lede">3D printed coasters and custom bar coasters from the current tray, plus the always-on favorites. Restaurant coasters for <a href="/palm-beach-county">Palm Beach County</a> start on the wholesale counter.</p>
       <div class="btn-row">
         <a href="#tray" class="btn btn-primary">See today's tray</a>
         <a href="#shelf" class="btn btn-outline">Always on the shelf</a>
@@ -37,7 +38,7 @@
 
 <div class="wrap" style="padding-bottom:clamp(32px,4vw,56px)">
   <figure style="margin:0;position:relative">
-    <img src="/img/bakery-dome-800.webp" srcset="/img/bakery-dome-800.webp 800w, /img/bakery-dome-1600.webp 1600w" sizes="(min-width: 1248px) 1152px, 100vw" alt="The JUP LIFE bakery counter: a glass dome over stacks of terracotta, sage and cream coasters, a wood tray beside kraft boxes, printers by the window" width="1600" height="900" decoding="async" style="width:100%;aspect-ratio:16/9;max-height:560px;object-fit:cover;object-position:60% 50%;border-radius:24px">
+    <img src="/img/bakery-dome-800.webp" srcset="/img/bakery-dome-800.webp 800w, /img/bakery-dome-1600.webp 1600w" sizes="(min-width: 1248px) 1152px, 100vw" alt="The JUP LIFE Studio bakery counter: a glass dome over stacks of terracotta, sage and cream coasters, a wood tray beside kraft boxes, printers by the window" width="1600" height="900" decoding="async" style="width:100%;aspect-ratio:16/9;max-height:560px;object-fit:cover;object-position:60% 50%;border-radius:24px">
     <figcaption class="render-cap">Studio rendering · the bakery counter</figcaption>
   </figure>
 </div>
@@ -97,10 +98,10 @@
     <div>
       <p class="eyebrow" style="color:var(--cream-muted)">Baked to order</p>
       <h3 id="order-h">Your logo, fresh baked.</h3>
-      <p>Custom-logo coasters from 100. Hotels, events and custom pieces too. Venues: ask for a free 6-coaster sample.</p>
+      <p>Custom logo coasters from 100 for restaurants and bars. Wholesale buyers get 6 free sample coasters. Retail buyers get 1 free sample coaster.</p>
     </div>
     <div class="btn-row">
-      <button type="button" class="btn btn-primary" data-open-sample data-type="Sample" data-buyer="wholesale">Get a free venue sample</button>
+      <button type="button" class="btn btn-primary" data-open-sample data-type="Half Dozen sample" data-buyer="wholesale">Get 6 free sample coasters</button>
       <a href="/wholesale" class="btn btn-outline" style="color:var(--cream);border-color:var(--cream)">Wholesale &amp; samples</a>
     </div>
   </div>

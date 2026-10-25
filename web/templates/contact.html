@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Contact JUP LIFE Studio in Jupiter, FL{% endblock %}
+{% block description %}Contact JUP LIFE Studio in Jupiter, FL at +1-561-532-7120 or hello@juplifestudio.com. Retail buyers get 1 free sample coaster. Wholesale buyers get 6 free sample coasters.{% endblock %}
+{% block ogtitle %}Contact JUP LIFE Studio in Jupiter, FL{% endblock %}
+{% block ogdesc %}{{ self.description() }}{% endblock %}
+{% block content %}
+<div class="wrap section prose">
+  <p class="eyebrow">The studio</p>
+  <h1>Contact JUP LIFE Studio in Jupiter, FL</h1>
+  <p class="subhead">Say hello.</p>
+  <p>Questions about 3D printed coasters, custom bar coasters or restaurant coasters. JUP LIFE Studio bakes in Jupiter and ships across the U.S., including <a href="/palm-beach-county">Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County</a>.</p>
+  <!-- TODO(owner): street address is intentionally omitted. Add a public street address only after the owner confirms one. Do not invent it. -->
+  <h2>Call, text or email</h2>
+  <address class="contact-list">
+    <span>Call Smash: <a href="tel:+15615327120">+1-561-532-7120</a></span>
+    <span>Say hello: <a href="mailto:hello@juplifestudio.com">hello@juplifestudio.com</a></span>
+    <span>Email Dee: <a href="mailto:dee@juplifestudio.com">dee@juplifestudio.com</a></span>
+    <span>Text us: <a href="sms:+15615818015">561-581-8015</a> (texting only)</span>
+    <span>X: <a href="https://x.com/juplifestudio" rel="noopener">@juplifestudio</a></span>
+    <span>TikTok: <a href="https://www.tiktok.com/@juplifestudio" rel="noopener" target="_blank">@juplifestudio</a></span>
+  </address>
+  <h2>Free samples</h2>
+  <p>Retail buyers get 1 free sample coaster. Wholesale buyers get 6 free sample coasters.</p>
+  <div class="btn-row">
+    <button type="button" class="btn btn-primary" data-open-sample data-type="Sample" data-buyer="retail">1 free sample</button>
+    <a class="btn btn-outline" href="/wholesale">Wholesale, 6 free samples</a>
+  </div>
+</div>
+{% endblock %}
