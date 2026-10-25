@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% from "partials/_macros.html" import sample_success, short %}
-{% block title %}Custom Logo Coasters for Restaurants | Palm Beach County{% endblock %}
-{% block description %}The Bakery Counter for restaurants and bars: custom washable TPU coasters with your logo, designed in Jupiter, FL. From 100 coasters at $2.00 ea. Samples available by request.{% endblock %}
-{% block ogtitle %}Fresh baked for your bar · JUP LIFE Wholesale{% endblock %}
-{% block ogdesc %}Custom washable TPU coasters with your logo. From $2.00 ea. Samples available by request.{% endblock %}
+{% block title %}Custom Logo Coasters for Palm Beach County Restaurants | JUP LIFE Studio{% endblock %}
+{% block description %}Custom logo coasters and restaurant coasters for Palm Beach County, 3D printed in Jupiter, FL. Custom bar coasters for Tequesta, Juno Beach, Palm Beach Gardens and West Palm Beach. Wholesale buyers get 6 free sample coasters. Retail buyers get 1 free sample coaster.{% endblock %}
+{% block ogtitle %}Custom Logo Coasters for Palm Beach County Restaurants{% endblock %}
+{% block ogdesc %}{{ self.description() }}{% endblock %}
 {% block head %}<link rel="preload" as="image" href="/img/ws-hero-bar-800.webp" imagesrcset="/img/ws-hero-bar-800.webp 800w, /img/ws-hero-bar-1600.webp 1600w" imagesizes="100vw">{% endblock %}
 {% block content %}
 <section class="ws-hero" aria-labelledby="ws-h">
@@ -13,10 +13,11 @@
     <div class="wrap" style="width:100%">
       <div class="panel">
         <p class="eyebrow">The Bakery Counter · for restaurants</p>
-        <h1 id="ws-h">Fresh baked for your bar.</h1>
-        <p class="lede">Custom washable TPU coasters, designed in Jupiter, FL. Your logo, fresh out of our oven.</p>
+        <h1 id="ws-h">Custom Logo Coasters for Palm Beach County Restaurants</h1>
+        <p class="subhead">Fresh baked for your bar.</p>
+        <p class="lede">Custom bar coasters and restaurant coasters in washable TPU, 3D printed in Jupiter, FL. Your logo, fresh out of our oven.</p>
         <div class="btn-row" style="align-items:center">
-          <button type="button" class="btn btn-primary" data-open-sample>Claim a free Half Dozen</button>
+          <button type="button" class="btn btn-primary" data-open-sample data-type="Half Dozen sample">Get 6 free sample coasters</button>
           <a href="#price-board" style="font-weight:600;padding:12px 4px">See the price board ↓</a>
         </div>
         <p style="margin:0;font-size:13px">Studio rendering</p>
@@ -32,8 +33,8 @@
   </div>
   <ol class="step-strip" style="list-style:none;margin:0;padding:0">
     <li class="step-card">
-      {{ pic("img/ws-step-taste.webp", "The Half Dozen: six coasters in a windowed kraft box with a sage band and the Mrs. Smash tag", sizes="(min-width: 800px) 360px, 100vw") }}
-      <div class="body"><span class="num">Step 1</span><h3>Taste.</h3><p>We send a Half Dozen: six coasters in a windowed kraft box. Samples are available by request.</p></div>
+      {{ pic("img/ws-step-taste.webp", "Six coasters in a windowed kraft box with a sage band and the Mrs. Smash tag", sizes="(min-width: 800px) 360px, 100vw") }}
+      <div class="body"><span class="num">Step 1</span><h3>Taste.</h3><p>Wholesale buyers get 6 free sample coasters in a windowed kraft box. Retail buyers get 1 free sample coaster.</p></div>
     </li>
     <li class="step-card">
       {{ pic("img/ws-step-order.webp", "A pencil sketch of a sunrise-over-waves logo beside a sage coaster with the same design", sizes="(min-width: 800px) 360px, 100vw") }}
@@ -54,16 +55,17 @@
     <div class="stack" style="gap:16px;flex:1 1 320px">
       <p class="eyebrow">The price board</p>
       <h2>Priced by the batch.</h2>
-      <p style="margin:0;font-size:18px;max-width:28em">The more you bake, the less each coaster costs. Every batch starts with a free Half Dozen.</p>
+      <p style="margin:0;font-size:18px;max-width:28em">The more you bake, the less each coaster costs. Wholesale buyers get 6 free sample coasters before a logo batch.</p>
       <p style="margin:0;font-size:15px">Logo setup, shipping and lead time: {{ ph('logo_terms', 'CONFIRM') }}</p>
-      <div><button type="button" class="btn btn-outline" data-open-sample>Claim a free Half Dozen</button></div>
+      <div><button type="button" class="btn btn-outline" data-open-sample data-type="Half Dozen sample">Get 6 free sample coasters</button></div>
     </div>
     <section class="board price-board" aria-labelledby="pb-h" style="flex:1 1 460px">
       <h3 id="pb-h" class="serif" style="text-align:center;font-size:clamp(28px,3vw,36px);margin:0 0 16px">Today's Wholesale Batch</h3>
       <dl>
         {% for t in site.tiers %}<div class="row"><dt>{{ t.qty if 'coaster' in t.qty else t.qty ~ ' coasters' }}</dt><span class="leader" aria-hidden="true"></span><dd>{{ t.total }} <small>({{ t.price }})</small></dd></div>
         {% endfor %}
-        <div class="row"><dt>Samples</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">by request</dd></div>
+        <div class="row"><dt>Retail sample</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">1 free</dd></div>
+        <div class="row"><dt>Wholesale sample</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">6 free</dd></div>
       </dl>
       <p class="foot">Locally grown in Jupiter, FL.</p>
     </section>
@@ -97,7 +99,7 @@
     <p class="eyebrow">Custom logo coasters</p>
     <h2 id="logo-h">Your logo, our oven.</h2>
     <p style="margin:0;font-size:18px;max-width:30em">Send us your logo and we'll bake it into the coaster as a raised relief, in the colorway that fits your room. You approve a sample print before we print your batch.</p>
-    <div><button type="button" class="btn btn-primary" data-open-sample>Start with a free Half Dozen</button></div>
+    <div><button type="button" class="btn btn-primary" data-open-sample data-type="Half Dozen sample">Get 6 free sample coasters</button></div>
   </div>
   <figure style="margin:0;position:relative">
     {{ pic("img/ws-logo-mockup-example.webp", "Example design: a cream coaster with a raised fork-and-spoon emblem, stacked on a bar", sizes="(min-width: 900px) 520px, calc(100vw - 32px)", style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:24px") }}
@@ -132,12 +134,12 @@
       <ul class="chips" aria-label="Who we bake for">
         <li>Restaurants</li><li>Bars</li><li>Boutique hotels</li><li>Airbnb hosts</li><li>Weddings</li><li>Corporate events</li><li>Parties</li>
       </ul>
-      <p style="margin:0;font-size:17px">Serving Palm Beach County first, and shipping beyond.</p>
+      <p style="margin:0;font-size:17px">Serving Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and the rest of <a href="/palm-beach-county">Palm Beach County</a>, and shipping beyond.</p>
     </div>
   </div>
   <figure style="margin:0;position:relative">
     <img src="/img/studio-counter-800.webp" srcset="/img/studio-counter-800.webp 800w, /img/studio-counter-1600.webp 1600w" sizes="(min-width: 1248px) 1152px, 100vw"
-         alt="The JUP LIFE studio counter: coasters under glass domes and on wood trays, printers and filament behind, palm trees outside" width="1600" height="900" loading="lazy" decoding="async" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:14px">
+         alt="The JUP LIFE Studio counter: coasters under glass domes and on wood trays, printers and filament behind, palm trees outside" width="1600" height="900" loading="lazy" decoding="async" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:14px">
     <figcaption class="render-cap">Studio rendering</figcaption>
   </figure>
 </section>
@@ -145,7 +147,7 @@
 <section class="wrap faq reveal" style="padding-bottom:clamp(48px,6vw,88px)" aria-labelledby="faq-h">
   <h2 id="faq-h" style="font-size:clamp(32px,3.6vw,44px);margin-bottom:12px">Counter questions.</h2>
   <details open><summary>How long does a batch take?</summary><p>{{ ph('wholesale_lead_time', 'PLACEHOLDER: wholesale lead time') }}</p></details>
-  <details><summary>Is there a minimum?</summary><p>Wholesale batches start at 100 coasters. Samples are available by request.</p></details>
+  <details><summary>Is there a minimum?</summary><p>Wholesale batches start at 100 coasters. Wholesale buyers get 6 free sample coasters. Retail buyers get 1 free sample coaster.</p></details>
   <details><summary>What colors can I pick?</summary><p>Our colorways are named after ingredients (pumpkin, blueberry, peach, sage, cinnamon and more), and they change with Today's Batch. Ask about matching your brand.</p></details>
   <details><summary>Can you do my logo?</summary><p>Yes. {{ ph('logo_setup_terms', 'CONFIRM logo setup terms') }}</p></details>
   <details><summary>Can I wash them?</summary><p>Yes. They're washable and dishwasher-safe TPU. {{ ph('top_rack', 'CONFIRM top-rack') }}</p></details>
@@ -155,9 +157,9 @@
   <div class="wrap section reveal">
     <div class="split" style="align-items:flex-start">
       <div class="stack" style="gap:18px;flex:1 1 340px">
-        <p class="eyebrow">The Half Dozen</p>
-        <h2 id="req-h">Samples are available by request.</h2>
-        <p style="margin:0;font-size:18px">Six coasters, one little box. Tell us where to send it.</p>
+        <p class="eyebrow">Free samples</p>
+        <h2 id="req-h">6 free sample coasters for wholesale buyers.</h2>
+        <p style="margin:0;font-size:18px">Six coasters, one little box. Tell us where to send it. Retail buyers get 1 free sample coaster.</p>
         <figure style="margin:0;position:relative">
           {{ pic("img/ws-bulk-boxes-studio.webp", "Kraft boxes stacked on a cart in the studio, printers along the wall", sizes="(min-width: 900px) 440px, calc(100vw - 32px)", style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px") }}
           <figcaption class="render-cap">Studio rendering</figcaption>
@@ -174,7 +176,7 @@
               <label class="field">Name*<input name="name" required autocomplete="name"></label>
               <label class="field">Business*<input name="business" required autocomplete="organization"></label>
             </div>
-            <label class="field">Address*<input name="address" required autocomplete="street-address" placeholder="Where should we send your Half Dozen?"></label>
+            <label class="field">Address*<input name="address" required autocomplete="street-address" placeholder="Where should we send your 6 free sample coasters?"></label>
             <div class="grid">
               <label class="field">Email*<input name="email" type="email" required autocomplete="email"></label>
               <label class="field">Phone<input name="phone" type="tel" autocomplete="tel"></label>
@@ -186,7 +188,7 @@
             <input type="hidden" name="source_page" value="/wholesale">
             <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
             <p class="field" role="alert" data-form-error style="margin:0"></p>
-            <button type="submit" class="btn btn-primary">Send my Half Dozen</button>
+            <button type="submit" class="btn btn-primary">Send my 6 free samples</button>
           </form>
         </div>
         {{ sample_success() }}

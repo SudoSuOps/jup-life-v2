@@ -1,0 +1,32 @@
+# Ping IndexNow with the production sitemap on every push to main.
+# The key file is web/root/<key>.txt, copied to the site root by tools/build.py.
+# Cloudflare Pages publishes that file on the same push, so tools/indexnow.py
+# waits until https://juplifestudio.com/<key>.txt is live before it POSTs.
+name: IndexNow
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install build dependencies
+        run: pip install -r requirements.txt
+      - name: Build the production sitemap
+        run: python tools/build.py
+        env:
+          SITE_URL: https://juplifestudio.com
+          INDEXABLE: "1"
+      - name: Ping IndexNow
+        run: python tools/indexnow.py --sitemap dist/sitemap.xml
