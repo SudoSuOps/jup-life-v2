@@ -20,8 +20,9 @@ a:hover { color: var(--terracotta-hover); }
 
 /* type */
 .serif, h1, h2, h3.serif { font-family: var(--font-serif); font-weight: 400; }
-h1 { margin: 0; font-size: clamp(44px, 6.4vw, 84px); line-height: 1.02; letter-spacing: -.01em; }
+h1 { margin: 0; font-size: clamp(34px, 4.5vw, 56px); line-height: 1.08; letter-spacing: -.01em; text-wrap: balance; }
 h2 { margin: 0; font-size: clamp(34px, 4vw, 52px); line-height: 1.1; }
+.subhead { margin: 0; font-family: var(--font-serif); font-size: clamp(22px, 2.8vw, 36px); line-height: 1.15; }
 .eyebrow { margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
 .lede { margin: 0; font-size: clamp(17px, 1.6vw, 20px); max-width: 30em; }
 .ph { color: var(--terracotta); font-weight: 600; } /* visible [[PLACEHOLDER]] marker: must be gone before launch */
@@ -214,7 +215,8 @@ dialog::backdrop { background: rgba(43,43,43,.55); }
 .nav a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
 .prose { max-width: 720px; display: flex; flex-direction: column; gap: 16px; }
 .prose h2 { font-size: clamp(26px, 3vw, 34px); margin-top: 16px; }
-.prose p { margin: 0; }
+.prose p, .prose address { margin: 0; }
+.prose address, .contact-list { font-style: normal; display: flex; flex-direction: column; gap: 8px; }
 .thumbs picture { display: contents; }
 
 /* ---- Wholesale: The Bakery Counter ---- */

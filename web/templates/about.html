@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Meet Mrs. Smash | JUP LIFE by Mrs. Smash{% endblock %}
+{% block description %}Mrs. Smash (Dee) is the face of JUP LIFE by Mrs. Smash, a Jupiter, FL 3D printing studio baking 3D printed coasters, custom bar coasters and restaurant coasters.{% endblock %}
+{% block ogtitle %}Meet Mrs. Smash{% endblock %}
+{% block ogdesc %}{{ self.description() }}{% endblock %}
+{% block content %}
+<section class="wrap section" style="display:flex;flex-wrap:wrap;align-items:center;gap:32px 64px">
+  <figure style="flex:0 1 420px;margin:0">
+    {{ pic("img/dee-portrait.webp", "Dee, Mrs. Smash, smiling in sunglasses on a sunny Jupiter morning", sizes="420px", style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:14px") }}
+  </figure>
+  <div class="stack prose" style="flex:1 1 320px;min-width:0;gap:16px">
+    <p class="eyebrow">About</p>
+    <h1>Meet Mrs. Smash</h1>
+    <p class="subhead">A little piece of our happy place.</p>
+    <p>Dee is Mrs. Smash: mom of four, wife to one, and the heart of the studio. She and Smash bake every batch right here in Jupiter.</p>
+    <p>Mrs. Smash (Dee) is the face of JUP LIFE by Mrs. Smash, a Jupiter, FL 3D printing studio. The studio bakes 3D printed coasters, custom bar coasters and restaurant coasters.</p>
+    <p>The studio serves <a href="/palm-beach-county">Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County</a>.</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="/shop">Shop the batch</a>
+      <a class="btn btn-outline" href="/contact">Contact</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

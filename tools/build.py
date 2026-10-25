@@ -208,20 +208,25 @@ def llms_txt(site: dict, products: list, batch: dict) -> str:
     base = site["site_url"]
     lines = [
         "# JUP LIFE by Mrs. Smash", "",
-        "> JUP LIFE is a small 3D-printing studio in Jupiter, Florida that bakes washable TPU coasters and coastal home pieces "
+        "> JUP LIFE Studio is a small 3D-printing studio in Jupiter, Florida that bakes washable TPU coasters and coastal home pieces "
         "in small seasonal batches, sold retail online and wholesale with custom logos to restaurants, bars, boutique hotels, "
         "rentals and event hosts in Palm Beach County and beyond.", "",
         "## Key facts",
-        "- Location: Jupiter, FL (serves Jupiter, Tequesta, Palm Beach Gardens, Juno Beach and Palm Beach County; ships within the US)",
+        "- Location: Jupiter, FL (serves Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County; ships within the US)",
         "- Material: flexible TPU 95A, washable; TPU pieces are dishwasher safe (normal dishwasher cycle, avoid extended or high-heat modes)",
         "- Shipping: free on all U.S. orders; orders leave the studio within 2-3 business days",
-        "- Wholesale: custom logo coasters from 100 pieces; Half Dozen sample available by request for businesses (retail customers can request one coaster); a sample print is made for approval before the batch is printed",
+        "- Samples: retail buyers get 1 free sample coaster; wholesale buyers get 6 free sample coasters. A sample print is made for approval before a logo batch is printed",
+        "- Wholesale: custom logo coasters and restaurant coasters from 100 pieces",
         f"- Current tray: {batch.get('tray', '')}",
-        "- Contact: hello@juplifestudio.com, call 561-532-7120, text 561-581-8015", "",
+        "- Contact: hello@juplifestudio.com, call +1-561-532-7120, text 561-581-8015",
+        "- X: https://x.com/juplifestudio", "",
         "## Pages",
-        f"- [Home]({base}/): who we are, the current tray, quality, FAQ",
+        f"- [Home]({base}/): 3D printed coasters, the current tray, quality, FAQ",
         f"- [Shop]({base}/shop): retail products with prices and checkout",
-        f"- [Wholesale & Samples]({base}/wholesale): custom logo coasters for restaurants, bars, hotels, rentals and events, price tiers, free sample",
+        f"- [Wholesale & Samples]({base}/wholesale): custom logo coasters for Palm Beach County restaurants, bars, hotels, rentals and events",
+        f"- [About]({base}/about): Meet Mrs. Smash (Dee), the face of JUP LIFE by Mrs. Smash",
+        f"- [Contact]({base}/contact): call +1-561-532-7120",
+        f"- [Palm Beach County]({base}/palm-beach-county): 3D printed coasters for Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County",
         f"- [Shipping & Returns]({base}/shipping-returns)",
         f"- [Privacy]({base}/privacy)", "", "## Products"]
     for p in products:
@@ -261,8 +266,9 @@ def main() -> int:
         return Markup(html.escape(val)) if val else Markup(f'<span class="ph">[[{html.escape(label)}]]</span>')
 
     def product_ld(p: dict) -> Markup:
+        # Prices come from products.json, which is what the shop cards show. Never add review or aggregateRating.
         ld = {"@context": "https://schema.org", "@type": "Product", "name": p["name"], "description": p["line"], "sku": p["sku"],
-              "brand": {"@type": "Brand", "name": "JUP LIFE"}, "category": "Home & Garden",
+              "brand": {"@type": "Brand", "name": "JUP LIFE Studio"}, "category": "Home & Garden",
               "manufacturer": {"@type": "Organization", "name": "JUP LIFE by Mrs. Smash"},
               "offers": {"@type": "Offer", "price": f"{p['price']:.2f}", "priceCurrency": "USD",
                          "availability": "https://schema.org/InStock", "itemCondition": "https://schema.org/NewCondition",
@@ -286,17 +292,28 @@ def main() -> int:
         "index.html": ("home.html", {"path": "/", "nav": "home"}),
         "shop.html": ("shop.html", {"path": "/shop", "nav": "shop"}),
         "wholesale.html": ("wholesale.html", {"path": "/wholesale", "nav": "wholesale"}),
+        "about.html": ("about.html", {"path": "/about", "nav": "about"}),
+        "contact.html": ("contact.html", {"path": "/contact", "nav": "contact"}),
+        "palm-beach-county.html": ("palm_beach_county.html", {"path": "/palm-beach-county", "nav": "palm"}),
         "privacy.html": ("privacy.html", {"path": "/privacy", "nav": ""}),
         "shipping-returns.html": ("shipping_returns.html", {"path": "/shipping-returns", "nav": ""}),
         "404.html": ("not_found.html", {"path": "/404", "nav": ""}),
     }
-    crumbs = {"/shop": "Shop", "/wholesale": "Wholesale & Samples"}
+    crumbs = {
+        "/shop": "Shop",
+        "/wholesale": "Wholesale & Samples",
+        "/about": "Meet Mrs. Smash",
+        "/contact": "Contact",
+        "/palm-beach-county": "Palm Beach County",
+    }
     for out, (tpl, ctx) in pages.items():
         page_html = env.get_template(tpl).render(page=ctx)
         (DIST / out).write_text(add_ld(page_html, ctx["path"], site["site_url"], crumbs))
 
     today = date.today().isoformat()
-    urls = [(f"{site['site_url']}{p}", pr) for p, pr in (("/", "1.0"), ("/shop", "0.9"), ("/wholesale", "0.9"), ("/shipping-returns", "0.3"), ("/privacy", "0.2"))]
+    urls = [(f"{site['site_url']}{p}", pr) for p, pr in (
+        ("/", "1.0"), ("/shop", "0.9"), ("/wholesale", "0.9"), ("/about", "0.7"),
+        ("/contact", "0.6"), ("/palm-beach-county", "0.8"), ("/shipping-returns", "0.3"), ("/privacy", "0.2"))]
     (DIST / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod><priority>{pr}</priority></url>\n" for u, pr in urls) + "</urlset>\n")

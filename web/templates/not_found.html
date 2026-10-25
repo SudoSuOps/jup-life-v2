@@ -1,11 +1,14 @@
 {% extends "base.html" %}
-{% block title %}Page not found | JUP LIFE{% endblock %}
-{% block description %}That page isn't on the tray.{% endblock %}
+{% block title %}Page Not Found | JUP LIFE Studio{% endblock %}
+{% block description %}That page isn't on the tray at JUP LIFE Studio.{% endblock %}
+{% block ogtitle %}Page Not Found | JUP LIFE Studio{% endblock %}
+{% block ogdesc %}{{ self.description() }}{% endblock %}
 {% block content %}
 <div class="wrap section prose">
   <p class="eyebrow">404</p>
-  <h1>Not on the tray.</h1>
-  <p>That page isn't in this batch. Try the shop or say hello.</p>
+  <h1>Page Not Found</h1>
+  <p class="subhead">Not on the tray.</p>
+  <p>That page isn't in this batch. Try the <a href="/shop">shop</a> or <a href="/contact">say hello</a>.</p>
   <div class="btn-row"><a class="btn btn-primary" href="/shop">Shop the Batch</a><a class="btn btn-outline" href="/">Back home</a></div>
 </div>
 {% endblock %}
