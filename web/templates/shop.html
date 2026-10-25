@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "partials/_macros.html" import card, batch_board, short %}
+{% from "partials/_macros.html" import card, batch_board, short, pop_tray %}
 {% block title %}Shop 3D Printed Coasters in Jupiter, FL | JUP LIFE Studio{% endblock %}
 {% block description %}Shop 3D printed coasters and custom bar coasters from JUP LIFE Studio in Jupiter, FL. The Hibiscus Set is six coasters with the case for $29. The Readers page holder and cradle is $19.{% endblock %}
 {% block ogtitle %}Shop 3D Printed Coasters in Jupiter, FL{% endblock %}
@@ -25,6 +25,7 @@
       <p class="lede">3D printed coasters and custom bar coasters from the current tray, plus the always-on favorites. Restaurant coasters for <a href="/palm-beach-county">Palm Beach County</a> start on the wholesale counter.</p>
       <div class="btn-row">
         <a href="#tray" class="btn btn-primary">See today's tray</a>
+        <a href="#pop-trays" class="btn btn-outline">Pop Trays</a>
         <a href="#shelf" class="btn btn-outline">Always on the shelf</a>
       </div>
     </div>
@@ -59,6 +60,22 @@
   </figure>
   <div class="tray-grid">
     {% for sku in tray_skus %}{{ card(by_sku[sku], shop=True) }}
+    {% endfor %}
+  </div>
+</section>
+
+<div class="wrap"><hr class="band"></div>
+
+<section id="pop-trays" class="wrap section stack reveal" style="gap:40px" aria-labelledby="pop-trays-h">
+  <div class="shelf-head">
+    <div>
+      <p class="eyebrow">Pop Trays</p>
+      <h2 id="pop-trays-h" style="margin-top:6px">Six to a tray.</h2>
+      <p>Flat, no-edge Pop Rounds, Ø100 mm, in TPU 95A. Six coasters on every tray, with the wave-over-JL mark on the back.</p>
+    </div>
+  </div>
+  <div class="pop-trays">
+    {% for p in products if p.pop_tray %}{{ pop_tray(p) }}
     {% endfor %}
   </div>
 </section>
