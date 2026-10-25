@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "partials/_macros.html" import card, cta_strip, batch_board, price_board %}
+{% from "partials/_macros.html" import card, cta_strip, batch_board, price_board, pop_tease %}
 {% block title %}Custom 3D-Printed Coasters in Jupiter, FL | JUP LIFE by Mrs. Smash{% endblock %}
 {% block description %}3D printed coasters and custom bar coasters from JUP LIFE Studio in Jupiter, FL. Restaurant coasters for Palm Beach County. Retail buyers get 1 free sample coaster. Wholesale buyers get 6 free sample coasters.{% endblock %}
 {% block ogtitle %}Custom 3D-Printed Coasters in Jupiter, FL{% endblock %}
@@ -90,6 +90,8 @@
     {{ cta_strip() }}
   </div>
 </section>
+
+{{ pop_tease() }}
 
 <section class="oven" aria-labelledby="oven-h">
   <div class="wrap section stack reveal" style="gap:28px">

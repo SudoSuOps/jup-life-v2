@@ -191,6 +191,97 @@
         }
       ],
       "render": true
+    },
+    {
+      "sku": "pop-tray-1-season-colors",
+      "name": "Pop Tray 1 · Season Colors",
+      "kicker": "Pop Tray 1",
+      "short": "Season Colors",
+      "line": "Six plain Pops, one of each season color.",
+      "price": null,
+      "material": "TPU 95A · washable · dishwasher safe",
+      "pops": [
+        {"name": "Pumpkin", "hex": "#E8731E"},
+        {"name": "Blueberry", "hex": "#3F5BB8"},
+        {"name": "Rhubarb", "hex": "#C93A5B"},
+        {"name": "Key Lime", "hex": "#A8D94A"},
+        {"name": "Peach", "hex": "#FFB07C"},
+        {"name": "Sea Salt", "hex": "#7FD1C2"}
+      ],
+      "shots": [
+        {
+          "img": "img/pop-tray-1-season-colors.webp",
+          "alt": "Concept render of Pop Tray 1, Season Colors: six plain flat Pop Round coasters on a wood tray, Pumpkin, Blueberry and Rhubarb in back, Key Lime, Peach and Sea Salt in front"
+        },
+        {
+          "img": "img/pop-tray-1-color-card.webp",
+          "alt": "Concept render of the Season Colors card for Pop Tray 1, with the flat Pop Round and swatches for Pumpkin, Blueberry, Rhubarb, Key Lime, Peach and Sea Salt"
+        }
+      ],
+      "home": false,
+      "shop": false,
+      "pop_tray": true
+    },
+    {
+      "sku": "pop-tray-2-pop-flowers",
+      "name": "Pop Tray 2 · Pop Flowers",
+      "kicker": "Pop Tray 2",
+      "short": "Pop Flowers",
+      "line": "Six flower Pops on the flat Pop Round.",
+      "price": null,
+      "material": "TPU 95A · washable · dishwasher safe",
+      "pops": [
+        {"name": "Sunflower", "hex": "#F6C21C"},
+        {"name": "Hibiscus", "hex": "#E0325F"},
+        {"name": "Orchid", "hex": "#9B4FC2"},
+        {"name": "Plumeria", "hex": "#EBE4D0"},
+        {"name": "Bird of Paradise", "hex": "#F07A1A"},
+        {"name": "Bougainvillea", "hex": "#D42A9C"}
+      ],
+      "shots": [
+        {
+          "img": "img/pop-tray-2-pop-flowers.webp",
+          "alt": "Concept render of Pop Tray 2, Pop Flowers: six flower Pop Round coasters on a wood tray, Sunflower, Hibiscus and Orchid in back, Plumeria, Bird of Paradise and Bougainvillea in front"
+        },
+        {
+          "img": "img/pop-flowers-contact-sheet.webp",
+          "alt": "Concept render contact sheet of the six Pop Flowers coasters, front and back: Sunflower, Hibiscus, Orchid, Plumeria, Bird of Paradise and Bougainvillea, with the wave-over-JL mark on the back"
+        }
+      ],
+      "home": false,
+      "shop": false,
+      "pop_tray": true
+    },
+    {
+      "sku": "pop-tray-3-coastal",
+      "name": "Pop Tray 3 · Coastal",
+      "kicker": "Pop Tray 3",
+      "short": "Coastal",
+      "line": "Six coastal Pops on the flat Pop Round.",
+      "story": "Red Mangrove: mangroves produce floating seedlings, called propagules, that tides and storms carry to new shores.",
+      "price": null,
+      "material": "TPU 95A · washable · dishwasher safe",
+      "pops": [
+        {"name": "Sea Glass", "hex": "#9FD8C6"},
+        {"name": "Shell", "hex": "#E0D5C1"},
+        {"name": "Dunes", "hex": "#D9B25F"},
+        {"name": "Red Mangrove", "hex": "#206030"},
+        {"name": "Banyan", "hex": "#3E7D3A"},
+        {"name": "Sea Turtle", "hex": "#0F7C82"}
+      ],
+      "shots": [
+        {
+          "img": "img/pop-tray-3-coastal.webp",
+          "alt": "Concept render of Pop Tray 3, Coastal: six coastal Pop Round coasters on a wood tray, Sea Glass, Shell and Dunes in back, Red Mangrove, Banyan and Sea Turtle in front"
+        },
+        {
+          "img": "img/pop-coastal-contact-sheet.webp",
+          "alt": "Concept render contact sheet of the six Coastal Pop coasters, front and back: Sea Glass, Shell, Dunes, Red Mangrove, Banyan and Sea Turtle, with the wave-over-JL mark on the back"
+        }
+      ],
+      "home": false,
+      "shop": false,
+      "pop_tray": true
     }
   ]
 }

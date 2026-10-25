@@ -6,6 +6,52 @@
 </ul>
 {% endmacro %}
 
+{% macro concept_fig(src, alt, sizes) %}
+<figure class="pop-shot">
+  {{ pic(src, alt, sizes=sizes) }}
+  <figcaption>Concept render, actual product may vary</figcaption>
+</figure>
+{% endmacro %}
+
+{% macro pop_tray(p) %}
+<article class="pop-tray" id="{{ p.sku }}" aria-labelledby="{{ p.sku }}-h">
+  <div class="pop-tray-copy">
+    <p class="eyebrow">{{ p.kicker }}</p>
+    <h3 class="serif" id="{{ p.sku }}-h">{{ p.short }}</h3>
+    <p>{{ p.line }}</p>
+    <ul class="swatches" aria-label="Six Pops on {{ p.short }}">
+      {% for f in p.pops %}<li><i style="background:{{ f.hex }}"></i>{{ f.name }}</li>{% endfor %}
+    </ul>
+    {% if p.story %}<p class="pop-story">{{ p.story }}</p>{% endif %}
+    {% if p.material %}<p class="material">{{ p.material }}</p>{% endif %}
+    <div class="btn-row">
+      <button type="button" class="btn btn-outline btn-sm" data-open-sample data-type="Product question" data-product="{{ p.name }}">Ask about this batch</button>
+    </div>
+  </div>
+  <div class="pop-tray-shots">
+    {% for s in p.shots %}{{ concept_fig(s.img, s.alt, "(min-width: 900px) 640px, calc(100vw - 48px)") }}{% endfor %}
+  </div>
+</article>
+{% endmacro %}
+
+{% macro pop_tease() %}
+{% for p in products if p.pop_tray %}
+{% if loop.first %}
+<section class="wrap pop-tease reveal" aria-labelledby="pop-tease-h">
+  <div class="pop-tease-in">
+    <div class="copy">
+      <p class="eyebrow">Pop Trays</p>
+      <h2 id="pop-tease-h">Six to a tray.</h2>
+      <p>Season Colors, Pop Flowers, and Coastal. Flat Pop Rounds, six on every tray.</p>
+      <a href="/shop#pop-trays" style="font-weight:600;padding:10px 0;align-self:flex-start">See the Pop Trays →</a>
+    </div>
+    {{ concept_fig(p.shots[0].img, p.shots[0].alt, "(min-width: 800px) 560px, calc(100vw - 64px)") }}
+  </div>
+</section>
+{% endif %}
+{% endfor %}
+{% endmacro %}
+
 {% macro card(p, shop=False) %}
 <article class="card">
   <div class="tag" aria-hidden="true"></div>

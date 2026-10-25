@@ -5,6 +5,7 @@
 
 - Pages are pre-rendered (cards, Today's Batch rows, prices live in the HTML).
 - Rasters get WebP (+ AVIF when Pillow supports it) variants at 400/800/1200/1600 and <picture> markup.
+  A same-stem PNG next to a WebP is the <img> fallback (width, height, lazy-load stay on the img).
 - CSS/JS are concatenated, lightly minified and content-hashed.
 - Writes sitemap.xml, robots.txt, _headers, _redirects, _routes.json and img/og-hero.jpg.
 """
@@ -116,8 +117,18 @@ def pic(src: str, alt: str = "", sizes: str = "100vw", lazy: bool = True, cls: s
     if not m:
         return Markup(f'<img src="/{src}" {attrs}>')
     attrs = f'width="{m["w"]}" height="{m["h"]}" ' + attrs
-    srcset = ", ".join(f"/img/{f} {w}w" for w, f in m["webp"])
-    img = f'<img src="/img/{name}" srcset="{srcset}" sizes="{sizes}" {attrs}>' if len(m["webp"]) > 1 else f'<img src="/img/{name}" {attrs}>'
+    webp_srcset = ", ".join(f"/img/{f} {w}w" for w, f in m["webp"])
+    png_name = f"{Path(name).stem}.png"
+    has_png = name.lower().endswith(".webp") and (DIST / "img" / png_name).is_file()
+    if has_png:
+        sources = []
+        if m["avif"]:
+            avif = ", ".join(f"/img/{f} {w}w" for w, f in m["avif"])
+            sources.append(f'<source type="image/avif" srcset="{avif}" sizes="{sizes}">')
+        if m["webp"]:
+            sources.append(f'<source type="image/webp" srcset="{webp_srcset}" sizes="{sizes}">')
+        return Markup(f'<picture>{"".join(sources)}<img src="/img/{png_name}" {attrs}></picture>')
+    img = f'<img src="/img/{name}" srcset="{webp_srcset}" sizes="{sizes}" {attrs}>' if len(m["webp"]) > 1 else f'<img src="/img/{name}" {attrs}>'
     if not m["avif"]:
         return Markup(img)
     avif = ", ".join(f"/img/{f} {w}w" for w, f in m["avif"])

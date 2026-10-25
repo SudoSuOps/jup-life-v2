@@ -177,6 +177,24 @@ dialog::backdrop { background: rgba(43,43,43,.55); }
 .notice { background: var(--cream-deep); border: 1.5px solid var(--kraft); border-radius: var(--radius-card); padding: 16px 20px; font-weight: 600; margin-top: 24px; }
 .shelf-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; }
 .shelf-head p { margin: 6px 0 0; max-width: 36em; }
+.pop-trays { display: flex; flex-direction: column; gap: 48px; }
+.pop-tray { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 28px 48px; }
+.pop-tray-copy { flex: 1 1 260px; max-width: 420px; display: flex; flex-direction: column; gap: 12px; }
+.pop-tray-copy h3 { margin: 0; font-size: clamp(28px, 3vw, 40px); line-height: 1.1; }
+.pop-tray-copy p { margin: 0; }
+.pop-tray-copy .material { font-size: 13px; font-weight: 600; letter-spacing: .02em; }
+.pop-story { font-size: 16px; max-width: 38em; }
+.pop-tray-shots { flex: 2 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 18px; }
+.pop-shot { margin: 0; min-width: 0; }
+.pop-shot picture { display: block; }
+.pop-shot img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 14px; background: var(--cream-deep); }
+.pop-shot figcaption { margin-top: 8px; display: inline-block; max-width: 100%; background: var(--cream); border: 1.5px solid var(--kraft); color: var(--cocoa); font-size: 12px; font-weight: 600; line-height: 1.35; padding: 4px 10px; border-radius: var(--radius-pill); }
+.pop-tease { padding-bottom: clamp(8px, 2vw, 24px); }
+.pop-tease-in { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 40px; background: #FFFDF9; border-radius: 24px; box-shadow: var(--shadow-soft); padding: clamp(16px, 3vw, 28px); }
+.pop-tease .copy { flex: 1 1 260px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.pop-tease .copy p { margin: 0; max-width: 32em; }
+.pop-tease .pop-shot { flex: 1 1 320px; }
+@media (min-width: 800px) { .pop-tease .pop-shot { order: -1; } }
 .thumbs { display: flex; gap: 8px; margin: 10px 16px 0; }
 .thumbs img { width: 64px; height: 64px; object-fit: cover; border-radius: 8px; border: 1.5px solid var(--cream-deep); }
 .combos { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
