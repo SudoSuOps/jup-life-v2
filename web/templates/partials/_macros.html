@@ -20,7 +20,7 @@
     <h3 class="serif" id="{{ p.sku }}-h">{{ p.short }}</h3>
     <p>{{ p.line }}</p>
     <ul class="swatches" aria-label="Six Pops on {{ p.short }}">
-      {% for f in p.pops %}<li><i style="background:{{ f.hex }}"></i>{{ f.name }}</li>{% endfor %}
+      {% for f in p.pops %}<li><i{% if f.name.startswith('Coconut') %} class="swatch-clear" title="Clear / transparent"{% endif %} style="background:{{ f.hex }}"></i>{{ f.name }}</li>{% endfor %}
     </ul>
     {% if p.story %}<p class="pop-story">{{ p.story }}</p>{% endif %}
     {% if p.material %}<p class="material">{{ p.material }}</p>{% endif %}
@@ -126,7 +126,7 @@
   <h2 id="batch-h">Today's Batch</h2>
   <p class="muted" style="margin:0 0 18px;font-size:16px"><span data-batch-tray>{{ batch.tray }}</span> is out of the oven.</p>
   <ul class="rows" data-batch-rows>
-    {% for f in batch.flavors[:6] %}<li class="row"><span class="swatch" style="background:{{ f.hex }}" aria-hidden="true"></span><span class="name">{{ f.name }}</span><span class="leader" aria-hidden="true"></span><span class="muted" style="font-style:italic">{{ f.note }}</span></li>
+    {% for f in batch.flavors[:6] %}<li class="row"><span class="swatch{% if f.name.startswith('Coconut') %} swatch-clear{% endif %}" style="background:{{ f.hex }}" aria-hidden="true"></span><span class="name">{{ f.name }}</span><span class="leader" aria-hidden="true"></span><span class="muted" style="font-style:italic">{{ f.note }}</span></li>
     {% endfor %}
   </ul>
   <p class="foot">Locally grown in Jupiter, FL.</p>

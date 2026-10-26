@@ -315,3 +315,5 @@ fieldset.buyer-type input { width: 20px; height: 20px; min-height: 0; margin-top
   .ws-price .price-board dl { gap: 2px; font-size: 15px; }
   .ws-price .board .foot { margin: 6px 0 0; padding-top: 4px; }
 }
+/* Coconut = clear/transparent filament: checker shows through a frosted white */
+.swatches i.swatch-clear, .swatch.swatch-clear { background: linear-gradient(135deg, rgba(255,255,255,.85), rgba(255,255,255,.3)), repeating-conic-gradient(#E6DFD3 0 25%, #FFFFFF 0 50%) 0 0 / 6px 6px !important; box-shadow: inset 0 0 0 1px rgba(90,62,43,.35); }

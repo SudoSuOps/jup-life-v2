@@ -1,6 +1,6 @@
 {
   "date": "2026-10-24",
-  "tray": "The Fall Tray",
+  "tray": "The Holiday Tray",
   "batch_no": "042",
   "chefs_special": "",
   "flavors": [
@@ -10,9 +10,9 @@
       "note": "fall harvest"
     },
     {
-      "name": "Cinnamon",
-      "hex": "#A0522D",
-      "note": "warm & spicy"
+      "name": "Coconut",
+      "hex": "#F4EFE3",
+      "note": "clear & bright"
     },
     {
       "name": "Cranberry",
