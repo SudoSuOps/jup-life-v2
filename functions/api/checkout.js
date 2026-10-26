@@ -1,5 +1,6 @@
-// POST /api/checkout  { items: [{ sku, qty }] } -> { url }  (Stripe-hosted Checkout)
-import { allow, clientIp, fail, json, sellables, siteUrl } from '../_lib.js';
+// POST /api/checkout  { items: [{ sku, qty, color? }] } -> { url }  (Stripe-hosted Checkout)
+// color is a single-color 6-pack. The charge is SINGLE_COLOR_SIX_PACK_USD, never the client price.
+import { allow, clientIp, COLOR_PACKS, fail, json, sellables, SINGLE_COLOR_SIX_PACK_USD, siteUrl } from '../_lib.js';
 
 export async function onRequestPost({ request, env }) {
   if (!env.STRIPE_SECRET_KEY) return fail(503, 'Checkout is not configured yet.');
@@ -10,23 +11,56 @@ export async function onRequestPost({ request, env }) {
   const items = body?.items;
   if (!Array.isArray(items) || items.length < 1 || items.length > 20) return fail(400, 'Your bag is empty.');
 
+  const cents = SINGLE_COLOR_SIX_PACK_USD * 100;
+  if (!Number.isInteger(cents) || cents < 50) return fail(503, 'Checkout is not configured yet.');
+
   const catalog = sellables(env);
   const merged = new Map();
   for (const line of items) {
-    const sku = typeof line?.sku === 'string' ? line.sku : '';
-    const qty = Number(line?.qty);
+    if (!line || typeof line !== 'object') return fail(400, 'Bad request.');
+    const sku = typeof line.sku === 'string' ? line.sku : '';
+    const qty = Number(line.qty);
     if (!Number.isInteger(qty) || qty < 1 || qty > 20) return fail(400, 'Invalid quantity.');
-    if (!Object.hasOwn(catalog, sku)) return fail(400, `'${sku.slice(0, 40)}' isn't available for checkout. Ask about this batch instead.`);
-    merged.set(sku, Math.min((merged.get(sku) || 0) + qty, catalog[sku].max));
+    const colorSent = Object.hasOwn(line, 'color') && line.color != null;
+    if (colorSent) {
+      if (!Object.hasOwn(COLOR_PACKS, sku)) return fail(400, `'${sku.slice(0, 40)}' isn't sold as a single-color 6-pack.`);
+      const pack = COLOR_PACKS[sku];
+      const color = typeof line.color === 'string' ? line.color : '';
+      if (!pack.colors.includes(color)) return fail(400, `'${color.slice(0, 40)}' isn't a color on this tray.`);
+      const key = `${sku}\0${color}`;
+      const prev = merged.get(key);
+      merged.set(key, { sku, color, packName: pack.name, qty: Math.min((prev?.qty || 0) + qty, 20) });
+    } else {
+      if (!Object.hasOwn(catalog, sku)) return fail(400, `'${sku.slice(0, 40)}' isn't available for checkout. Ask about this batch instead.`);
+      const prev = merged.get(sku);
+      merged.set(sku, { sku, qty: Math.min((prev?.qty || 0) + qty, catalog[sku].max) });
+    }
   }
 
   const base = siteUrl(env, request);
   const form = new URLSearchParams();
   form.set('mode', 'payment');
-  [...merged].forEach(([sku, qty], i) => {
-    form.set(`line_items[${i}][price]`, catalog[sku].price);
-    form.set(`line_items[${i}][quantity]`, String(qty));
+  const colorBits = [];
+  [...merged.values()].forEach((line, i) => {
+    form.set(`line_items[${i}][quantity]`, String(line.qty));
+    if (line.color) {
+      const name = `${line.packName} · ${line.color}`;
+      form.set(`line_items[${i}][price_data][currency]`, 'usd');
+      form.set(`line_items[${i}][price_data][unit_amount]`, String(cents));
+      form.set(`line_items[${i}][price_data][product_data][name]`, name);
+      form.set(`line_items[${i}][price_data][product_data][metadata][sku]`, line.sku);
+      form.set(`line_items[${i}][price_data][product_data][metadata][color]`, line.color);
+      form.set(`line_items[${i}][price_data][product_data][metadata][pack]`, 'single-color-6');
+      colorBits.push(`${name} x${line.qty}`);
+    } else {
+      form.set(`line_items[${i}][price]`, catalog[line.sku].price);
+    }
   });
+  if (colorBits.length) {
+    const summary = colorBits.join('; ').slice(0, 500);
+    form.set('metadata[color_lines]', summary);
+    form.set('payment_intent_data[metadata][color_lines]', summary);
+  }
   (env.SHIP_COUNTRIES || 'US').split(',').forEach((c, i) => form.set(`shipping_address_collection[allowed_countries][${i}]`, c.trim()));
   form.set('phone_number_collection[enabled]', 'true');
   form.set('success_url', `${base}/shop?checkout=success&session_id={CHECKOUT_SESSION_ID}`);

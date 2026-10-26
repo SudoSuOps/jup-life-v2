@@ -318,4 +318,17 @@ fieldset.buyer-type input { width: 20px; height: 20px; min-height: 0; margin-top
   .ws-price .board .foot { margin: 6px 0 0; padding-top: 4px; }
 }
 /* Coconut = clear/transparent filament: checker shows through a frosted white */
-.swatches i.swatch-clear, .swatch.swatch-clear { background: linear-gradient(135deg, rgba(255,255,255,.85), rgba(255,255,255,.3)), repeating-conic-gradient(#E6DFD3 0 25%, #FFFFFF 0 50%) 0 0 / 6px 6px !important; box-shadow: inset 0 0 0 1px rgba(90,62,43,.35); }
+.swatches i.swatch-clear, .swatch.swatch-clear, .color-dot.swatch-clear { background: linear-gradient(135deg, rgba(255,255,255,.85), rgba(255,255,255,.3)), repeating-conic-gradient(#E6DFD3 0 25%, #FFFFFF 0 50%) 0 0 / 6px 6px !important; box-shadow: inset 0 0 0 1px rgba(90,62,43,.35); }
+.color-pack { border: 0; margin: 0; padding: 0; min-inline-size: 0; display: flex; flex-direction: column; gap: 10px; }
+.color-pack legend { padding: 0; font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.color-pack-options { display: flex; flex-wrap: wrap; gap: 8px 14px; }
+.color-opt { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.color-opt input { width: 18px; height: 18px; margin: 0; accent-color: #5A3E2B; }
+.color-opt:has(input:focus-visible) { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 999px; }
+.color-opt:has(input:checked) span:last-child { text-decoration: underline; text-underline-offset: 3px; }
+.color-dot { width: 14px; height: 14px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(90,62,43,.25); flex: none; }
+.color-pack-buy { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.color-pack .price { font: 400 28px var(--font-serif); }
+.board .color-pack { margin-top: 16px; }
+.board .color-pack legend, .board .color-opt, .board .color-pack .price { color: var(--cream); }
+.board .color-opt input { accent-color: var(--cream); }

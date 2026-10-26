@@ -48,11 +48,13 @@ export function orderEmail(s, items = []) {
   const what = items.length
     ? items.map((i) => `${i.quantity} x ${i.description}  (${money(i.amount_total, s.currency)})`)
     : ['(line items unavailable, see the Stripe dashboard)'];
+  const colorLines = typeof s.metadata?.color_lines === 'string' ? s.metadata.color_lines : '';
   const short = items.length ? items.map((i) => (i.quantity > 1 ? `${i.quantity}x ` : '') + i.description).join(', ') : 'order';
   const dash = s.payment_intent ? `https://dashboard.stripe.com/${s.livemode === false ? 'test/' : ''}payments/${s.payment_intent}` : '';
   const text = [
     'NEW JUP LIFE ORDER', '',
     'ITEMS', ...what, '',
+    ...(colorLines ? ['COLORS', colorLines, ''] : []),
     `TOTAL  ${money(s.amount_total, s.currency)}${s.livemode === false ? '  (TEST MODE)' : ''}`, '',
     'SHIP TO', ...shipTo, who.phone ? `Phone: ${who.phone}` : '', '',
     'CUSTOMER', [who.name, who.email].filter(Boolean).join(' · '), '',

@@ -38,6 +38,7 @@ CHROME=/path/to/chrome npm run smoke     # browser smoke test against the runnin
 
 Stripe webhook endpoint: `https://juplifestudio.com/api/stripe/webhook`, event `checkout.session.completed`.
 Items with no price ID configured are not purchasable (they show "Ask about this batch").
+A single-color 6-pack is separate from those products. Its price is `SINGLE_COLOR_SIX_PACK_USD` in `functions/_lib.js` (currently $29). Checkout sends that amount to Stripe as `price_data`; it does not use a Price ID and it ignores the price in the browser. Confirm the amount with the owner before charging it. A tray marked `concept` or `coming_soon` stays off that cart.
 Resend needs `juplifestudio.com` verified as a sending domain.
 
 ## Editing content

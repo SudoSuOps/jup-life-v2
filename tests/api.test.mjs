@@ -5,7 +5,8 @@ import { onRequestPost as checkout } from '../functions/api/checkout.js';
 import { onRequestPost as webhook, verifyStripe, orderEmail } from '../functions/api/stripe/webhook.js';
 import { onRequestPost as drops } from '../functions/api/drops.js';
 import { onRequestPost as sample } from '../functions/api/sample-request.js';
-import { resetThrottle } from '../functions/_lib.js';
+import { readFileSync } from 'node:fs';
+import { COLOR_PACKS, colorPackCatalog, resetThrottle, SINGLE_COLOR_SIX_PACK_USD } from '../functions/_lib.js';
 
 const env = { STRIPE_SECRET_KEY: 'sk_test_x', STRIPE_PRICE_SIX_SET_CASE: 'price_six', STRIPE_PRICE_READERS: '', SITE_URL: 'https://juplifestudio.com' };
 const post = (url, body, headers = {}) => new Request(`https://x.test${url}`, { method: 'POST', body, headers });
@@ -34,6 +35,108 @@ test('checkout: sends only server-side price id to Stripe and returns the hosted
   assert.equal(sent.body.get('line_items[0][price]'), 'price_six');
   assert.equal(sent.body.get('line_items[0][quantity]'), '3');
   assert.equal(sent.body.get('success_url'), 'https://juplifestudio.com/shop?checkout=success&session_id={CHECKOUT_SESSION_ID}');
+});
+
+function stripeLines(body) {
+  const idx = new Set();
+  for (const [key] of body) {
+    const m = /^line_items\[(\d+)\]/.exec(key);
+    if (m) idx.add(Number(m[1]));
+  }
+  return [...idx].sort((a, b) => a - b).map((i) => ({
+    qty: body.get(`line_items[${i}][quantity]`),
+    price: body.get(`line_items[${i}][price]`),
+    amount: body.get(`line_items[${i}][price_data][unit_amount]`),
+    currency: body.get(`line_items[${i}][price_data][currency]`),
+    name: body.get(`line_items[${i}][price_data][product_data][name]`),
+    color: body.get(`line_items[${i}][price_data][product_data][metadata][color]`),
+    sku: body.get(`line_items[${i}][price_data][product_data][metadata][sku]`),
+  }));
+}
+
+test('color packs follow each tray and skip concept or coming soon', () => {
+  assert.equal(SINGLE_COLOR_SIX_PACK_USD, 29);
+  assert.deepEqual(COLOR_PACKS['fall-pop-coasters'], {
+    name: 'Holiday Tray 6-Pack',
+    colors: ['Pumpkin', 'Coconut', 'Cranberry', 'Maple', 'Rhubarb', 'Sunflower'],
+  });
+  assert.equal(COLOR_PACKS['pop-tray-1-season-colors'].colors.length, 6);
+  assert.ok(COLOR_PACKS['pop-tray-1-season-colors'].colors.includes('Coconut (clear)'));
+  assert.equal(COLOR_PACKS['pop-tray-2-pop-flowers'].colors.length, 6);
+  assert.equal(COLOR_PACKS['pop-tray-3-coastal'].colors.length, 6);
+  assert.equal(COLOR_PACKS['stack-bands-fall'], undefined);
+  assert.equal(COLOR_PACKS.gigi, undefined);
+  const yaml = readFileSync(new URL('../tools/todays-batch/batch.yaml', import.meta.url), 'utf8');
+  const yamlColors = [...yaml.matchAll(/\{name:\s*([^,}\n]+)/g)].map((m) => m[1].trim());
+  assert.deepEqual(yamlColors, COLOR_PACKS['fall-pop-coasters'].colors);
+  const batch = { flavors: ['A', 'B', 'C', 'D', 'E', 'F'].map((name) => ({ name })) };
+  const packs = colorPackCatalog([
+    { sku: 'soon', color_pack: 'Soon 6-Pack', coming_soon: true, pops: batch.flavors },
+    { sku: 'concept', color_pack: 'Concept 6-Pack', concept: true, pops: batch.flavors },
+    { sku: 'ok', color_pack: 'Ok 6-Pack', pops: batch.flavors },
+  ], batch);
+  assert.deepEqual(Object.keys(packs), ['ok']);
+});
+
+test('checkout: two colors are two line items, priced on the server', async () => {
+  let sent;
+  globalThis.fetch = async (url, init) => { sent = { url, body: new URLSearchParams(init.body) }; return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/colors' }), { status: 200 }); };
+  const r = await checkout({
+    request: jsonReq({
+      items: [
+        { sku: 'fall-pop-coasters', color: 'Cranberry', qty: 1, price: 1 },
+        { sku: 'fall-pop-coasters', color: 'Sunflower', qty: 2, price: 5 },
+      ],
+    }),
+    env,
+  });
+  assert.equal(r.status, 200);
+  const lines = stripeLines(sent.body);
+  assert.equal(lines.length, 2);
+  assert.deepEqual(lines.map((l) => l.name), ['Holiday Tray 6-Pack · Cranberry', 'Holiday Tray 6-Pack · Sunflower']);
+  assert.deepEqual(lines.map((l) => l.color), ['Cranberry', 'Sunflower']);
+  assert.deepEqual(lines.map((l) => l.sku), ['fall-pop-coasters', 'fall-pop-coasters']);
+  assert.deepEqual(lines.map((l) => l.qty), ['1', '2']);
+  assert.deepEqual(lines.map((l) => l.amount), ['2900', '2900']);
+  assert.ok(lines.every((l) => l.currency === 'usd' && l.price == null));
+  assert.equal(sent.body.get('metadata[color_lines]'), 'Holiday Tray 6-Pack · Cranberry x1; Holiday Tray 6-Pack · Sunflower x2');
+  assert.equal(sent.body.get('payment_intent_data[metadata][color_lines]'), sent.body.get('metadata[color_lines]'));
+  const note = orderEmail({ id: 'cs_c', amount_total: 8700, currency: 'usd', metadata: { color_lines: sent.body.get('metadata[color_lines]') } }, [
+    { quantity: 1, description: 'Holiday Tray 6-Pack · Cranberry', amount_total: 2900 },
+    { quantity: 2, description: 'Holiday Tray 6-Pack · Sunflower', amount_total: 5800 },
+  ]);
+  assert.match(note.subject, /Holiday Tray 6-Pack · Cranberry/);
+  assert.match(note.text, /COLORS\nHoliday Tray 6-Pack · Cranberry x1; Holiday Tray 6-Pack · Sunflower x2/);
+});
+
+test('checkout: invalid color is rejected and the client price is ignored', async () => {
+  const bad = await checkout({ request: jsonReq({ items: [{ sku: 'pop-tray-1-season-colors', color: 'Sunflower', qty: 1, price: 1 }] }), env });
+  assert.equal(bad.status, 400);
+  assert.match((await bad.json()).detail, /isn't a color on this tray/);
+  const foreign = await checkout({ request: jsonReq({ items: [{ sku: 'gigi', color: 'Cranberry', qty: 1 }] }), env });
+  assert.equal(foreign.status, 400);
+  let sent;
+  globalThis.fetch = async (url, init) => { sent = new URLSearchParams(init.body); return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/one' }), { status: 200 }); };
+  const ok = await checkout({ request: jsonReq({ items: [{ sku: 'pop-tray-2-pop-flowers', color: 'Sunflower', qty: 1, price: 1 }] }), env });
+  assert.equal(ok.status, 200);
+  const [line] = stripeLines(sent);
+  assert.equal(line.name, 'Pop Tray 2 6-Pack · Sunflower');
+  assert.equal(line.amount, String(SINGLE_COLOR_SIX_PACK_USD * 100));
+  assert.equal(line.price, null);
+});
+
+test('checkout: the Holiday Tray set still uses its Stripe price, separate from a color pack', async () => {
+  let sent;
+  globalThis.fetch = async (url, init) => { sent = new URLSearchParams(init.body); return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/set' }), { status: 200 }); };
+  const priced = { ...env, STRIPE_PRICE_FALL_POP_COASTERS: 'price_tray_set' };
+  const r = await checkout({ request: jsonReq({ items: [{ sku: 'fall-pop-coasters', qty: 1, price: 1 }, { sku: 'half-dozen', qty: 1, price: 1 }] }), env: priced });
+  assert.equal(r.status, 200);
+  const lines = stripeLines(sent);
+  assert.equal(lines.length, 2);
+  assert.equal(lines[0].price, 'price_tray_set');
+  assert.equal(lines[0].amount, null);
+  assert.equal(lines[1].price, 'price_1UTVSJHYwaTbul7MyxtILxOz');
+  assert.equal(sent.get('metadata[color_lines]'), null);
 });
 
 const sign = (payload, secret, t) => `t=${t},v1=${crypto.createHmac('sha256', secret).update(`${t}.${payload}`).digest('hex')}`;
