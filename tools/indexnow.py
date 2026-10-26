@@ -28,6 +28,9 @@ ROOT = Path(__file__).resolve().parent.parent
 ENDPOINT = "https://api.indexnow.org/indexnow"
 KEY_RE = re.compile(r"[0-9a-f]{32}")
 NS = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+# Cloudflare Browser Integrity Check returns 403 error 1010 for the default
+# Python-urllib user agent. The key file is public; this only identifies the pinger.
+UA = "JupLifeIndexNow/1.0 (+https://juplifestudio.com)"
 
 
 def find_key() -> str:
@@ -60,10 +63,18 @@ def host_of(url: str) -> str:
     return m.group(1)
 
 
+def open_request(url: str, *, data: bytes | None = None, headers: dict | None = None, method: str | None = None):
+    hdrs = {"User-Agent": UA}
+    if headers:
+        hdrs.update(headers)
+    req = urllib.request.Request(url, data=data, headers=hdrs, method=method)
+    return urllib.request.urlopen(req, timeout=30 if data else 20)
+
+
 def wait_for_key(key: str, key_url: str, retries: int, delay: int) -> None:
     for attempt in range(1, retries + 1):
         try:
-            with urllib.request.urlopen(key_url, timeout=20) as res:
+            with open_request(key_url) as res:
                 body = res.read().decode("utf-8", "replace").strip().lower()
             if res.status == 200 and body == key:
                 print(f"key live at {key_url}")
@@ -78,14 +89,13 @@ def wait_for_key(key: str, key_url: str, retries: int, delay: int) -> None:
 
 def ping(payload: dict) -> int:
     data = json.dumps(payload).encode("utf-8")
-    req = urllib.request.Request(
-        ENDPOINT,
-        data=data,
-        headers={"Content-Type": "application/json; charset=utf-8"},
-        method="POST",
-    )
     try:
-        with urllib.request.urlopen(req, timeout=30) as res:
+        with open_request(
+            ENDPOINT,
+            data=data,
+            headers={"Content-Type": "application/json; charset=utf-8"},
+            method="POST",
+        ) as res:
             print(f"IndexNow {res.status} for {len(payload['urlList'])} URLs")
             return 0
     except urllib.error.HTTPError as exc:
