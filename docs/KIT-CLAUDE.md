@@ -72,7 +72,7 @@ juplife-site/
 ## Hard rules (from the brief; don't break)
 
 - **Contacts, exact.** Wholesale: call Smash, `561-532-7120` (`tel:+15615327120`). Say hello: `hello@juplifestudio.com`. Email Dee: `dee@juplifestudio.com`. **Text us: `561-581-8015`**: only ever labeled "Text us", only `sms:` links, never `tel:`. X: @juplifestudio. TikTok: @juplifestudio.
-- **Claims.** Allowed only: washable; dishwasher safe (**TPU parts only**); made in Jupiter, FL; "locally grown" (playful); the five "Quality by design" facts. No antimicrobial/antibacterial/hygienic/food-safe/health claims, no durability stats, no "lasts forever". Never call PLA or PETG dishwasher safe. Stack Bands and The Gigi have **no material line** until the owner confirms.
+- **Claims.** Allowed only: washable; dishwasher safe (**TPU parts only**); made in Jupiter, FL; "locally baked" (playful); the five "Quality by design" facts. No antimicrobial/antibacterial/hygienic/food-safe/health claims, no durability stats, no "lasts forever". Never call PLA or PETG dishwasher safe. Stack Bands and The Gigi have **no material line** until the owner confirms.
 - **No** other brands' names or marks, no metal-chain imagery, no fake reviews/testimonials/ratings/customer logos/counts, no invented prices/emails/phones/lead times/URLs.
 - **Scope**: exactly 3 pages + 1 modal (plus the existing Shipping & Returns and Privacy pages). No About/Drops/Hospitality/Weddings/blog/coming-soon. No carousels, no popups on load, no autoplay.
 - **Color**: site chrome uses only the six core tokens. Ingredient colors only on swatches/flavor tags, always next to the flavor name. No light text on kraft; cocoa on kraft only for large/bold text.

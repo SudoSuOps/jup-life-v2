@@ -9,11 +9,11 @@
       "price": 29,
       "material": "TPU 95A · washable · dishwasher safe",
       "swatches": "batch",
-      "img": "img/pop-coasters-pumpkin.webp",
+      "img": "img/holiday-tray-pops-1600x900.webp",
       "home": true,
       "shop": true,
       "render": true,
-      "alt": "A stack of pumpkin-orange flower coasters with cinnamon sticks and fall leaves"
+      "alt": "Studio rendering of The Holiday Tray: six JUP LIFE Pop coasters in Pumpkin, Coconut (frosted clear), Cranberry, Maple, Rhubarb and Sunflower in a teal tray on sand, with warm holiday lights, greenery and a small gold star."
     },
     {
       "sku": "stack-bands-fall",
@@ -219,11 +219,11 @@
       "shots": [
         {
           "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "Concept render of Pop Tray 1, Season Colors: six plain flat Pop Round coasters on a wood tray, Pumpkin, Coconut (clear) and Rhubarb in back, Key Lime, Peach and Sea Salt in front"
+          "alt": "Studio rendering of JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray."
         },
         {
           "img": "img/pop-tray-1-color-card.webp",
-          "alt": "Concept render of the Season Colors card for Pop Tray 1, with the flat Pop Round and swatches for Pumpkin, Coconut (clear), Rhubarb, Key Lime, Peach and Sea Salt"
+          "alt": "Studio rendering color card for JUP LIFE Pop Tray 1: Pumpkin #E8731E, Coconut frosted clear TPU, Rhubarb #C93A5B, Key Lime #A8D94A, Peach #FFB07C and Sea Salt #7FD1C2."
         }
       ],
       "home": false,

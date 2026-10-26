@@ -8,6 +8,6 @@ Make a print card and social/web posts for every drop from one file.
    - `..._feed_1080x1350.png` (4:5), `..._story_1080x1920.png` (9:16) and `..._banner_1600x600.png`.
    - `today.html` is a self-contained embed with inline CSS and the logo built in.
 
-Locked (don't edit in YAML): the header, "Locally grown in Jupiter, FL", "Washable, dishwasher safe TPU · Built different.", juplifestudio.com, "Wholesale: Smash · 561-532-7120", the colors and the fonts.
+Locked (don't edit in YAML): the header, "Locally baked in Jupiter, FL", "Washable, dishwasher safe TPU · Built different.", juplifestudio.com, "Wholesale: Smash · 561-532-7120", the colors and the fonts.
 **Fit check:** notes auto-shrink down to 6 pt on the card. If one still won't fit, the script prints `WARNING ... Shorten it` and exits with code 2. Keep notes to about 2-3 short words.
 No health claims. Use only real prices in `tiers`.

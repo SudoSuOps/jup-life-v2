@@ -12,7 +12,7 @@ You are rebuilding **juplifestudio.com** from scratch for **JUP LIFE by Mrs. Sma
 
 ## 2. Voice
 Short, warm and confident, like a bakery chalkboard. Use bakery verbs (baked, batch, tray, fresh).
-Lines: "Fresh baked. Built different." · "Today's Batch is out of the oven." · "Your logo, fresh baked." · "Samples are on the house." · "Locally grown in Jupiter, FL." (playful) · "A little piece of our happy place."
+Lines: "Fresh baked. Built different." · "Today's Batch is out of the oven." · "Your logo, fresh baked." · "Samples are on the house." · "Locally baked in Jupiter, FL." (playful) · "A little piece of our happy place."
 
 ## 3. Design system
 **Colors (site chrome uses only these):**
@@ -40,7 +40,7 @@ Lines: "Fresh baked. Built different." · "Today's Batch is out of the oven." ·
 
 ## 4. Components (exactly 4)
 1. **Flavor-tag product card.** A kraft hang tag with a punched hole and a short sage "band" string. It has the product image on cream, swatch dots with flavor names, the product name (serif), one line of copy, the price or "Ask about this batch", and one button.
-2. **Chalkboard price board.** Live HTML text, not an image. Dotted-leader rows: `100 coasters ...... $2.00 ea` · `500 ...... $1.60 ea` · `1,000 ...... $1.20 ea` · `Samples ...... on the house`. Footer: "Locally grown in Jupiter, FL."
+2. **Chalkboard price board.** Live HTML text, not an image. Dotted-leader rows: `100 coasters ...... $2.00 ea` · `500 ...... $1.60 ea` · `1,000 ...... $1.20 ea` · `Samples ...... on the house`. Footer: "Locally baked in Jupiter, FL."
 3. **Today's Batch board.** The same chalkboard style. It shows the date, tray name, up to 6 flavor rows (swatch, name and short note like "Pumpkin, fall harvest"), and an optional diagonal "Chef's Special" ribbon. It's **rendered from JSON** `{date, tray, batch_no, flavors:[{name,hex,note}], chefs_special}` so it can be updated daily. Visual reference: `todays_batch_fall_feed_1080x1350.jpg`.
 4. **Sample box CTA.** A kraft panel with the Half Dozen box image, "Six coasters. One little box. On the house.", and a **[Get a free Half Dozen]** button that opens the modal. It's reused on every page.
 
@@ -118,7 +118,7 @@ The same fields as the form on Page 3, plus a hidden "source page" field. It ope
 - X: @juplifestudio. TikTok: @juplifestudio.
 
 ## 8. Claims guardrails and do-not list
-- **Allowed claims only:** washable; dishwasher safe (**TPU parts only**); made in Jupiter, FL; "locally grown" as playful copy; the five facts in "Quality by design".
+- **Allowed claims only:** washable; dishwasher safe (**TPU parts only**); made in Jupiter, FL; "locally baked" as playful copy; the five facts in "Quality by design".
 - ❌ No antimicrobial, antibacterial, hygienic, food-safe or health claims. No "lasts forever", no durability stats or percentages.
 - ❌ Never call PLA or PETG parts dishwasher safe.
 - ❌ No Gucci, Yurman or other brands' marks or names. No metal-chain imagery.

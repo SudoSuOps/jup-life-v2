@@ -31,7 +31,7 @@ DIST = ROOT / "dist"
 WIDTHS = (400, 800, 1200, 1600)
 HAS_AVIF = features.check("avif")
 FLAVOR_HEX = {"Pumpkin": "#E8731E", "Cinnamon": "#A0522D", "Cranberry": "#9B1B30", "Maple": "#C8862A", "Rhubarb": "#C93A5B",
-              "Blueberry": "#3F5BB8", "Peach": "#FFB07C", "Key Lime": "#A8D94A", "Watermelon": "#F2546B", "Coconut": "#F4EFE3",
+              "Blueberry": "#3F5BB8", "Peach": "#FFB07C", "Key Lime": "#A8D94A", "Watermelon": "#F2546B", "Coconut": "#F4EEE3",
               "Sea Salt": "#7FD1C2", "Sunflower": "#F6C21C"}
 PIXEL = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
 

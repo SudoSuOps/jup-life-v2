@@ -83,7 +83,7 @@
   </div>
 
   <figure style="margin:0">
-    {{ pic("img/flavor-board-" ~ season ~ ".webp", batch.tray ~ " flavor board on a wood tray, studio rendering", sizes="(min-width: 1200px) 1104px, calc(100vw - 32px)", style="width:100%;height:auto;border-radius:14px") }}
+    {{ pic("img/flavor-board-" ~ season ~ ".webp", "Studio rendering of The Holiday Tray flavor board: six Pop coasters in Pumpkin, Coconut (frosted clear), Cranberry, Maple, Rhubarb and Sunflower on a sand board." if season == "fall" else batch.tray ~ " flavor board on a wood tray, studio rendering", sizes="(min-width: 1200px) 1104px, calc(100vw - 32px)", style="width:100%;height:auto;border-radius:14px") }}
     <figcaption style="margin-top:8px;font-size:13px;font-weight:600">{{ batch.tray }} flavor board · Studio rendering. This week: {% for f in batch.flavors[:6] %}{{ f.name }}{% if f.name.startswith('Coconut') %} (clear){% endif %}{% if not loop.last %}, {% endif %}{% endfor %}.
     {{ swatch_list(batch.flavors[:6]) }}
     </figcaption>
