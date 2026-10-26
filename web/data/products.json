@@ -119,7 +119,7 @@
     {
       "sku": "gigi",
       "name": "The Gigi",
-      "line": "A flexible band with our JI monogram pressed in. Wear one or stack a few.",
+      "line": "A flexible band with our JL monogram pressed in. Wear one or stack a few.",
       "price": 9,
       "material": null,
       "img": "img/gigi-teal.webp",
@@ -136,7 +136,7 @@
       "home": true,
       "shop": true,
       "render": true,
-      "alt": "A teal Gigi band with a repeating JI monogram, in palm-leaf shadow"
+      "alt": "A teal Gigi band with a repeating JL monogram, in palm-leaf shadow"
     },
     {
       "sku": "tide-soap-dish",

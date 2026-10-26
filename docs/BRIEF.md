@@ -39,7 +39,7 @@ Lines: "Fresh baked. Built different." · "Today's Batch is out of the oven." ·
 **Motion (minimal):** a one-time 12 px fade-up on sections, a 4 px card lift on hover, 200 ms timing. Everything is off under `prefers-reduced-motion`. No marquees, carousels or autoplay.
 
 ## 4. Components (exactly 4)
-1. **Flavor-tag product card.** A kraft hang tag with a punched hole and a short sage "band" string. It has the product image on cream, swatch dots with flavor names, the product name (serif), one line of copy, the price or "Ask about this batch", one button, and an optional "Also on TikTok Shop ↗" link.
+1. **Flavor-tag product card.** A kraft hang tag with a punched hole and a short sage "band" string. It has the product image on cream, swatch dots with flavor names, the product name (serif), one line of copy, the price or "Ask about this batch", and one button.
 2. **Chalkboard price board.** Live HTML text, not an image. Dotted-leader rows: `100 coasters ...... $2.00 ea` · `500 ...... $1.60 ea` · `1,000 ...... $1.20 ea` · `Samples ...... on the house`. Footer: "Locally grown in Jupiter, FL."
 3. **Today's Batch board.** The same chalkboard style. It shows the date, tray name, up to 6 flavor rows (swatch, name and short note like "Pumpkin, fall harvest"), and an optional diagonal "Chef's Special" ribbon. It's **rendered from JSON** `{date, tray, batch_no, flavors:[{name,hex,note}], chefs_special}` so it can be updated daily. Visual reference: `todays_batch_fall_feed_1080x1350.jpg`.
 4. **Sample box CTA.** A kraft panel with the Half Dozen box image, "Six coasters. One little box. On the house.", and a **[Get a free Half Dozen]** button that opens the modal. It's reused on every page.
@@ -81,7 +81,7 @@ Divider: a rounded **sage TPU band** line (8 px, full pill shape) between sectio
 - H1 "The Batch." Sub: "The current tray, plus the always-on favorites."
 - **Current tray:** The Fall Tray. Pop coasters in the tray flavors. Price: **Ask about this batch**.
 - **Always on (flavor-tag cards):**
-  - **6-Coaster Set + Case: $29.** [Add to bag] + "Also on TikTok Shop ↗" `[[TIKTOK_SHOP_URL]]`
+  - **6-Coaster Set + Case: $29.** [Add to bag]
   - **The Readers** (thumb page holder + stand): **$19**
   - **Tide Soap Dish** (draining wave ridges, swappable inserts): **Ask about this batch.** Photo: `photo_tide_dish_lime_wave.jpg`
   - **Tide Hand Soap Dispenser** (TPU housing, PETG refill bottle, square-wave base): **Ask about this batch.** Photo: `photo_tide_dispenser_tpu_fade_1.jpg`
@@ -115,7 +115,7 @@ The same fields as the form on Page 3, plus a hidden "source page" field. It ope
 - **Wholesale: call Smash, 561-532-7120**
 - **Email: dee@juplifestudio.com**
 - **Text us: 561-581-8015** [[CONFIRM: texting line, show as "Text us" only]]. Never label it as a call number and never use a `tel:` link for it (use `sms:`).
-- X: @juplifestudio. TikTok Shop: `[[TIKTOK_SHOP_URL]]`.
+- X: @juplifestudio. TikTok: @juplifestudio.
 
 ## 8. Claims guardrails and do-not list
 - **Allowed claims only:** washable; dishwasher safe (**TPU parts only**); made in Jupiter, FL; "locally grown" as playful copy; the five facts in "Quality by design".
@@ -142,4 +142,4 @@ The 3 pages and the modal at 375 px and 1440 px, a one-page token and component 
 - [ ] AA contrast passes. Reduced motion is respected.
 
 ## 11. Placeholders to fill
-`[[TIKTOK_SHOP_URL]]` · `[[DEE PORTRAIT]]` · top-rack / dishwasher guidance · retail dispatch and wholesale lead times · logo setup and shipping terms · `[[RESPONSE TIME]]` · confirm "hand-checked" · confirm 561-581-8015 as the texting line · prices for Pop coasters, the Tide dish and the Tide dispenser (until then they show "Ask about this batch") · real photos of the 6-coaster set + case and The Readers.
+`[[DEE PORTRAIT]]` · top-rack / dishwasher guidance · retail dispatch and wholesale lead times · logo setup and shipping terms · `[[RESPONSE TIME]]` · confirm "hand-checked" · confirm 561-581-8015 as the texting line · prices for Pop coasters, the Tide dish and the Tide dispenser (until then they show "Ask about this batch") · real photos of the 6-coaster set + case and The Readers.

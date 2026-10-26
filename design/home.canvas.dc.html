@@ -147,9 +147,6 @@ a{color:#A9532F}a:hover{color:#8E4426}
 <button type="button" class="btn btn-outline btn-sm" onClick="{{p.act}}">Ask about this batch</button>
 </sc-if>
 </div>
-<sc-if value="{{p.tiktok}}" hint-placeholder-val="{{ false }}">
-<a href="#" style="font-size: 14px; font-weight: 600">Also on TikTok Shop ↗ <span class="ph">[[TIKTOK_SHOP_URL]]</span></a>
-</sc-if>
 </div>
 </article>
 </sc-for>
@@ -413,8 +410,8 @@ class Component extends DCLogic {
     const products = [
       { name: 'Holiday Tray Pop Coasters', line: 'Pop coasters in this season’s tray flavors.', photo: '[[PHOTO: Holiday Tray Pop coasters]]', img: '/_blob/5f92bd649d470e15194dd5b6eebf97ae', alt: 'A stack of pumpkin-orange flower coasters with cinnamon sticks and fall leaves', swatches: batch.flavors, material: tpu, ask: true },
       { name: 'Stack Bands', line: 'Snap. Stack. Go. Fall 3-packs: Harvest, Berry Pie and Coastal Batch.', photo: '[[PHOTO: Stack Bands]]', img: '/_blob/8825915ae074730705f6510e1bbd473a', alt: 'The Harvest stack band 3-pack in Pumpkin, Cinnamon and Maple', ask: true },
-      { name: '6-Coaster Set + Case', line: 'Six coasters and a case to keep them in.', photo: '[[PHOTO: 6-coaster set + case]]', img: '/_blob/4743ef461971b0d28aacd4b3234a0bff', alt: 'Six yellow flower coasters stacked in a white printed case', material: tpu, price: '$29', cta: 'Add to bag', tiktok: true },
-      { name: 'The Gigi', line: 'A flexible band with our JI monogram pressed in. Wear one or stack a few.', photo: '[[PHOTO: The Gigi]]', img: '/_blob/e315967f3fb97273bbcaa0fdb7045906', alt: 'A teal Gigi band with a repeating JI monogram, in palm-leaf shadow', ask: true },
+      { name: '6-Coaster Set + Case', line: 'Six coasters and a case to keep them in.', photo: '[[PHOTO: 6-coaster set + case]]', img: '/_blob/4743ef461971b0d28aacd4b3234a0bff', alt: 'Six yellow flower coasters stacked in a white printed case', material: tpu, price: '$29', cta: 'Add to bag' },
+      { name: 'The Gigi', line: 'A flexible band with our JL monogram pressed in. Wear one or stack a few.', photo: '[[PHOTO: The Gigi]]', img: '/_blob/e315967f3fb97273bbcaa0fdb7045906', alt: 'A teal Gigi band with a repeating JL monogram, in palm-leaf shadow', ask: true },
       { name: 'Tide Soap Dish', line: 'Draining wave ridges, swappable inserts.', photo: '[[PHOTO: photo_tide_dish_lime_wave.jpg]]', img: '/_blob/62e98bf8a7e126a09525494fb1892531', alt: 'A lime-green Tide soap dish with wave ridges and drain holes, holding a bar of soap', ask: true },
       { name: 'Tide Hand Soap Dispenser', line: 'TPU housing, PETG refill bottle, square-wave base.', photo: '[[PHOTO: photo_tide_dispenser_tpu_fade_1.jpg]]', img: '/_blob/db38a30e47d0fe1991298bb366eeb780', alt: 'A Tide hand soap dispenser fading from lime to amber, with wave texture and a square base', material: 'TPU housing · PETG bottle: wash by hand', ask: true }
     ].map((p) => ({
@@ -428,7 +425,6 @@ class Component extends DCLogic {
       material: p.material || '',
       price: p.price || '',
       ask: !!p.ask,
-      tiktok: !!p.tiktok,
       act: p.ask ? ask : () => {}
     }));
 
