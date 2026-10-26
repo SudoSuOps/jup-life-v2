@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% from "partials/_macros.html" import card, batch_board, short, pop_tray %}
+{% from "partials/_macros.html" import card, batch_board, short, pop_tray, swatch_list %}
 {% block title %}Shop 3D Printed Coasters in Jupiter, FL | JUP LIFE Studio{% endblock %}
-{% block description %}Shop 3D printed coasters and custom bar coasters from JUP LIFE Studio in Jupiter, FL. The Hibiscus Set is six coasters with the case for $29. The Readers page holder and cradle is $19.{% endblock %}
+{% block description %}Shop 3D printed coasters and custom bar coasters from JUP LIFE Studio in Jupiter, FL. The Hibiscus Set is six coasters with the case for $29. The Reader and stand is $19.{% endblock %}
 {% block ogtitle %}Shop 3D Printed Coasters in Jupiter, FL{% endblock %}
 {% block ogdesc %}{{ self.description() }}{% endblock %}
 {% block head %}
@@ -55,8 +55,10 @@
     </div>
   </div>
   <figure style="margin:0">
-    {{ pic("img/flavor-board-" ~ season ~ ".webp", batch.tray ~ " flavor board on a wood tray", sizes="(min-width: 1200px) 1104px, calc(100vw - 32px)", lazy=False, style="width:100%;height:auto;border-radius:14px") }}
-    <figcaption style="margin-top:8px;font-size:13px;font-weight:600">{{ batch.tray }} flavor board</figcaption>
+    {{ pic("img/flavor-board-" ~ season ~ ".webp", "Studio rendering of The Holiday Tray flavor board: six Pop coasters in Pumpkin, Coconut (frosted clear), Cranberry, Maple, Rhubarb and Sunflower on a sand board." if season == "fall" else batch.tray ~ " flavor board on a wood tray, studio rendering", sizes="(min-width: 1200px) 1104px, calc(100vw - 32px)", lazy=False, style="width:100%;height:auto;border-radius:14px") }}
+    <figcaption style="margin-top:8px;font-size:13px;font-weight:600">{{ batch.tray }} flavor board · Studio rendering. This week: {% for f in batch.flavors[:6] %}{{ f.name }}{% if f.name.startswith('Coconut') %} (clear){% endif %}{% if not loop.last %}, {% endif %}{% endfor %}.
+    {{ swatch_list(batch.flavors[:6]) }}
+    </figcaption>
   </figure>
   <div class="tray-grid">
     {% for sku in tray_skus %}{{ card(by_sku[sku], shop=True) }}

@@ -1,6 +1,6 @@
 {
   "_note": "Display data for cards. Prices here are DISPLAY ONLY. Checkout charges come from Stripe Price IDs mapped server-side in functions/_lib.js. Never invent prices: null = 'Ask about this batch'.",
-  "_todo_primary_29": "TODO(Smash): which $29 product is primary (6 coasters + case, The Half Dozen box, or 12 coasters with no case) is unresolved. Do not pick a primary $29 product or change these prices. The Readers ($19, with stand) and The Gigi ($9) are already listed.",
+  "_todo_primary_29": "TODO(Smash): which $29 product is primary (6 coasters + case, The Half Dozen box, or 12 coasters with no case) is unresolved. Do not pick a primary $29 product or change these prices. The Reader ($19, with stand) and The Gigi ($9) are already listed.",
   "products": [
     {
       "sku": "fall-pop-coasters",
@@ -9,10 +9,11 @@
       "price": 29,
       "material": "TPU 95A · washable · dishwasher safe",
       "swatches": "batch",
-      "img": "img/pop-coasters-pumpkin.webp",
+      "img": "img/holiday-tray-pops-1600x900.webp",
       "home": true,
       "shop": true,
-      "alt": "A stack of pumpkin-orange flower coasters with cinnamon sticks and fall leaves"
+      "render": true,
+      "alt": "Studio rendering of The Holiday Tray: six JUP LIFE Pop coasters in Pumpkin, Coconut (frosted clear), Cranberry, Maple, Rhubarb and Sunflower in a teal tray on sand, with warm holiday lights, greenery and a small gold star."
     },
     {
       "sku": "stack-bands-fall",
@@ -76,6 +77,7 @@
       "board": "img/stack-bands-board.webp",
       "home": true,
       "shop": true,
+      "render": true,
       "alt": "The Harvest stack band 3-pack in Pumpkin, Cinnamon and Maple"
     },
     {
@@ -87,6 +89,7 @@
       "img": "img/six-set-case.webp",
       "home": true,
       "shop": true,
+      "render": true,
       "alt": "Six yellow flower coasters stacked in a white printed case"
     },
     {
@@ -98,6 +101,7 @@
       "img": "img/halfdozen-box.webp",
       "home": false,
       "shop": true,
+      "render": true,
       "alt": "The Half Dozen: a windowed kraft box of assorted coasters wrapped in a sage TPU band with the Mrs. Smash tag"
     },
     {
@@ -109,12 +113,13 @@
       "img": "img/halfdozen-open.webp",
       "home": false,
       "shop": true,
+      "render": true,
       "alt": "The Baker's Dozen: a box of thirteen assorted coasters"
     },
     {
       "sku": "gigi",
       "name": "The Gigi",
-      "line": "A flexible band with our JI monogram pressed in. Wear one or stack a few.",
+      "line": "A flexible band with our JL monogram pressed in. Wear one or stack a few.",
       "price": 9,
       "material": null,
       "img": "img/gigi-teal.webp",
@@ -130,7 +135,8 @@
       ],
       "home": true,
       "shop": true,
-      "alt": "A teal Gigi band with a repeating JI monogram, in palm-leaf shadow"
+      "render": true,
+      "alt": "A teal Gigi band with a repeating JL monogram, in palm-leaf shadow"
     },
     {
       "sku": "tide-soap-dish",
@@ -151,6 +157,7 @@
       ],
       "home": true,
       "shop": true,
+      "render": true,
       "alt": "A lime-green Tide soap dish with wave ridges and drain holes, holding a bar of soap"
     },
     {
@@ -172,22 +179,23 @@
       ],
       "home": true,
       "shop": true,
+      "render": true,
       "alt": "A Tide hand soap dispenser fading from lime to amber, with wave texture and a square base"
     },
     {
       "sku": "readers",
-      "name": "The Readers",
-      "line": "The reader and its coastal cradle, both included. One more chapter.",
+      "name": "The Reader",
+      "line": "The Reader and its stand, both included. One more chapter.",
       "price": 19,
       "material": null,
       "img": "img/readers-cradle.webp",
       "home": false,
       "shop": true,
-      "alt": "A gold driftwood-pattern Readers page holder resting in a sand-colored cradle engraved One More Chapter, beside a book on a sunlit beach table",
+      "alt": "A gold driftwood-pattern Reader page holder resting in a sand-colored stand engraved One More Chapter, beside a book on a sunlit beach table",
       "gallery": [
         {
           "img": "img/readers-one-more-chapter.webp",
-          "alt": "The Readers gold driftwood-pattern page holder resting in its sand-colored One More Chapter cradle, with the empty cradle inset"
+          "alt": "The Reader gold driftwood-pattern page holder resting in its sand-colored One More Chapter stand, with the empty stand inset"
         }
       ],
       "render": true
@@ -211,11 +219,11 @@
       "shots": [
         {
           "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "Concept render of Pop Tray 1, Season Colors: six plain flat Pop Round coasters on a wood tray, Pumpkin, Coconut (clear) and Rhubarb in back, Key Lime, Peach and Sea Salt in front"
+          "alt": "Studio rendering of JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray."
         },
         {
           "img": "img/pop-tray-1-color-card.webp",
-          "alt": "Concept render of the Season Colors card for Pop Tray 1, with the flat Pop Round and swatches for Pumpkin, Coconut (clear), Rhubarb, Key Lime, Peach and Sea Salt"
+          "alt": "Studio rendering color card for JUP LIFE Pop Tray 1: Pumpkin #E8731E, Coconut frosted clear TPU, Rhubarb #C93A5B, Key Lime #A8D94A, Peach #FFB07C and Sea Salt #7FD1C2."
         }
       ],
       "home": false,

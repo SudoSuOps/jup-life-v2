@@ -2,7 +2,7 @@
 
 {% macro swatch_list(items) %}
 <ul class="swatches" aria-label="Flavors">
-  {% for f in items %}<li><i style="background:{{ f.hex }}"></i>{{ f.name }}</li>{% endfor %}
+  {% for f in items %}<li><i{% if f.name.startswith('Coconut') %} class="swatch-clear" title="Clear / transparent"{% endif %} style="background:{{ f.hex }}"></i>{{ f.name }}</li>{% endfor %}
 </ul>
 {% endmacro %}
 
@@ -61,7 +61,7 @@
   <div class="thumbs">{% for g in p.gallery %}{{ pic(g.img, g.alt, sizes="64px") }}{% endfor %}</div>
   {% endif %}
   {% elif p.sku == 'readers' and have_ph('readers_photo') %}
-  <figure>{{ pic(site.placeholders.readers_photo, "The Readers thumb page holder and stand", sizes="360px") }}</figure>
+  <figure>{{ pic(site.placeholders.readers_photo, "The Reader thumb page holder and stand", sizes="360px") }}</figure>
   {% else %}
   <div class="well"><span class="ph">{{ p.photo_placeholder }}</span></div>
   {% endif %}
@@ -78,9 +78,6 @@
       <span class="price">${{ p.price }}</span><button type="button" class="btn btn-primary btn-sm" data-add-to-bag data-sku="{{ p.sku }}" data-name="{{ p.name }}" data-price="{{ p.price }}">Add to bag</button>
       {% else %}
       <button type="button" class="btn btn-outline btn-sm" data-open-sample data-type="Product question" data-product="{{ p.name }}">Ask about this batch</button>
-      {% endif %}
-      {% if p.sku in ['readers', 'fall-pop-coasters', 'six-set-case', 'half-dozen', 'bakers-dozen'] %}
-      <a class="btn btn-outline btn-sm" href="https://www.tiktok.com/@juplifestudio" rel="noopener" target="_blank">Also on TikTok Shop</a>
       {% endif %}
     </div>
   </div>
@@ -122,14 +119,14 @@
 {# Pre-rendered; js/main.js re-renders the same markup from #batch-data #}
 <section class="board" id="todays-batch" aria-labelledby="batch-h" data-batch-board>
   {% if batch.chefs_special %}<div class="ribbon">Chef's Special: {{ batch.chefs_special }}</div>{% endif %}
-  <p class="eyebrow muted"><span data-batch-date>{{ batch_date }}</span>{% if batch.batch_no %} · Batch #<span data-batch-no>{{ batch.batch_no }}</span>{% endif %}</p>
+  <p class="eyebrow muted">{% if batch_date %}<span data-batch-date>{{ batch_date }}</span>{% endif %}{% if batch.batch_no %}{% if batch_date %} · {% endif %}Batch #<span data-batch-no>{{ batch.batch_no }}</span>{% endif %}</p>
   <h2 id="batch-h">Today's Batch</h2>
   <p class="muted" style="margin:0 0 18px;font-size:16px"><span data-batch-tray>{{ batch.tray }}</span> is out of the oven.</p>
   <ul class="rows" data-batch-rows>
     {% for f in batch.flavors[:6] %}<li class="row"><span class="swatch{% if f.name.startswith('Coconut') %} swatch-clear{% endif %}" style="background:{{ f.hex }}" aria-hidden="true"></span><span class="name">{{ f.name }}</span><span class="leader" aria-hidden="true"></span><span class="muted" style="font-style:italic">{{ f.note }}</span></li>
     {% endfor %}
   </ul>
-  <p class="foot">Locally grown in Jupiter, FL.</p>
+  <p class="foot">Locally baked in Jupiter, FL.</p>
 </section>
 {% endmacro %}
 
@@ -144,7 +141,7 @@
     <div class="row"><dt>Retail sample</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">1 free</dd></div>
     <div class="row"><dt>Wholesale sample</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">6 free</dd></div>
   </dl>
-  <p class="foot">Locally grown in Jupiter, FL.</p>
+  <p class="foot">Locally baked in Jupiter, FL.</p>
 </section>
 {% endmacro %}
 
@@ -214,7 +211,7 @@
   <span>Say hello: <a href="mailto:hello@juplifestudio.com">hello@juplifestudio.com</a></span>
   <span>Email Dee: <a href="mailto:dee@juplifestudio.com">dee@juplifestudio.com</a></span>
   <span>Text us: <a href="sms:+15615818015">561-581-8015</a></span>
-  <span><a href="https://www.tiktok.com/@juplifestudio" rel="noopener" target="_blank">TikTok Shop</a></span>
+  <span><a href="https://www.tiktok.com/@juplifestudio" rel="noopener" target="_blank">TikTok</a></span>
   <span><a href="https://x.com/juplifestudio" rel="noopener" target="_blank">X</a></span>
 </address>
 {% endmacro %}
