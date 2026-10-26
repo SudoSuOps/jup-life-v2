@@ -18,13 +18,13 @@
     if (!board || !raw) return;
     let b;
     try { b = JSON.parse(raw.textContent); } catch { return; }
-    const d = new Date(b.date + 'T12:00:00');
-    if (!isNaN(d)) {
+    const d = new Date((b.date || '') + 'T12:00:00');
+    const dateEl = $('[data-batch-date]', board);
+    if (dateEl && b.date && !isNaN(d)) {
       const day = d.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
       const mon = d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
-      $('[data-batch-date]', board).textContent = `${day} ${mon} ${d.getDate()}`;
+      dateEl.textContent = `${day} ${mon} ${d.getDate()}`;
     }
-    const dateEl = $('[data-batch-date]', board);
     let noEl = $('[data-batch-no]', board);
     if (b.batch_no) {
       if (!noEl && dateEl) {

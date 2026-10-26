@@ -61,7 +61,7 @@
   <div class="thumbs">{% for g in p.gallery %}{{ pic(g.img, g.alt, sizes="64px") }}{% endfor %}</div>
   {% endif %}
   {% elif p.sku == 'readers' and have_ph('readers_photo') %}
-  <figure>{{ pic(site.placeholders.readers_photo, "The Readers thumb page holder and stand", sizes="360px") }}</figure>
+  <figure>{{ pic(site.placeholders.readers_photo, "The Reader thumb page holder and stand", sizes="360px") }}</figure>
   {% else %}
   <div class="well"><span class="ph">{{ p.photo_placeholder }}</span></div>
   {% endif %}
@@ -122,7 +122,7 @@
 {# Pre-rendered; js/main.js re-renders the same markup from #batch-data #}
 <section class="board" id="todays-batch" aria-labelledby="batch-h" data-batch-board>
   {% if batch.chefs_special %}<div class="ribbon">Chef's Special: {{ batch.chefs_special }}</div>{% endif %}
-  <p class="eyebrow muted"><span data-batch-date>{{ batch_date }}</span>{% if batch.batch_no %} · Batch #<span data-batch-no>{{ batch.batch_no }}</span>{% endif %}</p>
+  <p class="eyebrow muted">{% if batch_date %}<span data-batch-date>{{ batch_date }}</span>{% endif %}{% if batch.batch_no %}{% if batch_date %} · {% endif %}Batch #<span data-batch-no>{{ batch.batch_no }}</span>{% endif %}</p>
   <h2 id="batch-h">Today's Batch</h2>
   <p class="muted" style="margin:0 0 18px;font-size:16px"><span data-batch-tray>{{ batch.tray }}</span> is out of the oven.</p>
   <ul class="rows" data-batch-rows>

@@ -1,6 +1,6 @@
 {
   "_note": "Display data for cards. Prices here are DISPLAY ONLY. Checkout charges come from Stripe Price IDs mapped server-side in functions/_lib.js. Never invent prices: null = 'Ask about this batch'.",
-  "_todo_primary_29": "TODO(Smash): which $29 product is primary (6 coasters + case, The Half Dozen box, or 12 coasters with no case) is unresolved. Do not pick a primary $29 product or change these prices. The Readers ($19, with stand) and The Gigi ($9) are already listed.",
+  "_todo_primary_29": "TODO(Smash): which $29 product is primary (6 coasters + case, The Half Dozen box, or 12 coasters with no case) is unresolved. Do not pick a primary $29 product or change these prices. The Reader ($19, with stand) and The Gigi ($9) are already listed.",
   "products": [
     {
       "sku": "fall-pop-coasters",
@@ -12,6 +12,7 @@
       "img": "img/pop-coasters-pumpkin.webp",
       "home": true,
       "shop": true,
+      "render": true,
       "alt": "A stack of pumpkin-orange flower coasters with cinnamon sticks and fall leaves"
     },
     {
@@ -76,6 +77,7 @@
       "board": "img/stack-bands-board.webp",
       "home": true,
       "shop": true,
+      "render": true,
       "alt": "The Harvest stack band 3-pack in Pumpkin, Cinnamon and Maple"
     },
     {
@@ -87,6 +89,7 @@
       "img": "img/six-set-case.webp",
       "home": true,
       "shop": true,
+      "render": true,
       "alt": "Six yellow flower coasters stacked in a white printed case"
     },
     {
@@ -98,6 +101,7 @@
       "img": "img/halfdozen-box.webp",
       "home": false,
       "shop": true,
+      "render": true,
       "alt": "The Half Dozen: a windowed kraft box of assorted coasters wrapped in a sage TPU band with the Mrs. Smash tag"
     },
     {
@@ -109,6 +113,7 @@
       "img": "img/halfdozen-open.webp",
       "home": false,
       "shop": true,
+      "render": true,
       "alt": "The Baker's Dozen: a box of thirteen assorted coasters"
     },
     {
@@ -130,6 +135,7 @@
       ],
       "home": true,
       "shop": true,
+      "render": true,
       "alt": "A teal Gigi band with a repeating JI monogram, in palm-leaf shadow"
     },
     {
@@ -151,6 +157,7 @@
       ],
       "home": true,
       "shop": true,
+      "render": true,
       "alt": "A lime-green Tide soap dish with wave ridges and drain holes, holding a bar of soap"
     },
     {
@@ -172,22 +179,23 @@
       ],
       "home": true,
       "shop": true,
+      "render": true,
       "alt": "A Tide hand soap dispenser fading from lime to amber, with wave texture and a square base"
     },
     {
       "sku": "readers",
-      "name": "The Readers",
-      "line": "The reader and its coastal cradle, both included. One more chapter.",
+      "name": "The Reader",
+      "line": "The Reader and its stand, both included. One more chapter.",
       "price": 19,
       "material": null,
       "img": "img/readers-cradle.webp",
       "home": false,
       "shop": true,
-      "alt": "A gold driftwood-pattern Readers page holder resting in a sand-colored cradle engraved One More Chapter, beside a book on a sunlit beach table",
+      "alt": "A gold driftwood-pattern Reader page holder resting in a sand-colored stand engraved One More Chapter, beside a book on a sunlit beach table",
       "gallery": [
         {
           "img": "img/readers-one-more-chapter.webp",
-          "alt": "The Readers gold driftwood-pattern page holder resting in its sand-colored One More Chapter cradle, with the empty cradle inset"
+          "alt": "The Reader gold driftwood-pattern page holder resting in its sand-colored One More Chapter stand, with the empty stand inset"
         }
       ],
       "render": true
