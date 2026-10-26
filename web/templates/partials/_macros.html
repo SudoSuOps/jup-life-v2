@@ -2,7 +2,7 @@
 
 {% macro swatch_list(items) %}
 <ul class="swatches" aria-label="Flavors">
-  {% for f in items %}<li><i style="background:{{ f.hex }}"></i>{{ f.name }}</li>{% endfor %}
+  {% for f in items %}<li><i{% if f.name.startswith('Coconut') %} class="swatch-clear" title="Clear / transparent"{% endif %} style="background:{{ f.hex }}"></i>{{ f.name }}</li>{% endfor %}
 </ul>
 {% endmacro %}
 

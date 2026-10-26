@@ -23,6 +23,7 @@ a{color:#A9532F}a:hover{color:#8E4426}
 .lift{transition:transform .2s,box-shadow .2s}.lift:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(90,62,43,.16)}
 .band{height:8px;border-radius:999px;background:#9CAF88;margin:0}
 .ph{color:#A9532F;font-weight:600}
+.swatch-clear{background:linear-gradient(135deg,rgba(255,255,255,.85),rgba(255,255,255,.3)),repeating-conic-gradient(#E6DFD3 0 25%,#FFFFFF 0 50%) 0 0/6px 6px !important;box-shadow:inset 0 0 0 1px rgba(90,62,43,.35) !important}
 .leader{flex:1 1 auto;border-bottom:2px dotted rgba(251,247,240,.45);margin:0 10px 6px;min-width:16px}
 .field{display:flex;flex-direction:column;gap:6px;font-size:15px;font-weight:600}
 .field input,.field select,.field textarea{font:400 16px Montserrat,sans-serif;color:#5A3E2B;background:#fff;border:1.5px solid #B9A48E;border-radius:10px;padding:12px 14px;min-height:48px}
@@ -79,7 +80,7 @@ a{color:#A9532F}a:hover{color:#8E4426}
 <div style="border-top: 2px dotted rgba(251,247,240,.35); padding-top: 14px; display: flex; flex-direction: column; gap: 10px">
 <sc-for list="{{batch.flavors}}" as="f" hint-placeholder-count="5">
 <div style="display: flex; align-items: flex-end; font-size: 17px">
-<span aria-hidden="true" style="flex: 0 0 auto; width: 18px; height: 18px; border-radius: 999px; background: {{f.hex}}; box-shadow: 0 0 0 2px rgba(251,247,240,.85); margin: 0 12px 4px 2px"></span>
+<span aria-hidden="true" class="{{f.swatchClass}}" title="{{f.swatchTitle}}" style="flex: 0 0 auto; width: 18px; height: 18px; border-radius: 999px; background: {{f.hex}}; box-shadow: 0 0 0 2px rgba(251,247,240,.85); margin: 0 12px 4px 2px"></span>
 <span style="font-weight: 600">{{f.name}}</span>
 <span class="leader"></span>
 <span style="font-style: italic; color: #E9D9C2">{{f.note}}</span>
@@ -103,8 +104,8 @@ a{color:#A9532F}a:hover{color:#8E4426}
 <a href="Shop.dc.html" style="font-weight: 600; padding: 10px 0">See the whole batch →</a>
 </div>
 <figure style="margin: 0; position: relative">
-<img src="/_blob/4d601d19703ad8b3911f256af7ba093c" alt="The Holiday Tray flavor board: Pumpkin, Cinnamon, Cranberry, Maple, Rhubarb and Sunflower pop coasters on a wood tray" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1400 / 352; border-radius: 14px">
-<figcaption style="margin-top: 8px; font-size: 13px; font-weight: 600">The Holiday Tray flavor board · Studio rendering</figcaption>
+<img src="/_blob/4d601d19703ad8b3911f256af7ba093c" alt="The Holiday Tray flavor board on a wood tray, studio rendering. This week: Pumpkin, Coconut (clear), Cranberry, Maple, Rhubarb and Sunflower" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1400 / 352; border-radius: 14px">
+<figcaption style="margin-top: 8px; font-size: 13px; font-weight: 600">The Holiday Tray flavor board · Studio rendering. This week: Pumpkin, Coconut (clear), Cranberry, Maple, Rhubarb and Sunflower.</figcaption>
 </figure>
 
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 32px 24px">
@@ -128,7 +129,7 @@ a{color:#A9532F}a:hover{color:#8E4426}
 <sc-if value="{{p.hasSwatches}}" hint-placeholder-val="{{ false }}">
 <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; font-weight: 600">
 <sc-for list="{{p.swatches}}" as="s" hint-placeholder-count="5">
-<li style="display: flex; align-items: center; gap: 6px"><span aria-hidden="true" style="width: 14px; height: 14px; border-radius: 999px; background: {{s.hex}}"></span>{{s.name}}</li>
+<li style="display: flex; align-items: center; gap: 6px"><span aria-hidden="true" class="{{s.swatchClass}}" title="{{s.swatchTitle}}" style="width: 14px; height: 14px; border-radius: 999px; background: {{s.hex}}"></span>{{s.name}}</li>
 </sc-for>
 </ul>
 </sc-if>
@@ -391,12 +392,12 @@ class Component extends DCLogic {
       batch_no: '',
       chefs_special: '',
       flavors: [
-        { name: 'Pumpkin', hex: '#E8731E', note: 'fall harvest' },
-        { name: 'Cinnamon', hex: '#A0522D', note: 'warm & spicy' },
-        { name: 'Cranberry', hex: '#9B1B30', note: 'tart pick' },
-        { name: 'Maple', hex: '#C8862A', note: 'fresh tapped' },
-        { name: 'Rhubarb', hex: '#C93A5B', note: 'garden crisp' },
-        { name: 'Sunflower', hex: '#F6C21C', note: 'the hero' }
+        { name: 'Pumpkin', hex: '#E8731E', note: 'fall harvest', swatchClass: '', swatchTitle: '' },
+        { name: 'Coconut', hex: '#F4EFE3', note: 'clear & bright', swatchClass: 'swatch-clear', swatchTitle: 'Clear / transparent' },
+        { name: 'Cranberry', hex: '#9B1B30', note: 'tart pick', swatchClass: '', swatchTitle: '' },
+        { name: 'Maple', hex: '#C8862A', note: 'fresh tapped', swatchClass: '', swatchTitle: '' },
+        { name: 'Rhubarb', hex: '#C93A5B', note: 'garden crisp', swatchClass: '', swatchTitle: '' },
+        { name: 'Sunflower', hex: '#F6C21C', note: 'the hero', swatchClass: '', swatchTitle: '' }
       ]
     };
     const d = new Date(batch.date + 'T12:00:00');

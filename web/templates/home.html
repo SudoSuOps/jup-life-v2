@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "partials/_macros.html" import card, cta_strip, batch_board, price_board, pop_tease %}
+{% from "partials/_macros.html" import card, cta_strip, batch_board, price_board, pop_tease, swatch_list %}
 {% block title %}Custom 3D-Printed Coasters in Jupiter, FL | JUP LIFE by Mrs. Smash{% endblock %}
 {% block description %}3D printed coasters and custom bar coasters from JUP LIFE Studio in Jupiter, FL. Restaurant coasters for Palm Beach County. Retail buyers get 1 free sample coaster. Wholesale buyers get 6 free sample coasters.{% endblock %}
 {% block ogtitle %}Custom 3D-Printed Coasters in Jupiter, FL{% endblock %}
@@ -80,8 +80,10 @@
   </div>
 
   <figure style="margin:0">
-    {{ pic("img/flavor-board-" ~ season ~ ".webp", batch.tray ~ " flavor board on a wood tray", sizes="(min-width: 1200px) 1104px, calc(100vw - 32px)", style="width:100%;height:auto;border-radius:14px") }}
-    <figcaption style="margin-top:8px;font-size:13px;font-weight:600">{{ batch.tray }} flavor board</figcaption>
+    {{ pic("img/flavor-board-" ~ season ~ ".webp", batch.tray ~ " flavor board on a wood tray, studio rendering", sizes="(min-width: 1200px) 1104px, calc(100vw - 32px)", style="width:100%;height:auto;border-radius:14px") }}
+    <figcaption style="margin-top:8px;font-size:13px;font-weight:600">{{ batch.tray }} flavor board · Studio rendering. This week: {% for f in batch.flavors[:6] %}{{ f.name }}{% if f.name.startswith('Coconut') %} (clear){% endif %}{% if not loop.last %}, {% endif %}{% endfor %}.
+    {{ swatch_list(batch.flavors[:6]) }}
+    </figcaption>
   </figure>
 
   <div class="tray-grid">
