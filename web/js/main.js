@@ -205,6 +205,7 @@
   const saveBag = (bag) => { try { localStorage.setItem(BAG_KEY, JSON.stringify(bag)); } catch { /* private mode: bag lives in memory */ } };
   let bag = loadBag();
 
+  const lineKey = (i) => (i.color ? `${i.sku}\0${i.color}` : i.sku);
   function renderBag() {
     const count = bag.reduce((n, i) => n + i.qty, 0);
     $$('[data-bag-count]').forEach((el) => { el.textContent = count; });
@@ -219,16 +220,17 @@
       $('.sub', li).textContent = money(i.price);
       $('.qty span', li).textContent = i.qty;
       const [minus, plus] = $$('button', li);
-      minus.addEventListener('click', () => setQty(i.sku, i.qty - 1));
-      plus.addEventListener('click', () => setQty(i.sku, i.qty + 1));
+      const key = lineKey(i);
+      minus.addEventListener('click', () => setQty(key, i.qty - 1));
+      plus.addEventListener('click', () => setQty(key, i.qty + 1));
       return li;
     }));
     $('[data-bag-empty]').hidden = bag.length > 0;
     $('[data-checkout]').disabled = bag.length === 0;
     $('[data-bag-subtotal]').textContent = money(bag.reduce((s, i) => s + i.price * i.qty, 0));
   }
-  function setQty(sku, qty) {
-    bag = bag.map((i) => (i.sku === sku ? { ...i, qty: Math.min(qty, 20) } : i)).filter((i) => i.qty > 0);
+  function setQty(key, qty) {
+    bag = bag.map((i) => (lineKey(i) === key ? { ...i, qty: Math.min(qty, 20) } : i)).filter((i) => i.qty > 0);
     saveBag(bag); renderBag();
   }
 
@@ -240,8 +242,20 @@
     $$('[data-add-to-bag]').forEach((b) => b.addEventListener('click', () => {
       // price shown client-side is display only; the server maps sku -> Stripe Price
       const { sku, name, price } = b.dataset;
-      const hit = bag.find((i) => i.sku === sku);
+      const hit = bag.find((i) => i.sku === sku && !i.color);
       if (hit) hit.qty = Math.min(hit.qty + 1, 20); else bag.push({ sku, name, price: Number(price), qty: 1 });
+      saveBag(bag); renderBag(); openDlg(dlg);
+    }));
+    $$('[data-add-six]').forEach((b) => b.addEventListener('click', () => {
+      // One click is one 6-pack. The server prices it and names it; this price is display only.
+      const sku = b.dataset.sku;
+      const price = Number(b.dataset.price);
+      const chosen = b.closest('.color-pack')?.querySelector('input[type=radio]:checked');
+      const color = chosen?.value;
+      if (!sku || !color || !Number.isFinite(price)) return;
+      const name = `${b.dataset.pack} · ${color}`;
+      const hit = bag.find((i) => i.sku === sku && i.color === color);
+      if (hit) hit.qty = Math.min(hit.qty + 1, 20); else bag.push({ sku, color, name, price, qty: 1 });
       saveBag(bag); renderBag(); openDlg(dlg);
     }));
     $('[data-checkout]', dlg).addEventListener('click', async (e) => {
@@ -250,7 +264,7 @@
       try {
         const res = await fetch(`${API}/checkout`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: bag.map(({ sku, qty }) => ({ sku, qty })) }),
+          body: JSON.stringify({ items: bag.map(({ sku, qty, color }) => (color ? { sku, qty, color } : { sku, qty })) }),
         });
         const data = await res.json().catch(() => ({}));
         if (!res.ok || !data.url) throw new Error(data.detail || 'Checkout is unavailable right now.');

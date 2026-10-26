@@ -58,6 +58,15 @@ def load_batch() -> dict:
     return load_json("batch.json")
 
 
+def single_color_six_pack_usd() -> int:
+    """The page price is the same constant checkout charges. See functions/_lib.js."""
+    text = (ROOT / "functions" / "_lib.js").read_text()
+    m = re.search(r"^export const SINGLE_COLOR_SIX_PACK_USD = (\d+)\s*;", text, re.M)
+    if not m:
+        sys.exit("SINGLE_COLOR_SIX_PACK_USD missing from functions/_lib.js")
+    return int(m.group(1))
+
+
 def batch_date_label(iso: str) -> str:
     try:
         d = date.fromisoformat(iso)
@@ -296,6 +305,7 @@ def main() -> int:
         return Markup(json.dumps(ld, indent=2).replace("</", "<\\/"))
 
     env.globals.update(pic=pic, product_ld=product_ld, by_sku={p['sku']: p for p in products}, flavor_hex=FLAVOR_HEX, indexable=indexable, ph=ph, site=site, batch=batch, batch_date=batch_date_label(batch["date"]),
+                       six_pack_usd=single_color_six_pack_usd(),
                        season=season, products=products, css_href=css_href, js_src=js_src,
                        site_url=site["site_url"], have_ph=lambda k: bool(site["placeholders"].get(k)),
                        batch_json=Markup(json.dumps(batch, indent=2, ensure_ascii=False).replace("</", "<\\/")))

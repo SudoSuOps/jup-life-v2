@@ -6,6 +6,25 @@
 </ul>
 {% endmacro %}
 
+{% macro color_pack(p, flavors, group) %}
+<fieldset class="color-pack">
+  <legend>6 of one color</legend>
+  <div class="color-pack-options">
+    {% for f in flavors %}
+    <label class="color-opt">
+      <input type="radio" name="six-{{ p.sku }}-{{ group }}" value="{{ f.name }}"{% if loop.first %} checked{% endif %}>
+      <span class="color-dot{% if f.name.startswith('Coconut') %} swatch-clear{% endif %}" style="background:{{ f.hex }}" aria-hidden="true"></span>
+      <span>{{ f.name }}</span>
+    </label>
+    {% endfor %}
+  </div>
+  <div class="color-pack-buy">
+    <span class="price">${{ six_pack_usd }}</span>
+    <button type="button" class="btn btn-primary btn-sm" data-add-six data-sku="{{ p.sku }}" data-pack="{{ p.color_pack }}" data-price="{{ six_pack_usd }}">Add 6 to bag</button>
+  </div>
+</fieldset>
+{% endmacro %}
+
 {% macro concept_fig(src, alt, sizes) %}
 <figure class="pop-shot">
   {{ pic(src, alt, sizes=sizes) }}
@@ -19,9 +38,13 @@
     <p class="eyebrow">{{ p.kicker }}</p>
     <h3 class="serif" id="{{ p.sku }}-h">{{ p.short }}</h3>
     <p>{{ p.line }}</p>
+    {% if p.color_pack and not p.concept and not p.coming_soon and p.pops|length >= 6 %}
+    {{ color_pack(p, p.pops[:6], 'tray') }}
+    {% else %}
     <ul class="swatches" aria-label="Six Pops on {{ p.short }}">
       {% for f in p.pops %}<li><i{% if f.name.startswith('Coconut') %} class="swatch-clear" title="Clear / transparent"{% endif %} style="background:{{ f.hex }}"></i>{{ f.name }}</li>{% endfor %}
     </ul>
+    {% endif %}
     {% if p.story %}<p class="pop-story">{{ p.story }}</p>{% endif %}
     {% if p.material %}<p class="material">{{ p.material }}</p>{% endif %}
     <div class="btn-row">
@@ -66,15 +89,18 @@
   <div class="well"><span class="ph">{{ p.photo_placeholder }}</span></div>
   {% endif %}
   <div class="body">
-    {% if p.swatches == 'batch' %}{{ swatch_list(batch.flavors) }}{% endif %}
     <h3 class="serif">{{ p.name }}</h3>
     <p>{{ p.line }}</p>
+    {% if p.color_pack and not p.concept and not p.coming_soon and p.swatches == 'batch' and batch.flavors|length >= 6 %}
+    {{ color_pack(p, batch.flavors[:6], 'card') }}
+    {% elif p.swatches == 'batch' %}{{ swatch_list(batch.flavors) }}{% endif %}
     {% if shop and p.combos_now %}
     <ul class="combos" aria-label="{{ season | capitalize }} 3-pack combos">{% for c in p.combos_now %}<li><b>{{ c.name }}</b>{% for f in c.flavors %}<i style="background:{{ flavor_hex[f] }}"></i>{{ f }} {% endfor %}</li>{% endfor %}</ul>
     {% endif %}
     {% if p.material %}<p class="material">{{ p.material }}</p>{% endif %}
     <div class="buy">
       {% if p.price %}
+      {% if p.color_pack and not p.concept and not p.coming_soon %}<p class="muted" style="flex:1 1 100%;margin:0;font-size:13px">Or the mixed set</p>{% endif %}
       <span class="price">${{ p.price }}</span><button type="button" class="btn btn-primary btn-sm" data-add-to-bag data-sku="{{ p.sku }}" data-name="{{ p.name }}" data-price="{{ p.price }}">Add to bag</button>
       {% else %}
       <button type="button" class="btn btn-outline btn-sm" data-open-sample data-type="Product question" data-product="{{ p.name }}">Ask about this batch</button>
@@ -126,6 +152,10 @@
     {% for f in batch.flavors[:6] %}<li class="row"><span class="swatch{% if f.name.startswith('Coconut') %} swatch-clear{% endif %}" style="background:{{ f.hex }}" aria-hidden="true"></span><span class="name">{{ f.name }}</span><span class="leader" aria-hidden="true"></span><span class="muted" style="font-style:italic">{{ f.note }}</span></li>
     {% endfor %}
   </ul>
+  {% set tray = by_sku['fall-pop-coasters'] %}
+  {% if tray.color_pack and not tray.concept and not tray.coming_soon and batch.flavors|length >= 6 %}
+  {{ color_pack(tray, batch.flavors[:6], 'board') }}
+  {% endif %}
   <p class="foot">Locally baked in Jupiter, FL.</p>
 </section>
 {% endmacro %}

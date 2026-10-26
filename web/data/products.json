@@ -1,5 +1,5 @@
 {
-  "_note": "Display data for cards. Prices here are DISPLAY ONLY. Checkout charges come from Stripe Price IDs mapped server-side in functions/_lib.js. Never invent prices: null = 'Ask about this batch'.",
+  "_note": "Display data for cards. Prices here are DISPLAY ONLY. Checkout charges come from Stripe Price IDs mapped server-side in functions/_lib.js. Never invent prices: null = 'Ask about this batch'. color_pack names a single-color 6-pack. Its charge is SINGLE_COLOR_SIX_PACK_USD in functions/_lib.js. concept or coming_soon keeps that pack off the cart.",
   "_todo_primary_29": "TODO(Smash): which $29 product is primary (6 coasters + case, The Half Dozen box, or 12 coasters with no case) is unresolved. Do not pick a primary $29 product or change these prices. The Reader ($19, with stand) and The Gigi ($9) are already listed.",
   "products": [
     {
@@ -9,6 +9,7 @@
       "price": 29,
       "material": "TPU 95A · washable · dishwasher safe",
       "swatches": "batch",
+      "color_pack": "Holiday Tray 6-Pack",
       "img": "img/holiday-tray-pops-1600x900.webp",
       "home": true,
       "shop": true,
@@ -206,6 +207,7 @@
       "kicker": "Pop Tray 1",
       "short": "Season Colors",
       "line": "Six plain Pops, one of each season color.",
+      "color_pack": "Pop Tray 1 6-Pack",
       "price": null,
       "material": "TPU 95A · washable · dishwasher safe",
       "pops": [
@@ -236,6 +238,7 @@
       "kicker": "Pop Tray 2",
       "short": "Pop Flowers",
       "line": "Six flower Pops on the flat Pop Round.",
+      "color_pack": "Pop Tray 2 6-Pack",
       "price": null,
       "material": "TPU 95A · washable · dishwasher safe",
       "pops": [
@@ -266,6 +269,7 @@
       "kicker": "Pop Tray 3",
       "short": "Coastal",
       "line": "Six coastal Pops on the flat Pop Round.",
+      "color_pack": "Pop Tray 3 6-Pack",
       "story": "Red Mangrove: mangroves produce floating seedlings, called propagules, that tides and storms carry to new shores.",
       "price": null,
       "material": "TPU 95A · washable · dishwasher safe",

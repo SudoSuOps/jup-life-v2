@@ -1,4 +1,27 @@
 // Shared helpers for the Pages Functions (underscore prefix = not routed).
+import productsDoc from '../web/data/products.json' with { type: 'json' };
+import batchDoc from '../web/data/batch.json' with { type: 'json' };
+
+// One place to change what a single-color 6-pack costs. Owner should confirm before launch.
+// Checkout charges this many dollars via Stripe price_data. The page reads the same constant.
+export const SINGLE_COLOR_SIX_PACK_USD = 29;
+
+// A tray sells a 6-pack of one color when it has color_pack set, exactly six flavors, and is not
+// marked concept or coming_soon. Holiday Tray colors come from Today's Batch; Pop Trays from pops.
+export function colorPackCatalog(products, batch) {
+  const out = {};
+  const flavorsOf = (p) => (p.swatches === 'batch' ? batch?.flavors : p.pops) || [];
+  for (const p of products) {
+    if (!p || !p.color_pack || p.concept || p.coming_soon) continue;
+    const flavors = flavorsOf(p).slice(0, 6);
+    const colors = flavors.map((f) => f?.name);
+    if (colors.length !== 6 || colors.some((c) => typeof c !== 'string' || !c.trim()) || new Set(colors).size !== 6) continue;
+    out[p.sku] = { name: p.color_pack, colors };
+  }
+  return out;
+}
+
+export const COLOR_PACKS = colorPackCatalog(productsDoc.products, batchDoc);
 
 export const json = (body, status = 200, headers = {}) =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json', ...headers } });
