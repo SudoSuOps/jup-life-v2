@@ -1,0 +1,18 @@
+# JUP LIFE Today's Batch: edit these fields only. Everything else is locked brand copy.
+season: The Holiday Tray         # shown in the divider
+harvest: Oct 2026              # "Harvested ___"
+date: ""                     # set the batch day before printing
+batch_no: ""                   # blank prints a write-in line: Batch # ________
+chefs_special: ""              # blank = no ribbon
+flavors:                       # up to 6; note must fit at 6 pt on the card (script warns)
+  - {name: Pumpkin,   color: "#E8731E", note: fall harvest}
+  - {name: Coconut,   color: "#F4EEE3", note: frosted clear}
+  - {name: Cranberry, color: "#9B1B30", note: tart pick}
+  - {name: Maple,     color: "#C8862A", note: fresh tapped}
+  - {name: Rhubarb,   color: "#C93A5B", note: garden crisp}
+  - {name: Sunflower, color: "#F6C21C", note: the hero}
+tiers:                         # real wholesale pricing, per coaster
+  - {qty: 100,  price: 2.00}
+  - {qty: 500,  price: 1.60}
+  - {qty: 1000, price: 1.20}
+samples_free: true             # prints "Samples on the house"

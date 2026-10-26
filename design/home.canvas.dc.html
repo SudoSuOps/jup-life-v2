@@ -87,7 +87,7 @@ a{color:#A9532F}a:hover{color:#8E4426}
 </div>
 </sc-for>
 </div>
-<p style="margin: 20px 0 0; padding-top: 12px; border-top: 2px dotted rgba(251,247,240,.35); font-size: 14px; color: #E9D9C2; text-align: center">Locally grown in Jupiter, FL.</p>
+<p style="margin: 20px 0 0; padding-top: 12px; border-top: 2px dotted rgba(251,247,240,.35); font-size: 14px; color: #E9D9C2; text-align: center">Locally baked in Jupiter, FL.</p>
 </div>
 </div>
 </section>
@@ -104,7 +104,7 @@ a{color:#A9532F}a:hover{color:#8E4426}
 <a href="Shop.dc.html" style="font-weight: 600; padding: 10px 0">See the whole batch →</a>
 </div>
 <figure style="margin: 0; position: relative">
-<img src="/_blob/4d601d19703ad8b3911f256af7ba093c" alt="The Holiday Tray flavor board on a wood tray, studio rendering. This week: Pumpkin, Coconut (clear), Cranberry, Maple, Rhubarb and Sunflower" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1400 / 352; border-radius: 14px">
+<img src="/_blob/4d601d19703ad8b3911f256af7ba093c" alt="Studio rendering of The Holiday Tray flavor board: six Pop coasters in Pumpkin, Coconut (frosted clear), Cranberry, Maple, Rhubarb and Sunflower on a sand board." loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1400 / 352; border-radius: 14px">
 <figcaption style="margin-top: 8px; font-size: 13px; font-weight: 600">The Holiday Tray flavor board · Studio rendering. This week: Pumpkin, Coconut (clear), Cranberry, Maple, Rhubarb and Sunflower.</figcaption>
 </figure>
 
@@ -147,9 +147,6 @@ a{color:#A9532F}a:hover{color:#8E4426}
 <button type="button" class="btn btn-outline btn-sm" onClick="{{p.act}}">Ask about this batch</button>
 </sc-if>
 </div>
-<sc-if value="{{p.tiktok}}" hint-placeholder-val="{{ false }}">
-<a href="#" style="font-size: 14px; font-weight: 600">Also on TikTok Shop ↗ <span class="ph">[[TIKTOK_SHOP_URL]]</span></a>
-</sc-if>
 </div>
 </article>
 </sc-for>
@@ -280,7 +277,7 @@ a{color:#A9532F}a:hover{color:#8E4426}
 <div style="display: flex; align-items: flex-end"><dt style="font-weight: 600">1,000</dt><span class="leader" aria-hidden="true"></span><dd style="margin: 0; font-weight: 600">$1.20 ea</dd></div>
 <div style="display: flex; align-items: flex-end"><dt style="font-weight: 600">Samples</dt><span class="leader" aria-hidden="true"></span><dd style="margin: 0; font-style: italic; color: #F1C9A0">on the house</dd></div>
 </dl>
-<p style="margin: 20px 0 0; padding-top: 12px; border-top: 2px dotted rgba(251,247,240,.35); font-size: 14px; color: #E9D9C2; text-align: center">Locally grown in Jupiter, FL.</p>
+<p style="margin: 20px 0 0; padding-top: 12px; border-top: 2px dotted rgba(251,247,240,.35); font-size: 14px; color: #E9D9C2; text-align: center">Locally baked in Jupiter, FL.</p>
 </div>
 </section>
 
@@ -411,10 +408,10 @@ class Component extends DCLogic {
     const tpu = 'TPU 95A · washable · dishwasher safe';
 
     const products = [
-      { name: 'Holiday Tray Pop Coasters', line: 'Pop coasters in this season’s tray flavors.', photo: '[[PHOTO: Holiday Tray Pop coasters]]', img: '/_blob/5f92bd649d470e15194dd5b6eebf97ae', alt: 'A stack of pumpkin-orange flower coasters with cinnamon sticks and fall leaves', swatches: batch.flavors, material: tpu, ask: true },
+      { name: 'Holiday Tray Pop Coasters', line: 'Pop coasters in this season’s tray flavors.', photo: '[[PHOTO: Holiday Tray Pop coasters]]', img: '/_blob/5f92bd649d470e15194dd5b6eebf97ae', alt: 'Studio rendering of The Holiday Tray: six JUP LIFE Pop coasters in Pumpkin, Coconut (frosted clear), Cranberry, Maple, Rhubarb and Sunflower in a teal tray on sand, with warm holiday lights, greenery and a small gold star.', swatches: batch.flavors, material: tpu, ask: true },
       { name: 'Stack Bands', line: 'Snap. Stack. Go. Fall 3-packs: Harvest, Berry Pie and Coastal Batch.', photo: '[[PHOTO: Stack Bands]]', img: '/_blob/8825915ae074730705f6510e1bbd473a', alt: 'The Harvest stack band 3-pack in Pumpkin, Cinnamon and Maple', ask: true },
-      { name: '6-Coaster Set + Case', line: 'Six coasters and a case to keep them in.', photo: '[[PHOTO: 6-coaster set + case]]', img: '/_blob/4743ef461971b0d28aacd4b3234a0bff', alt: 'Six yellow flower coasters stacked in a white printed case', material: tpu, price: '$29', cta: 'Add to bag', tiktok: true },
-      { name: 'The Gigi', line: 'A flexible band with our JI monogram pressed in. Wear one or stack a few.', photo: '[[PHOTO: The Gigi]]', img: '/_blob/e315967f3fb97273bbcaa0fdb7045906', alt: 'A teal Gigi band with a repeating JI monogram, in palm-leaf shadow', ask: true },
+      { name: '6-Coaster Set + Case', line: 'Six coasters and a case to keep them in.', photo: '[[PHOTO: 6-coaster set + case]]', img: '/_blob/4743ef461971b0d28aacd4b3234a0bff', alt: 'Six yellow flower coasters stacked in a white printed case', material: tpu, price: '$29', cta: 'Add to bag' },
+      { name: 'The Gigi', line: 'A flexible band with our JL monogram pressed in. Wear one or stack a few.', photo: '[[PHOTO: The Gigi]]', img: '/_blob/e315967f3fb97273bbcaa0fdb7045906', alt: 'A teal Gigi band with a repeating JL monogram, in palm-leaf shadow', ask: true },
       { name: 'Tide Soap Dish', line: 'Draining wave ridges, swappable inserts.', photo: '[[PHOTO: photo_tide_dish_lime_wave.jpg]]', img: '/_blob/62e98bf8a7e126a09525494fb1892531', alt: 'A lime-green Tide soap dish with wave ridges and drain holes, holding a bar of soap', ask: true },
       { name: 'Tide Hand Soap Dispenser', line: 'TPU housing, PETG refill bottle, square-wave base.', photo: '[[PHOTO: photo_tide_dispenser_tpu_fade_1.jpg]]', img: '/_blob/db38a30e47d0fe1991298bb366eeb780', alt: 'A Tide hand soap dispenser fading from lime to amber, with wave texture and a square base', material: 'TPU housing · PETG bottle: wash by hand', ask: true }
     ].map((p) => ({
@@ -428,7 +425,6 @@ class Component extends DCLogic {
       material: p.material || '',
       price: p.price || '',
       ask: !!p.ask,
-      tiktok: !!p.tiktok,
       act: p.ask ? ask : () => {}
     }));
 

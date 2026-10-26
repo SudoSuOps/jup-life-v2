@@ -32,7 +32,7 @@ export function sellables(env) {
     { sku: 'tide-dispenser', name: 'Tide Hand Soap Dispenser', price: env.STRIPE_PRICE_TIDE_DISPENSER, max: 20 },
     { sku: 'half-dozen', name: 'The Half Dozen (6 Assorted Coasters)', price: env.STRIPE_PRICE_HALF_DOZEN || 'price_1UTVSJHYwaTbul7MyxtILxOz', max: 20 },
     { sku: 'bakers-dozen', name: "The Baker's Dozen (13 Assorted Coasters)", price: env.STRIPE_PRICE_BAKERS_DOZEN || 'price_1UTVOYHYwaTbul7M7QJo4iye', max: 20 },
-    { sku: 'readers', name: 'The Readers', price: env.STRIPE_PRICE_READERS, max: 20 },
+    { sku: 'readers', name: 'The Reader', price: env.STRIPE_PRICE_READERS, max: 20 },
   ];
   return Object.fromEntries(items.filter((i) => i.price).map((i) => [i.sku, i]));
 }
