@@ -1,5 +1,5 @@
 # JUP LIFE Today's Batch: edit these fields only. Everything else is locked brand copy.
-season: The Fall Tray          # shown in the divider
+season: The Holiday Tray       # shown in the divider
 harvest: Oct 2026              # "Harvested ___"
 date: 2026-10-22               # optional; prints "THU OCT 22" and dates the files. Remove for no date.
 batch_no: ""                   # blank prints a write-in line: Batch # ________
