@@ -42,7 +42,7 @@
     ul.replaceChildren(...(b.flavors || []).slice(0, 6).map((f) => {
       const li = document.createElement('li');
       li.className = 'row';
-      const sw = document.createElement('span'); sw.className = 'swatch'; sw.style.background = f.hex; sw.setAttribute('aria-hidden', 'true');
+      const sw = document.createElement('span'); sw.className = /^Coconut/.test(f.name) ? 'swatch swatch-clear' : 'swatch'; sw.style.background = f.hex; sw.setAttribute('aria-hidden', 'true');
       const name = document.createElement('span'); name.className = 'name'; name.textContent = f.name;
       const lead = document.createElement('span'); lead.className = 'leader'; lead.setAttribute('aria-hidden', 'true');
       const note = document.createElement('span'); note.className = 'muted'; note.style.fontStyle = 'italic'; note.textContent = f.note;

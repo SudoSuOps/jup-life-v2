@@ -6,7 +6,7 @@ batch_no: ""                   # blank prints a write-in line: Batch # ________
 chefs_special: ""              # blank = no ribbon
 flavors:                       # up to 6; note must fit at 6 pt on the card (script warns)
   - {name: Pumpkin,   color: "#E8731E", note: fall harvest}
-  - {name: Cinnamon,  color: "#A0522D", note: warm & spicy}
+  - {name: Coconut,   color: "#F4EFE3", note: clear & bright}
   - {name: Cranberry, color: "#9B1B30", note: tart pick}
   - {name: Maple,     color: "#C8862A", note: fresh tapped}
   - {name: Rhubarb,   color: "#C93A5B", note: garden crisp}

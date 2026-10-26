@@ -202,7 +202,7 @@
       "material": "TPU 95A · washable · dishwasher safe",
       "pops": [
         {"name": "Pumpkin", "hex": "#E8731E"},
-        {"name": "Blueberry", "hex": "#3F5BB8"},
+        {"name": "Coconut (clear)", "hex": "#F4EFE3"},
         {"name": "Rhubarb", "hex": "#C93A5B"},
         {"name": "Key Lime", "hex": "#A8D94A"},
         {"name": "Peach", "hex": "#FFB07C"},
@@ -211,11 +211,11 @@
       "shots": [
         {
           "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "Concept render of Pop Tray 1, Season Colors: six plain flat Pop Round coasters on a wood tray, Pumpkin, Blueberry and Rhubarb in back, Key Lime, Peach and Sea Salt in front"
+          "alt": "Concept render of Pop Tray 1, Season Colors: six plain flat Pop Round coasters on a wood tray, Pumpkin, Coconut (clear) and Rhubarb in back, Key Lime, Peach and Sea Salt in front"
         },
         {
           "img": "img/pop-tray-1-color-card.webp",
-          "alt": "Concept render of the Season Colors card for Pop Tray 1, with the flat Pop Round and swatches for Pumpkin, Blueberry, Rhubarb, Key Lime, Peach and Sea Salt"
+          "alt": "Concept render of the Season Colors card for Pop Tray 1, with the flat Pop Round and swatches for Pumpkin, Coconut (clear), Rhubarb, Key Lime, Peach and Sea Salt"
         }
       ],
       "home": false,
