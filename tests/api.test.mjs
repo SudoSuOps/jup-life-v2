@@ -8,7 +8,7 @@ import { onRequestPost as sample } from '../functions/api/sample-request.js';
 import { onRequestGet as catalog } from '../functions/api/catalog.js';
 import { resetThrottle } from '../functions/_lib.js';
 
-const env = { STRIPE_SECRET_KEY: 'sk_test_x', STRIPE_PRICE_SIX_SET_CASE: 'price_six', STRIPE_PRICE_READERS: '', SITE_URL: 'https://juplifestudio.com' };
+const env = { STRIPE_SECRET_KEY: 'sk_test_x', STRIPE_PRICE_FALL_POP_COASTERS: 'price_six', STRIPE_PRICE_READERS: '', SITE_URL: 'https://juplifestudio.com' };
 const post = (url, body, headers = {}) => new Request(`https://x.test${url}`, { method: 'POST', body, headers });
 const jsonReq = (b) => post('/api/checkout', JSON.stringify(b), { 'Content-Type': 'application/json' });
 
@@ -35,14 +35,29 @@ test('readers checkout uses STRIPE_PRICE_READER_21 and ignores STRIPE_PRICE_READ
 });
 
 test('checkout: bad qty rejected, not configured -> 503', async () => {
-  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 0 }] }), env })).status, 400);
-  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: {} })).status, 503);
+  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'fall-pop-coasters', qty: 0 }] }), env })).status, 400);
+  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'fall-pop-coasters', qty: 1 }] }), env: {} })).status, 503);
+});
+
+test('hibiscus set uses STRIPE_PRICE_FLOWER_SET_CASE and ignores the old $29 six-set secret', async () => {
+  const oldOnly = { ...env, STRIPE_PRICE_SIX_SET_CASE: 'price_29' };
+  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: oldOnly })).status, 400);
+  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1 }] }), env: oldOnly })).status, 400);
+  let sent;
+  globalThis.fetch = async (url, init) => { sent = new URLSearchParams(init.body); return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/flower' }), { status: 200 }); };
+  const priced = { ...oldOnly, STRIPE_PRICE_FLOWER_SET_CASE: 'price_flower_39' };
+  const r = await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: priced });
+  assert.equal(r.status, 200);
+  assert.equal(sent.get('line_items[0][price]'), 'price_flower_39');
+  const r2 = await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1 }] }), env: priced });
+  assert.equal(r2.status, 200);
+  assert.equal(sent.get('line_items[0][price]'), 'price_flower_39');
 });
 
 test('checkout: sends only server-side price id to Stripe and returns the hosted url', async () => {
   let sent;
   globalThis.fetch = async (url, init) => { sent = { url, body: new URLSearchParams(init.body) }; return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/x' }), { status: 200 }); };
-  const r = await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 2 }, { sku: 'six-set-case', qty: 1 }], price: 1 }), env });
+  const r = await checkout({ request: jsonReq({ items: [{ sku: 'fall-pop-coasters', qty: 2 }, { sku: 'fall-pop-coasters', qty: 1 }], price: 1 }), env });
   assert.equal(r.status, 200);
   assert.equal((await r.json()).url, 'https://checkout.stripe.com/c/x');
   assert.equal(sent.body.get('line_items[0][price]'), 'price_six');

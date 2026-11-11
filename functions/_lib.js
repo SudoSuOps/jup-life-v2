@@ -31,7 +31,8 @@ const ownPrice = (id) => (id && id !== HALF_DOZEN_PRICE_ID && id !== BAKERS_DOZE
 export function sellables(env) {
   const items = [
     // TODO(Smash): which $29 product is primary (6+case, The Half Dozen box, or 12 with no case) is unresolved. Do not pick one or change prices.
-    { sku: 'six-set-case', name: 'The Hibiscus Set (6 coasters + case)', price: env.STRIPE_PRICE_SIX_SET_CASE, max: 20 },
+    // Hibiscus is a flower set with a case. Charge only STRIPE_PRICE_FLOWER_SET_CASE ($39), never the old $29 six-set secret.
+    { sku: 'six-set-case', name: 'The Hibiscus Set (6 coasters + case)', price: ownPrice(env.STRIPE_PRICE_FLOWER_SET_CASE), max: 20 },
     { sku: 'fall-pop-coasters', name: 'Holiday Tray Pop Coasters (12, no case)', price: env.STRIPE_PRICE_FALL_POP_COASTERS, max: 20 },
     { sku: 'gigi', name: 'The Gigi', price: env.STRIPE_PRICE_GIGI, max: 20 },
     { sku: 'tide-soap-dish', name: 'Tide Soap Dish', price: env.STRIPE_PRICE_TIDE_SOAP_DISH, max: 20 },
