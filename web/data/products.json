@@ -134,7 +134,7 @@
         }
       ],
       "home": true,
-      "shop": true,
+      "shop": false,
       "render": true,
       "alt": "A teal Gigi band with a repeating JL monogram, in palm-leaf shadow"
     },
