@@ -76,7 +76,7 @@
       "img": "img/stack-bands-harvest.webp",
       "board": "img/stack-bands-board.webp",
       "home": true,
-      "shop": true,
+      "shop": false,
       "render": true,
       "alt": "The Harvest stack band 3-pack in Pumpkin, Cinnamon and Maple"
     },
@@ -184,8 +184,8 @@
     },
     {
       "sku": "readers",
-      "name": "The Reader",
-      "line": "The Reader and its stand, both included. One more chapter.",
+      "name": "One More Chapter",
+      "line": "What's included: 1 Reader + 1 cradle holder.",
       "price": 19,
       "material": null,
       "img": "img/readers-cradle.webp",

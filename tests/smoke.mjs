@@ -37,9 +37,9 @@ for (const path of ['/', '/shop', '/wholesale']) {
 
 // "Ask about this batch" preselects Product question + product
 await page.goto(BASE + '/shop', { waitUntil: 'networkidle0' });
-await page.click('[data-type="Product question"][data-product="Stack Bands"]');
+await page.click('[data-type="Product question"][data-product="Pop Tray 1 · Season Colors"]');
 assert.equal(await page.$eval('#sample-dlg [name=request_type]', (e) => e.value), 'Product question');
-assert.equal(await page.$eval('#sample-dlg [name=product]', (e) => e.value), 'Stack Bands');
+assert.equal(await page.$eval('#sample-dlg [name=product]', (e) => e.value), 'Pop Tray 1 · Season Colors');
 // retail sample = one coaster + shipping address; wholesale keeps business/city/logo
 await page.keyboard.press('Escape');
 await page.click('.site-header [data-open-sample]');
@@ -49,7 +49,7 @@ assert.equal(await page.$eval('#sample-dlg [name=address]', (e) => !e.disabled &
 assert.equal(await page.$eval('#sample-dlg [name=business]', (e) => e.disabled && e.offsetParent === null), true);
 ok('retail sample modal shows address, hides business');
 await page.keyboard.press('Escape');
-await page.click('[data-type="Product question"][data-product="Stack Bands"]');
+await page.click('[data-type="Product question"][data-product="Pop Tray 1 · Season Colors"]');
 // required validation
 await page.click('#sample-dlg [type=submit]');
 assert.match(await page.$eval('#sample-dlg [data-form-error]', (e) => e.textContent), /required/i);
