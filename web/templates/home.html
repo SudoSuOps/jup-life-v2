@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% from "partials/_macros.html" import card, cta_strip, batch_board, price_board, pop_tease, swatch_list %}
 {% block title %}Custom 3D-Printed Coasters in Jupiter, FL | JUP LIFE by Mrs. Smash{% endblock %}
-{% block description %}3D printed coasters and custom bar coasters from JUP LIFE Studio in Jupiter, FL. Restaurant coasters for Palm Beach County. Retail buyers get 1 free sample coaster. Wholesale buyers get 6 free sample coasters.{% endblock %}
+{% block description %}3D printed coasters and custom bar coasters from JUP LIFE Studio in Jupiter, FL. Restaurant coasters for Palm Beach County. Samples are available by request.{% endblock %}
 {% block ogtitle %}Custom 3D-Printed Coasters in Jupiter, FL{% endblock %}
 {% block ogdesc %}{{ self.description() }}{% endblock %}
 {% block head %}
@@ -33,7 +33,7 @@
     "West Palm Beach, FL",
     "Palm Beach County, FL"
   ],
-  "sameAs": ["https://x.com/juplifestudio", "https://www.tiktok.com/@juplifestudio"]
+  "sameAs": ["https://www.tiktok.com/@juplifestudio"]
 }
 </script>
 {% endblock %}
@@ -47,10 +47,10 @@
       <p class="lede">3D printed coasters and coastal pieces, baked in small seasonal batches. Custom bar coasters and restaurant coasters from JUP LIFE Studio.</p>
       <div class="btn-row">
         <a href="/shop" class="btn btn-primary">Shop the Batch</a>
-        <button type="button" class="btn btn-outline" data-open-sample data-type="Sample" data-buyer="retail">Get a free sample</button>
+        <p class="hero-note">{{ site.home_shipping_line }}</p>
       </div>
-      <p style="margin:0;font-size:15px">Retail buyers get 1 free sample coaster. Wholesale buyers get 6 free sample coasters.</p>
-      <p style="margin:0;font-size:15px"><a href="/wholesale">Restaurants: wholesale pricing →</a></p>
+      <p style="margin:0;font-size:15px">Samples are available by request.</p>
+      <p style="margin:0;font-size:15px"><a href="/enterprise">Restaurants: enterprise pricing →</a></p>
     </div>
 
     <div class="hero-art">
@@ -113,10 +113,6 @@
         <video controls preload="none" playsinline poster="/img/poster-coaster-party.webp" aria-label="Coaster party: colorful coasters tumble onto a beach bar and drinks land on them"><source src="/video/coaster-party.mp4" type="video/mp4"></video>
         <figcaption><strong>Coaster party.</strong>Made for the bar · 15 s</figcaption>
       </figure>
-      <figure>
-        <video controls preload="none" playsinline poster="/img/poster-built-different.webp" aria-label="Built different: stack bands at sunset, by a bonfire and snapped onto a wrist"><source src="/video/built-different.mp4" type="video/mp4"></video>
-        <figcaption><strong>Snap. Stack. Go.</strong>Stack Bands · 23 s</figcaption>
-      </figure>
     </div>
     <p style="margin:0;font-size:13px">Studio renderings.</p>
   </div>
@@ -164,7 +160,7 @@
       <p class="eyebrow">The Half Dozen</p>
       <h2 id="hd-h">Six coasters. One little box.</h2>
       {# TODO(Smash): which $29 product is primary (6 coasters + case, The Half Dozen box, or 12 coasters with no case) is unresolved. Do not pick a primary $29 product or change prices. #}
-      <p style="margin:0">An assorted box of six, fresh from today's batch: windowed kraft box, sage TPU band, the Mrs. Smash tag and a Today's Batch menu card inside. Run a bar? <a href="/wholesale">Get 6 free sample coasters</a>.</p>
+      <p style="margin:0">An assorted box of six, fresh from today's batch: windowed kraft box, sage TPU band, the Mrs. Smash tag and a Today's Batch menu card inside. Run a bar? <a href="/enterprise">Samples are available by request</a>.</p>
       <div class="buy" style="gap:16px"><span class="price">$29</span><button type="button" class="btn btn-primary" data-add-to-bag data-sku="half-dozen" data-name="The Half Dozen" data-price="29">Order a Half Dozen</button><span class="muted">6 assorted · free U.S. shipping · <a href="/shop">Want 13? The Baker's Dozen is $39</a></span></div>
     </div>
   </div>
@@ -177,7 +173,7 @@
     <p class="eyebrow">For restaurants &amp; bars</p>
     <h2 id="rest-h">Your logo, fresh baked.</h2>
     <p style="margin:0;font-size:18px;max-width:32em">Custom bar coasters and restaurant coasters for Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and <a href="/palm-beach-county">Palm Beach County</a>.</p>
-    <a href="/wholesale" style="font-weight:600;padding:10px 0;align-self:flex-start">Wholesale &amp; samples →</a>
+    <a href="/enterprise" style="font-weight:600;padding:10px 0;align-self:flex-start">Enterprise →</a>
     <figure style="margin:8px 0 0;position:relative">
       {{ pic("img/restaurant-drink.webp", "A lemon spritz on a sage coaster beside a cinnamon coaster, on a beachside table at golden hour", sizes="(min-width: 900px) 520px, calc(100vw - 32px)", style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px") }}
       <figcaption class="render-cap">Studio rendering</figcaption>
@@ -205,7 +201,7 @@
   <h2 id="faq-h" style="font-size:clamp(32px,3.6vw,44px);margin-bottom:12px">Good questions.</h2>
   <details open><summary>What are they made of?</summary><p>TPU 95A, a flexible printed material. Each listing says if a piece is PLA or PETG.</p></details>
   <details><summary>Are they dishwasher safe?</summary><p>Yes. TPU pieces are washable and dishwasher safe. {{ ph('dishwasher_guidance', 'CONFIRM: top-rack / temperature guidance') }} Wash PLA and PETG pieces by hand.</p></details>
-  <details><summary>Can I get my logo on them?</summary><p>Yes, from 100 coasters. Wholesale buyers get 6 free sample coasters. Retail buyers get 1 free sample coaster. Request them on our <a href="/wholesale">Wholesale page</a>.</p></details>
+  <details><summary>Can I get my logo on them?</summary><p>Yes, from 200 coasters. Samples are available by request on our <a href="/enterprise">Enterprise page</a>.</p></details>
   <details><summary>How fast do you ship?</summary><p>{{ ph('lead_times', 'CONFIRM: retail dispatch and wholesale lead times') }}</p></details>
 </section>
 {% endblock %}

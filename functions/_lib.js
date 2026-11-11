@@ -21,6 +21,12 @@ export function allow(bucket, ip, limit, windowMs = 3600_000, now = Date.now()) 
 }
 export const resetThrottle = () => hits.clear();
 
+const HALF_DOZEN_PRICE_ID = 'price_1UTVSJHYwaTbul7MyxtILxOz';
+const BAKERS_DOZEN_PRICE_ID = 'price_1UTVOYHYwaTbul7M7QJo4iye';
+
+// A product price must be its own Stripe price. Borrowing the Half Dozen or Baker's Dozen ID would charge the wrong amount.
+const ownPrice = (id) => (id && id !== HALF_DOZEN_PRICE_ID && id !== BAKERS_DOZEN_PRICE_ID ? id : '');
+
 // Server-side catalog: the ONLY source of what can be charged. Items with no price ID are not purchasable.
 export function sellables(env) {
   const items = [
@@ -30,9 +36,12 @@ export function sellables(env) {
     { sku: 'gigi', name: 'The Gigi', price: env.STRIPE_PRICE_GIGI, max: 20 },
     { sku: 'tide-soap-dish', name: 'Tide Soap Dish', price: env.STRIPE_PRICE_TIDE_SOAP_DISH, max: 20 },
     { sku: 'tide-dispenser', name: 'Tide Hand Soap Dispenser', price: env.STRIPE_PRICE_TIDE_DISPENSER, max: 20 },
-    { sku: 'half-dozen', name: 'The Half Dozen (6 Assorted Coasters)', price: env.STRIPE_PRICE_HALF_DOZEN || 'price_1UTVSJHYwaTbul7MyxtILxOz', max: 20 },
-    { sku: 'bakers-dozen', name: "The Baker's Dozen (13 Assorted Coasters)", price: env.STRIPE_PRICE_BAKERS_DOZEN || 'price_1UTVOYHYwaTbul7M7QJo4iye', max: 20 },
-    { sku: 'readers', name: 'One More Chapter', price: env.STRIPE_PRICE_READERS, max: 20 },
+    { sku: 'half-dozen', name: 'The Half Dozen (6 Assorted Coasters)', price: env.STRIPE_PRICE_HALF_DOZEN || HALF_DOZEN_PRICE_ID, max: 20 },
+    { sku: 'bakers-dozen', name: "The Baker's Dozen (13 Assorted Coasters)", price: env.STRIPE_PRICE_BAKERS_DOZEN || BAKERS_DOZEN_PRICE_ID, max: 20 },
+    // Own secret only. STRIPE_PRICE_READERS is not used, so an older $19 price cannot be charged.
+    { sku: 'readers', name: 'One More Chapter', price: ownPrice(env.STRIPE_PRICE_READER_21), max: 20 },
+    { sku: 'pop-coasters-6', name: 'Pop Coasters 6-Pack', price: ownPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
+    { sku: 'flower-set-case', name: 'Flower Coaster Set with Case', price: ownPrice(env.STRIPE_PRICE_FLOWER_SET_CASE), max: 20 },
   ];
   return Object.fromEntries(items.filter((i) => i.price).map((i) => [i.sku, i]));
 }

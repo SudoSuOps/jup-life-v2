@@ -66,8 +66,8 @@
   }
 
   /* ---------- Sample request (modal + any inline [data-sample-form]) ---------- */
-  // Retail = 1 free sample coaster. Wholesale/venue = 6 free sample coasters.
-  // "The Half Dozen" is only the $29 box, never the free sample.
+  // Hidden sample_qty stays 1 for retail and 6 for a venue. The form does not promise a free count.
+  // "The Half Dozen" is only the $29 box.
   function bindBuyer(form, dlg) {
     const apply = () => {
       const buyer = form.querySelector('[name=buyer_type]:checked')?.value === 'wholesale' ? 'wholesale' : 'retail';
@@ -87,10 +87,10 @@
       const sampleType = rt === 'Sample' || rt === 'Half Dozen sample' || rt === 'Free sample (1 coaster)';
       if (dlg && sampleType) {
         const eye = $('[data-dlg-eyebrow]', dlg);
-        if (eye) eye.textContent = wholesale ? '6 free sample coasters for wholesale buyers' : '1 free sample coaster for retail buyers';
+        if (eye) eye.textContent = 'Samples available by request';
         const title = $('[data-dlg-title]', dlg);
-        if (title) title.textContent = wholesale ? 'Get 6 free sample coasters' : 'Get a free sample';
-        if (submit) submit.textContent = wholesale ? 'Send my 6 free samples' : 'Send my sample';
+        if (title) title.textContent = 'Request samples';
+        if (submit) submit.textContent = 'Request samples';
       } else if (dlg) {
         const COPY = {
           'Half Dozen order': ["We'll confirm details and pricing", 'Buy The Half Dozen ($29)', 'Send my order'],
@@ -105,7 +105,7 @@
         if (h) h.textContent = title;
         if (submit) submit.textContent = label;
       } else if (submit && sampleType) {
-        submit.textContent = wholesale ? 'Send my 6 free samples' : 'Send my sample';
+        submit.textContent = 'Request samples';
       }
     };
     $$('[name=buyer_type]', form).forEach((r) => r.addEventListener('change', apply));
@@ -298,5 +298,19 @@
     });
   }
 
-  renderBatch(); initSample(); initBag(); initDrops(); initReveal();
+  async function initSellable() {
+    let skus = [];
+    try {
+      const res = await fetch(`${API}/catalog`);
+      if (res.ok) skus = (await res.json()).skus || [];
+    } catch { /* leave the button on Coming soon */ }
+    const ok = new Set(skus);
+    $$('[data-sellable]').forEach((b) => {
+      if (!ok.has(b.dataset.sellable)) return;
+      b.disabled = false;
+      b.textContent = 'Add to bag';
+    });
+  }
+
+  renderBatch(); initSample(); initBag(); initDrops(); initSellable(); initReveal();
 })();

@@ -148,6 +148,10 @@ h2 { margin: 0; font-size: clamp(34px, 4vw, 52px); line-height: 1.1; }
 .site-footer .logo-chip img { width: 110px; height: 64px; object-fit: contain; }
 .site-footer address { font-style: normal; display: flex; flex-direction: column; gap: 8px; }
 .site-footer .legal { border-top: 1px solid rgba(251,247,240,.2); padding-block: 16px 28px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; font-size: 14px; color: #F1E7D8; }
+.site-footer .guarantee { margin: 0; display: flex; flex-direction: column; gap: 4px; color: #F1E7D8; }
+.site-footer .guarantee b { font-weight: 600; }
+.site-footer .guarantee span { font-size: 13px; font-weight: 400; }
+.hero-note { margin: 0; align-self: center; font-weight: 600; color: var(--terracotta); }
 
 /* dialogs (sample request + bag) — native <dialog>: focus contained, Esc closes */
 dialog { width: min(560px, calc(100vw - 32px)); max-height: calc(100vh - 32px); border: 0; border-radius: 18px; padding: clamp(24px, 4vw, 40px); background: var(--cream); color: var(--cocoa); box-shadow: 0 30px 60px rgba(43,43,43,.35); }

@@ -13,13 +13,13 @@ page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
 const ok = (name) => console.log('ok  -', name);
 
 // redirects
-for (const [from, to] of [['/restaurants', '/wholesale'], ['/collection/hibiscus', '/shop'], ['/weddings', '/shop'], ['/coming-soon', '/shop']]) {
+for (const [from, to] of [['/restaurants', '/enterprise'], ['/wholesale', '/enterprise'], ['/collection/hibiscus', '/shop'], ['/weddings', '/shop'], ['/coming-soon', '/shop']]) {
   const r = await fetch(BASE + from, { redirect: 'manual' });
   assert.equal(r.status, 301, from); assert.ok(r.headers.get('location').endsWith(to), from);
 }
 ok('301 redirects');
 
-for (const path of ['/', '/shop', '/wholesale']) {
+for (const path of ['/', '/shop', '/enterprise']) {
   await page.goto(BASE + path, { waitUntil: 'networkidle0' });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `no sideways scroll ${path}`);
   const n = (await page.$$('[data-open-sample]')).length;
@@ -44,7 +44,7 @@ assert.equal(await page.$eval('#sample-dlg [name=product]', (e) => e.value), 'Po
 await page.keyboard.press('Escape');
 await page.click('.site-header [data-open-sample]');
 assert.equal(await page.$eval('#sample-dlg [name=request_type]', (e) => e.value), 'Sample');
-assert.match(await page.$eval('#sample-dlg [data-dlg-title]', (e) => e.textContent), /free sample/i);
+assert.match(await page.$eval('#sample-dlg [data-dlg-title]', (e) => e.textContent), /request samples/i);
 assert.equal(await page.$eval('#sample-dlg [name=address]', (e) => !e.disabled && e.offsetParent !== null), true);
 assert.equal(await page.$eval('#sample-dlg [name=business]', (e) => e.disabled && e.offsetParent === null), true);
 ok('retail sample modal shows address, hides business');
@@ -63,17 +63,17 @@ page.on('request', (r) => {
   if (r.url().endsWith('/api/checkout')) { posted = JSON.parse(r.postData()); r.respond({ status: 200, contentType: 'application/json', body: JSON.stringify({ url: BASE + '/shop?checkout=success' }) }); }
   else r.continue();
 });
-await page.click('[data-sku="six-set-case"]');
+await page.click('[data-sku="half-dozen"]');
 await page.click('#bag-dlg [aria-label="One more"]');
 assert.equal(await page.$eval('[data-bag-count]', (e) => e.textContent), '2');
 await Promise.all([page.waitForNavigation(), page.click('[data-checkout]')]);
-assert.deepEqual(posted, { items: [{ sku: 'six-set-case', qty: 2 }] });
+assert.deepEqual(posted, { items: [{ sku: 'half-dozen', qty: 2 }] });
 assert.equal(await page.$eval('[data-checkout-banner="success"]', (e) => !e.hidden), true);
 assert.equal(await page.$eval('[data-bag-count]', (e) => e.textContent), '0');
 ok('bag add/qty/checkout POST (only sku+qty), success banner, bag cleared');
 
 // wholesale inline form: address required, hidden segment/type
-await page.goto(BASE + '/wholesale', { waitUntil: 'networkidle0' });
+await page.goto(BASE + '/enterprise', { waitUntil: 'networkidle0' });
 assert.equal(await page.$eval('#request [name=segment]', (e) => e.value), 'Restaurant or bar');
 await page.click('#request [type=submit]');
 assert.match(await page.$eval('#request [data-form-error]', (e) => e.textContent), /required/i);
@@ -81,9 +81,9 @@ ok('wholesale form: required check fires, segment preset');
 
 // above the fold at 375x667
 await page.goto(BASE + '/', { waitUntil: 'networkidle0' });
-const vis = await page.$$eval('[data-open-sample]', (bs) => bs.some((b) => { const r = b.getBoundingClientRect(); return r.top >= 0 && r.bottom <= innerHeight && r.width > 0; }));
+const vis = await page.evaluate(() => [...document.querySelectorAll('.hero-note')].some((el) => { const r = el.getBoundingClientRect(); return el.textContent.trim() === 'Shipping included' && r.top >= 0 && r.bottom <= innerHeight && r.width > 0; }));
 assert.equal(vis, true);
-ok('"Get a free sample" above the fold at 375x667');
+ok('"Shipping included" above the fold at 375x667');
 
 assert.deepEqual(errors.filter((e) => !/api\/|Failed to load resource/.test(e)), []);
 ok('no script errors');

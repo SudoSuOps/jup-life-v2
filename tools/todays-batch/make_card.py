@@ -24,7 +24,7 @@ def fit(text,font,size,maxw,minsize,label):
     return s
 def load(fn):
     b=yaml.safe_load(open(fn))
-    b.setdefault('tiers',[{'qty':100,'price':2.00},{'qty':500,'price':1.60},{'qty':1000,'price':1.20}])
+    b.setdefault('tiers',[{'qty':200,'price':2.00},{'qty':500,'price':1.90},{'qty':1000,'price':1.75}])
     b.setdefault('samples_free',True); b.setdefault('chefs_special',''); b.setdefault('batch_no','')
     if len(b['flavors'])>6: sys.exit('max 6 flavors')
     d=b.get('date'); b['_date']=datetime.date.fromisoformat(str(d)) if d else None
@@ -52,7 +52,7 @@ def chalk(c,x,y,w,h,b,k):
         yy=y+(62-i*15)*u; c.setFont('M600',7.5*k); c.drawString(x+8*k,yy,f"{t['qty']:,}")
         c.setFont('M800',8.5*k); c.drawRightString(x+w-17*k,yy,f"${t['price']:.2f}"); c.setFont('M500',6*k); c.drawRightString(x+w-7*k,yy,'ea')
     if b['samples_free']:
-        c.setFillColor(GOLD); c.setFont('M600Italic',7*k); c.drawCentredString(cx,y+15*u,'Samples'); c.drawCentredString(cx,y+6*u,'on the house')
+        c.setFillColor(GOLD); c.setFont('M600Italic',7*k); c.drawCentredString(cx,y+15*u,'Samples'); c.drawCentredString(cx,y+6*u,'by request')
 def ribbon(c,cx,y,text,k,maxw):
     s=fit('★ CHEF’S SPECIAL: '+text,'M700',7*k,maxw-16*k,6*k,'chefs_special')
     t='★ CHEF’S SPECIAL: '+text; w=sw(t,'M700',s)+16*k; h=s*1.9
@@ -120,7 +120,7 @@ def html_snippet(b,fn):
     fl=''.join(f'<li style="display:flex;align-items:center;gap:10px;background:#F4EBDD;border:1px solid #4A2F22;border-radius:3px 6px 6px 3px;padding:6px 12px;margin:6px 0"><span style="width:14px;height:14px;border-radius:50%;background:{e(f["color"])};border:1px solid #4A2F22;flex:none"></span><b>{e(f["name"])}</b><i style="margin-left:auto;font-size:13px">{e(f.get("note",""))}</i></li>' for f in b['flavors'])
     tr=''.join(f'<tr><td>{t["qty"]:,}</td><td style="text-align:right"><b>${t["price"]:.2f}</b> ea</td></tr>' for t in b['tiers'])
     chef=f'<div style="display:inline-block;background:#B8603E;color:#F4EBDD;font-weight:700;padding:6px 14px;margin-top:10px;border-radius:3px">★ Chef’s Special: {e(b["chefs_special"])}</div>' if b['chefs_special'] else ''
-    samp='<div style="color:#E8B27A;font-style:italic;margin-top:8px;text-align:center">Samples on the house</div>' if b['samples_free'] else ''
+    samp='<div style="color:#E8B27A;font-style:italic;margin-top:8px;text-align:center">Samples: available by request</div>' if b['samples_free'] else ''
     dl=e(divlabel(b))
     out=f'''<!-- JUP LIFE Today's Batch embed: self-contained, paste anywhere -->
 <div style="font-family:Montserrat,'Helvetica Neue',Arial,sans-serif;background:#E9D9BC;color:#4A2F22;border:2px solid #4A2F22;border-radius:12px;padding:20px 22px;max-width:640px;box-sizing:border-box">

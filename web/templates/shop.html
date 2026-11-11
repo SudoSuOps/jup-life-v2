@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% from "partials/_macros.html" import card, batch_board, short, pop_tray, swatch_list %}
 {% block title %}Shop 3D Printed Coasters in Jupiter, FL | JUP LIFE Studio{% endblock %}
-{% block description %}Shop 3D printed coasters and custom bar coasters from JUP LIFE Studio in Jupiter, FL. The Hibiscus Set is six coasters with the case for $29. One More Chapter is $19.{% endblock %}
+{% block description %}Shop 3D printed coasters and custom bar coasters from JUP LIFE Studio in Jupiter, FL. The Hibiscus Set is six coasters with the case for $29. One More Chapter is $21.{% endblock %}
 {% block ogtitle %}Shop 3D Printed Coasters in Jupiter, FL{% endblock %}
 {% block ogdesc %}{{ self.description() }}{% endblock %}
 {% block head %}
@@ -12,8 +12,8 @@
 {% endfor %}
 {% endblock %}
 {% block content %}
-{% set tray_skus = ['fall-pop-coasters', 'readers'] %}
-{% set shelf_skus = ['half-dozen', 'bakers-dozen', 'six-set-case', 'tide-soap-dish'] %}
+{% set tray_skus = ['pop-coasters-6', 'flower-set-case', 'readers'] %}
+{% set shelf_skus = ['half-dozen', 'bakers-dozen', 'six-set-case', 'tide-soap-dish', 'fall-pop-coasters'] %}
 <section class="wrap page-hero" aria-labelledby="shop-h">
   <div class="notice" data-checkout-banner="success" hidden role="status" style="margin:0 0 24px">It's on the tray. Your order is in. A receipt is on its way to your inbox.</div>
   <div class="notice" data-checkout-banner="cancel" hidden role="status" style="margin:0 0 24px">No worries, your bag is saved.</div>
@@ -22,7 +22,7 @@
       <p class="eyebrow">The bakery case · Jupiter, FL</p>
       <h1 id="shop-h">Shop 3D Printed Coasters in Jupiter, FL</h1>
       <p class="subhead">The Batch.</p>
-      <p class="lede">3D printed coasters and custom bar coasters from the current tray, plus the always-on favorites. Restaurant coasters for <a href="/palm-beach-county">Palm Beach County</a> start on the wholesale counter.</p>
+      <p class="lede">3D printed coasters and custom bar coasters from the current tray, plus the always-on favorites. Restaurant coasters for <a href="/palm-beach-county">Palm Beach County</a> start on the enterprise counter.</p>
       <div class="btn-row">
         <a href="#tray" class="btn btn-primary">See today's tray</a>
         <a href="#pop-trays" class="btn btn-outline">Pop Trays</a>
@@ -117,11 +117,11 @@
     <div>
       <p class="eyebrow" style="color:var(--cream-muted)">Baked to order</p>
       <h3 id="order-h">Your logo, fresh baked.</h3>
-      <p>Custom logo coasters from 100 for restaurants and bars. Wholesale buyers get 6 free sample coasters. Retail buyers get 1 free sample coaster.</p>
+      <p>Custom logo coasters from 200 for restaurants and bars. Samples are available by request.</p>
     </div>
     <div class="btn-row">
-      <button type="button" class="btn btn-primary" data-open-sample data-type="Half Dozen sample" data-buyer="wholesale">Get 6 free sample coasters</button>
-      <a href="/wholesale" class="btn btn-outline" style="color:var(--cream);border-color:var(--cream)">Wholesale &amp; samples</a>
+      <button type="button" class="btn btn-primary" data-open-sample data-type="Half Dozen sample" data-buyer="wholesale">Request samples</button>
+      <a href="/enterprise" class="btn btn-outline" style="color:var(--cream);border-color:var(--cream)">Enterprise</a>
     </div>
   </div>
 </section>

@@ -5,6 +5,7 @@ import { onRequestPost as checkout } from '../functions/api/checkout.js';
 import { onRequestPost as webhook, verifyStripe, orderEmail } from '../functions/api/stripe/webhook.js';
 import { onRequestPost as drops } from '../functions/api/drops.js';
 import { onRequestPost as sample } from '../functions/api/sample-request.js';
+import { onRequestGet as catalog } from '../functions/api/catalog.js';
 import { resetThrottle } from '../functions/_lib.js';
 
 const env = { STRIPE_SECRET_KEY: 'sk_test_x', STRIPE_PRICE_SIX_SET_CASE: 'price_six', STRIPE_PRICE_READERS: '', SITE_URL: 'https://juplifestudio.com' };
@@ -18,6 +19,19 @@ test('checkout: unpriced / unknown sku is rejected', async () => {
     const r = await checkout({ request: jsonReq({ items: [{ sku, qty: 1 }] }), env });
     assert.equal(r.status, 400, sku);
   }
+});
+
+test('readers checkout uses STRIPE_PRICE_READER_21 and ignores STRIPE_PRICE_READERS', async () => {
+  const oldOnly = { ...env, STRIPE_PRICE_READERS: 'price_19' };
+  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'readers', qty: 1 }] }), env: oldOnly })).status, 400);
+  let sent;
+  globalThis.fetch = async (url, init) => { sent = new URLSearchParams(init.body); return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/reader' }), { status: 200 }); };
+  const r = await checkout({ request: jsonReq({ items: [{ sku: 'readers', qty: 1 }] }), env: { ...oldOnly, STRIPE_PRICE_READER_21: 'price_reader_21' } });
+  assert.equal(r.status, 200);
+  assert.equal(sent.get('line_items[0][price]'), 'price_reader_21');
+  assert.equal(sent.get('line_items[0][quantity]'), '1');
+  assert.equal((await (await catalog({ env: oldOnly })).json()).skus.includes('readers'), false);
+  assert.equal((await (await catalog({ env: { ...oldOnly, STRIPE_PRICE_READER_21: 'price_reader_21' } })).json()).skus.includes('readers'), true);
 });
 
 test('checkout: bad qty rejected, not configured -> 503', async () => {
@@ -156,7 +170,7 @@ test('sample: qty is 1 for retail, 6 for wholesale, legacy types map, spoofed sa
   assert.equal((await sample({ request: form(legacyRetail), env })).status, 200);
   globalThis.fetch = realFetch;
   const studio = sent.filter((m) => String(m.subject).startsWith('Sample request:'));
-  const confirm = sent.filter((m) => /free sample coaster|venue sample coasters/i.test(m.subject));
+  const confirm = sent.filter((m) => /sample request is in/i.test(m.subject));
   assert.equal(studio.length, 4);
   assert.equal(studio[0].subject, 'Sample request: Retail (1)');
   assert.match(studio[0].text, /qty: 1/);
@@ -170,7 +184,9 @@ test('sample: qty is 1 for retail, 6 for wholesale, legacy types map, spoofed sa
   assert.match(studio[2].text, /qty: 6/);
   assert.equal(studio[3].subject, 'Sample request: Retail (1)');
   assert.match(studio[3].text, /qty: 1/);
-  assert.match(confirm[0].html, /Your free sample coaster is on the way\./);
-  assert.match(confirm[1].html, /Your 6 free venue sample coasters are being baked\./);
+  assert.match(confirm[0].html, /Your sample request is in\./);
+  assert.match(confirm[1].html, /Your sample request is in\./);
+  assert.doesNotMatch(confirm[0].html, /free sample/i);
+  assert.doesNotMatch(confirm[1].html, /free sample/i);
   assert.match(confirm[1].text, /We'll reach out about your logo within one business day\./);
 });

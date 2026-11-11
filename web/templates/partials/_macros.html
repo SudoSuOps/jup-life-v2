@@ -72,10 +72,20 @@
     {% if shop and p.combos_now %}
     <ul class="combos" aria-label="{{ season | capitalize }} 3-pack combos">{% for c in p.combos_now %}<li><b>{{ c.name }}</b>{% for f in c.flavors %}<i style="background:{{ flavor_hex[f] }}"></i>{{ f }} {% endfor %}</li>{% endfor %}</ul>
     {% endif %}
+    {% if p.options %}
+    {% for opt in p.options %}
+    <fieldset class="opt" data-option="{{ opt.key }}">
+      <legend>{{ opt.label }}</legend>
+      {% for c in opt.choices %}
+      <label><input type="radio" name="{{ p.sku }}-{{ opt.key }}" value="{{ c.value }}" {% if loop.first %}checked{% endif %}> {{ c.label }}{% if c.note %} <small>{{ c.note }}</small>{% endif %}</label>
+      {% endfor %}
+    </fieldset>
+    {% endfor %}
+    {% endif %}
     {% if p.material %}<p class="material">{{ p.material }}</p>{% endif %}
     <div class="buy">
       {% if p.price %}
-      <span class="price">${{ p.price }}</span><button type="button" class="btn btn-primary btn-sm" data-add-to-bag data-sku="{{ p.sku }}" data-name="{{ p.name }}" data-price="{{ p.price }}">Add to bag</button>
+      <span class="price">${{ p.price }}</span><button type="button" class="btn btn-primary btn-sm" data-add-to-bag data-sellable="{{ p.sku }}" data-sku="{{ p.sku }}" data-name="{{ p.name }}" data-price="{{ p.price }}" disabled>Coming soon</button>
       {% else %}
       <button type="button" class="btn btn-outline btn-sm" data-open-sample data-type="Product question" data-product="{{ p.name }}">Ask about this batch</button>
       {% endif %}
@@ -89,9 +99,9 @@
   <div>
     <p class="eyebrow" style="color:var(--cream-muted)">Custom logo coasters</p>
     <h3>Your logo, fresh baked.</h3>
-    <p>From 100 coasters. Wholesale buyers get 6 free sample coasters to try on the bar.</p>
+    <p>From 200 coasters. Samples are available by request.</p>
   </div>
-  <button type="button" class="btn btn-primary" data-open-sample data-type="Half Dozen sample" data-buyer="wholesale">Get 6 free sample coasters</button>
+  <button type="button" class="btn btn-primary" data-open-sample data-type="Half Dozen sample" data-buyer="wholesale">Request samples</button>
 </div>
 {% endmacro %}
 
@@ -138,28 +148,27 @@
   <dl>
     {% for t in site.tiers %}<div class="row"><dt>{{ t.qty }}</dt><span class="leader" aria-hidden="true"></span><dd>{{ t.price }}</dd></div>
     {% endfor %}
-    <div class="row"><dt>Retail sample</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">1 free</dd></div>
-    <div class="row"><dt>Wholesale sample</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">6 free</dd></div>
+    <div class="row"><dt>Samples</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">available by request</dd></div>
   </dl>
   <p class="foot">Locally baked in Jupiter, FL.</p>
 </section>
 {% endmacro %}
 
 {% macro sample_form(type='Sample', buyer='retail', select=False, submit=None, notes_ph='Product, quantity, colors, anything else', segment=False) %}
-{% set label = submit or ('Send my 6 free samples' if buyer == 'wholesale' else 'Send my sample') %}
+{% set label = submit or 'Request samples' %}
 <form class="form" data-sample-form action="/api/sample-request" method="post" enctype="multipart/form-data" novalidate>
   <fieldset class="field buyer-type" data-buyer-type>
     <legend>I'm buying for</legend>
-    <label><input type="radio" name="buyer_type" value="retail" {% if buyer == 'retail' %}checked{% endif %}> Myself: 1 free sample coaster</label>
-    <label><input type="radio" name="buyer_type" value="wholesale" {% if buyer == 'wholesale' %}checked{% endif %}> My restaurant, bar or venue: 6 free sample coasters</label>
+    <label><input type="radio" name="buyer_type" value="retail" {% if buyer == 'retail' %}checked{% endif %}> Myself</label>
+    <label><input type="radio" name="buyer_type" value="wholesale" {% if buyer == 'wholesale' %}checked{% endif %}> My restaurant, bar or venue</label>
   </fieldset>
   <input type="hidden" name="sample_qty" value="{{ 6 if buyer == 'wholesale' else 1 }}" data-sample-qty>
   {% if select %}
   <label class="field">Request type
     <select name="request_type">
-      <option value="Sample">1 free sample coaster (retail)</option>
+      <option value="Sample">Sample request</option>
       <option value="Half Dozen order">Order a Half Dozen</option>
-      <option value="Half Dozen sample">6 free sample coasters (wholesale)</option>
+      <option value="Half Dozen sample">Sample request for a restaurant, bar or venue</option>
       <option>Product question</option>
       <option value="Custom">Custom order</option>
     </select>
@@ -212,7 +221,6 @@
   <span>Email Dee: <a href="mailto:dee@juplifestudio.com">dee@juplifestudio.com</a></span>
   <span>Text us: <a href="sms:+15615818015">561-581-8015</a></span>
   <span><a href="https://www.tiktok.com/@juplifestudio" rel="noopener" target="_blank">TikTok</a></span>
-  <span><a href="https://x.com/juplifestudio" rel="noopener" target="_blank">X</a></span>
 </address>
 {% endmacro %}
 

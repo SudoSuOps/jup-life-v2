@@ -1,18 +1,31 @@
 {% extends "base.html" %}
 {% block title %}Shipping and Returns from Jupiter, FL | JUP LIFE by Mrs. Smash{% endblock %}
-{% block description %}Free U.S. shipping and 30-day returns on unused 3D printed coasters and coastal pieces from JUP LIFE Studio in Jupiter, FL.{% endblock %}
+{% block description %}Free U.S. shipping and 7-day returns on 3D printed coasters and coastal pieces from JUP LIFE Studio in Jupiter, FL.{% endblock %}
 {% block ogtitle %}Shipping and Returns from Jupiter, FL{% endblock %}
 {% block ogdesc %}{{ self.description() }}{% endblock %}
+{% block head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MerchantReturnPolicy",
+  "applicableCountry": "US",
+  "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+  "merchantReturnDays": 7,
+  "returnMethod": "https://schema.org/ReturnByMail",
+  "returnFees": "https://schema.org/ReturnFeesCustomerResponsibility"
+}
+</script>
+{% endblock %}
 {% block content %}
 <div class="wrap section prose">
   <p class="eyebrow">The studio details</p>
   <h1>Shipping and Returns from Jupiter, FL</h1>
   <p class="subhead">From our studio to your happy place.</p>
-  <p>Free U.S. shipping, with orders dispatched within 2–3 business days. We accept returns of unused items within 30 days of delivery.</p>
+  <p>Free U.S. shipping, with orders dispatched within 2–3 business days. We accept returns within 7 days of delivery if you're not 100% happy, no questions asked.</p>
   <h2>Shipping</h2>
   <p>We offer free shipping on all U.S. orders, with no order minimum. Orders leave our Jupiter, Florida studio within 2–3 business days after purchase. This is processing and dispatch time; carrier transit time is additional and delivery dates are not guaranteed. Confirm your shipping address during checkout.</p>
   <h2>Returns and care</h2>
-  <p>We accept returns of unused items within 30 days of delivery. Contact Dee at <a href="mailto:dee@juplifestudio.com">dee@juplifestudio.com</a> with your order reference to arrange a return before sending an item back. For a damaged item or an issue with your order, include a description and photos so we can help. Customers pay return postage for unused-item returns. The studio covers return postage for damaged or incorrect orders; contact Dee first so we can arrange it. Once your return arrives and is inspected, we’ll confirm the refund with you and return approved amounts to your original payment method. Your bank or payment provider determines when the credit appears. TPU pieces: dishwasher safe on a normal cycle (no high-heat). PLA/PETG: hand wash.</p>
+  <p>We accept returns within 7 days of delivery if you're not 100% happy, no questions asked. Contact Dee at <a href="mailto:dee@juplifestudio.com">dee@juplifestudio.com</a> with your order reference to arrange a return before sending an item back. For a damaged item or an issue with your order, include a description and photos so we can help. Customers pay return postage. The studio covers return postage for damaged or incorrect orders; contact Dee first so we can arrange it. Once your return arrives and is inspected, we’ll confirm the refund with you and return approved amounts to your original payment method. Your bank or payment provider determines when the credit appears. TPU pieces: dishwasher safe on a normal cycle (no high-heat). PLA/PETG: hand wash.</p>
   <h2>We’re here to help</h2>
   <p><a href="mailto:dee@juplifestudio.com">dee@juplifestudio.com</a><br>Text us: <a href="sms:+15615818015">561-581-8015</a></p>
 </div>
