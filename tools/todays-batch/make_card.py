@@ -13,7 +13,7 @@ LOGO=f'{HERE}/logo.png'
 # ---- LOCKED brand copy / colors ----
 KRAFT=H('#E9D9BC'); COCOA=H('#4A2F22'); TERRA=H('#B8603E'); SAGE=H('#6E7D50'); CHALK=H('#2F3A2C'); CREAM=H('#F4EBDD'); FRAME=H('#8B6A47'); GOLD=H('#E8B27A')
 TITLE="TODAY'S BATCH"; LOCAL='Locally baked in Jupiter, FL'; CLAIM='Washable, dishwasher safe TPU  ·  Built different.'
-SITE='juplifestudio.com'; CONTACT='Wholesale: Smash  ·  561-532-7120'
+SITE='juplifestudio.com'; CONTACT='Enterprise: Smash  ·  561-532-7120'
 MIN_PT=6.0; WARN=[]
 sw=pdfmetrics.stringWidth
 def fit(text,font,size,maxw,minsize,label):

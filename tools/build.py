@@ -220,7 +220,7 @@ def llms_txt(site: dict, products: list, batch: dict) -> str:
     lines = [
         "# JUP LIFE by Mrs. Smash", "",
         "> JUP LIFE Studio is a small 3D-printing studio in Jupiter, Florida that bakes washable TPU coasters and coastal home pieces "
-        "in small seasonal batches, sold retail online and wholesale with custom logos to restaurants, bars, boutique hotels, "
+        "in small seasonal batches, sold retail online and enterprise with custom logos to restaurants, bars, boutique hotels, "
         "rentals and event hosts in Palm Beach County and beyond.", "",
         "## Key facts",
         "- Location: Jupiter, FL (serves Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County; ships within the US)",
@@ -313,7 +313,7 @@ def main() -> int:
     }
     crumbs = {
         "/shop": "Shop",
-        "/enterprise": "Enterprise",
+        "/enterprise": "Enterprise & Samples",
         "/about": "Meet Mrs. Smash",
         "/contact": "Contact",
         "/palm-beach-county": "Palm Beach County",
