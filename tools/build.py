@@ -228,7 +228,6 @@ def llms_txt(site: dict, products: list, batch: dict, catalog: dict) -> str:
         "- Samples: retail buyers get 1 free sample coaster; enterprise buyers get 6 free sample coasters. A sample print is made for approval before a logo batch is printed",
         "- Enterprise: custom logo coasters and restaurant coasters from 200 pieces. A logo batch ships within 10 days of approval. Enterprise is an inquiry, not a shop product",
         "- Contact: hello@juplifestudio.com, call +1-561-532-7120, text 561-581-8015",
-        "- X: https://x.com/juplifestudio",
         "- TikTok: https://www.tiktok.com/@juplifestudio", "",
         "## Pages",
         f"- [Home]({base}/): the coaster printers, Jupiter FL",
