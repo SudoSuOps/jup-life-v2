@@ -5,8 +5,11 @@
     {
       "sku": "fall-pop-coasters",
       "name": "Holiday Tray Pop Coasters",
-      "line": "Twelve pop coasters in this season's tray flavors. No case.",
+      "line": "Pop coasters in this season's tray flavors. Flat or Edge. No case.",
       "price": 29,
+      "options": [
+        {"key": "style", "label": "Style", "choices": [{"value": "Flat", "label": "Flat"}, {"value": "Edge", "label": "Edge"}]}
+      ],
       "material": "TPU 95A \u00b7 washable \u00b7 dishwasher safe",
       "swatches": "batch",
       "img": "img/holiday-tray-pops-1600x900.webp",
@@ -84,7 +87,7 @@
       "sku": "six-set-case",
       "name": "The Hibiscus Set",
       "line": "Six Hibiscus line coasters with the case included.",
-      "price": 29,
+      "price": 39,
       "material": "TPU 95A \u00b7 washable \u00b7 dishwasher safe",
       "img": "img/six-set-case.webp",
       "home": true,
@@ -300,8 +303,8 @@
       "name": "Pop Tray 1 \u00b7 Season Colors",
       "kicker": "Pop Tray 1",
       "short": "Season Colors",
-      "line": "Six plain Pops, one of each season color.",
-      "price": null,
+      "line": "Six plain Pops, one of each season color. Flat or Edge.",
+      "price": 29,
       "material": "TPU 95A \u00b7 washable \u00b7 dishwasher safe",
       "pops": [
         {
@@ -340,7 +343,7 @@
         }
       ],
       "home": false,
-      "shop": false,
+      "shop": true,
       "pop_tray": true
     },
     {
@@ -348,8 +351,8 @@
       "name": "Pop Tray 2 \u00b7 Pop Flowers",
       "kicker": "Pop Tray 2",
       "short": "Pop Flowers",
-      "line": "Six flower Pops on the flat Pop Round.",
-      "price": null,
+      "line": "Six flower Pops. Flat or Edge.",
+      "price": 29,
       "material": "TPU 95A \u00b7 washable \u00b7 dishwasher safe",
       "pops": [
         {
@@ -388,7 +391,7 @@
         }
       ],
       "home": false,
-      "shop": false,
+      "shop": true,
       "pop_tray": true
     },
     {
@@ -396,9 +399,9 @@
       "name": "Pop Tray 3 \u00b7 Coastal",
       "kicker": "Pop Tray 3",
       "short": "Coastal",
-      "line": "Six coastal Pops on the flat Pop Round.",
+      "line": "Six coastal Pops. Flat or Edge.",
       "story": "Red Mangrove: mangroves produce floating seedlings, called propagules, that tides and storms carry to new shores.",
-      "price": null,
+      "price": 29,
       "material": "TPU 95A \u00b7 washable \u00b7 dishwasher safe",
       "pops": [
         {
@@ -437,7 +440,7 @@
         }
       ],
       "home": false,
-      "shop": false,
+      "shop": true,
       "pop_tray": true
     }
   ]
