@@ -178,7 +178,7 @@
         }
       ],
       "home": true,
-      "shop": true,
+      "shop": false,
       "render": true,
       "alt": "A Tide hand soap dispenser fading from lime to amber, with wave texture and a square base"
     },
