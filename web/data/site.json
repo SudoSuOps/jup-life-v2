@@ -1,6 +1,11 @@
 {
   "_note": "Open placeholders. Empty string = still open: the page shows a visible [[...]] marker. Fill a value and rebuild; the marker disappears. Launch gate: zero '[[' in dist/.",
   "site_url": "https://juplifestudio.com",
+  "home_shipping_line": "Shipping included",
+  "guarantee": {
+    "label": "100% Satisfaction Guarantee",
+    "text": "If you don't love our product, we'll take a full return."
+  },
   "tiers": [
     {
       "qty": "200 coasters",

@@ -13,8 +13,7 @@ These override the brief where they conflict.
   **The Readers moved to Shop only** (brief caps Home at 6 cards; no photo yet).
   A full-width Fall flavor-board image sits above the cards.
 - **New section "Out of the oven."** (after the tray): three tap-to-play vertical shorts. `preload="none"`, no autoplay, posters set.
-  - `fresh-baked.mp4` (15 s), `coaster-party.mp4` (15 s), `built-different.mp4` (23.4 s).
-  - `built-different.mp4` is the owner's 30 s "Built different" cut **with the "Meet The Gigi." segment (≈17.7–23.9 s) removed** because it shows a gold metal-chain bracelet (brief bans metal-chain imagery). Do not restore the original.
+  - `fresh-baked.mp4` (15 s), `coaster-party.mp4` (15 s).
 - **Quality by design**: flex close-up render beside the heading; the studio-vision render (`studio-vision.webp`, the brief's optional `bakery_studio_vision.jpg`) full width under the five beats.
 - **For restaurants**: beach-table drink render under the copy.
 - **Meet Mrs. Smash**: real portrait of Dee (`img/dee-portrait.webp`) with the Mrs. Smash tag as a small sticker. The source photo was **retouched**: the sunglasses' lens wordmark was removed, the temple stripe recolored to plain navy, and the crop sits above her name badge (which carried another business's logo). This keeps the brief's "no other brands' marks" rule. Don't swap in the unretouched original.
@@ -48,6 +47,6 @@ Built to `docs/WHOLESALE_SPEC.md`. Deviations / decisions:
 
 ## photos-v3 (Oct 22, owner folder)
 - Full-size photos replace the contact-sheet cuts: `ws-hero-bar`, `studio-counter`, `tide-dispenser`, `gigi-teal`, `ws-logo-mockup-example`. New `bakery-dome-*` (cake dome + kraft boxes) is the Shop banner.
-- Shorts (re-encoded to ~1.5-4 MB, posters generated, tap-to-play, never autoplay): **Wholesale "Out on the bar"**: `ws-one-love` (short01), `ws-drinks-down` (short09), `ws-spa-day` (short07, hotel/rental). **Shop "Out of the oven"**: `shop-baked-daily` (short02), `shop-fresh-out` (short01 (1)).
+- Shorts (re-encoded to ~1.5-4 MB, posters generated, tap-to-play, never autoplay): **Enterprise "Out on the bar"**: `ws-one-love` (short01), `ws-drinks-down` (short09). **Shop "Out of the oven"**: `shop-baked-daily` (short02), `shop-fresh-out` (short01 (1)).
 - Not used: `short02 (1)` (first half of the Home "Built different" cut, a duplicate). Checked every short for metal-chain imagery and other brands: none.
 - Still contact-sheet cuts (no full-size in the folder): the three wholesale step photos and `ws-bulk-boxes-studio`.
