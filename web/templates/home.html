@@ -90,7 +90,22 @@
   </figure>
 
   <div class="tray-grid">
-    {% for p in products if p.home %}{{ card(p) }}
+    {% for p in products if p.home %}
+      {% if p.sku == 'pop-coasters-6' %}
+      <div class="pop-feature">
+        <img class="popsters-logo" src="/img/popsters-logo.png" alt="Popsters by JUP LIFE" width="1185" height="402">
+        <div class="pop-feature-row">
+          {{ card(p) }}
+          <figure class="pop-loop">
+            <video muted autoplay loop playsinline poster="/img/poster-pop-coaster.webp" width="720" height="1280" aria-label="A Popsters coaster, printed by JUP LIFE">
+              <source src="/video/pop-coaster.mp4" type="video/mp4">
+            </video>
+          </figure>
+        </div>
+      </div>
+      {% else %}
+      {{ card(p) }}
+      {% endif %}
     {% endfor %}
     {{ cta_strip() }}
   </div>

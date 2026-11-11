@@ -273,8 +273,8 @@
       "shipping": "Free U.S. shipping.",
       "price": 39,
       "material": "TPU coasters \u00b7 PLA case",
-      "img": "img/pop-tray-2-pop-flowers.webp",
-      "alt": "Flower Pop coasters",
+      "img": "img/flower-sunflower-coaster.webp",
+      "alt": "A gold sunflower coaster, 3D printed in PLA, with a raised flower",
       "options": [
         {
           "key": "flower",
@@ -293,7 +293,7 @@
       ],
       "home": true,
       "shop": true,
-      "render": true
+      "render": false
     },
     {
       "sku": "pop-tray-1-season-colors",
