@@ -23,14 +23,14 @@ CHROME=/path/to/chrome npm run smoke     # browser smoke test against the runnin
 | `STRIPE_SECRET_KEY` | secret. `sk_test_...` until launch |
 | `STRIPE_WEBHOOK_SECRET` | secret. `whsec_...` from the webhook endpoint below |
 | `STRIPE_PRICE_SIX_SET_CASE` | `price_...` for the $29 6-Coaster Set + Case |
-| `STRIPE_PRICE_FALL_POP_COASTERS` | `price_...` for Fall Tray Pop Coasters ($29) |
+| `STRIPE_PRICE_FALL_POP_COASTERS` | unused for checkout. Holiday Tray Pop Coasters and the three Pop Trays use `STRIPE_PRICE_POP_COASTERS_6` at $29. |
 | `STRIPE_PRICE_GIGI` | `price_...` for The Gigi ($9) |
 | `STRIPE_PRICE_TIDE_SOAP_DISH` | `price_...` for Tide Soap Dish ($14) |
 | `STRIPE_PRICE_TIDE_DISPENSER` | `price_...` for Tide Hand Soap Dispenser ($21) |
 | `STRIPE_PRICE_READERS` | `price_...` for The Readers ($19) |
 | `STRIPE_PRICE_HALF_DOZEN` | optional override; defaults to the live $29 Half Dozen price |
 | `STRIPE_PRICE_BAKERS_DOZEN` | optional override; defaults to the live $39 Baker's Dozen price |
-| `STRIPE_PRICE_POP_COASTERS_6` | `price_...` for Pop Coasters 6-Pack ($29). No fallback. Missing or set to the Baker's Dozen price ID keeps the buy button on Coming soon |
+| `STRIPE_PRICE_POP_COASTERS_6` | `price_...` for Pop coasters at $29, Flat or Edge: the 6-pack, Holiday Tray Pop Coasters, and Pop Trays 1–3. No fallback. Missing or set to a reserved box price keeps the buy button on Coming soon |
 | `STRIPE_PRICE_FLOWER_SET_CASE` | `price_...` for Flower Coaster Set with Case ($39). No fallback, and never the Baker's Dozen price ID |
 | `RESEND_API_KEY` | secret. Empty = requests/orders are only logged. Needs Full access to save Drops signups as contacts |
 | `RESEND_SEGMENT_ID` | optional. Resend segment (Contacts > Segments) to file Drops signups in |

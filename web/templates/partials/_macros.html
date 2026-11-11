@@ -14,7 +14,7 @@
 {% endmacro %}
 
 {% macro pop_tray(p) %}
-<article class="pop-tray" id="{{ p.sku }}" aria-labelledby="{{ p.sku }}-h">
+<article class="pop-tray" id="{{ p.sku }}" data-coaster="{{ p.sku }}" aria-labelledby="{{ p.sku }}-h">
   <div class="pop-tray-copy">
     <p class="eyebrow">{{ p.kicker }}</p>
     <h3 class="serif" id="{{ p.sku }}-h">{{ p.short }}</h3>
@@ -24,8 +24,14 @@
     </ul>
     {% if p.story %}<p class="pop-story">{{ p.story }}</p>{% endif %}
     {% if p.material %}<p class="material">{{ p.material }}</p>{% endif %}
-    <div class="btn-row">
-      <button type="button" class="btn btn-outline btn-sm" data-open-sample data-type="Product question" data-product="{{ p.name }}">Ask about this batch</button>
+    <fieldset class="opt" data-option="style">
+      <legend>Style</legend>
+      <label><input type="radio" name="{{ p.sku }}-style" value="Flat" checked> Flat</label>
+      <label><input type="radio" name="{{ p.sku }}-style" value="Edge"> Edge</label>
+    </fieldset>
+    <div class="buy">
+      <span class="price">$29</span>
+      <button type="button" class="btn btn-primary btn-sm" data-add-to-bag data-sellable="{{ p.sku }}" data-sku="{{ p.sku }}" data-name="{{ p.name }}" data-price="29" disabled>Coming soon</button>
     </div>
   </div>
   <div class="pop-tray-shots">
@@ -42,7 +48,7 @@
     <div class="copy">
       <p class="eyebrow">Pop Trays</p>
       <h2 id="pop-tease-h">Six to a tray.</h2>
-      <p>Season Colors, Pop Flowers, and Coastal. Flat Pop Rounds, six on every tray.</p>
+      <p>Season Colors, Pop Flowers, and Coastal. Flat or Edge. Six on every tray.</p>
       <a href="/shop#pop-trays" style="font-weight:600;padding:10px 0;align-self:flex-start">See the Pop Trays →</a>
     </div>
     {{ concept_fig(p.shots[0].img, p.shots[0].alt, "(min-width: 800px) 560px, calc(100vw - 64px)") }}

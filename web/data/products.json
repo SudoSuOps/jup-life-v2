@@ -5,8 +5,11 @@
     {
       "sku": "fall-pop-coasters",
       "name": "Holiday Tray Pop Coasters",
-      "line": "Twelve pop coasters in this season's tray flavors. No case.",
+      "line": "Pop coasters in this season's tray flavors. Flat or Edge. No case.",
       "price": 29,
+      "options": [
+        {"key": "style", "label": "Style", "choices": [{"value": "Flat", "label": "Flat"}, {"value": "Edge", "label": "Edge"}]}
+      ],
       "material": "TPU 95A · washable · dishwasher safe",
       "swatches": "batch",
       "img": "img/holiday-tray-pops-1600x900.webp",
@@ -205,8 +208,8 @@
       "name": "Pop Tray 1 · Season Colors",
       "kicker": "Pop Tray 1",
       "short": "Season Colors",
-      "line": "Six plain Pops, one of each season color.",
-      "price": null,
+      "line": "Six plain Pops, one of each season color. Flat or Edge.",
+      "price": 29,
       "material": "TPU 95A · washable · dishwasher safe",
       "pops": [
         {"name": "Pumpkin", "hex": "#E8731E"},
@@ -227,7 +230,7 @@
         }
       ],
       "home": false,
-      "shop": false,
+      "shop": true,
       "pop_tray": true
     },
     {
@@ -235,8 +238,8 @@
       "name": "Pop Tray 2 · Pop Flowers",
       "kicker": "Pop Tray 2",
       "short": "Pop Flowers",
-      "line": "Six flower Pops on the flat Pop Round.",
-      "price": null,
+      "line": "Six flower Pops. Flat or Edge.",
+      "price": 29,
       "material": "TPU 95A · washable · dishwasher safe",
       "pops": [
         {"name": "Sunflower", "hex": "#F6C21C"},
@@ -257,7 +260,7 @@
         }
       ],
       "home": false,
-      "shop": false,
+      "shop": true,
       "pop_tray": true
     },
     {
@@ -265,9 +268,9 @@
       "name": "Pop Tray 3 · Coastal",
       "kicker": "Pop Tray 3",
       "short": "Coastal",
-      "line": "Six coastal Pops on the flat Pop Round.",
+      "line": "Six coastal Pops. Flat or Edge.",
       "story": "Red Mangrove: mangroves produce floating seedlings, called propagules, that tides and storms carry to new shores.",
-      "price": null,
+      "price": 29,
       "material": "TPU 95A · washable · dishwasher safe",
       "pops": [
         {"name": "Sea Glass", "hex": "#9FD8C6"},
@@ -288,7 +291,7 @@
         }
       ],
       "home": false,
-      "shop": false,
+      "shop": true,
       "pop_tray": true
     },
     {

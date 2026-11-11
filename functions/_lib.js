@@ -35,6 +35,8 @@ function coasterPrice(value) {
 }
 
 // Choices the server will accept as line-item metadata. Keep in step with web/data/products.json.
+const POP_STYLE = { style: ['Flat', 'Edge'] };
+
 export const OPTION_SPEC = {
   'pop-coasters-6': {
     style: ['Flat', 'Edge'],
@@ -43,6 +45,10 @@ export const OPTION_SPEC = {
   'flower-set-case': {
     flower: ['Sunflower', 'Hibiscus'],
   },
+  'fall-pop-coasters': POP_STYLE,
+  'pop-tray-1-season-colors': POP_STYLE,
+  'pop-tray-2-pop-flowers': POP_STYLE,
+  'pop-tray-3-coastal': POP_STYLE,
 };
 
 const OPTION_KEYS = ['style', 'tray', 'flower'];
@@ -76,7 +82,11 @@ export function sellables(env) {
   const items = [
     // Older SKUs stay mapped so their checkout code remains. The shop hides them via web/data/catalog.json.
     { sku: 'six-set-case', name: 'The Hibiscus Set (6 coasters + case)', price: env.STRIPE_PRICE_SIX_SET_CASE, max: 20 },
-    { sku: 'fall-pop-coasters', name: 'Holiday Tray Pop Coasters (12, no case)', price: env.STRIPE_PRICE_FALL_POP_COASTERS, max: 20 },
+    // Pop trays and the holiday tray are the $29 Flat or Edge pack. Do not charge STRIPE_PRICE_FALL_POP_COASTERS or a reserved box price.
+    { sku: 'fall-pop-coasters', name: 'Holiday Tray Pop Coasters', price: coasterPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
+    { sku: 'pop-tray-1-season-colors', name: 'Pop Tray 1 · Season Colors', price: coasterPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
+    { sku: 'pop-tray-2-pop-flowers', name: 'Pop Tray 2 · Pop Flowers', price: coasterPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
+    { sku: 'pop-tray-3-coastal', name: 'Pop Tray 3 · Coastal', price: coasterPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
     { sku: 'gigi', name: 'The Gigi', price: env.STRIPE_PRICE_GIGI, max: 20 },
     { sku: 'tide-soap-dish', name: 'Tide Soap Dish', price: env.STRIPE_PRICE_TIDE_SOAP_DISH, max: 20 },
     { sku: 'tide-dispenser', name: 'Tide Hand Soap Dispenser', price: env.STRIPE_PRICE_TIDE_DISPENSER, max: 20 },

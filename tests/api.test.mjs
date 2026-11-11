@@ -101,6 +101,15 @@ test('checkout: coaster options are separate line items with their own price and
   assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'pop-coasters-6', qty: 1, style: 'Flat', tray: 'Cranberry' }] }), env: priced })).status, 400);
   assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1 }] }), env: priced })).status, 400);
   assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1, flower: 'Orchid' }] }), env: priced })).status, 400);
+  const popEnv = { ...priced, STRIPE_PRICE_FALL_POP_COASTERS: 'price_fall', STRIPE_PRICE_HALF_DOZEN: HALF_PRICE };
+  for (const sku of ['fall-pop-coasters', 'pop-tray-1-season-colors', 'pop-tray-2-pop-flowers', 'pop-tray-3-coastal']) {
+    assert.equal((await checkout({ request: jsonReq({ items: [{ sku, qty: 1, style: 'Flat' }] }), env: { ...popEnv, STRIPE_PRICE_POP_COASTERS_6: '' } })).status, 400, sku);
+    assert.equal((await checkout({ request: jsonReq({ items: [{ sku, qty: 1 }] }), env: popEnv })).status, 400, sku);
+  }
+  const pop = await checkout({ request: jsonReq({ items: [{ sku: 'pop-tray-1-season-colors', qty: 1, style: 'Edge' }] }), env: popEnv });
+  assert.equal(pop.status, 200);
+  assert.equal(sent.body.get('line_items[0][price]'), 'price_pop');
+  assert.equal(sent.body.get('line_items[0][metadata][style]'), 'Edge');
   const open = await (await catalogApi({ env: priced })).json();
   assert.ok(open.skus.includes('pop-coasters-6'));
   assert.ok(open.skus.includes('flower-set-case'));
