@@ -220,20 +220,20 @@ def llms_txt(site: dict, products: list, batch: dict, catalog: dict) -> str:
     lines = [
         "# JUP LIFE by Mrs. Smash", "",
         "> JUP LIFE by Mrs. Smash prints coasters in Jupiter, Florida. The shop sells Pop Coasters and Flower Coasters. "
-        "Wholesale logo coasters are made for restaurants, bars, boutique hotels, rentals and event hosts in Palm Beach County and beyond.", "",
+        "Enterprise logo coasters are made for restaurants, bars, boutique hotels, rentals and event hosts in Palm Beach County and beyond.", "",
         "## Key facts",
         "- Location: Jupiter, FL (serves Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County; ships within the US)",
         "- Material: flexible TPU 95A, washable; TPU pieces are dishwasher safe (normal dishwasher cycle, avoid extended or high-heat modes)",
         "- Shipping: free on all U.S. orders; orders leave the studio within 2-3 business days",
-        "- Samples: retail buyers get 1 free sample coaster; wholesale buyers get 6 free sample coasters. A sample print is made for approval before a logo batch is printed",
-        "- Wholesale: custom logo coasters and restaurant coasters from 200 pieces. A logo batch ships within 10 days of approval. Wholesale is an inquiry, not a shop product",
+        "- Samples: retail buyers get 1 free sample coaster; enterprise buyers get 6 free sample coasters. A sample print is made for approval before a logo batch is printed",
+        "- Enterprise: custom logo coasters and restaurant coasters from 200 pieces. A logo batch ships within 10 days of approval. Enterprise is an inquiry, not a shop product",
         "- Contact: hello@juplifestudio.com, call +1-561-532-7120, text 561-581-8015",
         "- X: https://x.com/juplifestudio",
         "- TikTok: https://www.tiktok.com/@juplifestudio", "",
         "## Pages",
         f"- [Home]({base}/): the coaster printers, Jupiter FL",
         f"- [Shop]({base}/shop): Pop Coasters and Flower Coasters, with checkout",
-        f"- [Wholesale & Samples]({base}/wholesale): custom logo coasters for Palm Beach County restaurants, bars, hotels, rentals and events",
+        f"- [Enterprise & Samples]({base}/enterprise): custom logo coasters for Palm Beach County restaurants, bars, hotels, rentals and events",
         f"- [About]({base}/about): Meet Mrs. Smash (Dee), the face of JUP LIFE by Mrs. Smash",
         f"- [Contact]({base}/contact): call +1-561-532-7120",
         f"- [Palm Beach County]({base}/palm-beach-county): 3D printed coasters for Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County",
@@ -252,7 +252,7 @@ def llms_txt(site: dict, products: list, batch: dict, catalog: dict) -> str:
             continue
         price = f"${p['price']}" if p.get("price") else "ask about this batch"
         lines.append(f"- {p['name']} ({price}): {p['line']}")
-    lines += ["", "## Wholesale price tiers (per coaster)"] + [f"- {t['qty']}: {t['price']}" for t in site.get("tiers", [])]
+    lines += ["", "## Enterprise price tiers (per coaster)"] + [f"- {t['qty']}: {t['price']}" for t in site.get("tiers", [])]
     return "\n".join(lines) + "\n"
 
 
@@ -340,7 +340,7 @@ def main() -> int:
     }
     crumbs = {
         "/shop": "Shop",
-        "/enterprise": "Enterprise",
+        "/enterprise": "Enterprise & Samples",
         "/about": "Meet Mrs. Smash",
         "/contact": "Contact",
         "/palm-beach-county": "Palm Beach County",

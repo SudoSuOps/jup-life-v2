@@ -110,7 +110,7 @@
   <div>
     <p class="eyebrow" style="color:var(--cream-muted)">Custom logo coasters</p>
     <h3>Your logo, fresh baked.</h3>
-    <p>From 200 coasters. Wholesale buyers get 6 free sample coasters to try on the bar.</p>
+    <p>From 200 coasters. Enterprise buyers get 6 free sample coasters to try on the bar.</p>
   </div>
   <button type="button" class="btn btn-primary" data-open-sample data-type="Half Dozen sample" data-buyer="wholesale">Get 6 free sample coasters</button>
 </div>
@@ -160,7 +160,7 @@
     {% for t in site.tiers %}<div class="row"><dt>{{ t.qty }}</dt><span class="leader" aria-hidden="true"></span><dd>{{ t.price }}</dd></div>
     {% endfor %}
     <div class="row"><dt>Retail sample</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">1 free</dd></div>
-    <div class="row"><dt>Wholesale sample</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">6 free</dd></div>
+    <div class="row"><dt>Enterprise sample</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">6 free</dd></div>
   </dl>
   <p class="foot">Locally baked in Jupiter, FL.</p>
 </section>
@@ -180,7 +180,7 @@
     <select name="request_type">
       <option value="Sample">1 free sample coaster (retail)</option>
       {% if catalog.show_legacy %}<option value="Half Dozen order">Order a Half Dozen</option>{% endif %}
-      <option value="Half Dozen sample">6 free sample coasters (wholesale)</option>
+      <option value="Half Dozen sample">6 free sample coasters (enterprise)</option>
       <option>Product question</option>
       <option value="Custom">Custom order</option>
     </select>
@@ -228,7 +228,7 @@
 
 {% macro contacts() %}
 <address>
-  <span>Wholesale: call Smash, <a href="tel:+15615327120">561-532-7120</a></span>
+  <span>Enterprise: call Smash, <a href="tel:+15615327120">561-532-7120</a></span>
   <span>Say hello: <a href="mailto:hello@juplifestudio.com">hello@juplifestudio.com</a></span>
   <span>Email Dee: <a href="mailto:dee@juplifestudio.com">dee@juplifestudio.com</a></span>
   <span>Text us: <a href="sms:+15615818015">561-581-8015</a></span>

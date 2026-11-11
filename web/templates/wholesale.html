@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% from "partials/_macros.html" import sample_success, short %}
 {% block title %}Custom Logo Coasters for Palm Beach County Restaurants | JUP LIFE Studio{% endblock %}
-{% block description %}Custom logo coasters and restaurant coasters for Palm Beach County, 3D printed in Jupiter, FL. Custom bar coasters for Tequesta, Juno Beach, Palm Beach Gardens and West Palm Beach. Wholesale buyers get 6 free sample coasters. Retail buyers get 1 free sample coaster.{% endblock %}
+{% block description %}Custom logo coasters and restaurant coasters for Palm Beach County, 3D printed in Jupiter, FL. Custom bar coasters for Tequesta, Juno Beach, Palm Beach Gardens and West Palm Beach. Enterprise buyers get 6 free sample coasters. Retail buyers get 1 free sample coaster.{% endblock %}
 {% block ogtitle %}Custom Logo Coasters for Palm Beach County Restaurants{% endblock %}
 {% block ogdesc %}{{ self.description() }}{% endblock %}
 {% block ogimage %}{{ site_url }}/img/ws-logo-mockup-example.webp{% endblock %}
@@ -21,7 +21,7 @@
       "price": "{{ t.total | replace('$', '') | replace(',', '') }}.00",
       "priceCurrency": "USD",
       "availability": "https://schema.org/InStock",
-      "url": "{{ site_url }}/wholesale"
+      "url": "{{ site_url }}/enterprise"
     }{% if not loop.last %},{% endif %}
     {% endfor %}
   ]
@@ -55,17 +55,17 @@
     <div class="stack" style="gap:16px;flex:1 1 320px">
       <p class="eyebrow">The price board</p>
       <h2>Priced by the batch.</h2>
-      <p style="margin:0;font-size:18px;max-width:28em">The more you bake, the less each coaster costs. Wholesale buyers get 6 free sample coasters before a logo batch.</p>
+      <p style="margin:0;font-size:18px;max-width:28em">The more you bake, the less each coaster costs. Enterprise buyers get 6 free sample coasters before a logo batch.</p>
       <p style="margin:0;font-size:15px">Logo setup, shipping and lead time: {{ ph('logo_terms', 'CONFIRM') }}</p>
       <div><button type="button" class="btn btn-outline" data-open-sample data-type="Half Dozen sample" data-buyer="wholesale">Get 6 free sample coasters</button></div>
     </div>
     <section class="board price-board" aria-labelledby="pb-h" style="flex:1 1 460px">
-      <h3 id="pb-h" class="serif" style="text-align:center;font-size:clamp(28px,3vw,36px)">Today's Wholesale Batch</h3>
+      <h3 id="pb-h" class="serif" style="text-align:center;font-size:clamp(28px,3vw,36px)">Today's Enterprise Batch</h3>
       <dl>
         {% for t in site.tiers %}<div class="row"><dt>{{ t.qty if 'coaster' in t.qty else t.qty ~ ' coasters' }}</dt><span class="leader" aria-hidden="true"></span><dd>{{ t.total }} <small>({{ t.price }})</small></dd></div>
         {% endfor %}
         <div class="row"><dt>Retail sample</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">1 free</dd></div>
-        <div class="row"><dt>Wholesale sample</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">6 free</dd></div>
+        <div class="row"><dt>Enterprise sample</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">6 free</dd></div>
       </dl>
       <p class="foot">Locally baked in Jupiter, FL.</p>
     </section>
@@ -81,7 +81,7 @@
   <ol class="step-strip" style="list-style:none;margin:0;padding:0">
     <li class="step-card">
       {{ pic("img/ws-step-taste.webp", "Six coasters in a windowed kraft box with a sage band and the Mrs. Smash tag", sizes="(min-width: 800px) 360px, 100vw") }}
-      <div class="body"><span class="num">Step 1</span><h3>Taste.</h3><p>Wholesale buyers get 6 free sample coasters in a windowed kraft box. Retail buyers get 1 free sample coaster.</p></div>
+      <div class="body"><span class="num">Step 1</span><h3>Taste.</h3><p>Enterprise buyers get 6 free sample coasters in a windowed kraft box. Retail buyers get 1 free sample coaster.</p></div>
     </li>
     <li class="step-card">
       {{ pic("img/ws-step-order.webp", "A pencil sketch of a sunrise-over-waves logo beside a sage coaster with the same design", sizes="(min-width: 800px) 360px, 100vw") }}
@@ -171,8 +171,8 @@
 
 <section class="wrap faq reveal" style="padding-bottom:clamp(48px,6vw,88px)" aria-labelledby="faq-h">
   <h2 id="faq-h" style="font-size:clamp(32px,3.6vw,44px);margin-bottom:12px">Counter questions.</h2>
-  <details open><summary>How long does a batch take?</summary><p>{{ ph('wholesale_lead_time', 'PLACEHOLDER: wholesale lead time') }}</p></details>
-  <details><summary>Is there a minimum?</summary><p>Wholesale batches start at 200 coasters. Wholesale buyers get 6 free sample coasters. Retail buyers get 1 free sample coaster.</p></details>
+  <details open><summary>How long does a batch take?</summary><p>{{ ph('wholesale_lead_time', 'PLACEHOLDER: enterprise lead time') }}</p></details>
+  <details><summary>Is there a minimum?</summary><p>Enterprise batches start at 200 coasters. Enterprise buyers get 6 free sample coasters. Retail buyers get 1 free sample coaster.</p></details>
   <details><summary>What colors can I pick?</summary><p>Our colorways are named after ingredients (pumpkin, coconut, peach, sage, key lime and more), and they change with Today's Batch. Ask about matching your brand.</p></details>
   <details><summary>Can you do my logo?</summary><p>Yes. {{ ph('logo_terms', 'CONFIRM logo setup terms') }}</p></details>
   <details><summary>Can I wash them?</summary><p>Yes. They're washable and dishwasher-safe TPU. {{ ph('dishwasher_guidance', 'CONFIRM top-rack') }}</p></details>
@@ -183,7 +183,7 @@
     <div class="split" style="align-items:flex-start">
       <div class="stack" style="gap:18px;flex:1 1 340px">
         <p class="eyebrow">Free samples</p>
-        <h2 id="req-h">6 free sample coasters for wholesale buyers.</h2>
+        <h2 id="req-h">6 free sample coasters for enterprise buyers.</h2>
         <p style="margin:0;font-size:18px">Six coasters, one little box. Tell us where to send it. Retail buyers get 1 free sample coaster.</p>
         <figure style="margin:0;position:relative">
           {{ pic("img/ws-bulk-boxes-studio.webp", "Kraft boxes stacked on a cart in the studio, printers along the wall", sizes="(min-width: 900px) 440px, calc(100vw - 32px)", style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px") }}
@@ -217,7 +217,7 @@
             <span style="font-size:13px" data-wholesale-only>PNG, JPG, SVG or PDF, up to 4 MB.</span>
             <input type="hidden" name="request_type" value="Half Dozen sample">
             <input type="hidden" name="segment" value="Restaurant or bar">
-            <input type="hidden" name="source_page" value="/wholesale">
+            <input type="hidden" name="source_page" value="/enterprise">
             <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
             <p class="field" role="alert" data-form-error style="margin:0"></p>
             <button type="submit" class="btn btn-primary" data-submit>Send my 6 free samples</button>
