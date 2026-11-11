@@ -13,8 +13,7 @@ These override the brief where they conflict.
   **The Readers moved to Shop only** (brief caps Home at 6 cards; no photo yet).
   A full-width Fall flavor-board image sits above the cards.
 - **New section "Out of the oven."** (after the tray): three tap-to-play vertical shorts. `preload="none"`, no autoplay, posters set.
-  - `fresh-baked.mp4` (15 s), `coaster-party.mp4` (15 s), `built-different.mp4` (23.4 s).
-  - `built-different.mp4` is the owner's 30 s "Built different" cut **with the "Meet The Gigi." segment (≈17.7–23.9 s) removed** because it shows a gold metal-chain bracelet (brief bans metal-chain imagery). Do not restore the original.
+  - `fresh-baked.mp4` (15 s), `coaster-party.mp4` (15 s).
 - **Quality by design**: flex close-up render beside the heading; the studio-vision render (`studio-vision.webp`, the brief's optional `bakery_studio_vision.jpg`) full width under the five beats.
 - **For restaurants**: beach-table drink render under the copy.
 - **Meet Mrs. Smash**: real portrait of Dee (`img/dee-portrait.webp`) with the Mrs. Smash tag as a small sticker. The source photo was **retouched**: the sunglasses' lens wordmark was removed, the temple stripe recolored to plain navy, and the crop sits above her name badge (which carried another business's logo). This keeps the brief's "no other brands' marks" rule. Don't swap in the unretouched original.
@@ -27,7 +26,7 @@ These override the brief where they conflict.
 ## Wholesale = "The Bakery Counter, for restaurants" (supersedes the earlier audience-tile version)
 Built to `docs/WHOLESALE_SPEC.md`. Deviations / decisions:
 - **Hero**: split layout on desktop (copy left, photo right) instead of text over the photo. The photo's left side isn't empty (palms, sea), and an overlay panel covered the drink. Mobile: copy + CTA first, so "Claim a free Half Dozen" sits above the fold at 375×667.
-- **Price board** shows batch totals plus per-coaster prices: 100 = $200 ($2.00 ea), 500 = $800 ($1.60 ea), 1,000 = $1,200 ($1.20 ea), samples on the house. Live text. The chalkboard background image (03) is not used; the board component already is the chalkboard.
+- **Price board** shows batch totals plus per-coaster prices: 200 = $400 ($2.00 ea), 500 = $950 ($1.90 ea), 1,000 = $1,750 ($1.75 ea), samples on the house. Live text. The chalkboard background image (03) is not used; the board component already is the chalkboard.
 - **Built for service**: "Doesn't chip" carries a visible `[[CONFIRM claim]]` because it is outside the brief's allowed-claims list (§8). "It bends instead of breaking" is kept as a restatement of "Flexible TPU 95A"; the owner should confirm both.
 - **Who it's for**: chips = Restaurants · Bars · Boutique hotels · Airbnb hosts · **Events · Custom by design** (last two kept from the owner's earlier ask).
 - **Logo mockup** is captioned "Example design, not a client."
@@ -48,6 +47,6 @@ Built to `docs/WHOLESALE_SPEC.md`. Deviations / decisions:
 
 ## photos-v3 (Oct 22, owner folder)
 - Full-size photos replace the contact-sheet cuts: `ws-hero-bar`, `studio-counter`, `tide-dispenser`, `gigi-teal`, `ws-logo-mockup-example`. New `bakery-dome-*` (cake dome + kraft boxes) is the Shop banner.
-- Shorts (re-encoded to ~1.5-4 MB, posters generated, tap-to-play, never autoplay): **Wholesale "Out on the bar"**: `ws-one-love` (short01), `ws-drinks-down` (short09), `ws-spa-day` (short07, hotel/rental). **Shop "Out of the oven"**: `shop-baked-daily` (short02), `shop-fresh-out` (short01 (1)).
+- Shorts (re-encoded to ~1.5-4 MB, posters generated, tap-to-play, never autoplay): **Enterprise "Out on the bar"**: `ws-one-love` (short01), `ws-drinks-down` (short09). **Shop "Out of the oven"**: `shop-baked-daily` (short02), `shop-fresh-out` (short01 (1)).
 - Not used: `short02 (1)` (first half of the Home "Built different" cut, a duplicate). Checked every short for metal-chain imagery and other brands: none.
 - Still contact-sheet cuts (no full-size in the folder): the three wholesale step photos and `ws-bulk-boxes-studio`.

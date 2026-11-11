@@ -226,16 +226,16 @@ def llms_txt(site: dict, products: list, batch: dict) -> str:
         "- Location: Jupiter, FL (serves Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County; ships within the US)",
         "- Material: flexible TPU 95A, washable; TPU pieces are dishwasher safe (normal dishwasher cycle, avoid extended or high-heat modes)",
         "- Shipping: free on all U.S. orders; orders leave the studio within 2-3 business days",
-        "- Samples: retail buyers get 1 free sample coaster; wholesale buyers get 6 free sample coasters. A sample print is made for approval before a logo batch is printed",
-        "- Wholesale: custom logo coasters and restaurant coasters from 100 pieces. The Half Dozen is the $29 retail box only, and a logo batch ships within 10 days of approval",
+        "- Samples: samples are available by request on the Enterprise page. A sample print is made for approval before a logo batch is printed",
+        "- Enterprise: custom logo coasters and restaurant coasters from 200 pieces. The Half Dozen is the $29 retail box only, and a logo batch ships within 10 days of approval",
+        "- Returns: within 7 days of delivery if you're not 100% happy, no questions asked",
         f"- Current tray: {batch.get('tray', '')}",
         "- Contact: hello@juplifestudio.com, call +1-561-532-7120, text 561-581-8015",
-        "- X: https://x.com/juplifestudio",
         "- TikTok: https://www.tiktok.com/@juplifestudio", "",
         "## Pages",
         f"- [Home]({base}/): 3D printed coasters, the current tray, quality, FAQ",
         f"- [Shop]({base}/shop): retail products with prices and checkout",
-        f"- [Wholesale & Samples]({base}/wholesale): custom logo coasters for Palm Beach County restaurants, bars, hotels, rentals and events",
+        f"- [Enterprise]({base}/enterprise): custom logo coasters for Palm Beach County restaurants, bars, hotels, rentals and events",
         f"- [About]({base}/about): Meet Mrs. Smash (Dee), the face of JUP LIFE by Mrs. Smash",
         f"- [Contact]({base}/contact): call +1-561-532-7120",
         f"- [Palm Beach County]({base}/palm-beach-county): 3D printed coasters for Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County",
@@ -245,7 +245,7 @@ def llms_txt(site: dict, products: list, batch: dict) -> str:
         if p.get("shop"):
             price = f"${p['price']}" if p.get("price") else "ask about this batch"
             lines.append(f"- {p['name']} ({price}): {p['line']}")
-    lines += ["", "## Wholesale price tiers (per coaster)"] + [f"- {t['qty']}: {t['price']}" for t in site.get("tiers", [])]
+    lines += ["", "## Enterprise price tiers (per coaster)"] + [f"- {t['qty']}: {t['price']}" for t in site.get("tiers", [])]
     return "\n".join(lines) + "\n"
 
 
@@ -303,7 +303,7 @@ def main() -> int:
     pages = {
         "index.html": ("home.html", {"path": "/", "nav": "home"}),
         "shop.html": ("shop.html", {"path": "/shop", "nav": "shop"}),
-        "wholesale.html": ("wholesale.html", {"path": "/wholesale", "nav": "wholesale"}),
+        "enterprise.html": ("wholesale.html", {"path": "/enterprise", "nav": "enterprise"}),
         "about.html": ("about.html", {"path": "/about", "nav": "about"}),
         "contact.html": ("contact.html", {"path": "/contact", "nav": "contact"}),
         "palm-beach-county.html": ("palm_beach_county.html", {"path": "/palm-beach-county", "nav": "palm"}),
@@ -313,7 +313,7 @@ def main() -> int:
     }
     crumbs = {
         "/shop": "Shop",
-        "/wholesale": "Wholesale & Samples",
+        "/enterprise": "Enterprise",
         "/about": "Meet Mrs. Smash",
         "/contact": "Contact",
         "/palm-beach-county": "Palm Beach County",
@@ -324,7 +324,7 @@ def main() -> int:
 
     today = date.today().isoformat()
     urls = [(f"{site['site_url']}{p}", pr) for p, pr in (
-        ("/", "1.0"), ("/shop", "0.9"), ("/wholesale", "0.9"), ("/about", "0.7"),
+        ("/", "1.0"), ("/shop", "0.9"), ("/enterprise", "0.9"), ("/about", "0.7"),
         ("/contact", "0.6"), ("/palm-beach-county", "0.8"), ("/shipping-returns", "0.3"), ("/privacy", "0.2"))]
     (DIST / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'

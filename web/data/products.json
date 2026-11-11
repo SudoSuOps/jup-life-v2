@@ -1,13 +1,13 @@
 {
   "_note": "Display data for cards. Prices here are DISPLAY ONLY. Checkout charges come from Stripe Price IDs mapped server-side in functions/_lib.js. Never invent prices: null = 'Ask about this batch'.",
-  "_todo_primary_29": "TODO(Smash): which $29 product is primary (6 coasters + case, The Half Dozen box, or 12 coasters with no case) is unresolved. Do not pick a primary $29 product or change these prices. The Reader ($19, with stand) and The Gigi ($9) are already listed.",
+  "_todo_primary_29": "TODO(Smash): which $29 product is primary (6 coasters + case, The Half Dozen box, or 12 coasters with no case) is unresolved. Do not pick a primary $29 product or change these prices. One More Chapter ($21, 1 Reader + 1 cradle holder) and The Gigi ($9) are already listed.",
   "products": [
     {
       "sku": "fall-pop-coasters",
       "name": "Holiday Tray Pop Coasters",
       "line": "Twelve pop coasters in this season's tray flavors. No case.",
       "price": 29,
-      "material": "TPU 95A · washable · dishwasher safe",
+      "material": "TPU 95A \u00b7 washable \u00b7 dishwasher safe",
       "swatches": "batch",
       "img": "img/holiday-tray-pops-1600x900.webp",
       "home": true,
@@ -76,7 +76,7 @@
       "img": "img/stack-bands-harvest.webp",
       "board": "img/stack-bands-board.webp",
       "home": true,
-      "shop": true,
+      "shop": false,
       "render": true,
       "alt": "The Harvest stack band 3-pack in Pumpkin, Cinnamon and Maple"
     },
@@ -85,7 +85,7 @@
       "name": "The Hibiscus Set",
       "line": "Six Hibiscus line coasters with the case included.",
       "price": 29,
-      "material": "TPU 95A · washable · dishwasher safe",
+      "material": "TPU 95A \u00b7 washable \u00b7 dishwasher safe",
       "img": "img/six-set-case.webp",
       "home": true,
       "shop": true,
@@ -97,7 +97,7 @@
       "name": "The Half Dozen",
       "line": "Six assorted coasters in a windowed kraft box with a sage band, the Mrs. Smash tag and a Today's Batch card. Free U.S. shipping.",
       "price": 29,
-      "material": "TPU 95A · washable · dishwasher safe",
+      "material": "TPU 95A \u00b7 washable \u00b7 dishwasher safe",
       "img": "img/halfdozen-box.webp",
       "home": false,
       "shop": true,
@@ -109,7 +109,7 @@
       "name": "The Baker's Dozen",
       "line": "Thirteen assorted coasters, one for everyone at the table and one to spare. Free U.S. shipping.",
       "price": 39,
-      "material": "TPU 95A · washable · dishwasher safe",
+      "material": "TPU 95A \u00b7 washable \u00b7 dishwasher safe",
       "img": "img/halfdozen-open.webp",
       "home": false,
       "shop": true,
@@ -134,7 +134,7 @@
         }
       ],
       "home": true,
-      "shop": true,
+      "shop": false,
       "render": true,
       "alt": "A teal Gigi band with a repeating JL monogram, in palm-leaf shadow"
     },
@@ -165,7 +165,7 @@
       "name": "Tide Hand Soap Dispenser",
       "line": "TPU housing, PETG refill bottle, square-wave base.",
       "price": 21,
-      "material": "TPU housing · PETG bottle: wash by hand",
+      "material": "TPU housing \u00b7 PETG bottle: wash by hand",
       "img": "img/tide-dispenser.webp",
       "gallery": [
         {
@@ -178,15 +178,15 @@
         }
       ],
       "home": true,
-      "shop": true,
+      "shop": false,
       "render": true,
       "alt": "A Tide hand soap dispenser fading from lime to amber, with wave texture and a square base"
     },
     {
       "sku": "readers",
-      "name": "The Reader",
-      "line": "The Reader and its stand, both included. One more chapter.",
-      "price": 19,
+      "name": "One More Chapter",
+      "line": "What's included: 1 Reader + 1 cradle holder.",
+      "price": 21,
       "material": null,
       "img": "img/readers-cradle.webp",
       "home": false,
@@ -201,20 +201,133 @@
       "render": true
     },
     {
+      "sku": "pop-coasters-6",
+      "name": "Pop Coasters 6-Pack",
+      "line": "Six Pop coasters. Flat or Edge. A mixed tray, or one color.",
+      "note": "Mix packs in one order.",
+      "shipping": "Free U.S. shipping.",
+      "price": 29,
+      "material": "TPU 95A \u00b7 washable \u00b7 dishwasher safe",
+      "img": "img/pop-coasters-pumpkin.webp",
+      "alt": "A pumpkin Pop coaster",
+      "options": [
+        {
+          "key": "style",
+          "label": "Style",
+          "choices": [
+            {
+              "value": "Flat",
+              "label": "Flat"
+            },
+            {
+              "value": "Edge",
+              "label": "Edge"
+            }
+          ]
+        },
+        {
+          "key": "tray",
+          "label": "Tray",
+          "choices": [
+            {
+              "value": "Mixed",
+              "label": "Mixed",
+              "note": "6 colors"
+            },
+            {
+              "value": "Pumpkin",
+              "label": "Pumpkin"
+            },
+            {
+              "value": "Coconut (clear)",
+              "label": "Coconut",
+              "note": "clear"
+            },
+            {
+              "value": "Rhubarb",
+              "label": "Rhubarb"
+            },
+            {
+              "value": "Key Lime",
+              "label": "Key Lime"
+            },
+            {
+              "value": "Peach",
+              "label": "Peach"
+            },
+            {
+              "value": "Sea Salt",
+              "label": "Sea Salt"
+            }
+          ]
+        }
+      ],
+      "home": true,
+      "shop": true,
+      "render": true
+    },
+    {
+      "sku": "flower-set-case",
+      "name": "Flower Coaster Set with Case",
+      "line": "Six coasters and a one-color PLA case. Sunflower or Hibiscus.",
+      "shipping": "Free U.S. shipping.",
+      "price": 39,
+      "material": "TPU coasters \u00b7 PLA case",
+      "img": "img/pop-tray-2-pop-flowers.webp",
+      "alt": "Flower Pop coasters",
+      "options": [
+        {
+          "key": "flower",
+          "label": "Flower",
+          "choices": [
+            {
+              "value": "Sunflower",
+              "label": "Sunflower"
+            },
+            {
+              "value": "Hibiscus",
+              "label": "Hibiscus"
+            }
+          ]
+        }
+      ],
+      "home": true,
+      "shop": true,
+      "render": true
+    },
+    {
       "sku": "pop-tray-1-season-colors",
-      "name": "Pop Tray 1 · Season Colors",
+      "name": "Pop Tray 1 \u00b7 Season Colors",
       "kicker": "Pop Tray 1",
       "short": "Season Colors",
       "line": "Six plain Pops, one of each season color.",
       "price": null,
-      "material": "TPU 95A · washable · dishwasher safe",
+      "material": "TPU 95A \u00b7 washable \u00b7 dishwasher safe",
       "pops": [
-        {"name": "Pumpkin", "hex": "#E8731E"},
-        {"name": "Coconut (clear)", "hex": "#F4EFE3"},
-        {"name": "Rhubarb", "hex": "#C93A5B"},
-        {"name": "Key Lime", "hex": "#A8D94A"},
-        {"name": "Peach", "hex": "#FFB07C"},
-        {"name": "Sea Salt", "hex": "#7FD1C2"}
+        {
+          "name": "Pumpkin",
+          "hex": "#E8731E"
+        },
+        {
+          "name": "Coconut (clear)",
+          "hex": "#F4EFE3"
+        },
+        {
+          "name": "Rhubarb",
+          "hex": "#C93A5B"
+        },
+        {
+          "name": "Key Lime",
+          "hex": "#A8D94A"
+        },
+        {
+          "name": "Peach",
+          "hex": "#FFB07C"
+        },
+        {
+          "name": "Sea Salt",
+          "hex": "#7FD1C2"
+        }
       ],
       "shots": [
         {
@@ -232,19 +345,37 @@
     },
     {
       "sku": "pop-tray-2-pop-flowers",
-      "name": "Pop Tray 2 · Pop Flowers",
+      "name": "Pop Tray 2 \u00b7 Pop Flowers",
       "kicker": "Pop Tray 2",
       "short": "Pop Flowers",
       "line": "Six flower Pops on the flat Pop Round.",
       "price": null,
-      "material": "TPU 95A · washable · dishwasher safe",
+      "material": "TPU 95A \u00b7 washable \u00b7 dishwasher safe",
       "pops": [
-        {"name": "Sunflower", "hex": "#F6C21C"},
-        {"name": "Hibiscus", "hex": "#E0325F"},
-        {"name": "Orchid", "hex": "#9B4FC2"},
-        {"name": "Plumeria", "hex": "#EBE4D0"},
-        {"name": "Bird of Paradise", "hex": "#F07A1A"},
-        {"name": "Bougainvillea", "hex": "#D42A9C"}
+        {
+          "name": "Sunflower",
+          "hex": "#F6C21C"
+        },
+        {
+          "name": "Hibiscus",
+          "hex": "#E0325F"
+        },
+        {
+          "name": "Orchid",
+          "hex": "#9B4FC2"
+        },
+        {
+          "name": "Plumeria",
+          "hex": "#EBE4D0"
+        },
+        {
+          "name": "Bird of Paradise",
+          "hex": "#F07A1A"
+        },
+        {
+          "name": "Bougainvillea",
+          "hex": "#D42A9C"
+        }
       ],
       "shots": [
         {
@@ -262,20 +393,38 @@
     },
     {
       "sku": "pop-tray-3-coastal",
-      "name": "Pop Tray 3 · Coastal",
+      "name": "Pop Tray 3 \u00b7 Coastal",
       "kicker": "Pop Tray 3",
       "short": "Coastal",
       "line": "Six coastal Pops on the flat Pop Round.",
       "story": "Red Mangrove: mangroves produce floating seedlings, called propagules, that tides and storms carry to new shores.",
       "price": null,
-      "material": "TPU 95A · washable · dishwasher safe",
+      "material": "TPU 95A \u00b7 washable \u00b7 dishwasher safe",
       "pops": [
-        {"name": "Sea Glass", "hex": "#9FD8C6"},
-        {"name": "Shell", "hex": "#E0D5C1"},
-        {"name": "Dunes", "hex": "#D9B25F"},
-        {"name": "Red Mangrove", "hex": "#206030"},
-        {"name": "Banyan", "hex": "#3E7D3A"},
-        {"name": "Sea Turtle", "hex": "#0F7C82"}
+        {
+          "name": "Sea Glass",
+          "hex": "#9FD8C6"
+        },
+        {
+          "name": "Shell",
+          "hex": "#E0D5C1"
+        },
+        {
+          "name": "Dunes",
+          "hex": "#D9B25F"
+        },
+        {
+          "name": "Red Mangrove",
+          "hex": "#206030"
+        },
+        {
+          "name": "Banyan",
+          "hex": "#3E7D3A"
+        },
+        {
+          "name": "Sea Turtle",
+          "hex": "#0F7C82"
+        }
       ],
       "shots": [
         {

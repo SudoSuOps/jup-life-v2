@@ -1,7 +1,7 @@
 # JUP LIFE: Today's Batch template
 Make a print card and social/web posts for every drop from one file.
 
-1. **Edit** `batch.yaml` (or copy `fall_2026.yaml` / `summer.yaml`). Set the season, harvest month/year, optional `date` (YYYY-MM-DD, prints e.g. "THU OCT 22"), optional `batch_no`, up to 6 flavors (name, hex color, short note), an optional `chefs_special` (leave it "" for no ribbon), and the price tiers (they default to the real wholesale tiers: 100 at $2.00, 500 at $1.60, 1,000 at $1.20 each; `samples_free: true`).
+1. **Edit** `batch.yaml` (or copy `fall_2026.yaml` / `summer.yaml`). Set the season, harvest month/year, optional `date` (YYYY-MM-DD, prints e.g. "THU OCT 22"), optional `batch_no`, up to 6 flavors (name, hex color, short note), an optional `chefs_special` (leave it "" for no ribbon), and the price tiers (they default to the real wholesale tiers: 200 at $2.00, 500 at $1.90, 1,000 at $1.75 each; `samples_free: true`).
 2. **Run** `python3 make_card.py batch.yaml` (needs `pip install reportlab pyyaml`, plus `pdftoppm` from poppler-utils).
 3. **Grab** the files from `out/<season>_<date>/`:
    - `..._card_3.5in.pdf` is print-ready: 3.5" square plus a 0.125" bleed. The matching `..._card_3.5in.png` is a 300 dpi proof.

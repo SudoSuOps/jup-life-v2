@@ -11,13 +11,13 @@ const SANS = "Montserrat, -apple-system, 'Segoe UI', Helvetica, Arial, sans-seri
 export function sampleConfirmationCopy(buyer) {
   if (buyer === 'wholesale') {
     return {
-      heading: 'Your 6 free venue sample coasters are being baked.',
+      heading: 'Your sample request is in.',
       paragraphs: ["We'll reach out about your logo within one business day."],
     };
   }
   return {
-    heading: 'Your free sample coaster is on the way.',
-    paragraphs: [],
+    heading: 'Your sample request is in.',
+    paragraphs: ["We'll be in touch within one business day."],
   };
 }
 

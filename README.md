@@ -27,7 +27,9 @@ CHROME=/path/to/chrome npm run smoke     # browser smoke test against the runnin
 | `STRIPE_PRICE_GIGI` | `price_...` for The Gigi ($9) |
 | `STRIPE_PRICE_TIDE_SOAP_DISH` | `price_...` for Tide Soap Dish ($14) |
 | `STRIPE_PRICE_TIDE_DISPENSER` | `price_...` for Tide Hand Soap Dispenser ($21) |
-| `STRIPE_PRICE_READERS` | `price_...` for The Readers ($19) |
+| `STRIPE_PRICE_READER_21` | `price_...` for One More Chapter at $21. Leave unset until that Stripe price exists. The button stays Coming soon, and checkout will not use `STRIPE_PRICE_READERS`. |
+| `STRIPE_PRICE_POP_COASTERS_6` | `price_...` for Pop Coasters 6-Pack at $29 (Flat or Edge). Leave unset until that price exists. |
+| `STRIPE_PRICE_FLOWER_SET_CASE` | `price_...` for Flower Coaster Set with Case at $39. Leave unset until that price exists. |
 | `STRIPE_PRICE_HALF_DOZEN` | optional override; defaults to the live $29 Half Dozen price |
 | `STRIPE_PRICE_BAKERS_DOZEN` | optional override; defaults to the live $39 Baker's Dozen price |
 | `RESEND_API_KEY` | secret. Empty = requests/orders are only logged. Needs Full access to save Drops signups as contacts |
