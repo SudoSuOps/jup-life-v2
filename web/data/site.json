@@ -3,19 +3,19 @@
   "site_url": "https://juplifestudio.com",
   "tiers": [
     {
-      "qty": "100 coasters",
+      "qty": "200 coasters",
       "price": "$2.00 ea",
-      "total": "$200"
+      "total": "$400"
     },
     {
       "qty": "500",
-      "price": "$1.60 ea",
-      "total": "$800"
+      "price": "$1.90 ea",
+      "total": "$950"
     },
     {
       "qty": "1,000",
-      "price": "$1.20 ea",
-      "total": "$1,200"
+      "price": "$1.75 ea",
+      "total": "$1,750"
     }
   ],
   "placeholders": {

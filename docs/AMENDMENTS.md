@@ -27,7 +27,7 @@ These override the brief where they conflict.
 ## Wholesale = "The Bakery Counter, for restaurants" (supersedes the earlier audience-tile version)
 Built to `docs/WHOLESALE_SPEC.md`. Deviations / decisions:
 - **Hero**: split layout on desktop (copy left, photo right) instead of text over the photo. The photo's left side isn't empty (palms, sea), and an overlay panel covered the drink. Mobile: copy + CTA first, so "Claim a free Half Dozen" sits above the fold at 375×667.
-- **Price board** shows batch totals plus per-coaster prices: 100 = $200 ($2.00 ea), 500 = $800 ($1.60 ea), 1,000 = $1,200 ($1.20 ea), samples on the house. Live text. The chalkboard background image (03) is not used; the board component already is the chalkboard.
+- **Price board** shows batch totals plus per-coaster prices: 200 = $400 ($2.00 ea), 500 = $950 ($1.90 ea), 1,000 = $1,750 ($1.75 ea), samples on the house. Live text. The chalkboard background image (03) is not used; the board component already is the chalkboard.
 - **Built for service**: "Doesn't chip" carries a visible `[[CONFIRM claim]]` because it is outside the brief's allowed-claims list (§8). "It bends instead of breaking" is kept as a restatement of "Flexible TPU 95A"; the owner should confirm both.
 - **Who it's for**: chips = Restaurants · Bars · Boutique hotels · Airbnb hosts · **Events · Custom by design** (last two kept from the owner's earlier ask).
 - **Logo mockup** is captioned "Example design, not a client."
