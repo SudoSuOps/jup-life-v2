@@ -330,7 +330,7 @@ def main() -> int:
     pages = {
         "index.html": ("home.html", {"path": "/", "nav": "home"}),
         "shop.html": ("shop.html", {"path": "/shop", "nav": "shop"}),
-        "wholesale.html": ("wholesale.html", {"path": "/wholesale", "nav": "wholesale"}),
+        "enterprise.html": ("wholesale.html", {"path": "/enterprise", "nav": "enterprise"}),
         "about.html": ("about.html", {"path": "/about", "nav": "about"}),
         "contact.html": ("contact.html", {"path": "/contact", "nav": "contact"}),
         "palm-beach-county.html": ("palm_beach_county.html", {"path": "/palm-beach-county", "nav": "palm"}),
@@ -340,7 +340,7 @@ def main() -> int:
     }
     crumbs = {
         "/shop": "Shop",
-        "/wholesale": "Wholesale & Samples",
+        "/enterprise": "Enterprise",
         "/about": "Meet Mrs. Smash",
         "/contact": "Contact",
         "/palm-beach-county": "Palm Beach County",
@@ -351,7 +351,7 @@ def main() -> int:
 
     today = date.today().isoformat()
     urls = [(f"{site['site_url']}{p}", pr) for p, pr in (
-        ("/", "1.0"), ("/shop", "0.9"), ("/wholesale", "0.9"), ("/about", "0.7"),
+        ("/", "1.0"), ("/shop", "0.9"), ("/enterprise", "0.9"), ("/about", "0.7"),
         ("/contact", "0.6"), ("/palm-beach-county", "0.8"), ("/shipping-returns", "0.3"), ("/privacy", "0.2"))]
     (DIST / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'

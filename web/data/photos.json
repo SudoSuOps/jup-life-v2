@@ -59,15 +59,15 @@
     },
     "flower-set-case": {
       "card": {
-        "img": "img/six-set-case.webp",
-        "alt": "Studio rendering of yellow flower coasters stacked in a white case.",
-        "render": true
+        "img": "img/flower-sunflower-coaster.webp",
+        "alt": "A gold sunflower coaster, 3D printed in PLA, with a raised flower",
+        "render": false
       },
       "flower": {
         "Sunflower": {
-          "img": "img/six-set-case.webp",
-          "alt": "Studio rendering of yellow flower coasters stacked in a white case.",
-          "render": true
+          "img": "img/flower-sunflower-coaster.webp",
+          "alt": "A gold sunflower coaster, 3D printed in PLA, with a raised flower",
+          "render": false
         },
         "Hibiscus": {
           "img": "img/pop-tray-2-pop-flowers.webp",

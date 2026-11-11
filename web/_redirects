@@ -1,5 +1,7 @@
-/restaurants /wholesale 301
-/restaurants/* /wholesale 301
+/wholesale /enterprise 301
+/wholesale/* /enterprise 301
+/restaurants /enterprise 301
+/restaurants/* /enterprise 301
 /collection /shop 301
 /collection/* /shop 301
 /collections /shop 301
