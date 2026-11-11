@@ -1,0 +1,5 @@
+{
+  "_note": "Storefront visibility. Only `listed` SKUs appear on the home page and shop, in this order. Other products stay in products.json and in functions/_lib.js. Set show_legacy to true to render the previous tray, pop trays, shelf, and Half Dozen blocks instead of the two coasters.",
+  "show_legacy": false,
+  "listed": ["pop-coasters-6", "flower-set-case"]
+}

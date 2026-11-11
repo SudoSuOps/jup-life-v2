@@ -1,6 +1,6 @@
 {
   "_note": "Display data for cards. Prices here are DISPLAY ONLY. Checkout charges come from Stripe Price IDs mapped server-side in functions/_lib.js. Never invent prices: null = 'Ask about this batch'.",
-  "_todo_primary_29": "TODO(Smash): which $29 product is primary (6 coasters + case, The Half Dozen box, or 12 coasters with no case) is unresolved. Do not pick a primary $29 product or change these prices. The Reader ($19, with stand) and The Gigi ($9) are already listed.",
+  "_todo_primary_29": "Storefront list is web/data/catalog.json: Pop Coasters 6-Pack ($29) and Flower Coaster Set with Case ($39). Prices below for older products stay as they were. Photos for the two coasters live in web/data/photos.json.",
   "products": [
     {
       "sku": "fall-pop-coasters",
@@ -290,6 +290,60 @@
       "home": false,
       "shop": false,
       "pop_tray": true
+    },
+    {
+      "sku": "pop-coasters-6",
+      "name": "Pop Coasters 6-Pack",
+      "line": "Six Pop coasters. Flat or Edge. A mixed tray, or one color.",
+      "note": "Mix packs in one order.",
+      "shipping": "Free U.S. shipping.",
+      "price": 29,
+      "material": "TPU 95A · washable · dishwasher safe",
+      "options": [
+        {
+          "key": "style",
+          "label": "Style",
+          "choices": [
+            {"value": "Flat", "label": "Flat"},
+            {"value": "Edge", "label": "Edge"}
+          ]
+        },
+        {
+          "key": "tray",
+          "label": "Tray",
+          "choices": [
+            {"value": "Mixed", "label": "Mixed", "note": "6 colors"},
+            {"value": "Pumpkin", "label": "Pumpkin", "hex": "#E8731E"},
+            {"value": "Coconut (clear)", "label": "Coconut", "note": "clear", "hex": "#F4EFE3", "frosted": true},
+            {"value": "Rhubarb", "label": "Rhubarb", "hex": "#C93A5B"},
+            {"value": "Key Lime", "label": "Key Lime", "hex": "#A8D94A"},
+            {"value": "Peach", "label": "Peach", "hex": "#FFB07C"},
+            {"value": "Sea Salt", "label": "Sea Salt", "hex": "#7FD1C2"}
+          ]
+        }
+      ],
+      "home": false,
+      "shop": false
+    },
+    {
+      "sku": "flower-set-case",
+      "name": "Flower Coaster Set with Case",
+      "line": "Six coasters and a one-color PLA case. Sunflower or Hibiscus.",
+      "shipping": "Free U.S. shipping.",
+      "price": 39,
+      "material": "TPU coasters · PLA case",
+      "options": [
+        {
+          "key": "flower",
+          "label": "Flower",
+          "choices": [
+            {"value": "Sunflower", "label": "Sunflower", "hex": "#F6C21C"},
+            {"value": "Hibiscus", "label": "Hibiscus", "hex": "#E0325F"}
+          ]
+        }
+      ],
+      "home": false,
+      "shop": false
     }
   ]
 }

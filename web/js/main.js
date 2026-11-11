@@ -205,6 +205,7 @@
   const saveBag = (bag) => { try { localStorage.setItem(BAG_KEY, JSON.stringify(bag)); } catch { /* private mode: bag lives in memory */ } };
   let bag = loadBag();
 
+  const lineId = (i) => [i.sku, i.style || '', i.tray || '', i.flower || ''].join('\u0000');
   function renderBag() {
     const count = bag.reduce((n, i) => n + i.qty, 0);
     $$('[data-bag-count]').forEach((el) => { el.textContent = count; });
@@ -216,20 +217,31 @@
       li.innerHTML = `<span><strong></strong><br><span class="sub"></span></span>
         <span class="qty"><button type="button" aria-label="One fewer">−</button><span aria-live="polite"></span><button type="button" aria-label="One more">+</button></span>`;
       $('strong', li).textContent = i.name;
-      $('.sub', li).textContent = money(i.price);
+      const detail = [i.style, i.tray, i.flower].filter(Boolean).join(' · ');
+      $('.sub', li).textContent = detail ? `${detail} · ${money(i.price)}` : money(i.price);
       $('.qty span', li).textContent = i.qty;
       const [minus, plus] = $$('button', li);
-      minus.addEventListener('click', () => setQty(i.sku, i.qty - 1));
-      plus.addEventListener('click', () => setQty(i.sku, i.qty + 1));
+      const id = lineId(i);
+      minus.addEventListener('click', () => setQty(id, i.qty - 1));
+      plus.addEventListener('click', () => setQty(id, i.qty + 1));
       return li;
     }));
     $('[data-bag-empty]').hidden = bag.length > 0;
     $('[data-checkout]').disabled = bag.length === 0;
     $('[data-bag-subtotal]').textContent = money(bag.reduce((s, i) => s + i.price * i.qty, 0));
   }
-  function setQty(sku, qty) {
-    bag = bag.map((i) => (i.sku === sku ? { ...i, qty: Math.min(qty, 20) } : i)).filter((i) => i.qty > 0);
+  function setQty(id, qty) {
+    bag = bag.map((i) => (lineId(i) === id ? { ...i, qty: Math.min(qty, 20) } : i)).filter((i) => i.qty > 0);
     saveBag(bag); renderBag();
+  }
+  function choiceFrom(card) {
+    const opts = {};
+    if (!card) return opts;
+    $$('[data-option]', card).forEach((fs) => {
+      const checked = fs.querySelector('input:checked');
+      if (checked) opts[fs.dataset.option] = checked.value;
+    });
+    return opts;
   }
 
   function initBag() {
@@ -238,10 +250,13 @@
     wireClose(dlg);
     $$('[data-open-bag]').forEach((b) => b.addEventListener('click', () => openDlg(dlg)));
     $$('[data-add-to-bag]').forEach((b) => b.addEventListener('click', () => {
+      if (b.disabled) return;
       // price shown client-side is display only; the server maps sku -> Stripe Price
       const { sku, name, price } = b.dataset;
-      const hit = bag.find((i) => i.sku === sku);
-      if (hit) hit.qty = Math.min(hit.qty + 1, 20); else bag.push({ sku, name, price: Number(price), qty: 1 });
+      const opts = choiceFrom(b.closest('[data-coaster]'));
+      const item = { sku, name, price: Number(price), qty: 1, ...opts };
+      const hit = bag.find((i) => lineId(i) === lineId(item));
+      if (hit) hit.qty = Math.min(hit.qty + 1, 20); else bag.push(item);
       saveBag(bag); renderBag(); openDlg(dlg);
     }));
     $('[data-checkout]', dlg).addEventListener('click', async (e) => {
@@ -250,7 +265,13 @@
       try {
         const res = await fetch(`${API}/checkout`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: bag.map(({ sku, qty }) => ({ sku, qty })) }),
+          body: JSON.stringify({ items: bag.map(({ sku, qty, style, tray, flower }) => {
+            const line = { sku, qty };
+            if (style) line.style = style;
+            if (tray) line.tray = tray;
+            if (flower) line.flower = flower;
+            return line;
+          }) }),
         });
         const data = await res.json().catch(() => ({}));
         if (!res.ok || !data.url) throw new Error(data.detail || 'Checkout is unavailable right now.');
@@ -298,5 +319,73 @@
     });
   }
 
-  renderBatch(); initSample(); initBag(); initDrops(); initReveal();
+  function shotFor(book, sku, opts) {
+    const entry = book[sku];
+    if (!entry) return null;
+    const pick = (group, key) => (group && key && group[key] && group[key].img ? group[key] : null);
+    if (opts.flower) return pick(entry.flower, opts.flower) || entry.card || null;
+    if (opts.tray && opts.tray !== 'Mixed') return pick(entry.tray, opts.tray) || pick(entry.style, opts.style) || entry.card || null;
+    return pick(entry.style, opts.style) || pick(entry.tray, opts.tray) || entry.card || null;
+  }
+
+  function showShot(card, shot) {
+    const figure = $('[data-product-figure]', card);
+    if (!figure || !shot) return;
+    const img = $('img', figure);
+    const cap = $('[data-photo-cap]', figure);
+    const well = $('[data-photo-well]', figure);
+    if (!shot.img) {
+      if (img) img.hidden = true;
+      if (well) {
+        well.hidden = false;
+        const ph = $('[data-photo-ph]', well);
+        if (ph) ph.textContent = shot.placeholder || 'Photo coming';
+      }
+      if (cap) cap.hidden = true;
+      return;
+    }
+    if (well) well.hidden = true;
+    if (img) {
+      img.hidden = false;
+      const next = `/${String(shot.img).replace(/^\//, '')}`;
+      if (img.getAttribute('src') !== next) {
+        img.src = next;
+        img.removeAttribute('srcset');
+        $$('source', figure).forEach((s) => s.remove());
+      }
+      img.alt = shot.alt || '';
+    }
+    if (cap) {
+      const label = shot.caption || (shot.render ? 'Studio rendering' : '');
+      cap.hidden = !label;
+      cap.textContent = label;
+    }
+  }
+
+  function initPhotos() {
+    const raw = $('#photo-book');
+    if (!raw) return;
+    let book;
+    try { book = JSON.parse(raw.textContent); } catch { return; }
+    $$('[data-coaster]').forEach((card) => {
+      const apply = () => showShot(card, shotFor(book, card.dataset.coaster, choiceFrom(card)));
+      $$('[data-option] input', card).forEach((input) => input.addEventListener('change', apply));
+    });
+  }
+
+  async function initSellable() {
+    let skus = [];
+    try {
+      const res = await fetch(`${API}/catalog`);
+      if (res.ok) skus = (await res.json()).skus || [];
+    } catch { /* leave the button on Coming soon */ }
+    const ok = new Set(skus);
+    $$('[data-sellable]').forEach((b) => {
+      if (!ok.has(b.dataset.sellable)) return;
+      b.disabled = false;
+      b.textContent = 'Add to bag';
+    });
+  }
+
+  renderBatch(); initSample(); initPhotos(); initBag(); initSellable(); initDrops(); initReveal();
 })();

@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% from "partials/_macros.html" import card, cta_strip, batch_board, price_board, pop_tease, swatch_list %}
-{% block title %}Custom 3D-Printed Coasters in Jupiter, FL | JUP LIFE by Mrs. Smash{% endblock %}
-{% block description %}3D printed coasters and custom bar coasters from JUP LIFE Studio in Jupiter, FL. Restaurant coasters for Palm Beach County. Retail buyers get 1 free sample coaster. Wholesale buyers get 6 free sample coasters.{% endblock %}
-{% block ogtitle %}Custom 3D-Printed Coasters in Jupiter, FL{% endblock %}
+{% block title %}The Coaster Printers in Jupiter, FL | JUP LIFE by Mrs. Smash{% endblock %}
+{% block description %}JUP LIFE by Mrs. Smash prints coasters in Jupiter, FL. Pop Coasters 6-Pack, $29. Flower Coaster Set with Case, $39. Free U.S. shipping.{% endblock %}
+{% block ogtitle %}The Coaster Printers in Jupiter, FL{% endblock %}
 {% block ogdesc %}{{ self.description() }}{% endblock %}
 {% block head %}
 {# TODO(Smash): publishing the street address in structured data is on hold. Do not add streetAddress or postalCode until Smash OKs a public address. #}
@@ -16,7 +16,7 @@
   "@type": ["LocalBusiness", "Store"],
   "@id": "{{ site_url }}/#business",
   "name": "JUP LIFE by Mrs. Smash",
-  "description": "Coaster bakery in Jupiter, FL: custom washable TPU logo coasters for restaurants and bars.",
+  "description": "The coaster printers in Jupiter, FL. Pop Coasters and Flower Coasters from JUP LIFE by Mrs. Smash.",
   "url": "{{ site_url }}/",
   "image": "{{ site_url }}/img/og-hero.jpg",
   "logo": "{{ site_url }}/img/logo.png",
@@ -41,12 +41,12 @@
 <div class="wrap">
   <section class="hero" aria-labelledby="hero-h">
     <div class="hero-copy">
-      <p class="eyebrow">Fresh baked daily · Jupiter, FL</p>
-      <h1 id="hero-h">Custom 3D-Printed Coasters in Jupiter, FL</h1>
-      <p class="subhead">Fresh baked. Built different.</p>
-      <p class="lede">3D printed coasters and coastal pieces, baked in small seasonal batches. Custom bar coasters and restaurant coasters from JUP LIFE Studio.</p>
+      <p class="eyebrow">Jupiter, FL</p>
+      <h1 id="hero-h">The coaster printers.</h1>
+      <p class="subhead">JUP LIFE by Mrs. Smash</p>
+      <p class="lede">Pop Coasters, six to a pack. Flower Coasters, six with a case. Printed in our Jupiter studio. Free U.S. shipping.</p>
       <div class="btn-row">
-        <a href="/shop" class="btn btn-primary">Shop the Batch</a>
+        <a href="/shop" class="btn btn-primary">Shop the coasters</a>
         <button type="button" class="btn btn-outline" data-open-sample data-type="Sample" data-buyer="retail">Get a free sample</button>
       </div>
       <p style="margin:0;font-size:15px">Retail buyers get 1 free sample coaster. Wholesale buyers get 6 free sample coasters.</p>
@@ -62,17 +62,25 @@
         {{ pic("img/seal-fresh-baked.webp", "Fresh baked daily. JUP LIFE Studio, built different.", sizes="128px", lazy=False) }}
         <figcaption class="render-cap">Studio rendering</figcaption>
       </figure>
-      {{ batch_board() }}
+      {% if catalog.show_legacy %}{{ batch_board() }}{% else %}
+      <figure class="hero-still">
+        {{ pic(by_sku['pop-coasters-6'].img, by_sku['pop-coasters-6'].alt, sizes="(min-width: 900px) 520px, calc(100vw - 32px)", lazy=False) }}
+        {% if by_sku['pop-coasters-6'].render %}<figcaption class="render-cap">Studio rendering</figcaption>{% endif %}
+      </figure>
+      {% endif %}
     </div>
   </section>
 </div>
 
+{% if catalog.show_legacy %}
 <script type="application/json" id="batch-data">
 {{ batch_json }}
 </script>
+{% endif %}
 
 <div class="wrap"><hr class="band"></div>
 
+{% if catalog.show_legacy %}
 <section class="wrap section stack reveal" style="gap:32px" aria-labelledby="tray-h">
   <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px">
     <div>
@@ -97,6 +105,20 @@
 </section>
 
 {{ pop_tease() }}
+{% else %}
+<section class="wrap section stack reveal" style="gap:32px" aria-labelledby="coasters-h">
+  <div>
+    <p class="eyebrow">The shop</p>
+    <h2 id="coasters-h" style="margin-top:6px">Two coasters.</h2>
+    <p style="margin:8px 0 0">Printed in Jupiter. Free U.S. shipping.</p>
+  </div>
+  <div class="coaster-grid">
+    {% for sku in catalog.listed %}{{ card(by_sku[sku], shop=True) }}
+    {% endfor %}
+  </div>
+</section>
+<script type="application/json" id="photo-book">{{ photo_book_json }}</script>
+{% endif %}
 
 <section class="oven" aria-labelledby="oven-h">
   <div class="wrap section stack reveal" style="gap:28px">
@@ -113,10 +135,12 @@
         <video controls preload="none" playsinline poster="/img/poster-coaster-party.webp" aria-label="Coaster party: colorful coasters tumble onto a beach bar and drinks land on them"><source src="/video/coaster-party.mp4" type="video/mp4"></video>
         <figcaption><strong>Coaster party.</strong>Made for the bar · 15 s</figcaption>
       </figure>
+      {% if catalog.show_legacy %}
       <figure>
         <video controls preload="none" playsinline poster="/img/poster-built-different.webp" aria-label="Built different: stack bands at sunset, by a bonfire and snapped onto a wrist"><source src="/video/built-different.mp4" type="video/mp4"></video>
         <figcaption><strong>Snap. Stack. Go.</strong>Stack Bands · 23 s</figcaption>
       </figure>
+      {% endif %}
     </div>
     <p style="margin:0;font-size:13px">Studio renderings.</p>
   </div>
@@ -153,6 +177,7 @@
   </figure>
 </section>
 
+{% if catalog.show_legacy %}
 <section class="wrap reveal" style="padding-bottom:clamp(48px,6vw,88px)" aria-labelledby="hd-h">
   <div class="halfdozen">
     <figure>
@@ -169,6 +194,7 @@
     </div>
   </div>
 </section>
+{% endif %}
 
 <div class="wrap"><hr class="band"></div>
 

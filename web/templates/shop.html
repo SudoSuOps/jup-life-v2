@@ -1,15 +1,23 @@
 {% extends "base.html" %}
 {% from "partials/_macros.html" import card, batch_board, short, pop_tray, swatch_list %}
-{% block title %}Shop 3D Printed Coasters in Jupiter, FL | JUP LIFE Studio{% endblock %}
-{% block description %}Shop 3D printed coasters and custom bar coasters from JUP LIFE Studio in Jupiter, FL. The Hibiscus Set is six coasters with the case for $29. The Reader and stand is $19.{% endblock %}
-{% block ogtitle %}Shop 3D Printed Coasters in Jupiter, FL{% endblock %}
+{% block title %}Shop Coasters in Jupiter, FL | JUP LIFE by Mrs. Smash{% endblock %}
+{% block description %}Shop coasters from JUP LIFE by Mrs. Smash in Jupiter, FL. Pop Coasters 6-Pack, $29. Flower Coaster Set with Case, $39. Free U.S. shipping.{% endblock %}
+{% block ogtitle %}Shop Coasters in Jupiter, FL{% endblock %}
 {% block ogdesc %}{{ self.description() }}{% endblock %}
 {% block head %}
-{% for p in products if p.price %}
+{% if catalog.show_legacy %}
+{% for p in products if p.price and not p.listed %}
 <script type="application/ld+json">
 {{ product_ld(p) }}
 </script>
 {% endfor %}
+{% else %}
+{% for sku in catalog.listed if by_sku[sku].price %}
+<script type="application/ld+json">
+{{ product_ld(by_sku[sku]) }}
+</script>
+{% endfor %}
+{% endif %}
 {% endblock %}
 {% block content %}
 {% set tray_skus = ['fall-pop-coasters', 'stack-bands-fall'] %}
@@ -19,6 +27,7 @@
   <div class="notice" data-checkout-banner="cancel" hidden role="status" style="margin:0 0 24px">No worries, your bag is saved.</div>
   <div class="split">
     <div class="stack" style="gap:18px">
+      {% if catalog.show_legacy %}
       <p class="eyebrow">The bakery case · Jupiter, FL</p>
       <h1 id="shop-h">Shop 3D Printed Coasters in Jupiter, FL</h1>
       <p class="subhead">The Batch.</p>
@@ -28,14 +37,26 @@
         <a href="#pop-trays" class="btn btn-outline">Pop Trays</a>
         <a href="#shelf" class="btn btn-outline">Always on the shelf</a>
       </div>
+      {% else %}
+      <p class="eyebrow">Jupiter, FL</p>
+      <h1 id="shop-h">The coasters.</h1>
+      <p class="subhead">Pop Coasters and Flower Coasters.</p>
+      <p class="lede">Two packs, printed in Jupiter. Pop Coasters are $29. The Flower Coaster Set with Case is $39. Free U.S. shipping.</p>
+      <div class="btn-row">
+        <a href="#coasters" class="btn btn-primary">See the coasters</a>
+        <button type="button" class="btn btn-outline" data-open-sample data-type="Product question" data-product="Pop Coasters 6-Pack">Ask about a coaster</button>
+      </div>
+      {% endif %}
     </div>
-    {{ batch_board() }}
+    {% if catalog.show_legacy %}{{ batch_board() }}{% endif %}
   </div>
 </section>
 
+{% if catalog.show_legacy %}
 <script type="application/json" id="batch-data">
 {{ batch_json }}
 </script>
+{% endif %}
 
 <div class="wrap" style="padding-bottom:clamp(32px,4vw,56px)">
   <figure style="margin:0;position:relative">
@@ -44,6 +65,7 @@
   </figure>
 </div>
 
+{% if catalog.show_legacy %}
 <div class="wrap"><hr class="band"></div>
 
 <section id="tray" class="wrap section stack reveal" style="gap:32px" aria-labelledby="tray-h">
@@ -97,6 +119,22 @@
     {% endfor %}
   </div>
 </section>
+{% else %}
+<section id="coasters" class="wrap section stack reveal" style="gap:32px" aria-labelledby="coasters-h">
+  <div class="shelf-head">
+    <div>
+      <p class="eyebrow">In the shop</p>
+      <h2 id="coasters-h" style="margin-top:6px">Two coasters.</h2>
+      <p>Choose a style, a tray, or a flower. Mix Pop Coaster packs in one order. Free U.S. shipping.</p>
+    </div>
+  </div>
+  <div class="coaster-grid">
+    {% for sku in catalog.listed %}{{ card(by_sku[sku], shop=True) }}
+    {% endfor %}
+  </div>
+</section>
+<script type="application/json" id="photo-book">{{ photo_book_json }}</script>
+{% endif %}
 
 <section class="oven" aria-labelledby="oven-h">
   <div class="wrap section stack reveal" style="gap:28px">

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { onRequestPost as checkout } from '../functions/api/checkout.js';
+import { onRequestGet as catalogApi } from '../functions/api/catalog.js';
 import { onRequestPost as webhook, verifyStripe, orderEmail } from '../functions/api/stripe/webhook.js';
 import { onRequestPost as drops } from '../functions/api/drops.js';
 import { onRequestPost as sample } from '../functions/api/sample-request.js';
@@ -34,6 +35,78 @@ test('checkout: sends only server-side price id to Stripe and returns the hosted
   assert.equal(sent.body.get('line_items[0][price]'), 'price_six');
   assert.equal(sent.body.get('line_items[0][quantity]'), '3');
   assert.equal(sent.body.get('success_url'), 'https://juplifestudio.com/shop?checkout=success&session_id={CHECKOUT_SESSION_ID}');
+  assert.equal(sent.body.get('line_items[0][metadata][style]'), null);
+});
+
+const BAKERS_PRICE = 'price_1UTVOYHYwaTbul7M7QJo4iye';
+const HALF_PRICE = 'price_1UTVSJHYwaTbul7MyxtILxOz';
+
+test('new coasters are not for sale without their own price, and never borrow the Baker\'s Dozen price', async () => {
+  const realFetch = globalThis.fetch;
+  let sent = false;
+  globalThis.fetch = async () => { sent = true; return new Response('{}', { status: 500 }); };
+  const borrowed = {
+    STRIPE_SECRET_KEY: 'sk_test_x',
+    STRIPE_PRICE_BAKERS_DOZEN: BAKERS_PRICE,
+    STRIPE_PRICE_HALF_DOZEN: HALF_PRICE,
+    STRIPE_PRICE_POP_COASTERS_6: BAKERS_PRICE,
+    STRIPE_PRICE_FLOWER_SET_CASE: HALF_PRICE,
+    SITE_URL: 'https://juplifestudio.com',
+  };
+  for (const body of [
+    { items: [{ sku: 'pop-coasters-6', qty: 1, style: 'Flat', tray: 'Mixed' }] },
+    { items: [{ sku: 'flower-set-case', qty: 1, flower: 'Hibiscus' }] },
+    { items: [{ sku: 'pop-coasters-6', qty: 1, style: 'Edge', tray: 'Pumpkin' }] },
+  ]) {
+    assert.equal((await checkout({ request: jsonReq(body), env: borrowed })).status, 400);
+  }
+  const missing = { STRIPE_SECRET_KEY: 'sk_test_x', STRIPE_PRICE_BAKERS_DOZEN: BAKERS_PRICE };
+  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1, flower: 'Sunflower' }] }), env: missing })).status, 400);
+  assert.equal(sent, false);
+  const listed = await (await catalogApi({ env: borrowed })).json();
+  assert.equal(listed.skus.includes('pop-coasters-6'), false);
+  assert.equal(listed.skus.includes('flower-set-case'), false);
+  assert.equal(JSON.stringify(listed).includes('price_'), false);
+  globalThis.fetch = realFetch;
+});
+
+test('checkout: coaster options are separate line items with their own price and metadata', async () => {
+  const realFetch = globalThis.fetch;
+  let sent;
+  globalThis.fetch = async (url, init) => { sent = { body: new URLSearchParams(init.body) }; return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/x' }), { status: 200 }); };
+  const priced = {
+    ...env,
+    STRIPE_PRICE_POP_COASTERS_6: 'price_pop',
+    STRIPE_PRICE_FLOWER_SET_CASE: 'price_flower',
+    STRIPE_PRICE_BAKERS_DOZEN: BAKERS_PRICE,
+  };
+  const r = await checkout({ request: jsonReq({ items: [
+    { sku: 'pop-coasters-6', qty: 1, style: 'Flat', tray: 'Mixed' },
+    { sku: 'pop-coasters-6', qty: 2, style: 'Flat', tray: 'Mixed' },
+    { sku: 'pop-coasters-6', qty: 1, style: 'Edge', tray: 'Coconut (clear)' },
+    { sku: 'flower-set-case', qty: 1, flower: 'Hibiscus' },
+  ] }), env: priced });
+  assert.equal(r.status, 200);
+  assert.equal(sent.body.get('line_items[0][price]'), 'price_pop');
+  assert.equal(sent.body.get('line_items[0][quantity]'), '3');
+  assert.equal(sent.body.get('line_items[0][metadata][style]'), 'Flat');
+  assert.equal(sent.body.get('line_items[0][metadata][tray]'), 'Mixed');
+  assert.equal(sent.body.get('line_items[1][price]'), 'price_pop');
+  assert.equal(sent.body.get('line_items[1][metadata][style]'), 'Edge');
+  assert.equal(sent.body.get('line_items[1][metadata][tray]'), 'Coconut (clear)');
+  assert.equal(sent.body.get('line_items[2][price]'), 'price_flower');
+  assert.equal(sent.body.get('line_items[2][metadata][flower]'), 'Hibiscus');
+  assert.equal(sent.body.get('line_items[2][metadata][style]'), null);
+  for (const [k, v] of sent.body) assert.equal(v === BAKERS_PRICE, false, k);
+  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'pop-coasters-6', qty: 1, style: 'Flat', tray: 'Cranberry' }] }), env: priced })).status, 400);
+  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1 }] }), env: priced })).status, 400);
+  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1, flower: 'Orchid' }] }), env: priced })).status, 400);
+  const open = await (await catalogApi({ env: priced })).json();
+  assert.ok(open.skus.includes('pop-coasters-6'));
+  assert.ok(open.skus.includes('flower-set-case'));
+  assert.equal(JSON.stringify(open).includes('price_pop'), false);
+  assert.equal(JSON.stringify(open).includes('price_flower'), false);
+  globalThis.fetch = realFetch;
 });
 
 const sign = (payload, secret, t) => `t=${t},v1=${crypto.createHmac('sha256', secret).update(`${t}.${payload}`).digest('hex')}`;
@@ -133,6 +206,17 @@ test('order email: lists items, ship-to name, total and a dashboard link', () =>
   assert.match(subject, /The Gigi · 9\.00 USD/);
   for (const bit of ['1 x The Gigi', 'Gift Person', '1 Main St', 'Jupiter, FL 33469', '+15615550000', 'dashboard.stripe.com/payments/pi_9']) assert.ok(text.includes(bit), bit);
   assert.ok(orderEmail(s, []).text.includes('line items unavailable'));
+});
+
+test('order email: style, tray and flower metadata ride along with the line', () => {
+  const s = { id: 'cs_2', amount_total: 6800, currency: 'usd', livemode: false, customer_details: { email: 'b@x.co' } };
+  const items = [
+    { quantity: 1, description: 'Pop Coasters 6-Pack', amount_total: 2900, metadata: { style: 'Flat', tray: 'Mixed' } },
+    { quantity: 1, description: 'Flower Coaster Set with Case', amount_total: 3900, metadata: { flower: 'Hibiscus' } },
+  ];
+  const { text } = orderEmail(s, items);
+  assert.match(text, /style: Flat, tray: Mixed/);
+  assert.match(text, /flower: Hibiscus/);
 });
 
 test('sample: retail Sample needs an address (no business), business types still need business + city', async () => {

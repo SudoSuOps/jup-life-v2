@@ -53,10 +53,14 @@
 {% endmacro %}
 
 {% macro card(p, shop=False) %}
-<article class="card">
+<article class="card" data-coaster="{{ p.sku }}">
   <div class="tag" aria-hidden="true"></div>
   {% if p.img %}
-  <figure>{{ pic(p.img, p.alt, sizes="(min-width: 640px) 360px, calc(100vw - 64px)") }}{% if p.render %}<figcaption class="render-cap">Studio rendering</figcaption>{% endif %}</figure>
+  <figure data-product-figure>
+    {{ pic(p.img, p.alt, sizes="(min-width: 640px) 520px, calc(100vw - 64px)") }}
+    <figcaption class="render-cap" data-photo-cap {% if not p.render %}hidden{% endif %}>{{ p.caption or "Studio rendering" }}</figcaption>
+    <div class="well" data-photo-well hidden><span class="ph" data-photo-ph>Photo coming</span></div>
+  </figure>
   {% if shop and p.gallery %}
   <div class="thumbs">{% for g in p.gallery %}{{ pic(g.img, g.alt, sizes="64px") }}{% endfor %}</div>
   {% endif %}
@@ -73,8 +77,25 @@
     <ul class="combos" aria-label="{{ season | capitalize }} 3-pack combos">{% for c in p.combos_now %}<li><b>{{ c.name }}</b>{% for f in c.flavors %}<i style="background:{{ flavor_hex[f] }}"></i>{{ f }} {% endfor %}</li>{% endfor %}</ul>
     {% endif %}
     {% if p.material %}<p class="material">{{ p.material }}</p>{% endif %}
+    {% if p.options %}
+    {% for opt in p.options %}
+    <fieldset class="opt" data-option="{{ opt.key }}">
+      <legend>{{ opt.label }}</legend>
+      {% for c in opt.choices %}
+      <label>
+        <input type="radio" name="{{ p.sku }}-{{ opt.key }}" value="{{ c.value }}" {% if loop.first %}checked{% endif %}>
+        <span>{% if c.hex %}<i class="dot{% if c.frosted %} swatch-clear{% endif %}" style="background:{{ c.hex }}" aria-hidden="true"></i>{% endif %}{{ c.label }}{% if c.note %} <small>{{ c.note }}</small>{% endif %}</span>
+      </label>
+      {% endfor %}
+    </fieldset>
+    {% endfor %}
+    {% endif %}
+    {% if p.note %}<p class="note">{{ p.note }}</p>{% endif %}
+    {% if p.shipping %}<p class="note">{{ p.shipping }}</p>{% endif %}
     <div class="buy">
-      {% if p.price %}
+      {% if p.options %}
+      <span class="price">${{ p.price }}</span><button type="button" class="btn btn-primary btn-sm" data-add-to-bag data-sellable="{{ p.sku }}" data-sku="{{ p.sku }}" data-name="{{ p.name }}" data-price="{{ p.price }}" disabled>Coming soon</button>
+      {% elif p.price %}
       <span class="price">${{ p.price }}</span><button type="button" class="btn btn-primary btn-sm" data-add-to-bag data-sku="{{ p.sku }}" data-name="{{ p.name }}" data-price="{{ p.price }}">Add to bag</button>
       {% else %}
       <button type="button" class="btn btn-outline btn-sm" data-open-sample data-type="Product question" data-product="{{ p.name }}">Ask about this batch</button>
@@ -158,7 +179,7 @@
   <label class="field">Request type
     <select name="request_type">
       <option value="Sample">1 free sample coaster (retail)</option>
-      <option value="Half Dozen order">Order a Half Dozen</option>
+      {% if catalog.show_legacy %}<option value="Half Dozen order">Order a Half Dozen</option>{% endif %}
       <option value="Half Dozen sample">6 free sample coasters (wholesale)</option>
       <option>Product question</option>
       <option value="Custom">Custom order</option>

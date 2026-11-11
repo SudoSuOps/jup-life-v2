@@ -215,36 +215,43 @@ def robots_txt(base: str, indexable: bool) -> str:
     return f"User-agent: *\nAllow: /\nDisallow: /api/\n\n{bots}Sitemap: {base}/sitemap.xml\n"
 
 
-def llms_txt(site: dict, products: list, batch: dict) -> str:
+def llms_txt(site: dict, products: list, batch: dict, catalog: dict) -> str:
     base = site["site_url"]
     lines = [
         "# JUP LIFE by Mrs. Smash", "",
-        "> JUP LIFE Studio is a small 3D-printing studio in Jupiter, Florida that bakes washable TPU coasters and coastal home pieces "
-        "in small seasonal batches, sold retail online and wholesale with custom logos to restaurants, bars, boutique hotels, "
-        "rentals and event hosts in Palm Beach County and beyond.", "",
+        "> JUP LIFE by Mrs. Smash prints coasters in Jupiter, Florida. The shop sells Pop Coasters and Flower Coasters. "
+        "Wholesale logo coasters are made for restaurants, bars, boutique hotels, rentals and event hosts in Palm Beach County and beyond.", "",
         "## Key facts",
         "- Location: Jupiter, FL (serves Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County; ships within the US)",
         "- Material: flexible TPU 95A, washable; TPU pieces are dishwasher safe (normal dishwasher cycle, avoid extended or high-heat modes)",
         "- Shipping: free on all U.S. orders; orders leave the studio within 2-3 business days",
         "- Samples: retail buyers get 1 free sample coaster; wholesale buyers get 6 free sample coasters. A sample print is made for approval before a logo batch is printed",
-        "- Wholesale: custom logo coasters and restaurant coasters from 100 pieces. The Half Dozen is the $29 retail box only, and a logo batch ships within 10 days of approval",
-        f"- Current tray: {batch.get('tray', '')}",
+        "- Wholesale: custom logo coasters and restaurant coasters from 100 pieces. A logo batch ships within 10 days of approval. Wholesale is an inquiry, not a shop product",
         "- Contact: hello@juplifestudio.com, call +1-561-532-7120, text 561-581-8015",
         "- X: https://x.com/juplifestudio",
         "- TikTok: https://www.tiktok.com/@juplifestudio", "",
         "## Pages",
-        f"- [Home]({base}/): 3D printed coasters, the current tray, quality, FAQ",
-        f"- [Shop]({base}/shop): retail products with prices and checkout",
+        f"- [Home]({base}/): the coaster printers, Jupiter FL",
+        f"- [Shop]({base}/shop): Pop Coasters and Flower Coasters, with checkout",
         f"- [Wholesale & Samples]({base}/wholesale): custom logo coasters for Palm Beach County restaurants, bars, hotels, rentals and events",
         f"- [About]({base}/about): Meet Mrs. Smash (Dee), the face of JUP LIFE by Mrs. Smash",
         f"- [Contact]({base}/contact): call +1-561-532-7120",
         f"- [Palm Beach County]({base}/palm-beach-county): 3D printed coasters for Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County",
         f"- [Shipping & Returns]({base}/shipping-returns)",
         f"- [Privacy]({base}/privacy)", "", "## Products"]
-    for p in products:
-        if p.get("shop"):
-            price = f"${p['price']}" if p.get("price") else "ask about this batch"
-            lines.append(f"- {p['name']} ({price}): {p['line']}")
+    if catalog.get("show_legacy") and batch.get("tray"):
+        contact = "- Contact: hello@juplifestudio.com, call +1-561-532-7120, text 561-581-8015"
+        lines.insert(lines.index(contact), f"- Current tray: {batch.get('tray', '')}")
+    by_sku = {p["sku"]: p for p in products}
+    skus = list(catalog.get("listed") or [])
+    if catalog.get("show_legacy"):
+        skus += [p["sku"] for p in products if p.get("shop") and p["sku"] not in skus]
+    for sku in skus:
+        p = by_sku.get(sku)
+        if not p:
+            continue
+        price = f"${p['price']}" if p.get("price") else "ask about this batch"
+        lines.append(f"- {p['name']} ({price}): {p['line']}")
     lines += ["", "## Wholesale price tiers (per coaster)"] + [f"- {t['qty']}: {t['price']}" for t in site.get("tiers", [])]
     return "\n".join(lines) + "\n"
 
@@ -259,6 +266,20 @@ def main() -> int:
     site["site_url"] = (os.environ.get("SITE_URL") or os.environ.get("CF_PAGES_URL") or site["site_url"]).rstrip("/")
     indexable = os.environ.get("INDEXABLE") == "1"
     products = load_json("products.json")["products"]
+    catalog = load_json("catalog.json")
+    photo_products = load_json("photos.json").get("products") or {}
+    listed = set(catalog.get("listed") or [])
+    for p in products:
+        p["listed"] = p["sku"] in listed
+        card_shot = (photo_products.get(p["sku"]) or {}).get("card") or {}
+        if card_shot.get("img"):
+            p["img"] = card_shot["img"]
+            if card_shot.get("alt"):
+                p["alt"] = card_shot["alt"]
+            p["render"] = bool(card_shot.get("render"))
+            if card_shot.get("caption"):
+                p["caption"] = card_shot["caption"]
+    photo_book = {sku: photo_products[sku] for sku in catalog.get("listed") or [] if sku in photo_products}
     batch = load_batch()
     summer = "summer" in batch["tray"].lower()
     season = "summer" if summer else "fall"
@@ -279,26 +300,32 @@ def main() -> int:
 
     def product_ld(p: dict) -> Markup:
         # Prices come from products.json, which is what the shop cards show. Never add review or aggregateRating.
+        offers = {"@type": "Offer", "price": f"{p['price']:.2f}", "priceCurrency": "USD",
+                  "itemCondition": "https://schema.org/NewCondition",
+                  "shippingDetails": {"@type": "OfferShippingDetails",
+                                      "shippingRate": {"@type": "MonetaryAmount", "value": "0", "currency": "USD"},
+                                      "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "US"},
+                                      "deliveryTime": {"@type": "ShippingDeliveryTime",
+                                                       "handlingTime": {"@type": "QuantitativeValue", "minValue": 2, "maxValue": 3, "unitCode": "DAY"}}},
+                  "url": f"{site['site_url']}/shop"}
+        # Coasters that need a Stripe price secret are not marked in stock here. The buy button
+        # stays "Coming soon" until that secret is set, so the page does not claim they can be bought.
+        if not p.get("options"):
+            offers["availability"] = "https://schema.org/InStock"
         ld = {"@context": "https://schema.org", "@type": "Product", "name": p["name"], "description": p["line"], "sku": p["sku"],
               "brand": {"@type": "Brand", "name": "JUP LIFE Studio"}, "category": "Home & Garden",
               "manufacturer": {"@type": "Organization", "name": "JUP LIFE by Mrs. Smash"},
-              "offers": {"@type": "Offer", "price": f"{p['price']:.2f}", "priceCurrency": "USD",
-                         "availability": "https://schema.org/InStock", "itemCondition": "https://schema.org/NewCondition",
-                         "shippingDetails": {"@type": "OfferShippingDetails",
-                                             "shippingRate": {"@type": "MonetaryAmount", "value": "0", "currency": "USD"},
-                                             "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "US"},
-                                             "deliveryTime": {"@type": "ShippingDeliveryTime",
-                                                              "handlingTime": {"@type": "QuantitativeValue", "minValue": 2, "maxValue": 3, "unitCode": "DAY"}}},
-                         "url": f"{site['site_url']}/shop"}}
+              "offers": offers}
         imgs = [p["img"]] + [g["img"] for g in p.get("gallery", [])] if p.get("img") else []
         if imgs:
             ld["image"] = [f"{site['site_url']}/{i}" for i in imgs]
         return Markup(json.dumps(ld, indent=2).replace("</", "<\\/"))
 
     env.globals.update(pic=pic, product_ld=product_ld, by_sku={p['sku']: p for p in products}, flavor_hex=FLAVOR_HEX, indexable=indexable, ph=ph, site=site, batch=batch, batch_date=batch_date_label(batch["date"]),
-                       season=season, products=products, css_href=css_href, js_src=js_src,
+                       season=season, products=products, catalog=catalog, css_href=css_href, js_src=js_src,
                        site_url=site["site_url"], have_ph=lambda k: bool(site["placeholders"].get(k)),
-                       batch_json=Markup(json.dumps(batch, indent=2, ensure_ascii=False).replace("</", "<\\/")))
+                       batch_json=Markup(json.dumps(batch, indent=2, ensure_ascii=False).replace("</", "<\\/")),
+                       photo_book_json=Markup(json.dumps(photo_book, ensure_ascii=False).replace("</", "<\\/")))
 
     pages = {
         "index.html": ("home.html", {"path": "/", "nav": "home"}),
@@ -330,7 +357,7 @@ def main() -> int:
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod><priority>{pr}</priority></url>\n" for u, pr in urls) + "</urlset>\n")
     (DIST / "robots.txt").write_text(robots_txt(site["site_url"], indexable))
-    (DIST / "llms.txt").write_text(llms_txt(site, products, batch))
+    (DIST / "llms.txt").write_text(llms_txt(site, products, batch, catalog))
     shutil.copytree(WEB / "root", DIST, dirs_exist_ok=True)  # favicon, touch icons, manifest
     shutil.copy(WEB / "_headers", DIST / "_headers")
     shutil.copy(WEB / "_redirects", DIST / "_redirects")

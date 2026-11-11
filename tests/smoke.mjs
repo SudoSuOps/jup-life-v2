@@ -37,9 +37,9 @@ for (const path of ['/', '/shop', '/wholesale']) {
 
 // "Ask about this batch" preselects Product question + product
 await page.goto(BASE + '/shop', { waitUntil: 'networkidle0' });
-await page.click('[data-type="Product question"][data-product="Stack Bands"]');
+await page.click('[data-type="Product question"][data-product="Pop Coasters 6-Pack"]');
 assert.equal(await page.$eval('#sample-dlg [name=request_type]', (e) => e.value), 'Product question');
-assert.equal(await page.$eval('#sample-dlg [name=product]', (e) => e.value), 'Stack Bands');
+assert.equal(await page.$eval('#sample-dlg [name=product]', (e) => e.value), 'Pop Coasters 6-Pack');
 // retail sample = one coaster + shipping address; wholesale keeps business/city/logo
 await page.keyboard.press('Escape');
 await page.click('.site-header [data-open-sample]');
@@ -49,7 +49,7 @@ assert.equal(await page.$eval('#sample-dlg [name=address]', (e) => !e.disabled &
 assert.equal(await page.$eval('#sample-dlg [name=business]', (e) => e.disabled && e.offsetParent === null), true);
 ok('retail sample modal shows address, hides business');
 await page.keyboard.press('Escape');
-await page.click('[data-type="Product question"][data-product="Stack Bands"]');
+await page.click('[data-type="Product question"][data-product="Pop Coasters 6-Pack"]');
 // required validation
 await page.click('#sample-dlg [type=submit]');
 assert.match(await page.$eval('#sample-dlg [data-form-error]', (e) => e.textContent), /required/i);
@@ -61,13 +61,16 @@ await page.setRequestInterception(true);
 let posted;
 page.on('request', (r) => {
   if (r.url().endsWith('/api/checkout')) { posted = JSON.parse(r.postData()); r.respond({ status: 200, contentType: 'application/json', body: JSON.stringify({ url: BASE + '/shop?checkout=success' }) }); }
+  else if (r.url().endsWith('/api/catalog')) r.respond({ status: 200, contentType: 'application/json', body: JSON.stringify({ skus: ['pop-coasters-6', 'flower-set-case'] }) });
   else r.continue();
 });
-await page.click('[data-sku="six-set-case"]');
+await page.goto(BASE + '/shop', { waitUntil: 'networkidle0' });
+await page.waitForSelector('[data-sku="pop-coasters-6"]:not([disabled])');
+await page.click('[data-sku="pop-coasters-6"]');
 await page.click('#bag-dlg [aria-label="One more"]');
 assert.equal(await page.$eval('[data-bag-count]', (e) => e.textContent), '2');
 await Promise.all([page.waitForNavigation(), page.click('[data-checkout]')]);
-assert.deepEqual(posted, { items: [{ sku: 'six-set-case', qty: 2 }] });
+assert.deepEqual(posted, { items: [{ sku: 'pop-coasters-6', qty: 2, style: 'Flat', tray: 'Mixed' }] });
 assert.equal(await page.$eval('[data-checkout-banner="success"]', (e) => !e.hidden), true);
 assert.equal(await page.$eval('[data-bag-count]', (e) => e.textContent), '0');
 ok('bag add/qty/checkout POST (only sku+qty), success banner, bag cleared');

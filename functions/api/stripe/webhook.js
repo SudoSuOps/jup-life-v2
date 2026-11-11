@@ -27,6 +27,13 @@ export async function verifyStripe(payload, header, secret, now = Date.now() / 1
 
 const money = (cents, cur) => `${((cents || 0) / 100).toFixed(2)} ${String(cur || 'usd').toUpperCase()}`;
 
+function optionNote(item) {
+  const meta = item?.metadata;
+  if (!meta || typeof meta !== 'object') return '';
+  const bits = ['style', 'tray', 'flower'].filter((k) => meta[k]).map((k) => `${k}: ${meta[k]}`);
+  return bits.length ? `  [${bits.join(', ')}]` : '';
+}
+
 // Line items are not in the webhook payload; ask Stripe. Returns [] if that fails, so the email still goes out.
 async function lineItems(id, env) {
   if (!env.STRIPE_SECRET_KEY || !id) return [];
@@ -46,7 +53,7 @@ export function orderEmail(s, items = []) {
   const cityLine = [[a.city, a.state].filter(Boolean).join(', '), a.postal_code].filter(Boolean).join(' ');
   const shipTo = [sd.name || who.name, a.line1, a.line2, cityLine, a.country].filter(Boolean);
   const what = items.length
-    ? items.map((i) => `${i.quantity} x ${i.description}  (${money(i.amount_total, s.currency)})`)
+    ? items.map((i) => `${i.quantity} x ${i.description}  (${money(i.amount_total, s.currency)})${optionNote(i)}`)
     : ['(line items unavailable, see the Stripe dashboard)'];
   const short = items.length ? items.map((i) => (i.quantity > 1 ? `${i.quantity}x ` : '') + i.description).join(', ') : 'order';
   const dash = s.payment_intent ? `https://dashboard.stripe.com/${s.livemode === false ? 'test/' : ''}payments/${s.payment_intent}` : '';

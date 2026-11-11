@@ -7,4 +7,8 @@ STRIPE_PRICE_GIGI=price_xxx
 STRIPE_PRICE_TIDE_SOAP_DISH=price_xxx
 STRIPE_PRICE_TIDE_DISPENSER=price_xxx
 STRIPE_PRICE_READERS=price_xxx
+# Pop Coasters 6-Pack ($29) and Flower Coaster Set with Case ($39).
+# Leave blank to show Coming soon. Do not paste the Baker's Dozen price ID here.
+STRIPE_PRICE_POP_COASTERS_6=
+STRIPE_PRICE_FLOWER_SET_CASE=
 RESEND_API_KEY=

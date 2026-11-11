@@ -1,5 +1,13 @@
 # Open placeholders: owner to fill before launch
 
+## Photo swap
+
+Professional photos replace the studio renderings in **one file**: `web/data/photos.json`.
+
+Each Pop Coaster style (`Flat`, `Edge`), each tray (`Mixed`, `Pumpkin`, `Coconut (clear)`, `Rhubarb`, `Key Lime`, `Peach`, `Sea Salt`) and each flower (`Sunflower`, `Hibiscus`) has an `img` path. Change that path, update `alt` so it describes the new photo, and set `render` to `false`. An empty `img` shows “Photo coming”. Rebuild after saving. Do not edit the templates.
+
+Slots that share a path today are stand-ins, not separate photographs.
+
 Each shows on the page as visible terracotta `[[...]]` text (`.ph` class). `grep -rn "\[\[" web/` finds them all. Launch gate: zero matches in `web/dist/`.
 
 | Placeholder | Where | Needed from owner |

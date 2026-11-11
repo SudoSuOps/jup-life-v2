@@ -21,18 +21,71 @@ export function allow(bucket, ip, limit, windowMs = 3600_000, now = Date.now()) 
 }
 export const resetThrottle = () => hits.clear();
 
+// Known live price IDs for older boxes. New coaster SKUs must never charge these.
+const HALF_DOZEN_PRICE_ID = 'price_1UTVSJHYwaTbul7MyxtILxOz';
+const BAKERS_DOZEN_PRICE_ID = 'price_1UTVOYHYwaTbul7M7QJo4iye';
+const RESERVED_PRICE_IDS = new Set([HALF_DOZEN_PRICE_ID, BAKERS_DOZEN_PRICE_ID]);
+
+// A missing, blank, or borrowed price ID means the SKU is not for sale.
+function coasterPrice(value) {
+  if (typeof value !== 'string') return '';
+  const id = value.trim();
+  if (!id || RESERVED_PRICE_IDS.has(id)) return '';
+  return id;
+}
+
+// Choices the server will accept as line-item metadata. Keep in step with web/data/products.json.
+export const OPTION_SPEC = {
+  'pop-coasters-6': {
+    style: ['Flat', 'Edge'],
+    tray: ['Mixed', 'Pumpkin', 'Coconut (clear)', 'Rhubarb', 'Key Lime', 'Peach', 'Sea Salt'],
+  },
+  'flower-set-case': {
+    flower: ['Sunflower', 'Hibiscus'],
+  },
+};
+
+const OPTION_KEYS = ['style', 'tray', 'flower'];
+
+// {} when the line's choices are valid. null when a required choice is missing or not allowed.
+export function lineOptions(sku, line) {
+  const spec = OPTION_SPEC[sku];
+  if (!spec) {
+    for (const key of OPTION_KEYS) {
+      const raw = line?.[key];
+      if (raw != null && raw !== '') return null;
+    }
+    return {};
+  }
+  const out = {};
+  for (const key of Object.keys(spec)) {
+    const raw = line?.[key];
+    if (typeof raw !== 'string' || !spec[key].includes(raw)) return null;
+    out[key] = raw;
+  }
+  for (const key of OPTION_KEYS) {
+    if (spec[key]) continue;
+    const raw = line?.[key];
+    if (raw != null && raw !== '') return null;
+  }
+  return out;
+}
+
 // Server-side catalog: the ONLY source of what can be charged. Items with no price ID are not purchasable.
 export function sellables(env) {
   const items = [
-    // TODO(Smash): which $29 product is primary (6+case, The Half Dozen box, or 12 with no case) is unresolved. Do not pick one or change prices.
+    // Older SKUs stay mapped so their checkout code remains. The shop hides them via web/data/catalog.json.
     { sku: 'six-set-case', name: 'The Hibiscus Set (6 coasters + case)', price: env.STRIPE_PRICE_SIX_SET_CASE, max: 20 },
     { sku: 'fall-pop-coasters', name: 'Holiday Tray Pop Coasters (12, no case)', price: env.STRIPE_PRICE_FALL_POP_COASTERS, max: 20 },
     { sku: 'gigi', name: 'The Gigi', price: env.STRIPE_PRICE_GIGI, max: 20 },
     { sku: 'tide-soap-dish', name: 'Tide Soap Dish', price: env.STRIPE_PRICE_TIDE_SOAP_DISH, max: 20 },
     { sku: 'tide-dispenser', name: 'Tide Hand Soap Dispenser', price: env.STRIPE_PRICE_TIDE_DISPENSER, max: 20 },
-    { sku: 'half-dozen', name: 'The Half Dozen (6 Assorted Coasters)', price: env.STRIPE_PRICE_HALF_DOZEN || 'price_1UTVSJHYwaTbul7MyxtILxOz', max: 20 },
-    { sku: 'bakers-dozen', name: "The Baker's Dozen (13 Assorted Coasters)", price: env.STRIPE_PRICE_BAKERS_DOZEN || 'price_1UTVOYHYwaTbul7M7QJo4iye', max: 20 },
+    { sku: 'half-dozen', name: 'The Half Dozen (6 Assorted Coasters)', price: env.STRIPE_PRICE_HALF_DOZEN || HALF_DOZEN_PRICE_ID, max: 20 },
+    { sku: 'bakers-dozen', name: "The Baker's Dozen (13 Assorted Coasters)", price: env.STRIPE_PRICE_BAKERS_DOZEN || BAKERS_DOZEN_PRICE_ID, max: 20 },
     { sku: 'readers', name: 'The Reader', price: env.STRIPE_PRICE_READERS, max: 20 },
+    // Own env vars only. No fallback to another product's price.
+    { sku: 'pop-coasters-6', name: 'Pop Coasters 6-Pack', price: coasterPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
+    { sku: 'flower-set-case', name: 'Flower Coaster Set with Case', price: coasterPrice(env.STRIPE_PRICE_FLOWER_SET_CASE), max: 20 },
   ];
   return Object.fromEntries(items.filter((i) => i.price).map((i) => [i.sku, i]));
 }

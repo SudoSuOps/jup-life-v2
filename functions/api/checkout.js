@@ -1,5 +1,5 @@
 // POST /api/checkout  { items: [{ sku, qty }] } -> { url }  (Stripe-hosted Checkout)
-import { allow, clientIp, fail, json, sellables, siteUrl } from '../_lib.js';
+import { allow, clientIp, fail, json, lineOptions, sellables, siteUrl } from '../_lib.js';
 
 export async function onRequestPost({ request, env }) {
   if (!env.STRIPE_SECRET_KEY) return fail(503, 'Checkout is not configured yet.');
@@ -17,15 +17,21 @@ export async function onRequestPost({ request, env }) {
     const qty = Number(line?.qty);
     if (!Number.isInteger(qty) || qty < 1 || qty > 20) return fail(400, 'Invalid quantity.');
     if (!Object.hasOwn(catalog, sku)) return fail(400, `'${sku.slice(0, 40)}' isn't available for checkout. Ask about this batch instead.`);
-    merged.set(sku, Math.min((merged.get(sku) || 0) + qty, catalog[sku].max));
+    const opts = lineOptions(sku, line);
+    if (!opts) return fail(400, 'That option is not available.');
+    const key = `${sku}\u0000${JSON.stringify(opts)}`;
+    const prev = merged.get(key) || { sku, qty: 0, opts };
+    prev.qty = Math.min(prev.qty + qty, catalog[sku].max);
+    merged.set(key, prev);
   }
 
   const base = siteUrl(env, request);
   const form = new URLSearchParams();
   form.set('mode', 'payment');
-  [...merged].forEach(([sku, qty], i) => {
-    form.set(`line_items[${i}][price]`, catalog[sku].price);
-    form.set(`line_items[${i}][quantity]`, String(qty));
+  [...merged.values()].forEach((line, i) => {
+    form.set(`line_items[${i}][price]`, catalog[line.sku].price);
+    form.set(`line_items[${i}][quantity]`, String(line.qty));
+    for (const [k, v] of Object.entries(line.opts)) form.set(`line_items[${i}][metadata][${k}]`, v);
   });
   (env.SHIP_COUNTRIES || 'US').split(',').forEach((c, i) => form.set(`shipping_address_collection[allowed_countries][${i}]`, c.trim()));
   form.set('phone_number_collection[enabled]', 'true');

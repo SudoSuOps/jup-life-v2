@@ -1,0 +1,81 @@
+{
+  "_note": "PHOTO SWAP. This is the only file to edit when professional photos arrive. Do not edit the HTML. Paths are relative to web/ and are served from /. Each key under style, tray, and flower is one slot. Today every slot points at the closest studio rendering we already have. Replace that slot's img with the new file, rewrite alt so it describes the new photo, and set render to false so the Studio rendering caption drops. An empty img shows Photo coming. Slots that share a path are stand-ins, not separate photographs.",
+  "products": {
+    "pop-coasters-6": {
+      "card": {
+        "img": "img/pop-tray-1-season-colors.webp",
+        "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
+        "render": true
+      },
+      "style": {
+        "Flat": {
+          "img": "img/pop-tray-1-season-colors.webp",
+          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
+          "render": true
+        },
+        "Edge": {
+          "img": "img/pop-tray-1-season-colors.webp",
+          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
+          "render": true
+        }
+      },
+      "tray": {
+        "Mixed": {
+          "img": "img/pop-tray-1-season-colors.webp",
+          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
+          "render": true
+        },
+        "Pumpkin": {
+          "img": "img/pop-tray-1-season-colors.webp",
+          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
+          "render": true
+        },
+        "Coconut (clear)": {
+          "img": "img/pop-tray-1-season-colors.webp",
+          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
+          "render": true
+        },
+        "Rhubarb": {
+          "img": "img/pop-tray-1-season-colors.webp",
+          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
+          "render": true
+        },
+        "Key Lime": {
+          "img": "img/pop-tray-1-season-colors.webp",
+          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
+          "render": true
+        },
+        "Peach": {
+          "img": "img/pop-tray-1-season-colors.webp",
+          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
+          "render": true
+        },
+        "Sea Salt": {
+          "img": "img/pop-tray-1-season-colors.webp",
+          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
+          "render": true
+        }
+      }
+    },
+    "flower-set-case": {
+      "card": {
+        "img": "img/six-set-case.webp",
+        "alt": "Studio rendering of yellow flower coasters stacked in a white case.",
+        "render": true
+      },
+      "flower": {
+        "Sunflower": {
+          "img": "img/six-set-case.webp",
+          "alt": "Studio rendering of yellow flower coasters stacked in a white case.",
+          "render": true
+        },
+        "Hibiscus": {
+          "img": "img/pop-tray-2-pop-flowers.webp",
+          "alt": "Concept render of flower coasters, including Hibiscus, Sunflower, Orchid, Plumeria, Bird of Paradise and Bougainvillea.",
+          "render": true,
+          "caption": "Concept render"
+        }
+      }
+    }
+  }
+}
