@@ -227,7 +227,7 @@ def llms_txt(site: dict, products: list, batch: dict) -> str:
         "- Material: flexible TPU 95A, washable; TPU pieces are dishwasher safe (normal dishwasher cycle, avoid extended or high-heat modes)",
         "- Shipping: free on all U.S. orders; orders leave the studio within 2-3 business days",
         "- Samples: retail buyers get 1 free sample coaster; wholesale buyers get 6 free sample coasters. A sample print is made for approval before a logo batch is printed",
-        "- Wholesale: custom logo coasters and restaurant coasters from 100 pieces. The Half Dozen is the $29 retail box only, and a logo batch ships within 10 days of approval",
+        "- Wholesale: custom logo coasters and restaurant coasters from 200 pieces. The Half Dozen is the $29 retail box only, and a logo batch ships within 10 days of approval",
         f"- Current tray: {batch.get('tray', '')}",
         "- Contact: hello@juplifestudio.com, call +1-561-532-7120, text 561-581-8015",
         "- X: https://x.com/juplifestudio",

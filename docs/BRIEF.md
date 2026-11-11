@@ -40,7 +40,7 @@ Lines: "Fresh baked. Built different." · "Today's Batch is out of the oven." ·
 
 ## 4. Components (exactly 4)
 1. **Flavor-tag product card.** A kraft hang tag with a punched hole and a short sage "band" string. It has the product image on cream, swatch dots with flavor names, the product name (serif), one line of copy, the price or "Ask about this batch", and one button.
-2. **Chalkboard price board.** Live HTML text, not an image. Dotted-leader rows: `100 coasters ...... $2.00 ea` · `500 ...... $1.60 ea` · `1,000 ...... $1.20 ea` · `Samples ...... on the house`. Footer: "Locally baked in Jupiter, FL."
+2. **Chalkboard price board.** Live HTML text, not an image. Dotted-leader rows: `200 coasters ...... $2.00 ea` · `500 ...... $1.90 ea` · `1,000 ...... $1.75 ea` · `Samples ...... on the house`. Footer: "Locally baked in Jupiter, FL."
 3. **Today's Batch board.** The same chalkboard style. It shows the date, tray name, up to 6 flavor rows (swatch, name and short note like "Pumpkin, fall harvest"), and an optional diagonal "Chef's Special" ribbon. It's **rendered from JSON** `{date, tray, batch_no, flavors:[{name,hex,note}], chefs_special}` so it can be updated daily. Visual reference: `todays_batch_fall_feed_1080x1350.jpg`.
 4. **Sample box CTA.** A kraft panel with the Half Dozen box image, "Six coasters. One little box. On the house.", and a **[Get a free Half Dozen]** button that opens the modal. It's reused on every page.
 
@@ -73,7 +73,7 @@ Divider: a rounded **sage TPU band** line (8 px, full pill shape) between sectio
 7. **FAQ (4 questions, accordion):**
    - *What are they made of?* TPU 95A, a flexible printed material. Each listing says if a piece is PLA or PETG.
    - *Are they dishwasher safe?* Yes. TPU pieces are washable and dishwasher safe. [[CONFIRM: top-rack / temperature guidance]]. Wash PLA and PETG pieces by hand.
-   - *Can I get my logo on them?* Yes, from 100 coasters. Start with a free Half Dozen.
+   - *Can I get my logo on them?* Yes, from 200 coasters. Start with a free Half Dozen.
    - *How fast do you ship?* [[CONFIRM: retail dispatch and wholesale lead times]]
 8. **Footer** (cocoa background): stacked logo, "Fresh baked. Built different.", links to Shop / Wholesale & Samples, the contacts (see section 7), "Made in Jupiter, FL", © 2026 JUP LIFE by Mrs. Smash, and the Shipping & Returns and Privacy links (keep the existing pages).
 
@@ -134,7 +134,7 @@ The 3 pages and the modal at 375 px and 1440 px, a one-page token and component 
 - [ ] Exactly 3 pages plus 1 modal.
 - [ ] Mobile LCP under 2 s. Lighthouse mobile scores of 90+ on Performance, Accessibility and SEO.
 - [ ] **"Get a free Half Dozen" is visible above the fold on a 375 × 667 screen.**
-- [ ] The price board reads 100 at $2.00 / 500 at $1.60 / 1,000 at $1.20 / samples free, as live text.
+- [ ] The price board reads 200 at $2.00 / 500 at $1.90 / 1,000 at $1.75 / samples free, as live text.
 - [ ] Today's Batch renders from JSON.
 - [ ] "Dishwasher safe" appears only on TPU items. No unverified claims anywhere.
 - [ ] Contacts exactly as in section 7. 561-581-8015 appears only as "Text us".

@@ -12,7 +12,7 @@ flavors:                       # up to 6; note must fit at 6 pt on the card (scr
   - {name: Rhubarb,   color: "#C93A5B", note: garden crisp}
   - {name: Sea Salt,  color: "#7FD1C2", note: always in season}
 tiers:                         # real wholesale pricing, per coaster
-  - {qty: 100,  price: 2.00}
-  - {qty: 500,  price: 1.60}
-  - {qty: 1000, price: 1.20}
+  - {qty: 200,  price: 2.00}
+  - {qty: 500,  price: 1.90}
+  - {qty: 1000, price: 1.75}
 samples_free: true             # prints "Samples on the house"

@@ -24,7 +24,7 @@ def fit(text,font,size,maxw,minsize,label):
     return s
 def load(fn):
     b=yaml.safe_load(open(fn))
-    b.setdefault('tiers',[{'qty':100,'price':2.00},{'qty':500,'price':1.60},{'qty':1000,'price':1.20}])
+    b.setdefault('tiers',[{'qty':200,'price':2.00},{'qty':500,'price':1.90},{'qty':1000,'price':1.75}])
     b.setdefault('samples_free',True); b.setdefault('chefs_special',''); b.setdefault('batch_no','')
     if len(b['flavors'])>6: sys.exit('max 6 flavors')
     d=b.get('date'); b['_date']=datetime.date.fromisoformat(str(d)) if d else None
