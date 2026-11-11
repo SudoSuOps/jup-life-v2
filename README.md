@@ -23,12 +23,12 @@ CHROME=/path/to/chrome npm run smoke     # browser smoke test against the runnin
 | `STRIPE_SECRET_KEY` | secret. `sk_test_...` until launch |
 | `STRIPE_WEBHOOK_SECRET` | secret. `whsec_...` from the webhook endpoint below |
 | `STRIPE_PRICE_SIX_SET_CASE` | unused for checkout. The Hibiscus Set is a flower set with a case and uses `STRIPE_PRICE_FLOWER_SET_CASE` at $39. |
-| `STRIPE_PRICE_FALL_POP_COASTERS` | `price_...` for Fall Tray Pop Coasters ($29) |
+| `STRIPE_PRICE_FALL_POP_COASTERS` | unused for checkout. Holiday Tray Pop Coasters and the three Pop Trays use `STRIPE_PRICE_POP_COASTERS_6` at $29. |
 | `STRIPE_PRICE_GIGI` | `price_...` for The Gigi ($9) |
 | `STRIPE_PRICE_TIDE_SOAP_DISH` | `price_...` for Tide Soap Dish ($14) |
 | `STRIPE_PRICE_TIDE_DISPENSER` | `price_...` for Tide Hand Soap Dispenser ($21) |
 | `STRIPE_PRICE_READER_21` | `price_...` for One More Chapter at $21. Leave unset until that Stripe price exists. The button stays Coming soon, and checkout will not use `STRIPE_PRICE_READERS`. |
-| `STRIPE_PRICE_POP_COASTERS_6` | `price_...` for Pop Coasters 6-Pack at $29 (Flat or Edge). Leave unset until that price exists. |
+| `STRIPE_PRICE_POP_COASTERS_6` | `price_...` for Pop coasters at $29, Flat or Edge: the 6-pack, Holiday Tray Pop Coasters, and Pop Trays 1–3. Leave unset until that $29 price exists. Buttons stay Coming soon. |
 | `STRIPE_PRICE_FLOWER_SET_CASE` | `price_...` for flower sets with a case at $39 (The Hibiscus Set and the Flower Coaster Set with Case, Sunflower or Hibiscus). Leave unset until that $39 price exists. The buttons stay Coming soon, and checkout will not use `STRIPE_PRICE_SIX_SET_CASE`. |
 | `STRIPE_PRICE_HALF_DOZEN` | optional override; defaults to the live $29 Half Dozen price |
 | `STRIPE_PRICE_BAKERS_DOZEN` | optional override; defaults to the live $39 Baker's Dozen price |

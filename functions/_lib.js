@@ -33,7 +33,11 @@ export function sellables(env) {
     // TODO(Smash): which $29 product is primary (6+case, The Half Dozen box, or 12 with no case) is unresolved. Do not pick one or change prices.
     // Hibiscus is a flower set with a case. Charge only STRIPE_PRICE_FLOWER_SET_CASE ($39), never the old $29 six-set secret.
     { sku: 'six-set-case', name: 'The Hibiscus Set (6 coasters + case)', price: ownPrice(env.STRIPE_PRICE_FLOWER_SET_CASE), max: 20 },
-    { sku: 'fall-pop-coasters', name: 'Holiday Tray Pop Coasters (12, no case)', price: env.STRIPE_PRICE_FALL_POP_COASTERS, max: 20 },
+    // Pop trays and the holiday tray are the $29 Flat or Edge pack. Do not charge STRIPE_PRICE_FALL_POP_COASTERS or the Half Dozen price.
+    { sku: 'fall-pop-coasters', name: 'Holiday Tray Pop Coasters', price: ownPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
+    { sku: 'pop-tray-1-season-colors', name: 'Pop Tray 1 · Season Colors', price: ownPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
+    { sku: 'pop-tray-2-pop-flowers', name: 'Pop Tray 2 · Pop Flowers', price: ownPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
+    { sku: 'pop-tray-3-coastal', name: 'Pop Tray 3 · Coastal', price: ownPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
     { sku: 'gigi', name: 'The Gigi', price: env.STRIPE_PRICE_GIGI, max: 20 },
     { sku: 'tide-soap-dish', name: 'Tide Soap Dish', price: env.STRIPE_PRICE_TIDE_SOAP_DISH, max: 20 },
     { sku: 'tide-dispenser', name: 'Tide Hand Soap Dispenser', price: env.STRIPE_PRICE_TIDE_DISPENSER, max: 20 },
