@@ -175,6 +175,10 @@ def build_assets() -> tuple[str, str]:
     (DIST / "js" / jname).write_bytes(js)
     shutil.copytree(WEB / "fonts", DIST / "fonts", dirs_exist_ok=True)
     shutil.copytree(WEB / "video", DIST / "video", dirs_exist_ok=True)
+    # Hollywood drops web/media/readers-short.mp4 later. Copy only when the folder exists.
+    media = WEB / "media"
+    if media.exists():
+        shutil.copytree(media, DIST / "media", dirs_exist_ok=True)
     return f"/css/{cname}", f"/js/{jname}"
 
 
@@ -219,7 +223,7 @@ def llms_txt(site: dict, products: list, batch: dict, catalog: dict) -> str:
     base = site["site_url"]
     lines = [
         "# JUP LIFE by Mrs. Smash", "",
-        "> JUP LIFE by Mrs. Smash prints coasters in Jupiter, Florida. The shop sells Pop Coasters ($29) and Flower Coasters ($39), and One More Chapter ($21). "
+        "> JUP LIFE by Mrs. Smash prints coasters in Jupiter, Florida. The shop sells Pop Coasters ($29) and Flower Coasters ($39), and Readers ($21). "
         "Enterprise logo coasters are made for restaurants, bars, boutique hotels, rentals and event hosts in Palm Beach County and beyond.", "",
         "## Key facts",
         "- Location: Jupiter, FL (serves Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County; ships within the US)",
@@ -233,7 +237,7 @@ def llms_txt(site: dict, products: list, batch: dict, catalog: dict) -> str:
         "- TikTok: https://www.tiktok.com/@juplifestudio", "",
         "## Pages",
         f"- [Home]({base}/): the coaster printers, Jupiter FL",
-        f"- [Shop]({base}/shop): Pop Coasters, Flower Coasters, and One More Chapter, with checkout",
+        f"- [Shop]({base}/shop): Pop Coasters, Flower Coasters, and Readers, with checkout",
         f"- [Enterprise]({base}/enterprise): custom logo coasters for Palm Beach County restaurants, bars, hotels, rentals and events",
         f"- [About]({base}/about): Meet Mrs. Smash (Dee), the face of JUP LIFE by Mrs. Smash",
         f"- [Contact]({base}/contact): call +1-561-532-7120",

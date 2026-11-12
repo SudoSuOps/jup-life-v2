@@ -394,5 +394,27 @@
     });
   }
 
-  renderBatch(); initSample(); initPhotos(); initBag(); initSellable(); initDrops(); initReveal();
+  // VIDEO SLOT: Readers short stays hidden until /media/readers-short.mp4 actually loads.
+  function initReadersShort() {
+    $$('[data-readers-short]').forEach((figure) => {
+      const video = $('[data-readers-short-video]', figure);
+      if (!video) return;
+      let alive = true;
+      const show = () => { if (alive) figure.hidden = false; };
+      const hide = () => { alive = false; figure.hidden = true; };
+      video.addEventListener('loadeddata', show);
+      video.addEventListener('canplay', show);
+      video.addEventListener('error', hide);
+      const source = $('source', video);
+      if (source) source.addEventListener('error', hide);
+      const src = source?.getAttribute('src');
+      if (!src) { hide(); return; }
+      fetch(src, { method: 'HEAD' }).then((res) => {
+        if (!res.ok) hide();
+        else video.load();
+      }).catch(() => { /* a failed probe stays hidden until a real load event */ });
+    });
+  }
+
+  renderBatch(); initSample(); initPhotos(); initBag(); initSellable(); initDrops(); initReveal(); initReadersShort();
 })();

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% from "partials/_macros.html" import card, batch_board, short, pop_tray, swatch_list %}
 {% block title %}Shop Coasters in Jupiter, FL | JUP LIFE by Mrs. Smash{% endblock %}
-{% block description %}Shop coasters from JUP LIFE by Mrs. Smash in Jupiter, FL. Pop Coasters 6-Pack, $29. Flower Coaster Set with Case, $39. One More Chapter is $21. Free U.S. shipping.{% endblock %}
+{% block description %}Shop coasters from JUP LIFE by Mrs. Smash in Jupiter, FL. Pop Coasters 6-Pack, $29. Flower Coaster Set with Case, $39. Readers is $21. Free U.S. shipping.{% endblock %}
 {% block ogtitle %}Shop Coasters in Jupiter, FL{% endblock %}
 {% block ogdesc %}{{ self.description() }}{% endblock %}
 {% block head %}
@@ -101,6 +101,22 @@
           </figure>
         </div>
       </div>
+      {% elif sku == 'readers' %}
+      <div class="pop-feature" id="readers">
+        <img class="readers-logo" src="/img/readers-wordmark-navy.png" alt="Readers by JUP LIFE" width="1200" height="444">
+        <div class="pop-feature-row">
+          {{ card(by_sku['readers'], shop=True) }}
+          {# VIDEO SLOT: Hollywood drops web/media/readers-short.mp4 later. Hidden until the file loads. #}
+          <figure class="pop-loop" data-readers-short hidden>
+            <video muted autoplay loop playsinline
+                   width="720" height="1280"
+                   aria-label="A short of Readers, by JUP LIFE"
+                   data-readers-short-video>
+              <source src="/media/readers-short.mp4" type="video/mp4">
+            </video>
+          </figure>
+        </div>
+      </div>
       {% else %}
       {{ card(by_sku[sku], shop=True) }}
       {% endif %}
@@ -167,8 +183,20 @@
       {% endif %}
     {% endfor %}
   </div>
-  <div class="tray-grid">
-    {{ card(by_sku['readers'], shop=True) }}
+  <div class="pop-feature" id="readers">
+    <img class="readers-logo" src="/img/readers-wordmark-navy.png" alt="Readers by JUP LIFE" width="1200" height="444">
+    <div class="pop-feature-row">
+      {{ card(by_sku['readers'], shop=True) }}
+      {# VIDEO SLOT: Hollywood drops web/media/readers-short.mp4 later. Hidden until the file loads. #}
+      <figure class="pop-loop" data-readers-short hidden>
+        <video muted autoplay loop playsinline
+               width="720" height="1280"
+               aria-label="A short of Readers, by JUP LIFE"
+               data-readers-short-video>
+          <source src="/media/readers-short.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
   </div>
 </section>
 <script type="application/json" id="photo-book">{{ photo_book_json }}</script>

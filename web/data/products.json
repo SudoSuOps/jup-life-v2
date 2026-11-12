@@ -1,6 +1,6 @@
 {
   "_note": "Display data for cards. Prices here are DISPLAY ONLY. Checkout charges come from Stripe Price IDs mapped server-side in functions/_lib.js. Never invent prices: null = 'Ask about this batch'.",
-  "_todo_primary_29": "Storefront list is web/data/catalog.json: Pop Coasters 6-Pack ($29) and Flower Coaster Set with Case ($39). One More Chapter stays on the shop at $21 with img/one-more-chapter.webp and its existing copy. Prices below for older products stay as they were. Photos for the two coasters live in web/data/photos.json.",
+  "_todo_primary_29": "Storefront list is web/data/catalog.json: Pop Coasters 6-Pack ($29) and Flower Coaster Set with Case ($39). Readers stays on the shop at $21 with img/one-more-chapter.webp and its existing copy. Prices below for older products stay as they were. Photos for the two coasters live in web/data/photos.json.",
   "products": [
     {
       "sku": "fall-pop-coasters",
@@ -200,18 +200,18 @@
     },
     {
       "sku": "readers",
-      "name": "One More Chapter",
-      "line": "What's included: 1 Reader + 1 cradle holder.",
+      "name": "Readers",
+      "line": "1 reader + 1 crate, TPU baked.",
       "price": 21,
-      "material": null,
+      "material": "washable",
       "img": "img/one-more-chapter.webp",
       "home": false,
       "shop": true,
-      "alt": "One More Chapter thumb page holder on an open book, with a cream holder, a sage-green holder, and a thumb in use",
+      "alt": "A Readers thumb page holder on an open book, with a cream holder, a sage-green holder, and a thumb in use",
       "gallery": [
         {
           "img": "img/readers-one-more-chapter.webp",
-          "alt": "The Reader gold driftwood-pattern page holder resting in its sand-colored One More Chapter stand, with the empty stand inset"
+          "alt": "A gold driftwood-pattern Readers page holder resting in its sand-colored crate, with the empty crate inset"
         }
       ],
       "render": false

@@ -27,7 +27,7 @@ CHROME=/path/to/chrome npm run smoke     # browser smoke test against the runnin
 | `STRIPE_PRICE_GIGI` | `price_...` for The Gigi ($9) |
 | `STRIPE_PRICE_TIDE_SOAP_DISH` | `price_...` for Tide Soap Dish ($14) |
 | `STRIPE_PRICE_TIDE_DISPENSER` | `price_...` for Tide Hand Soap Dispenser ($21) |
-| `STRIPE_PRICE_READER_21` | `price_...` for One More Chapter at $21. Leave unset until that Stripe price exists. The button stays Coming soon, and checkout will not use `STRIPE_PRICE_READERS`. |
+| `STRIPE_PRICE_READER_21` | `price_...` for Readers at $21. Leave unset until that Stripe price exists. The button stays Coming soon, and checkout will not use `STRIPE_PRICE_READERS`. |
 | `STRIPE_PRICE_POP_COASTERS_6` | `price_...` for Pop coasters at $29, Flat or Edge: the 6-pack, Holiday Tray Pop Coasters, and Pop Trays 1–3. No fallback. Missing or set to a reserved box price keeps the buy button on Coming soon. |
 | `STRIPE_PRICE_HIBISCUS_SET` | `price_...` for The Hibiscus Set (`six-set-case`) at $39. If unset, checkout falls back to `STRIPE_PRICE_FLOWER_SET_CASE`. Never uses `STRIPE_PRICE_SIX_SET_CASE`. |
 | `STRIPE_PRICE_FLOWER_SET_CASE` | `price_...` for the Flower Coaster Set with Case (`flower-set-case`) at $39. No fallback, and never a reserved box price. Also the fallback for The Hibiscus Set when `STRIPE_PRICE_HIBISCUS_SET` is unset. |

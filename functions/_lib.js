@@ -93,7 +93,7 @@ export function sellables(env) {
     { sku: 'half-dozen', name: 'The Half Dozen (6 Assorted Coasters)', price: env.STRIPE_PRICE_HALF_DOZEN || HALF_DOZEN_PRICE_ID, max: 20 },
     { sku: 'bakers-dozen', name: "The Baker's Dozen (13 Assorted Coasters)", price: env.STRIPE_PRICE_BAKERS_DOZEN || BAKERS_DOZEN_PRICE_ID, max: 20 },
     // Own secret only. STRIPE_PRICE_READERS is not used, so an older $19 price cannot be charged.
-    { sku: 'readers', name: 'One More Chapter', price: ownPrice(env.STRIPE_PRICE_READER_21), max: 20 },
+    { sku: 'readers', name: 'Readers', price: ownPrice(env.STRIPE_PRICE_READER_21), max: 20 },
     // Own env vars only. No fallback to another product's price.
     { sku: 'pop-coasters-6', name: 'Pop Coasters 6-Pack', price: ownPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
     { sku: 'flower-set-case', name: 'Flower Coaster Set with Case', price: ownPrice(env.STRIPE_PRICE_FLOWER_SET_CASE), max: 20 },
