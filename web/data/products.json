@@ -15,8 +15,8 @@
       "img": "img/holiday-tray-pops-1600x900.webp",
       "home": true,
       "shop": true,
-      "render": true,
-      "alt": "Studio rendering of The Holiday Tray: six JUP LIFE Pop coasters in Pumpkin, Coconut (frosted clear), Cranberry, Maple, Rhubarb and Sunflower in a teal tray on sand, with warm holiday lights, greenery and a small gold star."
+      "render": false,
+      "alt": "The Holiday Tray: six JUP LIFE Pop coasters in Pumpkin, Coconut (frosted clear), Cranberry, Maple, Rhubarb and Sunflower in a teal tray on sand, with warm holiday lights, greenery and a small gold star."
     },
     {
       "sku": "stack-bands-fall",
@@ -80,7 +80,7 @@
       "board": "img/stack-bands-board.webp",
       "home": true,
       "shop": false,
-      "render": true,
+      "render": false,
       "alt": "The Harvest stack band 3-pack in Pumpkin, Cinnamon and Maple"
     },
     {
@@ -92,7 +92,7 @@
       "img": "img/six-set-case.webp",
       "home": true,
       "shop": true,
-      "render": true,
+      "render": false,
       "alt": "Six yellow flower coasters stacked in a white printed case"
     },
     {
@@ -104,7 +104,7 @@
       "img": "img/halfdozen-box.webp",
       "home": false,
       "shop": true,
-      "render": true,
+      "render": false,
       "alt": "The Half Dozen: a windowed kraft box of assorted coasters wrapped in a sage TPU band with the Mrs. Smash tag"
     },
     {
@@ -116,7 +116,7 @@
       "img": "img/halfdozen-open.webp",
       "home": false,
       "shop": true,
-      "render": true,
+      "render": false,
       "alt": "The Baker's Dozen: a box of thirteen assorted coasters"
     },
     {
@@ -138,7 +138,7 @@
       ],
       "home": true,
       "shop": false,
-      "render": true,
+      "render": false,
       "alt": "A teal Gigi band with a repeating JL monogram, in palm-leaf shadow"
     },
     {
@@ -160,7 +160,7 @@
       ],
       "home": true,
       "shop": true,
-      "render": true,
+      "render": false,
       "alt": "A lime-green Tide soap dish with wave ridges and drain holes, holding a bar of soap"
     },
     {
@@ -182,7 +182,7 @@
       ],
       "home": true,
       "shop": false,
-      "render": true,
+      "render": false,
       "alt": "A Tide hand soap dispenser fading from lime to amber, with wave texture and a square base"
     },
     {
@@ -201,7 +201,7 @@
           "alt": "The Reader gold driftwood-pattern page holder resting in its sand-colored One More Chapter stand, with the empty stand inset"
         }
       ],
-      "render": true
+      "render": false
     },
     {
       "sku": "pop-coasters-6",
@@ -267,7 +267,7 @@
       ],
       "home": true,
       "shop": true,
-      "render": true
+      "render": false
     },
     {
       "sku": "flower-set-case",
@@ -335,11 +335,11 @@
       "shots": [
         {
           "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "Studio rendering of JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray."
+          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray."
         },
         {
           "img": "img/pop-tray-1-color-card.webp",
-          "alt": "Studio rendering color card for JUP LIFE Pop Tray 1: Pumpkin #E8731E, Coconut frosted clear TPU, Rhubarb #C93A5B, Key Lime #A8D94A, Peach #FFB07C and Sea Salt #7FD1C2."
+          "alt": "Color card for JUP LIFE Pop Tray 1: Pumpkin #E8731E, Coconut frosted clear TPU, Rhubarb #C93A5B, Key Lime #A8D94A, Peach #FFB07C and Sea Salt #7FD1C2."
         }
       ],
       "home": false,
@@ -383,11 +383,11 @@
       "shots": [
         {
           "img": "img/pop-tray-2-pop-flowers.webp",
-          "alt": "Concept render of Pop Tray 2, Pop Flowers: six flower Pop Round coasters on a wood tray, Sunflower, Hibiscus and Orchid in back, Plumeria, Bird of Paradise and Bougainvillea in front"
+          "alt": "Pop Tray 2, Pop Flowers: six flower Pop Round coasters on a wood tray, Sunflower, Hibiscus and Orchid in back, Plumeria, Bird of Paradise and Bougainvillea in front"
         },
         {
           "img": "img/pop-flowers-contact-sheet.webp",
-          "alt": "Concept render contact sheet of the six Pop Flowers coasters, front and back: Sunflower, Hibiscus, Orchid, Plumeria, Bird of Paradise and Bougainvillea, with the wave-over-JL mark on the back"
+          "alt": "Contact sheet of the six Pop Flowers coasters, front and back: Sunflower, Hibiscus, Orchid, Plumeria, Bird of Paradise and Bougainvillea, with the wave-over-JL mark on the back"
         }
       ],
       "home": false,
@@ -432,11 +432,11 @@
       "shots": [
         {
           "img": "img/pop-tray-3-coastal.webp",
-          "alt": "Concept render of Pop Tray 3, Coastal: six coastal Pop Round coasters on a wood tray, Sea Glass, Shell and Dunes in back, Red Mangrove, Banyan and Sea Turtle in front"
+          "alt": "Pop Tray 3, Coastal: six coastal Pop Round coasters on a wood tray, Sea Glass, Shell and Dunes in back, Red Mangrove, Banyan and Sea Turtle in front"
         },
         {
           "img": "img/pop-coastal-contact-sheet.webp",
-          "alt": "Concept render contact sheet of the six Coastal Pop coasters, front and back: Sea Glass, Shell, Dunes, Red Mangrove, Banyan and Sea Turtle, with the wave-over-JL mark on the back"
+          "alt": "Contact sheet of the six Coastal Pop coasters, front and back: Sea Glass, Shell, Dunes, Red Mangrove, Banyan and Sea Turtle, with the wave-over-JL mark on the back"
         }
       ],
       "home": false,

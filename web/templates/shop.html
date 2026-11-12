@@ -40,7 +40,7 @@
 <div class="wrap" style="padding-bottom:clamp(32px,4vw,56px)">
   <figure style="margin:0;position:relative">
     <img src="/img/bakery-dome-800.webp" srcset="/img/bakery-dome-800.webp 800w, /img/bakery-dome-1600.webp 1600w" sizes="(min-width: 1248px) 1152px, 100vw" alt="The JUP LIFE Studio bakery counter: a glass dome over stacks of terracotta, sage and cream coasters, a wood tray beside kraft boxes, printers by the window" width="1600" height="900" decoding="async" style="width:100%;aspect-ratio:16/9;max-height:560px;object-fit:cover;object-position:60% 50%;border-radius:24px">
-    <figcaption class="render-cap">Studio rendering · the bakery counter</figcaption>
+    <figcaption>The bakery counter</figcaption>
   </figure>
 </div>
 
@@ -55,8 +55,8 @@
     </div>
   </div>
   <figure style="margin:0">
-    {{ pic("img/flavor-board-" ~ season ~ ".webp", "Studio rendering of The Holiday Tray flavor board: six Pop coasters in Pumpkin, Coconut (frosted clear), Cranberry, Maple, Rhubarb and Sunflower on a sand board." if season == "fall" else batch.tray ~ " flavor board on a wood tray, studio rendering", sizes="(min-width: 1200px) 1104px, calc(100vw - 32px)", lazy=False, style="width:100%;height:auto;border-radius:14px") }}
-    <figcaption style="margin-top:8px;font-size:13px;font-weight:600">{{ batch.tray }} flavor board · Studio rendering. This week: {% for f in batch.flavors[:6] %}{{ f.name }}{% if f.name.startswith('Coconut') %} (clear){% endif %}{% if not loop.last %}, {% endif %}{% endfor %}.
+    {{ pic("img/flavor-board-" ~ season ~ ".webp", "The Holiday Tray flavor board: six Pop coasters in Pumpkin, Coconut (frosted clear), Cranberry, Maple, Rhubarb and Sunflower on a sand board." if season == "fall" else batch.tray ~ " flavor board on a wood tray", sizes="(min-width: 1200px) 1104px, calc(100vw - 32px)", lazy=False, style="width:100%;height:auto;border-radius:14px") }}
+    <figcaption style="margin-top:8px;font-size:13px;font-weight:600">{{ batch.tray }} flavor board. This week: {% for f in batch.flavors[:6] %}{{ f.name }}{% if f.name.startswith('Coconut') %} (clear){% endif %}{% if not loop.last %}, {% endif %}{% endfor %}.
     {{ swatch_list(batch.flavors[:6]) }}
     </figcaption>
   </figure>
@@ -123,7 +123,6 @@
       {{ short('shop-baked-daily', 'Baked daily in Jupiter.', 'Fresh from the tray · 15 s', 'Baked daily in Jupiter: a hand in an oven mitt slides a tray of colorful coasters, with sunflower coasters, out of an oven') }}
       {{ short('shop-fresh-out', 'Fresh out the oven.', 'Inside the studio · 15 s', 'Fresh out the oven: shelves of printers in a bright studio, a coaster printing on a plate') }}
     </div>
-    <p style="margin:0;font-size:13px">Studio renderings.</p>
   </div>
 </section>
 
