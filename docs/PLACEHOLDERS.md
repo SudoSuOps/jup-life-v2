@@ -20,7 +20,7 @@ Each shows on the page as visible terracotta `[[...]]` text (`.ph` class). `grep
 | 561-581-8015 as texting line | Footer, contact strip | Confirm it's the text line |
 | Prices: Pop Coasters, Stack Bands, The Gigi, Tide Soap Dish, Tide Dispenser | Cards ("Ask about this batch") | Prices + Stripe Price IDs if they become buyable |
 | Materials: Stack Bands, The Gigi | Cards (no material line yet) | TPU? Dishwasher safe? |
-| Real photos | All product cards (all current images are studio renderings) | Real photos of 6-coaster set + case, The Readers, and the rest |
+| Real photos | All product cards | Real photos of 6-coaster set + case, The Readers, and the rest |
 | `[[PHOTO: The Readers]]` | Shop | Any photo |
 | Full-res originals | `tide-soap-dish`, `soapdish-*`, `tide-trio`, `tide-hotel-bath`, `gigi-earthtone-stack`, `pop-coasters-pumpkin`, `flex-closeup` | These were cut from contact sheets at ~380–400 px; swap in full-size files |
 | `og-hero.jpg` | `<meta property="og:image">` | `banner_Website_hero_1920x800.png` or approve a cut from the hero render |

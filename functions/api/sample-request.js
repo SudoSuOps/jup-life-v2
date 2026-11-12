@@ -88,7 +88,7 @@ async function confirmSample(env, request, rec) {
   const { html, text } = brandedEmail({
     base,
     preheader: copy.heading,
-    eyebrow: rec.buyer_type === 'wholesale' ? 'Free venue sample' : 'Free sample coaster',
+    eyebrow: 'Samples available by request',
     heading: copy.heading,
     paragraphs: copy.paragraphs,
     signoff: ['Fresh baked, built different.', 'Mrs. Smash'],

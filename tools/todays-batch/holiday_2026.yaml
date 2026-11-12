@@ -15,4 +15,4 @@ tiers:                         # real wholesale pricing, per coaster
   - {qty: 200,  price: 2.00}
   - {qty: 500,  price: 1.90}
   - {qty: 1000, price: 1.75}
-samples_free: true             # prints "Samples on the house"
+samples_free: true             # prints "Samples: available by request"

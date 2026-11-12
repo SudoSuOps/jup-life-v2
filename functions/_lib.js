@@ -21,13 +21,13 @@ export function allow(bucket, ip, limit, windowMs = 3600_000, now = Date.now()) 
 }
 export const resetThrottle = () => hits.clear();
 
-// Known live price IDs for older boxes. New coaster SKUs must never charge these.
+// Known live price IDs for older boxes. A product must not charge these.
 const HALF_DOZEN_PRICE_ID = 'price_1UTVSJHYwaTbul7MyxtILxOz';
 const BAKERS_DOZEN_PRICE_ID = 'price_1UTVOYHYwaTbul7M7QJo4iye';
 const RESERVED_PRICE_IDS = new Set([HALF_DOZEN_PRICE_ID, BAKERS_DOZEN_PRICE_ID]);
 
 // A missing, blank, or borrowed price ID means the SKU is not for sale.
-function coasterPrice(value) {
+function ownPrice(value) {
   if (typeof value !== 'string') return '';
   const id = value.trim();
   if (!id || RESERVED_PRICE_IDS.has(id)) return '';
@@ -80,22 +80,23 @@ export function lineOptions(sku, line) {
 // Server-side catalog: the ONLY source of what can be charged. Items with no price ID are not purchasable.
 export function sellables(env) {
   const items = [
-    // Older SKUs stay mapped so their checkout code remains. The shop hides them via web/data/catalog.json.
-    { sku: 'six-set-case', name: 'The Hibiscus Set (6 coasters + case)', price: env.STRIPE_PRICE_SIX_SET_CASE, max: 20 },
+    // The Hibiscus Set is $39 on its own price. If that secret is unset, use the flower-set price. Never the old $29 six-set secret.
+    { sku: 'six-set-case', name: 'The Hibiscus Set (6 coasters + case)', price: ownPrice(env.STRIPE_PRICE_HIBISCUS_SET) || ownPrice(env.STRIPE_PRICE_FLOWER_SET_CASE), max: 20 },
     // Pop trays and the holiday tray are the $29 Flat or Edge pack. Do not charge STRIPE_PRICE_FALL_POP_COASTERS or a reserved box price.
-    { sku: 'fall-pop-coasters', name: 'Holiday Tray Pop Coasters', price: coasterPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
-    { sku: 'pop-tray-1-season-colors', name: 'Pop Tray 1 · Season Colors', price: coasterPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
-    { sku: 'pop-tray-2-pop-flowers', name: 'Pop Tray 2 · Pop Flowers', price: coasterPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
-    { sku: 'pop-tray-3-coastal', name: 'Pop Tray 3 · Coastal', price: coasterPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
+    { sku: 'fall-pop-coasters', name: 'Holiday Tray Pop Coasters', price: ownPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
+    { sku: 'pop-tray-1-season-colors', name: 'Pop Tray 1 · Season Colors', price: ownPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
+    { sku: 'pop-tray-2-pop-flowers', name: 'Pop Tray 2 · Pop Flowers', price: ownPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
+    { sku: 'pop-tray-3-coastal', name: 'Pop Tray 3 · Coastal', price: ownPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
     { sku: 'gigi', name: 'The Gigi', price: env.STRIPE_PRICE_GIGI, max: 20 },
     { sku: 'tide-soap-dish', name: 'Tide Soap Dish', price: env.STRIPE_PRICE_TIDE_SOAP_DISH, max: 20 },
     { sku: 'tide-dispenser', name: 'Tide Hand Soap Dispenser', price: env.STRIPE_PRICE_TIDE_DISPENSER, max: 20 },
     { sku: 'half-dozen', name: 'The Half Dozen (6 Assorted Coasters)', price: env.STRIPE_PRICE_HALF_DOZEN || HALF_DOZEN_PRICE_ID, max: 20 },
     { sku: 'bakers-dozen', name: "The Baker's Dozen (13 Assorted Coasters)", price: env.STRIPE_PRICE_BAKERS_DOZEN || BAKERS_DOZEN_PRICE_ID, max: 20 },
-    { sku: 'readers', name: 'The Reader', price: env.STRIPE_PRICE_READERS, max: 20 },
+    // Own secret only. STRIPE_PRICE_READERS is not used, so an older $19 price cannot be charged.
+    { sku: 'readers', name: 'One More Chapter', price: ownPrice(env.STRIPE_PRICE_READER_21), max: 20 },
     // Own env vars only. No fallback to another product's price.
-    { sku: 'pop-coasters-6', name: 'Pop Coasters 6-Pack', price: coasterPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
-    { sku: 'flower-set-case', name: 'Flower Coaster Set with Case', price: coasterPrice(env.STRIPE_PRICE_FLOWER_SET_CASE), max: 20 },
+    { sku: 'pop-coasters-6', name: 'Pop Coasters 6-Pack', price: ownPrice(env.STRIPE_PRICE_POP_COASTERS_6), max: 20 },
+    { sku: 'flower-set-case', name: 'Flower Coaster Set with Case', price: ownPrice(env.STRIPE_PRICE_FLOWER_SET_CASE), max: 20 },
   ];
   return Object.fromEntries(items.filter((i) => i.price).map((i) => [i.sku, i]));
 }

@@ -6,9 +6,10 @@ import { onRequestGet as catalogApi } from '../functions/api/catalog.js';
 import { onRequestPost as webhook, verifyStripe, orderEmail } from '../functions/api/stripe/webhook.js';
 import { onRequestPost as drops } from '../functions/api/drops.js';
 import { onRequestPost as sample } from '../functions/api/sample-request.js';
+import { onRequestGet as catalog } from '../functions/api/catalog.js';
 import { resetThrottle } from '../functions/_lib.js';
 
-const env = { STRIPE_SECRET_KEY: 'sk_test_x', STRIPE_PRICE_SIX_SET_CASE: 'price_six', STRIPE_PRICE_READERS: '', SITE_URL: 'https://juplifestudio.com' };
+const env = { STRIPE_SECRET_KEY: 'sk_test_x', STRIPE_PRICE_TIDE_SOAP_DISH: 'price_six', STRIPE_PRICE_READERS: '', SITE_URL: 'https://juplifestudio.com' };
 const post = (url, body, headers = {}) => new Request(`https://x.test${url}`, { method: 'POST', body, headers });
 const jsonReq = (b) => post('/api/checkout', JSON.stringify(b), { 'Content-Type': 'application/json' });
 
@@ -21,15 +22,69 @@ test('checkout: unpriced / unknown sku is rejected', async () => {
   }
 });
 
+test('readers checkout uses STRIPE_PRICE_READER_21 and ignores STRIPE_PRICE_READERS', async () => {
+  const oldOnly = { ...env, STRIPE_PRICE_READERS: 'price_19' };
+  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'readers', qty: 1 }] }), env: oldOnly })).status, 400);
+  let sent;
+  globalThis.fetch = async (url, init) => { sent = new URLSearchParams(init.body); return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/reader' }), { status: 200 }); };
+  const r = await checkout({ request: jsonReq({ items: [{ sku: 'readers', qty: 1 }] }), env: { ...oldOnly, STRIPE_PRICE_READER_21: 'price_reader_21' } });
+  assert.equal(r.status, 200);
+  assert.equal(sent.get('line_items[0][price]'), 'price_reader_21');
+  assert.equal(sent.get('line_items[0][quantity]'), '1');
+  assert.equal((await (await catalog({ env: oldOnly })).json()).skus.includes('readers'), false);
+  assert.equal((await (await catalog({ env: { ...oldOnly, STRIPE_PRICE_READER_21: 'price_reader_21' } })).json()).skus.includes('readers'), true);
+});
+
 test('checkout: bad qty rejected, not configured -> 503', async () => {
-  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 0 }] }), env })).status, 400);
-  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: {} })).status, 503);
+  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'tide-soap-dish', qty: 0 }] }), env })).status, 400);
+  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'tide-soap-dish', qty: 1 }] }), env: {} })).status, 503);
+});
+
+test('hibiscus set uses STRIPE_PRICE_HIBISCUS_SET and falls back to the flower-set price', async () => {
+  const oldOnly = { ...env, STRIPE_PRICE_SIX_SET_CASE: 'price_29' };
+  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: oldOnly })).status, 400);
+  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1 }] }), env: oldOnly })).status, 400);
+  let sent;
+  globalThis.fetch = async (url, init) => { sent = new URLSearchParams(init.body); return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/flower' }), { status: 200 }); };
+  const fallback = { ...oldOnly, STRIPE_PRICE_FLOWER_SET_CASE: 'price_flower_39' };
+  const r = await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: fallback });
+  assert.equal(r.status, 200);
+  assert.equal(sent.get('line_items[0][price]'), 'price_flower_39');
+  const own = { ...fallback, STRIPE_PRICE_HIBISCUS_SET: 'price_hibiscus_39' };
+  const r2 = await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: own });
+  assert.equal(r2.status, 200);
+  assert.equal(sent.get('line_items[0][price]'), 'price_hibiscus_39');
+  const r3 = await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1, flower: 'Sunflower' }] }), env: own });
+  assert.equal(r3.status, 200);
+  assert.equal(sent.get('line_items[0][price]'), 'price_flower_39');
+  const borrowed = { ...fallback, STRIPE_PRICE_HIBISCUS_SET: 'price_1UTVSJHYwaTbul7MyxtILxOz' };
+  const r4 = await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: borrowed });
+  assert.equal(r4.status, 200);
+  assert.equal(sent.get('line_items[0][price]'), 'price_flower_39');
+  assert.equal((await (await catalog({ env: own })).json()).skus.includes('six-set-case'), true);
+  assert.equal((await (await catalog({ env: oldOnly })).json()).skus.includes('six-set-case'), false);
+});
+
+test('pop trays and the holiday tray use STRIPE_PRICE_POP_COASTERS_6 only', async () => {
+  const wrong = { ...env, STRIPE_PRICE_FALL_POP_COASTERS: 'price_fall', STRIPE_PRICE_HALF_DOZEN: 'price_1UTVSJHYwaTbul7MyxtILxOz' };
+  for (const sku of ['fall-pop-coasters', 'pop-tray-1-season-colors', 'pop-tray-2-pop-flowers', 'pop-tray-3-coastal', 'pop-coasters-6']) {
+    assert.equal((await checkout({ request: jsonReq({ items: [{ sku, qty: 1 }] }), env: wrong })).status, 400, sku);
+  }
+  let sent;
+  globalThis.fetch = async (url, init) => { sent = new URLSearchParams(init.body); return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/pop' }), { status: 200 }); };
+  const priced = { ...wrong, STRIPE_PRICE_POP_COASTERS_6: 'price_pop_29' };
+  for (const sku of ['fall-pop-coasters', 'pop-tray-1-season-colors', 'pop-coasters-6']) {
+    const line = sku === 'pop-coasters-6' ? { sku, qty: 1, style: 'Flat', tray: 'Mixed' } : { sku, qty: 1, style: 'Flat' };
+    const r = await checkout({ request: jsonReq({ items: [line] }), env: priced });
+    assert.equal(r.status, 200, sku);
+    assert.equal(sent.get('line_items[0][price]'), 'price_pop_29', sku);
+  }
 });
 
 test('checkout: sends only server-side price id to Stripe and returns the hosted url', async () => {
   let sent;
   globalThis.fetch = async (url, init) => { sent = { url, body: new URLSearchParams(init.body) }; return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/x' }), { status: 200 }); };
-  const r = await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 2 }, { sku: 'six-set-case', qty: 1 }], price: 1 }), env });
+  const r = await checkout({ request: jsonReq({ items: [{ sku: 'tide-soap-dish', qty: 2 }, { sku: 'tide-soap-dish', qty: 1 }], price: 1 }), env });
   assert.equal(r.status, 200);
   assert.equal((await r.json()).url, 'https://checkout.stripe.com/c/x');
   assert.equal(sent.body.get('line_items[0][price]'), 'price_six');
@@ -249,7 +304,7 @@ test('sample: qty is 1 for retail, 6 for wholesale, legacy types map, spoofed sa
   assert.equal((await sample({ request: form(legacyRetail), env })).status, 200);
   globalThis.fetch = realFetch;
   const studio = sent.filter((m) => String(m.subject).startsWith('Sample request:'));
-  const confirm = sent.filter((m) => /free sample coaster|venue sample coasters/i.test(m.subject));
+  const confirm = sent.filter((m) => /sample request is in/i.test(m.subject));
   assert.equal(studio.length, 4);
   assert.equal(studio[0].subject, 'Sample request: Retail (1)');
   assert.match(studio[0].text, /qty: 1/);
@@ -263,7 +318,9 @@ test('sample: qty is 1 for retail, 6 for wholesale, legacy types map, spoofed sa
   assert.match(studio[2].text, /qty: 6/);
   assert.equal(studio[3].subject, 'Sample request: Retail (1)');
   assert.match(studio[3].text, /qty: 1/);
-  assert.match(confirm[0].html, /Your free sample coaster is on the way\./);
-  assert.match(confirm[1].html, /Your 6 free venue sample coasters are being baked\./);
+  assert.match(confirm[0].html, /Your sample request is in\./);
+  assert.match(confirm[1].html, /Your sample request is in\./);
+  assert.doesNotMatch(confirm[0].html, /free sample/i);
+  assert.doesNotMatch(confirm[1].html, /free sample/i);
   assert.match(confirm[1].text, /We'll reach out about your logo within one business day\./);
 });

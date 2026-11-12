@@ -1,59 +1,59 @@
 {
-  "_note": "PHOTO SWAP. This is the only file to edit when professional photos arrive. Do not edit the HTML. Paths are relative to web/ and are served from /. Each key under style, tray, and flower is one slot. Today every slot points at the closest studio rendering we already have. Replace that slot's img with the new file, rewrite alt so it describes the new photo, and set render to false so the Studio rendering caption drops. An empty img shows Photo coming. Slots that share a path are stand-ins, not separate photographs.",
+  "_note": "PHOTO SWAP. This is the only file to edit when professional photos arrive. Do not edit the HTML. Paths are relative to web/ and are served from /. Each key under style, tray, and flower is one slot. Point img at the new file, rewrite alt so it describes the photo, and leave render false. Do not add a studio rendering or concept render caption. An empty img shows Photo coming. Slots that share a path are stand-ins, not separate photographs.",
   "products": {
     "pop-coasters-6": {
       "card": {
         "img": "img/pop-tray-1-season-colors.webp",
-        "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
-        "render": true
+        "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+        "render": false
       },
       "style": {
         "Flat": {
           "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
-          "render": true
+          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "render": false
         },
         "Edge": {
           "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
-          "render": true
+          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "render": false
         }
       },
       "tray": {
         "Mixed": {
           "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
-          "render": true
+          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "render": false
         },
         "Pumpkin": {
           "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
-          "render": true
+          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "render": false
         },
         "Coconut (clear)": {
           "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
-          "render": true
+          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "render": false
         },
         "Rhubarb": {
           "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
-          "render": true
+          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "render": false
         },
         "Key Lime": {
           "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
-          "render": true
+          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "render": false
         },
         "Peach": {
           "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
-          "render": true
+          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "render": false
         },
         "Sea Salt": {
           "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "Studio rendering of the Pop coaster colors: Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt.",
-          "render": true
+          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "render": false
         }
       }
     },
@@ -71,9 +71,8 @@
         },
         "Hibiscus": {
           "img": "img/pop-tray-2-pop-flowers.webp",
-          "alt": "Concept render of flower coasters, including Hibiscus, Sunflower, Orchid, Plumeria, Bird of Paradise and Bougainvillea.",
-          "render": true,
-          "caption": "Concept render"
+          "alt": "Pop Tray 2, Pop Flowers: six flower Pop Round coasters on a wood tray, Sunflower, Hibiscus and Orchid in back, Plumeria, Bird of Paradise and Bougainvillea in front",
+          "render": false
         }
       }
     }

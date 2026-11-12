@@ -219,30 +219,31 @@ def llms_txt(site: dict, products: list, batch: dict, catalog: dict) -> str:
     base = site["site_url"]
     lines = [
         "# JUP LIFE by Mrs. Smash", "",
-        "> JUP LIFE by Mrs. Smash prints coasters in Jupiter, Florida. The shop sells Pop Coasters and Flower Coasters. "
+        "> JUP LIFE by Mrs. Smash prints coasters in Jupiter, Florida. The shop sells Pop Coasters ($29) and Flower Coasters ($39), and One More Chapter ($21). "
         "Enterprise logo coasters are made for restaurants, bars, boutique hotels, rentals and event hosts in Palm Beach County and beyond.", "",
         "## Key facts",
         "- Location: Jupiter, FL (serves Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County; ships within the US)",
         "- Material: flexible TPU 95A, washable; TPU pieces are dishwasher safe (normal dishwasher cycle, avoid extended or high-heat modes)",
         "- Shipping: free on all U.S. orders; orders leave the studio within 2-3 business days",
-        "- Samples: retail buyers get 1 free sample coaster; enterprise buyers get 6 free sample coasters. A sample print is made for approval before a logo batch is printed",
-        "- Enterprise: custom logo coasters and restaurant coasters from 200 pieces. A logo batch ships within 10 days of approval. Enterprise is an inquiry, not a shop product",
+        "- Samples: samples are available by request on the Enterprise page. A sample print is made for approval before a logo batch is printed",
+        "- Enterprise: custom logo coasters and restaurant coasters from 200 pieces. The Half Dozen is the $29 retail box only, and a logo batch ships within 10 days of approval",
+        "- Returns: within 7 days of delivery if you're not 100% happy, no questions asked",
+        f"- Current tray: {batch.get('tray', '')}",
         "- Contact: hello@juplifestudio.com, call +1-561-532-7120, text 561-581-8015",
         "- TikTok: https://www.tiktok.com/@juplifestudio", "",
         "## Pages",
         f"- [Home]({base}/): the coaster printers, Jupiter FL",
-        f"- [Shop]({base}/shop): Pop Coasters and Flower Coasters, with checkout",
-        f"- [Enterprise & Samples]({base}/enterprise): custom logo coasters for Palm Beach County restaurants, bars, hotels, rentals and events",
+        f"- [Shop]({base}/shop): Pop Coasters, Flower Coasters, and One More Chapter, with checkout",
+        f"- [Enterprise]({base}/enterprise): custom logo coasters for Palm Beach County restaurants, bars, hotels, rentals and events",
         f"- [About]({base}/about): Meet Mrs. Smash (Dee), the face of JUP LIFE by Mrs. Smash",
         f"- [Contact]({base}/contact): call +1-561-532-7120",
         f"- [Palm Beach County]({base}/palm-beach-county): 3D printed coasters for Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County",
         f"- [Shipping & Returns]({base}/shipping-returns)",
         f"- [Privacy]({base}/privacy)", "", "## Products"]
-    if catalog.get("show_legacy") and batch.get("tray"):
-        contact = "- Contact: hello@juplifestudio.com, call +1-561-532-7120, text 561-581-8015"
-        lines.insert(lines.index(contact), f"- Current tray: {batch.get('tray', '')}")
     by_sku = {p["sku"]: p for p in products}
     skus = list(catalog.get("listed") or [])
+    if "readers" not in skus and by_sku.get("readers", {}).get("shop"):
+        skus.append("readers")
     if catalog.get("show_legacy"):
         skus += [p["sku"] for p in products if p.get("shop") and p["sku"] not in skus]
     for sku in skus:

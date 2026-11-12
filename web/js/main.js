@@ -66,8 +66,8 @@
   }
 
   /* ---------- Sample request (modal + any inline [data-sample-form]) ---------- */
-  // Retail = 1 free sample coaster. Wholesale/venue = 6 free sample coasters.
-  // "The Half Dozen" is only the $29 box, never the free sample.
+  // Hidden sample_qty stays 1 for retail and 6 for a venue. The form does not promise a free count.
+  // "The Half Dozen" is only the $29 box.
   function bindBuyer(form, dlg) {
     const apply = () => {
       const buyer = form.querySelector('[name=buyer_type]:checked')?.value === 'wholesale' ? 'wholesale' : 'retail';
@@ -87,10 +87,10 @@
       const sampleType = rt === 'Sample' || rt === 'Half Dozen sample' || rt === 'Free sample (1 coaster)';
       if (dlg && sampleType) {
         const eye = $('[data-dlg-eyebrow]', dlg);
-        if (eye) eye.textContent = wholesale ? '6 free sample coasters for wholesale buyers' : '1 free sample coaster for retail buyers';
+        if (eye) eye.textContent = 'Samples available by request';
         const title = $('[data-dlg-title]', dlg);
-        if (title) title.textContent = wholesale ? 'Get 6 free sample coasters' : 'Get a free sample';
-        if (submit) submit.textContent = wholesale ? 'Send my 6 free samples' : 'Send my sample';
+        if (title) title.textContent = 'Request samples';
+        if (submit) submit.textContent = 'Request samples';
       } else if (dlg) {
         const COPY = {
           'Half Dozen order': ["We'll confirm details and pricing", 'Buy The Half Dozen ($29)', 'Send my order'],
@@ -105,7 +105,7 @@
         if (h) h.textContent = title;
         if (submit) submit.textContent = label;
       } else if (submit && sampleType) {
-        submit.textContent = wholesale ? 'Send my 6 free samples' : 'Send my sample';
+        submit.textContent = 'Request samples';
       }
     };
     $$('[name=buyer_type]', form).forEach((r) => r.addEventListener('change', apply));
@@ -252,8 +252,14 @@
     $$('[data-add-to-bag]').forEach((b) => b.addEventListener('click', () => {
       if (b.disabled) return;
       // price shown client-side is display only; the server maps sku -> Stripe Price
-      const { sku, name, price } = b.dataset;
+      let { sku, name, price } = b.dataset;
       const opts = choiceFrom(b.closest('[data-coaster]'));
+      // Hibiscus on the flower card checks out as its own $39 product. Do not send flower metadata on that SKU.
+      if (sku === 'flower-set-case' && opts.flower === 'Hibiscus') {
+        sku = 'six-set-case';
+        name = 'The Hibiscus Set';
+        delete opts.flower;
+      }
       const item = { sku, name, price: Number(price), qty: 1, ...opts };
       const hit = bag.find((i) => lineId(i) === lineId(item));
       if (hit) hit.qty = Math.min(hit.qty + 1, 20); else bag.push(item);
@@ -356,9 +362,10 @@
       img.alt = shot.alt || '';
     }
     if (cap) {
-      const label = shot.caption || (shot.render ? 'Studio rendering' : '');
-      cap.hidden = !label;
-      cap.textContent = label;
+      const label = typeof shot.caption === 'string' ? shot.caption.trim() : '';
+      const show = label && !/studio rendering|concept render/i.test(label);
+      cap.hidden = !show;
+      cap.textContent = show ? label : '';
     }
   }
 

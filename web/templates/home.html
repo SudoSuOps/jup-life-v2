@@ -60,12 +60,10 @@
       </div>
       <figure class="seal">
         {{ pic("img/seal-fresh-baked.webp", "Fresh baked daily. JUP LIFE Studio, built different.", sizes="128px", lazy=False) }}
-        <figcaption class="render-cap">Studio rendering</figcaption>
       </figure>
       {% if catalog.show_legacy %}{{ batch_board() }}{% else %}
       <figure class="hero-still">
         {{ pic(by_sku['pop-coasters-6'].img, by_sku['pop-coasters-6'].alt, sizes="(min-width: 900px) 520px, calc(100vw - 32px)", lazy=False) }}
-        {% if by_sku['pop-coasters-6'].render %}<figcaption class="render-cap">Studio rendering</figcaption>{% endif %}
       </figure>
       {% endif %}
     </div>
@@ -91,14 +89,29 @@
   </div>
 
   <figure style="margin:0">
-    {{ pic("img/flavor-board-" ~ season ~ ".webp", "Studio rendering of The Holiday Tray flavor board: six Pop coasters in Pumpkin, Coconut (frosted clear), Cranberry, Maple, Rhubarb and Sunflower on a sand board." if season == "fall" else batch.tray ~ " flavor board on a wood tray, studio rendering", sizes="(min-width: 1200px) 1104px, calc(100vw - 32px)", style="width:100%;height:auto;border-radius:14px") }}
-    <figcaption style="margin-top:8px;font-size:13px;font-weight:600">{{ batch.tray }} flavor board · Studio rendering. This week: {% for f in batch.flavors[:6] %}{{ f.name }}{% if f.name.startswith('Coconut') %} (clear){% endif %}{% if not loop.last %}, {% endif %}{% endfor %}.
+    {{ pic("img/flavor-board-" ~ season ~ ".webp", "The Holiday Tray flavor board: six Pop coasters in Pumpkin, Coconut (frosted clear), Cranberry, Maple, Rhubarb and Sunflower on a sand board." if season == "fall" else batch.tray ~ " flavor board on a wood tray", sizes="(min-width: 1200px) 1104px, calc(100vw - 32px)", style="width:100%;height:auto;border-radius:14px") }}
+    <figcaption style="margin-top:8px;font-size:13px;font-weight:600">{{ batch.tray }} flavor board. This week: {% for f in batch.flavors[:6] %}{{ f.name }}{% if f.name.startswith('Coconut') %} (clear){% endif %}{% if not loop.last %}, {% endif %}{% endfor %}.
     {{ swatch_list(batch.flavors[:6]) }}
     </figcaption>
   </figure>
 
   <div class="tray-grid">
-    {% for p in products if p.home %}{{ card(p) }}
+    {% for p in products if p.home %}
+      {% if p.sku == 'pop-coasters-6' %}
+      <div class="pop-feature">
+        <img class="popsters-logo" src="/img/popsters-logo.png" alt="Popsters by JUP LIFE" width="1185" height="402">
+        <div class="pop-feature-row">
+          {{ card(p) }}
+          <figure class="pop-loop">
+            <video muted autoplay loop playsinline poster="/img/poster-pop-coaster.webp" width="720" height="1280" aria-label="A Popsters coaster, printed by JUP LIFE">
+              <source src="/video/pop-coaster.mp4" type="video/mp4">
+            </video>
+          </figure>
+        </div>
+      </div>
+      {% else %}
+      {{ card(p) }}
+      {% endif %}
     {% endfor %}
     {{ cta_strip() }}
   </div>
@@ -151,7 +164,6 @@
         <figcaption><strong>Coaster party.</strong>Made for the bar · 15 s</figcaption>
       </figure>
     </div>
-    <p style="margin:0;font-size:13px">Studio renderings.</p>
   </div>
 </section>
 
@@ -182,7 +194,6 @@
   </ul>
   <figure style="margin:0;position:relative">
     <img src="/img/studio-counter-800.webp" srcset="/img/studio-counter-800.webp 800w, /img/studio-counter-1600.webp 1600w" sizes="(min-width: 1248px) 1152px, 100vw" alt="The JUP LIFE Studio counter: coasters under glass domes and on wood trays, printers and filament behind, palm trees outside" width="1600" height="900" loading="lazy" decoding="async" style="width:100%;aspect-ratio:3/2;max-height:620px;object-fit:cover;border-radius:14px">
-    <figcaption class="render-cap">Studio rendering</figcaption>
   </figure>
 </section>
 
@@ -192,13 +203,12 @@
     <figure>
       {{ pic("img/halfdozen-box.webp", "The Half Dozen: a windowed kraft box of coasters wrapped in a sage TPU band with the Mrs. Smash tag", sizes="(min-width: 900px) 560px, calc(100vw - 64px)") }}
       {{ pic("img/halfdozen-open.webp", "The box opened: six coasters in tissue, a Today's Batch card, sage band and tag", sizes="220px", cls="inset") }}
-      <figcaption class="render-cap">Studio rendering</figcaption>
     </figure>
     <div class="copy">
       <p class="eyebrow">The Half Dozen</p>
       <h2 id="hd-h">Six coasters. One little box.</h2>
       {# TODO(Smash): which $29 product is primary (6 coasters + case, The Half Dozen box, or 12 coasters with no case) is unresolved. Do not pick a primary $29 product or change prices. #}
-      <p style="margin:0">An assorted box of six, fresh from today's batch: windowed kraft box, sage TPU band, the Mrs. Smash tag and a Today's Batch menu card inside. Run a bar? <a href="/enterprise">Get 6 free sample coasters</a>.</p>
+      <p style="margin:0">An assorted box of six, fresh from today's batch: windowed kraft box, sage TPU band, the Mrs. Smash tag and a Today's Batch menu card inside. Run a bar? <a href="/enterprise">Samples are available by request</a>.</p>
       <div class="buy" style="gap:16px"><span class="price">$29</span><button type="button" class="btn btn-primary" data-add-to-bag data-sku="half-dozen" data-name="The Half Dozen" data-price="29">Order a Half Dozen</button><span class="muted">6 assorted · free U.S. shipping · <a href="/shop">Want 13? The Baker's Dozen is $39</a></span></div>
     </div>
   </div>
@@ -215,7 +225,6 @@
     <a href="/enterprise" style="font-weight:600;padding:10px 0;align-self:flex-start">Enterprise &amp; samples →</a>
     <figure style="margin:8px 0 0;position:relative">
       {{ pic("img/restaurant-drink.webp", "A lemon spritz on a sage coaster beside a cinnamon coaster, on a beachside table at golden hour", sizes="(min-width: 900px) 520px, calc(100vw - 32px)", style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px") }}
-      <figcaption class="render-cap">Studio rendering</figcaption>
     </figure>
   </div>
   {{ price_board() }}

@@ -1,6 +1,6 @@
 {
   "_note": "Display data for cards. Prices here are DISPLAY ONLY. Checkout charges come from Stripe Price IDs mapped server-side in functions/_lib.js. Never invent prices: null = 'Ask about this batch'.",
-  "_todo_primary_29": "Storefront list is web/data/catalog.json: Pop Coasters 6-Pack ($29) and Flower Coaster Set with Case ($39). Prices below for older products stay as they were. Photos for the two coasters live in web/data/photos.json.",
+  "_todo_primary_29": "Storefront list is web/data/catalog.json: Pop Coasters 6-Pack ($29) and Flower Coaster Set with Case ($39). One More Chapter stays on the shop at $21 with img/one-more-chapter.webp and its existing copy. Prices below for older products stay as they were. Photos for the two coasters live in web/data/photos.json.",
   "products": [
     {
       "sku": "fall-pop-coasters",
@@ -8,15 +8,28 @@
       "line": "Pop coasters in this season's tray flavors. Flat or Edge. No case.",
       "price": 29,
       "options": [
-        {"key": "style", "label": "Style", "choices": [{"value": "Flat", "label": "Flat"}, {"value": "Edge", "label": "Edge"}]}
+        {
+          "key": "style",
+          "label": "Style",
+          "choices": [
+            {
+              "value": "Flat",
+              "label": "Flat"
+            },
+            {
+              "value": "Edge",
+              "label": "Edge"
+            }
+          ]
+        }
       ],
       "material": "TPU 95A · washable · dishwasher safe",
       "swatches": "batch",
       "img": "img/holiday-tray-pops-1600x900.webp",
       "home": true,
       "shop": true,
-      "render": true,
-      "alt": "Studio rendering of The Holiday Tray: six JUP LIFE Pop coasters in Pumpkin, Coconut (frosted clear), Cranberry, Maple, Rhubarb and Sunflower in a teal tray on sand, with warm holiday lights, greenery and a small gold star."
+      "render": false,
+      "alt": "The Holiday Tray: six JUP LIFE Pop coasters in Pumpkin, Coconut (frosted clear), Cranberry, Maple, Rhubarb and Sunflower in a teal tray on sand, with warm holiday lights, greenery and a small gold star."
     },
     {
       "sku": "stack-bands-fall",
@@ -79,20 +92,20 @@
       "img": "img/stack-bands-harvest.webp",
       "board": "img/stack-bands-board.webp",
       "home": true,
-      "shop": true,
-      "render": true,
+      "shop": false,
+      "render": false,
       "alt": "The Harvest stack band 3-pack in Pumpkin, Cinnamon and Maple"
     },
     {
       "sku": "six-set-case",
       "name": "The Hibiscus Set",
       "line": "Six Hibiscus line coasters with the case included.",
-      "price": 29,
+      "price": 39,
       "material": "TPU 95A · washable · dishwasher safe",
       "img": "img/six-set-case.webp",
       "home": true,
       "shop": true,
-      "render": true,
+      "render": false,
       "alt": "Six yellow flower coasters stacked in a white printed case"
     },
     {
@@ -104,7 +117,7 @@
       "img": "img/halfdozen-box.webp",
       "home": false,
       "shop": true,
-      "render": true,
+      "render": false,
       "alt": "The Half Dozen: a windowed kraft box of assorted coasters wrapped in a sage TPU band with the Mrs. Smash tag"
     },
     {
@@ -116,7 +129,7 @@
       "img": "img/halfdozen-open.webp",
       "home": false,
       "shop": true,
-      "render": true,
+      "render": false,
       "alt": "The Baker's Dozen: a box of thirteen assorted coasters"
     },
     {
@@ -137,8 +150,8 @@
         }
       ],
       "home": true,
-      "shop": true,
-      "render": true,
+      "shop": false,
+      "render": false,
       "alt": "A teal Gigi band with a repeating JL monogram, in palm-leaf shadow"
     },
     {
@@ -160,7 +173,7 @@
       ],
       "home": true,
       "shop": true,
-      "render": true,
+      "render": false,
       "alt": "A lime-green Tide soap dish with wave ridges and drain holes, holding a bar of soap"
     },
     {
@@ -181,27 +194,131 @@
         }
       ],
       "home": true,
-      "shop": true,
-      "render": true,
+      "shop": false,
+      "render": false,
       "alt": "A Tide hand soap dispenser fading from lime to amber, with wave texture and a square base"
     },
     {
       "sku": "readers",
-      "name": "The Reader",
-      "line": "The Reader and its stand, both included. One more chapter.",
-      "price": 19,
+      "name": "One More Chapter",
+      "line": "What's included: 1 Reader + 1 cradle holder.",
+      "price": 21,
       "material": null,
-      "img": "img/readers-cradle.webp",
+      "img": "img/one-more-chapter.webp",
       "home": false,
       "shop": true,
-      "alt": "A gold driftwood-pattern Reader page holder resting in a sand-colored stand engraved One More Chapter, beside a book on a sunlit beach table",
+      "alt": "One More Chapter thumb page holder on an open book, with a cream holder, a sage-green holder, and a thumb in use",
       "gallery": [
         {
           "img": "img/readers-one-more-chapter.webp",
           "alt": "The Reader gold driftwood-pattern page holder resting in its sand-colored One More Chapter stand, with the empty stand inset"
         }
       ],
-      "render": true
+      "render": false
+    },
+    {
+      "sku": "pop-coasters-6",
+      "name": "Pop Coasters 6-Pack",
+      "line": "Six Pop coasters. Flat or Edge. A mixed tray, or one color.",
+      "note": "Mix packs in one order.",
+      "shipping": "Free U.S. shipping.",
+      "price": 29,
+      "material": "TPU 95A · washable · dishwasher safe",
+      "img": "img/pop-coasters-pumpkin.webp",
+      "alt": "A pumpkin Pop coaster",
+      "options": [
+        {
+          "key": "style",
+          "label": "Style",
+          "choices": [
+            {
+              "value": "Flat",
+              "label": "Flat"
+            },
+            {
+              "value": "Edge",
+              "label": "Edge"
+            }
+          ]
+        },
+        {
+          "key": "tray",
+          "label": "Tray",
+          "choices": [
+            {
+              "value": "Mixed",
+              "label": "Mixed",
+              "note": "6 colors"
+            },
+            {
+              "value": "Pumpkin",
+              "label": "Pumpkin",
+              "hex": "#E8731E"
+            },
+            {
+              "value": "Coconut (clear)",
+              "label": "Coconut",
+              "note": "clear",
+              "hex": "#F4EFE3",
+              "frosted": true
+            },
+            {
+              "value": "Rhubarb",
+              "label": "Rhubarb",
+              "hex": "#C93A5B"
+            },
+            {
+              "value": "Key Lime",
+              "label": "Key Lime",
+              "hex": "#A8D94A"
+            },
+            {
+              "value": "Peach",
+              "label": "Peach",
+              "hex": "#FFB07C"
+            },
+            {
+              "value": "Sea Salt",
+              "label": "Sea Salt",
+              "hex": "#7FD1C2"
+            }
+          ]
+        }
+      ],
+      "home": false,
+      "shop": false,
+      "render": false
+    },
+    {
+      "sku": "flower-set-case",
+      "name": "Flower Coaster Set with Case",
+      "line": "Six coasters and a one-color PLA case. Sunflower or Hibiscus.",
+      "shipping": "Free U.S. shipping.",
+      "price": 39,
+      "material": "TPU coasters · PLA case",
+      "img": "img/flower-sunflower-coaster.webp",
+      "alt": "A gold sunflower coaster, 3D printed in PLA, with a raised flower",
+      "options": [
+        {
+          "key": "flower",
+          "label": "Flower",
+          "choices": [
+            {
+              "value": "Sunflower",
+              "label": "Sunflower",
+              "hex": "#F6C21C"
+            },
+            {
+              "value": "Hibiscus",
+              "label": "Hibiscus",
+              "hex": "#E0325F"
+            }
+          ]
+        }
+      ],
+      "home": false,
+      "shop": false,
+      "render": false
     },
     {
       "sku": "pop-tray-1-season-colors",
@@ -212,21 +329,39 @@
       "price": 29,
       "material": "TPU 95A · washable · dishwasher safe",
       "pops": [
-        {"name": "Pumpkin", "hex": "#E8731E"},
-        {"name": "Coconut (clear)", "hex": "#F4EFE3"},
-        {"name": "Rhubarb", "hex": "#C93A5B"},
-        {"name": "Key Lime", "hex": "#A8D94A"},
-        {"name": "Peach", "hex": "#FFB07C"},
-        {"name": "Sea Salt", "hex": "#7FD1C2"}
+        {
+          "name": "Pumpkin",
+          "hex": "#E8731E"
+        },
+        {
+          "name": "Coconut (clear)",
+          "hex": "#F4EFE3"
+        },
+        {
+          "name": "Rhubarb",
+          "hex": "#C93A5B"
+        },
+        {
+          "name": "Key Lime",
+          "hex": "#A8D94A"
+        },
+        {
+          "name": "Peach",
+          "hex": "#FFB07C"
+        },
+        {
+          "name": "Sea Salt",
+          "hex": "#7FD1C2"
+        }
       ],
       "shots": [
         {
           "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "Studio rendering of JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray."
+          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray."
         },
         {
           "img": "img/pop-tray-1-color-card.webp",
-          "alt": "Studio rendering color card for JUP LIFE Pop Tray 1: Pumpkin #E8731E, Coconut frosted clear TPU, Rhubarb #C93A5B, Key Lime #A8D94A, Peach #FFB07C and Sea Salt #7FD1C2."
+          "alt": "Color card for JUP LIFE Pop Tray 1: Pumpkin #E8731E, Coconut frosted clear TPU, Rhubarb #C93A5B, Key Lime #A8D94A, Peach #FFB07C and Sea Salt #7FD1C2."
         }
       ],
       "home": false,
@@ -242,21 +377,39 @@
       "price": 29,
       "material": "TPU 95A · washable · dishwasher safe",
       "pops": [
-        {"name": "Sunflower", "hex": "#F6C21C"},
-        {"name": "Hibiscus", "hex": "#E0325F"},
-        {"name": "Orchid", "hex": "#9B4FC2"},
-        {"name": "Plumeria", "hex": "#EBE4D0"},
-        {"name": "Bird of Paradise", "hex": "#F07A1A"},
-        {"name": "Bougainvillea", "hex": "#D42A9C"}
+        {
+          "name": "Sunflower",
+          "hex": "#F6C21C"
+        },
+        {
+          "name": "Hibiscus",
+          "hex": "#E0325F"
+        },
+        {
+          "name": "Orchid",
+          "hex": "#9B4FC2"
+        },
+        {
+          "name": "Plumeria",
+          "hex": "#EBE4D0"
+        },
+        {
+          "name": "Bird of Paradise",
+          "hex": "#F07A1A"
+        },
+        {
+          "name": "Bougainvillea",
+          "hex": "#D42A9C"
+        }
       ],
       "shots": [
         {
           "img": "img/pop-tray-2-pop-flowers.webp",
-          "alt": "Concept render of Pop Tray 2, Pop Flowers: six flower Pop Round coasters on a wood tray, Sunflower, Hibiscus and Orchid in back, Plumeria, Bird of Paradise and Bougainvillea in front"
+          "alt": "Pop Tray 2, Pop Flowers: six flower Pop Round coasters on a wood tray, Sunflower, Hibiscus and Orchid in back, Plumeria, Bird of Paradise and Bougainvillea in front"
         },
         {
           "img": "img/pop-flowers-contact-sheet.webp",
-          "alt": "Concept render contact sheet of the six Pop Flowers coasters, front and back: Sunflower, Hibiscus, Orchid, Plumeria, Bird of Paradise and Bougainvillea, with the wave-over-JL mark on the back"
+          "alt": "Contact sheet of the six Pop Flowers coasters, front and back: Sunflower, Hibiscus, Orchid, Plumeria, Bird of Paradise and Bougainvillea, with the wave-over-JL mark on the back"
         }
       ],
       "home": false,
@@ -273,80 +426,44 @@
       "price": 29,
       "material": "TPU 95A · washable · dishwasher safe",
       "pops": [
-        {"name": "Sea Glass", "hex": "#9FD8C6"},
-        {"name": "Shell", "hex": "#E0D5C1"},
-        {"name": "Dunes", "hex": "#D9B25F"},
-        {"name": "Red Mangrove", "hex": "#206030"},
-        {"name": "Banyan", "hex": "#3E7D3A"},
-        {"name": "Sea Turtle", "hex": "#0F7C82"}
+        {
+          "name": "Sea Glass",
+          "hex": "#9FD8C6"
+        },
+        {
+          "name": "Shell",
+          "hex": "#E0D5C1"
+        },
+        {
+          "name": "Dunes",
+          "hex": "#D9B25F"
+        },
+        {
+          "name": "Red Mangrove",
+          "hex": "#206030"
+        },
+        {
+          "name": "Banyan",
+          "hex": "#3E7D3A"
+        },
+        {
+          "name": "Sea Turtle",
+          "hex": "#0F7C82"
+        }
       ],
       "shots": [
         {
           "img": "img/pop-tray-3-coastal.webp",
-          "alt": "Concept render of Pop Tray 3, Coastal: six coastal Pop Round coasters on a wood tray, Sea Glass, Shell and Dunes in back, Red Mangrove, Banyan and Sea Turtle in front"
+          "alt": "Pop Tray 3, Coastal: six coastal Pop Round coasters on a wood tray, Sea Glass, Shell and Dunes in back, Red Mangrove, Banyan and Sea Turtle in front"
         },
         {
           "img": "img/pop-coastal-contact-sheet.webp",
-          "alt": "Concept render contact sheet of the six Coastal Pop coasters, front and back: Sea Glass, Shell, Dunes, Red Mangrove, Banyan and Sea Turtle, with the wave-over-JL mark on the back"
+          "alt": "Contact sheet of the six Coastal Pop coasters, front and back: Sea Glass, Shell, Dunes, Red Mangrove, Banyan and Sea Turtle, with the wave-over-JL mark on the back"
         }
       ],
       "home": false,
       "shop": true,
       "pop_tray": true
-    },
-    {
-      "sku": "pop-coasters-6",
-      "name": "Pop Coasters 6-Pack",
-      "line": "Six Pop coasters. Flat or Edge. A mixed tray, or one color.",
-      "note": "Mix packs in one order.",
-      "shipping": "Free U.S. shipping.",
-      "price": 29,
-      "material": "TPU 95A · washable · dishwasher safe",
-      "options": [
-        {
-          "key": "style",
-          "label": "Style",
-          "choices": [
-            {"value": "Flat", "label": "Flat"},
-            {"value": "Edge", "label": "Edge"}
-          ]
-        },
-        {
-          "key": "tray",
-          "label": "Tray",
-          "choices": [
-            {"value": "Mixed", "label": "Mixed", "note": "6 colors"},
-            {"value": "Pumpkin", "label": "Pumpkin", "hex": "#E8731E"},
-            {"value": "Coconut (clear)", "label": "Coconut", "note": "clear", "hex": "#F4EFE3", "frosted": true},
-            {"value": "Rhubarb", "label": "Rhubarb", "hex": "#C93A5B"},
-            {"value": "Key Lime", "label": "Key Lime", "hex": "#A8D94A"},
-            {"value": "Peach", "label": "Peach", "hex": "#FFB07C"},
-            {"value": "Sea Salt", "label": "Sea Salt", "hex": "#7FD1C2"}
-          ]
-        }
-      ],
-      "home": false,
-      "shop": false
-    },
-    {
-      "sku": "flower-set-case",
-      "name": "Flower Coaster Set with Case",
-      "line": "Six coasters and a one-color PLA case. Sunflower or Hibiscus.",
-      "shipping": "Free U.S. shipping.",
-      "price": 39,
-      "material": "TPU coasters · PLA case",
-      "options": [
-        {
-          "key": "flower",
-          "label": "Flower",
-          "choices": [
-            {"value": "Sunflower", "label": "Sunflower", "hex": "#F6C21C"},
-            {"value": "Hibiscus", "label": "Hibiscus", "hex": "#E0325F"}
-          ]
-        }
-      ],
-      "home": false,
-      "shop": false
     }
   ]
 }
