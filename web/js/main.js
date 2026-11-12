@@ -239,7 +239,15 @@
     $$('[data-open-bag]').forEach((b) => b.addEventListener('click', () => openDlg(dlg)));
     $$('[data-add-to-bag]').forEach((b) => b.addEventListener('click', () => {
       // price shown client-side is display only; the server maps sku -> Stripe Price
-      const { sku, name, price } = b.dataset;
+      let { sku, name } = b.dataset;
+      const { price } = b.dataset;
+      if (sku === 'flower-set-case') {
+        const flower = b.closest('article')?.querySelector('[data-option="flower"] input:checked')?.value;
+        if (flower === 'Hibiscus') {
+          sku = 'six-set-case';
+          name = 'The Hibiscus Set';
+        }
+      }
       const hit = bag.find((i) => i.sku === sku);
       if (hit) hit.qty = Math.min(hit.qty + 1, 20); else bag.push({ sku, name, price: Number(price), qty: 1 });
       saveBag(bag); renderBag(); openDlg(dlg);
