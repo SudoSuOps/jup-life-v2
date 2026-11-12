@@ -39,19 +39,29 @@ test('checkout: bad qty rejected, not configured -> 503', async () => {
   assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'tide-soap-dish', qty: 1 }] }), env: {} })).status, 503);
 });
 
-test('hibiscus set uses STRIPE_PRICE_FLOWER_SET_CASE and ignores the old $29 six-set secret', async () => {
+test('hibiscus set uses STRIPE_PRICE_HIBISCUS_SET and falls back to the flower-set price', async () => {
   const oldOnly = { ...env, STRIPE_PRICE_SIX_SET_CASE: 'price_29' };
   assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: oldOnly })).status, 400);
   assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1 }] }), env: oldOnly })).status, 400);
   let sent;
   globalThis.fetch = async (url, init) => { sent = new URLSearchParams(init.body); return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/flower' }), { status: 200 }); };
-  const priced = { ...oldOnly, STRIPE_PRICE_FLOWER_SET_CASE: 'price_flower_39' };
-  const r = await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: priced });
+  const fallback = { ...oldOnly, STRIPE_PRICE_FLOWER_SET_CASE: 'price_flower_39' };
+  const r = await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: fallback });
   assert.equal(r.status, 200);
   assert.equal(sent.get('line_items[0][price]'), 'price_flower_39');
-  const r2 = await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1 }] }), env: priced });
+  const own = { ...fallback, STRIPE_PRICE_HIBISCUS_SET: 'price_hibiscus_39' };
+  const r2 = await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: own });
   assert.equal(r2.status, 200);
+  assert.equal(sent.get('line_items[0][price]'), 'price_hibiscus_39');
+  const r3 = await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1 }] }), env: own });
+  assert.equal(r3.status, 200);
   assert.equal(sent.get('line_items[0][price]'), 'price_flower_39');
+  const borrowed = { ...fallback, STRIPE_PRICE_HIBISCUS_SET: 'price_1UTVSJHYwaTbul7MyxtILxOz' };
+  const r4 = await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: borrowed });
+  assert.equal(r4.status, 200);
+  assert.equal(sent.get('line_items[0][price]'), 'price_flower_39');
+  assert.equal((await (await catalog({ env: own })).json()).skus.includes('six-set-case'), true);
+  assert.equal((await (await catalog({ env: oldOnly })).json()).skus.includes('six-set-case'), false);
 });
 
 test('pop trays and the holiday tray use STRIPE_PRICE_POP_COASTERS_6 only', async () => {
