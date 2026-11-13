@@ -7,7 +7,7 @@ STRIPE_PRICE_FALL_POP_COASTERS=price_xxx
 STRIPE_PRICE_GIGI=price_xxx
 STRIPE_PRICE_TIDE_SOAP_DISH=price_xxx
 STRIPE_PRICE_TIDE_DISPENSER=price_xxx
-# One More Chapter ($21). Leave unset until a $21 Stripe price exists. STRIPE_PRICE_READERS is ignored.
+# Readers ($21). Leave unset until a $21 Stripe price exists. STRIPE_PRICE_READERS is ignored.
 STRIPE_PRICE_READER_21=
 # Pop Coasters 6-Pack at $29 (Flat or Edge). Leave blank to show Coming soon.
 # Do not paste the Half Dozen or Baker's Dozen price ID here.

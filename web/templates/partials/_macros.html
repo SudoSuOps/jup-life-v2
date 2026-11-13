@@ -70,7 +70,7 @@
   <div class="thumbs">{% for g in p.gallery %}{{ pic(g.img, g.alt, sizes="64px") }}{% endfor %}</div>
   {% endif %}
   {% elif p.sku == 'readers' and have_ph('readers_photo') %}
-  <figure>{{ pic(site.placeholders.readers_photo, "The Reader thumb page holder and stand", sizes="360px") }}</figure>
+  <figure>{{ pic(site.placeholders.readers_photo, "A Readers thumb page holder and crate", sizes="360px") }}</figure>
   {% else %}
   <div class="well"><span class="ph">{{ p.photo_placeholder }}</span></div>
   {% endif %}
