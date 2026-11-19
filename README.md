@@ -1,6 +1,6 @@
 # juplifestudio.com v2
 
-Fresh baked. Built different. Static site (Jinja build) + Cloudflare Pages Functions for checkout, Stripe webhook and the sample form.
+Fresh printed. Built different. Static site (Jinja build) + Cloudflare Pages Functions for checkout, Stripe webhook and the sample form.
 
 ```sh
 python3 -m venv .venv && .venv/bin/pip install -r requirements.txt

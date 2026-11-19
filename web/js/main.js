@@ -95,8 +95,8 @@
         const COPY = {
           'Half Dozen order': ["We'll confirm details and pricing", 'Buy The Half Dozen ($29)', 'Send my order'],
           'Product question': ['Ask us anything', 'Ask about this batch', 'Send my question'],
-          'Custom order': ['Baked to order', 'Custom order', 'Send my request'],
-          Custom: ['Baked to order', 'Custom order', 'Send my request'],
+          'Custom order': ['Printed to order', 'Custom order', 'Send my request'],
+          Custom: ['Printed to order', 'Custom order', 'Send my request'],
         };
         const [eyebrow, title, label] = COPY[rt] || COPY['Product question'];
         const eye = $('[data-dlg-eyebrow]', dlg);
