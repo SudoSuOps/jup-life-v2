@@ -46,7 +46,7 @@ Built to `docs/WHOLESALE_SPEC.md`. Deviations / decisions:
 - Form intake: `POST /api/sample-request` (multipart) with honeypot, per-IP throttle, logo type/size/magic-byte checks, SVG script rejection; notifications via Resend HTTP API (optional; logs otherwise).
 
 ## photos-v3 (Oct 22, owner folder)
-- Full-size photos replace the contact-sheet cuts: `ws-hero-bar`, `studio-counter`, `tide-dispenser`, `gigi-teal`, `ws-logo-mockup-example`. New `bakery-dome-*` (cake dome + kraft boxes) is the Shop banner.
+- Full-size photos replace the contact-sheet cuts: `ws-hero-bar`, `studio-counter`, `tide-dispenser`, `gigi-teal`, `ws-logo-mockup-example`. New `display-dome-*` (glass dome over coasters) is the Shop banner.
 - Shorts (re-encoded to ~1.5-4 MB, posters generated, tap-to-play, never autoplay): **Enterprise "Out on the bar"**: `ws-one-love` (short01), `ws-drinks-down` (short09). **Shop "Off the printers"**: `shop-baked-daily` (short02), `shop-fresh-out` (short01 (1)).
 - Not used: `short02 (1)` (first half of the Home "Built different" cut, a duplicate). Checked every short for metal-chain imagery and other brands: none.
 - Still contact-sheet cuts (no full-size in the folder): the three wholesale step photos and `ws-bulk-boxes-studio`.

@@ -115,7 +115,7 @@ The same fields as the form on Page 3, plus a hidden "source page" field. It ope
 - **Wholesale: call Smash, 561-532-7120**
 - **Email: dee@juplifestudio.com**
 - **Text us: 561-581-8015** [[CONFIRM: texting line, show as "Text us" only]]. Never label it as a call number and never use a `tel:` link for it (use `sms:`).
-- X: @juplifestudio. TikTok: @juplifestudio.
+- X: @juplifestudio. TikTok: @juplifestudios.
 
 ## 8. Claims guardrails and do-not list
 - **Allowed claims only:** washable; made in Jupiter, FL; "locally printed" as playful copy; the five facts in "Quality by design".
