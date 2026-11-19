@@ -91,7 +91,7 @@ async function confirmSample(env, request, rec) {
     eyebrow: 'Samples available by request',
     heading: copy.heading,
     paragraphs: copy.paragraphs,
-    signoff: ['Fresh baked, built different.', 'Mrs. Smash'],
+    signoff: ['Fresh printed, built different.', 'Mrs. Smash'],
   });
   try {
     const r = await fetch('https://api.resend.com/emails', {

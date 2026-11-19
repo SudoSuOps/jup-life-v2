@@ -57,8 +57,8 @@ a{color:#A9532F}a:hover{color:#8E4426}
 <section style="max-width: 1200px; margin: 0 auto; padding: clamp(32px, 6vw, 88px) clamp(16px, 4vw, 48px); display: flex; flex-wrap: wrap; align-items: center; gap: 40px 64px">
 <div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
 <p class="eyebrow">Fresh print daily · Jupiter, FL</p>
-<h1 class="serif" style="margin: 0; font-size: clamp(44px, 6.4vw, 84px); line-height: 1.02; letter-spacing: -.01em">Fresh baked.<br>Built different.</h1>
-<p style="margin: 0; font-size: clamp(17px, 1.6vw, 20px); max-width: 30em">Washable TPU coasters and coastal pieces, 3D-printed in small seasonal batches in Jupiter, FL.</p>
+<h1 class="serif" style="margin: 0; font-size: clamp(44px, 6.4vw, 84px); line-height: 1.02; letter-spacing: -.01em">Fresh printed.<br>Built different.</h1>
+<p style="margin: 0; font-size: clamp(17px, 1.6vw, 20px); max-width: 30em">Washable coasters and coastal pieces, 3D-printed in small seasonal batches in Jupiter, FL.</p>
 <div style="display: flex; flex-wrap: wrap; gap: 12px; padding-top: 4px">
 <a href="Shop.dc.html" class="btn btn-primary">Shop the Batch</a>
 <button type="button" class="btn btn-outline" onClick="{{openSample}}">Get a free Half Dozen</button>
@@ -76,7 +76,7 @@ a{color:#A9532F}a:hover{color:#8E4426}
 </sc-if>
 <p class="eyebrow" style="color: #E9D9C2">{{batchDate}} · Batch #{{batchNo}}</p>
 <h2 class="serif" style="margin: 6px 0 2px; font-size: clamp(32px, 3.4vw, 42px); line-height: 1.1">Today's Batch</h2>
-<p style="margin: 0 0 18px; font-size: 16px; color: #E9D9C2">{{batch.tray}} is out of the oven.</p>
+<p style="margin: 0 0 18px; font-size: 16px; color: #E9D9C2">{{batch.tray}} is fresh off the printers.</p>
 <div style="border-top: 2px dotted rgba(251,247,240,.35); padding-top: 14px; display: flex; flex-direction: column; gap: 10px">
 <sc-for list="{{batch.flavors}}" as="f" hint-placeholder-count="5">
 <div style="display: flex; align-items: flex-end; font-size: 17px">
@@ -87,7 +87,7 @@ a{color:#A9532F}a:hover{color:#8E4426}
 </div>
 </sc-for>
 </div>
-<p style="margin: 20px 0 0; padding-top: 12px; border-top: 2px dotted rgba(251,247,240,.35); font-size: 14px; color: #E9D9C2; text-align: center">Locally baked in Jupiter, FL.</p>
+<p style="margin: 20px 0 0; padding-top: 12px; border-top: 2px dotted rgba(251,247,240,.35); font-size: 14px; color: #E9D9C2; text-align: center">Locally printed in Jupiter, FL.</p>
 </div>
 </div>
 </section>
@@ -154,7 +154,7 @@ a{color:#A9532F}a:hover{color:#8E4426}
 <article class="lift" style="grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px 40px; background: #2B2B2B; color: #FBF7F0; border-radius: 14px; padding: clamp(24px, 3vw, 36px) clamp(20px, 3vw, 40px)">
 <div style="flex: 1 1 420px; display: flex; flex-direction: column; gap: 12px">
 <p class="eyebrow" style="color: #E9D9C2">Custom logo coasters</p>
-<h3 class="serif" style="margin: 0; font-size: 34px; line-height: 1.1">Your logo, fresh baked.</h3>
+<h3 class="serif" style="margin: 0; font-size: 34px; line-height: 1.1">Your logo, fresh printed.</h3>
 <p style="margin: 0; font-size: 16px; color: #F1E7D8">From 200 coasters. Start with a free Half Dozen and try them on your bar.</p>
 </div>
 <button type="button" class="btn btn-primary" style="align-self: flex-start" onClick="{{openSample}}">Get a free Half Dozen</button>
@@ -162,17 +162,17 @@ a{color:#A9532F}a:hover{color:#8E4426}
 </div>
 </section>
 
-<!-- 2b. Out of the oven: tap-to-play shorts, no autoplay -->
-<section aria-labelledby="oven-h" style="background: #F3EADC">
+<!-- 2b. Off the printers: tap-to-play shorts, no autoplay -->
+<section aria-labelledby="press-h" style="background: #F3EADC">
 <div style="max-width: 1200px; margin: 0 auto; padding: clamp(48px, 6vw, 80px) clamp(16px, 4vw, 48px); display: flex; flex-direction: column; gap: 28px">
 <div>
 <p class="eyebrow">Watch the batch</p>
-<h2 id="oven-h" class="serif" style="margin: 6px 0 0; font-size: clamp(34px, 4vw, 52px); line-height: 1.1">Out of the oven.</h2>
+<h2 id="press-h" class="serif" style="margin: 6px 0 0; font-size: clamp(34px, 4vw, 52px); line-height: 1.1">Off the printers.</h2>
 </div>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 24px 20px; max-width: 980px">
 <figure style="margin: 0">
-<video controls preload="none" playsinline poster="/_blob/238bbbffc048f679f15c9b06fa804f49" aria-label="Fresh Baked: a coaster printing in the studio, then the finished pieces under glass domes" style="display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 14px; background: #2B2B2B"><source src="/_blob/984273e46e36021a368916c039b21f44" type="video/mp4"></video>
-<figcaption style="margin-top: 10px; display: flex; flex-direction: column"><strong style="font-size: 16px">Fresh baked.</strong><span style="font-size: 13px">From the printer to the dome · 15 s</span></figcaption>
+<video controls preload="none" playsinline poster="/_blob/238bbbffc048f679f15c9b06fa804f49" aria-label="Fresh printed: a coaster printing in the studio, then the finished pieces under glass domes" style="display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 14px; background: #2B2B2B"><source src="/_blob/984273e46e36021a368916c039b21f44" type="video/mp4"></video>
+<figcaption style="margin-top: 10px; display: flex; flex-direction: column"><strong style="font-size: 16px">Fresh printed.</strong><span style="font-size: 13px">From the printer to the dome · 15 s</span></figcaption>
 </figure>
 <figure style="margin: 0">
 <video controls preload="none" playsinline poster="/_blob/72a9eea05e2730e531121e60181b9ef5" aria-label="Coaster party: colorful coasters tumble onto a beach bar and drinks land on them" style="display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 14px; background: #2B2B2B"><source src="/_blob/7a1c78567421599b0df717078a65f04a" type="video/mp4"></video>
@@ -194,22 +194,22 @@ a{color:#A9532F}a:hover{color:#8E4426}
 <div style="flex: 1 1 380px; max-width: 640px">
 <p class="eyebrow">Why we're built different</p>
 <h2 class="serif" style="margin: 6px 0 10px; font-size: clamp(34px, 4vw, 52px); line-height: 1.1">Quality by design.</h2>
-<p style="margin: 0; font-size: 18px">We're a small studio that bakes in batches, not an assembly line.</p>
+<p style="margin: 0; font-size: 18px">We're a small studio that prints in batches, not an assembly line.</p>
 </div>
 <figure style="flex: 0 1 300px; margin: 0; position: relative">
-<img src="/_blob/0006a8cb5b5e299a4eaed96c499a2aa3" alt="Hands flexing a pumpkin-orange TPU coaster" loading="lazy" style="display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 14px">
+<img src="/_blob/0006a8cb5b5e299a4eaed96c499a2aa3" alt="Hands flexing a pumpkin-orange coaster" loading="lazy" style="display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 14px">
 </figure>
 </div>
 <ul style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px 32px">
 <li style="display: flex; flex-direction: column; gap: 10px; padding: 8px 0">
 <svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5A3E2B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 28h34l-3 7H8z"></path><circle cx="13" cy="22" r="4.5"></circle><circle cx="22" cy="21" r="4.5"></circle><circle cx="31" cy="22" r="4.5"></circle></svg>
 <strong style="font-size: 18px">Small batches.</strong>
-<span style="font-size: 16px">Every tray is designed in-house, seasonal, and baked fresh. No assembly line.</span>
+<span style="font-size: 16px">Every tray is designed in-house, seasonal, and printed fresh. No assembly line.</span>
 </li>
 <li style="display: flex; flex-direction: column; gap: 10px; padding: 8px 0">
 <svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5A3E2B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M26 6l6 6-16 16-8 2 2-8z"></path><path d="M22 10l6 6"></path><path d="M5 37c4-4 7-4 10 0s7 4 10 0 7-4 10 0"></path></svg>
 <strong style="font-size: 18px">Designed in Jupiter.</strong>
-<span style="font-size: 16px">Our own design team builds every piece for single-color TPU, tested on our own printers.</span>
+<span style="font-size: 16px">Our own design team builds every piece in a single color, tested on our own printers.</span>
 </li>
 <li style="display: flex; flex-direction: column; gap: 10px; padding: 8px 0">
 <svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5A3E2B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="6" width="30" height="32" rx="3"></rect><path d="M7 14h30"></path><path d="M18 14v6h8v-6"></path><path d="M13 32h18"></path></svg>
@@ -219,7 +219,7 @@ a{color:#A9532F}a:hover{color:#8E4426}
 <li style="display: flex; flex-direction: column; gap: 10px; padding: 8px 0">
 <svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5A3E2B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="20" cy="30" rx="15" ry="6"></ellipse><path d="M5 30v3c0 3.3 6.7 6 15 6s15-2.7 15-6v-3"></path><path d="M32 5c3 4 5 7 5 9a5 5 0 0 1-10 0c0-2 2-5 5-9z"></path></svg>
 <strong style="font-size: 18px">Built to be used.</strong>
-<span style="font-size: 16px">Flexible TPU 95A. Washable, dishwasher safe, made for daily use.</span>
+<span style="font-size: 16px">Flexible. Washable, made for daily use.</span>
 </li>
 <li style="display: flex; flex-direction: column; gap: 10px; padding: 8px 0">
 <svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5A3E2B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 6h22v32H14L6 22z"></path><circle cx="14" cy="22" r="2.5"></circle><path d="M21 22l4 4 7-8"></path></svg>
@@ -236,13 +236,13 @@ a{color:#A9532F}a:hover{color:#8E4426}
 <section style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px) clamp(48px, 6vw, 88px)">
 <div style="background: #C9A67A; border-radius: 24px; padding: clamp(16px, 3vw, 32px); display: flex; flex-wrap: wrap; gap: clamp(16px, 3vw, 32px); align-items: stretch">
 <figure style="flex: 1 1 420px; margin: 0; position: relative; min-width: 0">
-<img src="/_blob/a7ef878cf8ba4fe864fc9841968e0e72" alt="The Half Dozen: a windowed kraft box of coasters wrapped in a sage TPU band with the Mrs. Smash tag" style="display: block; width: 100%; height: 100%; min-height: 300px; object-fit: cover; border-radius: 16px">
+<img src="/_blob/a7ef878cf8ba4fe864fc9841968e0e72" alt="The Half Dozen: a windowed kraft box of coasters wrapped in a sage band with the Mrs. Smash tag" style="display: block; width: 100%; height: 100%; min-height: 300px; object-fit: cover; border-radius: 16px">
 <img src="/_blob/177598fa0eb04e4d90ec0311bc5068f7" alt="The box opened: six coasters in tissue, a Today's Batch card, sage band and tag" loading="lazy" style="position: absolute; right: 14px; bottom: 40px; width: 38%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; border: 4px solid #FBF7F0; box-shadow: 0 10px 24px rgba(43,43,43,.3)">
 </figure>
 <div style="flex: 1 1 380px; background: #FBF7F0; border-radius: 16px; padding: clamp(24px, 4vw, 48px); display: flex; flex-direction: column; gap: 16px; justify-content: center">
 <p class="eyebrow">The Half Dozen</p>
 <h2 class="serif" style="margin: 0; font-size: clamp(32px, 3.6vw, 46px); line-height: 1.1">Six coasters. One little box. On the house.</h2>
-<p style="margin: 0; font-size: 17px">Windowed kraft box, sage TPU band, the Mrs. Smash tag, and a Today's Batch menu card inside.</p>
+<p style="margin: 0; font-size: 17px">Windowed kraft box, sage band, the Mrs. Smash tag, and a Today's Batch menu card inside.</p>
 <div><button type="button" class="btn btn-primary" onClick="{{openSample}}">Get a free Half Dozen</button></div>
 </div>
 </div>
@@ -254,7 +254,7 @@ a{color:#A9532F}a:hover{color:#8E4426}
 <section id="wholesale" style="max-width: 1200px; margin: 0 auto; padding: clamp(48px, 6vw, 88px) clamp(16px, 4vw, 48px); display: flex; flex-wrap: wrap; align-items: center; gap: 40px 64px">
 <div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
 <p class="eyebrow">For restaurants &amp; bars</p>
-<h2 class="serif" style="margin: 0; font-size: clamp(34px, 4vw, 52px); line-height: 1.1">Your logo, fresh baked.</h2>
+<h2 class="serif" style="margin: 0; font-size: clamp(34px, 4vw, 52px); line-height: 1.1">Your logo, fresh printed.</h2>
 <p style="margin: 0; font-size: 18px; max-width: 28em">Custom-logo coasters for bars and restaurants in Jupiter, Palm Beach County and beyond.</p>
 <a href="Wholesale.dc.html" style="font-weight: 600; padding: 10px 0; align-self: flex-start">Wholesale &amp; samples →</a>
 <figure style="margin: 8px 0 0; position: relative">
@@ -271,7 +271,7 @@ a{color:#A9532F}a:hover{color:#8E4426}
 <div style="display: flex; align-items: flex-end"><dt style="font-weight: 600">1,000</dt><span class="leader" aria-hidden="true"></span><dd style="margin: 0; font-weight: 600">$1.75 ea</dd></div>
 <div style="display: flex; align-items: flex-end"><dt style="font-weight: 600">Samples</dt><span class="leader" aria-hidden="true"></span><dd style="margin: 0; font-style: italic; color: #F1C9A0">on the house</dd></div>
 </dl>
-<p style="margin: 20px 0 0; padding-top: 12px; border-top: 2px dotted rgba(251,247,240,.35); font-size: 14px; color: #E9D9C2; text-align: center">Locally baked in Jupiter, FL.</p>
+<p style="margin: 20px 0 0; padding-top: 12px; border-top: 2px dotted rgba(251,247,240,.35); font-size: 14px; color: #E9D9C2; text-align: center">Locally printed in Jupiter, FL.</p>
 </div>
 </section>
 
@@ -286,7 +286,7 @@ a{color:#A9532F}a:hover{color:#8E4426}
 <div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
 <p class="eyebrow">Meet Mrs. Smash</p>
 <h2 class="serif" style="margin: 0; font-size: clamp(34px, 4vw, 52px); line-height: 1.1">A little piece of our happy place.</h2>
-<p style="margin: 0; font-size: 18px; max-width: 32em">Dee is Mrs. Smash: mom of four, wife to one, and the heart of the studio. She and Smash bake every batch right here in Jupiter.</p>
+<p style="margin: 0; font-size: 18px; max-width: 32em">Dee is Mrs. Smash: mom of four, wife to one, and the heart of the studio. She and Smash print every batch right here in Jupiter.</p>
 </div>
 </section>
 
@@ -312,7 +312,7 @@ a{color:#A9532F}a:hover{color:#8E4426}
 <div style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 12px">
 <div style="background: #FBF7F0; border-radius: 12px; padding: 10px 14px; align-self: flex-start"><img src="/_blob/a3b868b09b002d654d9fe1fcadde3124" alt="JUP LIFE" style="width: 110px; height: 64px; object-fit: contain; display: block"></div>
 <span class="serif" style="font-size: 28px; line-height: 1.1">JUP LIFE<br><span style="font-size: 18px">by Mrs. Smash</span></span>
-<span style="font-size: 16px; color: #F1E7D8">Fresh baked. Built different.</span>
+<span style="font-size: 16px; color: #F1E7D8">Fresh printed. Built different.</span>
 </div>
 <nav aria-label="Footer" style="flex: 0 1 200px; display: flex; flex-direction: column; gap: 8px; font-size: 16px">
 <a href="Shop.dc.html">Shop</a>
@@ -398,15 +398,15 @@ class Component extends DCLogic {
     const open = (type) => () => this.setState({ modalOpen: true, sent: false, reqType: type });
     const openSample = open('Half Dozen sample');
     const ask = open('Product question');
-    const tpu = 'TPU 95A · washable · dishwasher safe';
+    const materialLine = 'washable';
 
     const products = [
-      { name: 'Holiday Tray Pop Coasters', line: 'Pop coasters in this season’s tray flavors.', photo: '[[PHOTO: Holiday Tray Pop coasters]]', img: '/_blob/5f92bd649d470e15194dd5b6eebf97ae', alt: 'The Holiday Tray: six JUP LIFE Pop coasters in Pumpkin, Coconut (frosted clear), Cranberry, Maple, Rhubarb and Sunflower in a teal tray on sand, with warm holiday lights, greenery and a small gold star.', swatches: batch.flavors, material: tpu, ask: true },
+      { name: 'Holiday Tray Pop Coasters', line: 'Pop coasters in this season’s tray flavors.', photo: '[[PHOTO: Holiday Tray Pop coasters]]', img: '/_blob/5f92bd649d470e15194dd5b6eebf97ae', alt: 'The Holiday Tray: six JUP LIFE Pop coasters in Pumpkin, Coconut (frosted clear), Cranberry, Maple, Rhubarb and Sunflower in a teal tray on sand, with warm holiday lights, greenery and a small gold star.', swatches: batch.flavors, material: materialLine, ask: true },
       { name: 'Stack Bands', line: 'Snap. Stack. Go. Fall 3-packs: Harvest, Berry Pie and Coastal Batch.', photo: '[[PHOTO: Stack Bands]]', img: '/_blob/8825915ae074730705f6510e1bbd473a', alt: 'The Harvest stack band 3-pack in Pumpkin, Cinnamon and Maple', ask: true },
-      { name: '6-Coaster Set + Case', line: 'Six coasters and a case to keep them in.', photo: '[[PHOTO: 6-coaster set + case]]', img: '/_blob/4743ef461971b0d28aacd4b3234a0bff', alt: 'Six yellow flower coasters stacked in a white printed case', material: tpu, price: '$29', cta: 'Add to bag' },
+      { name: '6-Coaster Set + Case', line: 'Six coasters and a case to keep them in.', photo: '[[PHOTO: 6-coaster set + case]]', img: '/_blob/4743ef461971b0d28aacd4b3234a0bff', alt: 'Six yellow flower coasters stacked in a white printed case', material: materialLine, price: '$29', cta: 'Add to bag' },
       { name: 'The Gigi', line: 'A flexible band with our JL monogram pressed in. Wear one or stack a few.', photo: '[[PHOTO: The Gigi]]', img: '/_blob/e315967f3fb97273bbcaa0fdb7045906', alt: 'A teal Gigi band with a repeating JL monogram, in palm-leaf shadow', ask: true },
       { name: 'Tide Soap Dish', line: 'Draining wave ridges, swappable inserts.', photo: '[[PHOTO: photo_tide_dish_lime_wave.jpg]]', img: '/_blob/62e98bf8a7e126a09525494fb1892531', alt: 'A lime-green Tide soap dish with wave ridges and drain holes, holding a bar of soap', ask: true },
-      { name: 'Tide Hand Soap Dispenser', line: 'TPU housing, PETG refill bottle, square-wave base.', photo: '[[PHOTO: photo_tide_dispenser_tpu_fade_1.jpg]]', img: '/_blob/db38a30e47d0fe1991298bb366eeb780', alt: 'A Tide hand soap dispenser fading from lime to amber, with wave texture and a square base', material: 'TPU housing · PETG bottle: wash by hand', ask: true }
+      { name: 'Tide Hand Soap Dispenser', line: 'Flexible housing, PETG refill bottle, square-wave base.', photo: '[[PHOTO: photo_tide_dispenser_tpu_fade_1.jpg]]', img: '/_blob/db38a30e47d0fe1991298bb366eeb780', alt: 'A Tide hand soap dispenser fading from lime to amber, with wave texture and a square base', material: 'Flexible housing · PETG bottle', ask: true }
     ].map((p) => ({
       ...p,
       hasSwatches: !!(p.swatches && p.swatches.length),
@@ -422,8 +422,8 @@ class Component extends DCLogic {
     }));
 
     const faqData = [
-      { q: 'What are they made of?', a: 'TPU 95A, a flexible printed material. Each listing says if a piece is PLA or PETG.', ph: '' },
-      { q: 'Are they dishwasher safe?', a: 'Yes. TPU pieces are washable and dishwasher safe. Wash PLA and PETG pieces by hand.', ph: '[[CONFIRM: top-rack / temperature guidance]]' },
+      { q: 'What are they made of?', a: 'A flexible printed material. Washable, made for daily use.', ph: '' },
+      { q: 'Can I wash them?', a: 'Yes. They're washable.', ph: '[[CONFIRM: top-rack / temperature guidance]]' },
       { q: 'Can I get my logo on them?', a: 'Yes, from 200 coasters. Start with a free Half Dozen.', ph: '' },
       { q: 'How fast do you ship?', a: '', ph: '[[CONFIRM: retail dispatch and wholesale lead times]]' }
     ];
