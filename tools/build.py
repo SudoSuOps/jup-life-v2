@@ -227,7 +227,7 @@ def llms_txt(site: dict, products: list, batch: dict, catalog: dict) -> str:
         "Enterprise logo coasters are made for restaurants, bars, boutique hotels, rentals and event hosts in Palm Beach County and beyond.", "",
         "## Key facts",
         "- Location: Jupiter, FL (serves Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County; ships within the US)",
-        "- Material: flexible TPU 95A, washable; TPU pieces are dishwasher safe (normal dishwasher cycle, avoid extended or high-heat modes)",
+        "- Material: flexible and washable",
         "- Shipping: free on all U.S. orders; orders leave the studio within 2-3 business days",
         "- Samples: samples are available by request on the Enterprise page. A sample print is made for approval before a logo batch is printed",
         "- Enterprise: custom logo coasters and restaurant coasters from 200 pieces. The Half Dozen is the $29 retail box only, and a logo batch ships within 10 days of approval",

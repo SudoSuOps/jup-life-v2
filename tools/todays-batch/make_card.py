@@ -12,7 +12,7 @@ for w in ['500','600','700','800','500Italic','600Italic']:
 LOGO=f'{HERE}/logo.png'
 # ---- LOCKED brand copy / colors ----
 KRAFT=H('#E9D9BC'); COCOA=H('#4A2F22'); TERRA=H('#B8603E'); SAGE=H('#6E7D50'); CHALK=H('#2F3A2C'); CREAM=H('#F4EBDD'); FRAME=H('#8B6A47'); GOLD=H('#E8B27A')
-TITLE="TODAY'S BATCH"; LOCAL='Locally baked in Jupiter, FL'; CLAIM='Washable, dishwasher safe TPU  ·  Built different.'
+TITLE="TODAY'S BATCH"; LOCAL='Locally baked in Jupiter, FL'; CLAIM='Washable  ·  Built different.'
 SITE='juplifestudio.com'; CONTACT='Enterprise: Smash  ·  561-532-7120'
 MIN_PT=6.0; WARN=[]
 sw=pdfmetrics.stringWidth
@@ -109,7 +109,7 @@ def banner(b,fn):
     W,H_=1600,600; k=2.4; c=canvas.Canvas(fn,pagesize=(W,H_)); frame(c,W,H_,1.6)
     header(c,50,H_-60,k*1.25,b,560); 
     c.setFillColor(COCOA); c.setFont('M700',22); c.drawString(102,H_-190,divlabel(b))
-    c.setFillColor(SAGE); c.setFont('M600',19); c.drawString(102,H_-225,'Washable, dishwasher safe TPU · Built different.')
+    c.setFillColor(SAGE); c.setFont('M600',19); c.drawString(102,H_-225,'Washable · Built different.')
     c.setFillColor(COCOA); c.setFont('M700',26); c.drawString(102,110,SITE); c.setFont('M500',19); c.drawString(102,78,CONTACT)
     if b['chefs_special']: ribbon(c,330,170,b['chefs_special'],2.6,540)
     rh=34; gap=14; x=640; y=H_-110
