@@ -2,8 +2,10 @@ import { requireAccess } from './access';
 import type { Env } from './env';
 import { text } from './http';
 import { log } from './log';
+import { reconcileChannel } from './reconcile';
 import { backfillShopify, handleShopifyWebhook } from './shopify';
 import { backfillStripe, handleStripeWebhook } from './stripe';
+import { routeUi } from './ui';
 
 const WEBHOOKS = new Set(['/hook/stripe', '/hook/shopify']);
 
@@ -18,7 +20,8 @@ export default {
     try {
       if (path === '/hook/stripe' && request.method === 'POST') return handleStripeWebhook(request, env);
       if (path === '/hook/shopify' && request.method === 'POST') return handleShopifyWebhook(request, env);
-      if (path === '/') return text('JUP LIFE ledger', 200, 'text/html; charset=utf-8');
+      const ui = await routeUi(request, env, path);
+      if (ui) return ui;
       return text('Not found', 404);
     } catch (error) {
       log('request_error', { message: error instanceof Error ? error.message : 'error', path });
@@ -34,6 +37,15 @@ export default {
         });
         await backfillShopify(env, { full }).catch((error: unknown) => {
           log('shopify_backfill_error', { message: error instanceof Error ? error.message : 'error' });
+        });
+        await reconcileChannel(env.DB, 'stripe_direct', full).catch((error: unknown) => {
+          log('reconcile_error', { message: error instanceof Error ? error.message : 'error' });
+        });
+        await reconcileChannel(env.DB, 'shopify', full).catch((error: unknown) => {
+          log('reconcile_error', { message: error instanceof Error ? error.message : 'error' });
+        });
+        await reconcileChannel(env.DB, 'tiktok', full).catch((error: unknown) => {
+          log('reconcile_error', { message: error instanceof Error ? error.message : 'error' });
         });
       })(),
     );
