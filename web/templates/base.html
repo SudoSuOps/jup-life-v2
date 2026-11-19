@@ -51,10 +51,10 @@
       <a href="/enterprise"{% if page.nav == 'enterprise' %} aria-current="page"{% endif %}>Enterprise &amp; Samples</a>
       <a href="/about"{% if page.nav == 'about' %} aria-current="page"{% endif %}>About</a>
       <a href="/contact"{% if page.nav == 'contact' %} aria-current="page"{% endif %}>Contact</a>
-      <button type="button" class="bag-btn" data-open-bag aria-label="Bag, 0 items">
+      {% if page.nav != 'events' %}<button type="button" class="bag-btn" data-open-bag aria-label="Bag, 0 items">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
         <span class="bag-count" data-bag-count>0</span>
-      </button>
+      </button>{% endif %}
       {% if page.nav == 'enterprise' %}<button type="button" class="btn btn-primary btn-sm" data-open-sample data-type="Half Dozen sample" data-buyer="wholesale">Request samples</button>{% elif page.nav != 'home' %}<button type="button" class="btn btn-primary btn-sm" data-open-sample data-type="Sample" data-buyer="retail">Request samples</button>{% endif %}
     </nav>
   </div>
@@ -64,7 +64,7 @@
 {% block content %}{% endblock %}
 </main>
 
-{% if page.nav %}{{ drops_band() }}{% endif %}
+{% if page.nav and page.nav != 'events' %}{{ drops_band() }}{% endif %}
 <footer class="site-footer">
   <div class="wrap top">
     <div class="stack" style="flex:1 1 260px;gap:12px">
@@ -78,8 +78,9 @@
       <a href="/enterprise">Enterprise &amp; Samples</a>
       <a href="/about">About</a>
       <a href="/contact">Contact</a>
+      <a href="/weddings-events"{% if page.nav == 'events' %} aria-current="page"{% endif %}>Weddings &amp; Events</a>
       <a href="/palm-beach-county">Palm Beach County</a>
-      <a href="https://www.tiktok.com/@juplifestudio" rel="noopener" target="_blank">TikTok</a>
+      <a href="https://www.tiktok.com/@juplifestudios" rel="noopener" target="_blank">TikTok</a>
       <a href="/shipping-returns">Shipping &amp; Returns</a>
       <a href="/privacy">Privacy</a>
     </nav>
@@ -100,7 +101,7 @@
   </div>
 </dialog>
 
-<dialog id="bag-dlg" aria-labelledby="bag-h">
+{% if page.nav != 'events' %}<dialog id="bag-dlg" aria-labelledby="bag-h">
   <button type="button" class="dlg-close" data-close aria-label="Close"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#5A3E2B" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16"/></svg></button>
   <h2 id="bag-h" style="font-size:34px;margin:4px 0 16px">Your bag</h2>
   <ul class="bag-list" data-bag-list></ul>
@@ -109,7 +110,7 @@
   <p style="font-size:13px;margin:0 0 16px">Free shipping on all U.S. orders.</p>
   <p role="alert" data-bag-error style="margin:0 0 8px;color:#9B1B30;font-weight:600"></p>
   <button type="button" class="btn btn-primary" data-checkout style="width:100%">Checkout</button>
-</dialog>
+</dialog>{% endif %}
 
 <script src="{{ js_src }}" defer></script>
 </body>

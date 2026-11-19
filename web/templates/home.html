@@ -33,7 +33,7 @@
     "West Palm Beach, FL",
     "Palm Beach County, FL"
   ],
-  "sameAs": ["https://www.tiktok.com/@juplifestudio"]
+  "sameAs": ["https://www.tiktok.com/@juplifestudios"]
 }
 </script>
 {% endblock %}
@@ -59,7 +59,7 @@
         <picture><source media="(min-width: 900px)" srcset="/img/hero-dome-800.webp 800w, /img/hero-dome-1600.webp 1600w" sizes="600px"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" width="1600" height="900"></picture>
       </div>
       <figure class="seal">
-        {{ pic("img/seal-fresh-baked.webp", "Fresh baked daily. JUP LIFE Studio, built different.", sizes="128px", lazy=False) }}
+        {{ pic("img/seal-fresh-print.webp", "Fresh print daily. JUP LIFE Studio, built different.", sizes="128px", lazy=False) }}
       </figure>
       {% if catalog.show_legacy %}{{ batch_board() }}{% else %}
       <figure class="hero-still">
@@ -148,16 +148,16 @@
 <script type="application/json" id="photo-book">{{ photo_book_json }}</script>
 {% endif %}
 
-<section class="oven" aria-labelledby="oven-h">
+<section class="cream-band" aria-labelledby="press-h">
   <div class="wrap section stack reveal" style="gap:28px">
     <div>
       <p class="eyebrow">Watch the batch</p>
-      <h2 id="oven-h" style="margin-top:6px">Out of the oven.</h2>
+      <h2 id="press-h" style="margin-top:6px">Off the printers.</h2>
     </div>
     <div class="video-grid">
       <figure>
-        <video controls preload="none" playsinline poster="/img/poster-fresh-baked.webp" aria-label="Fresh Baked: a coaster printing in the studio, then the finished pieces under glass domes"><source src="/video/fresh-baked.mp4" type="video/mp4"></video>
-        <figcaption><strong>Fresh baked.</strong>From the printer to the dome · 15 s</figcaption>
+        {{ pic("img/sunflower-set-jar.webp", "Sunflower coaster set stacked in a glass jar by the beach.", sizes="(min-width: 700px) 460px, calc(100vw - 32px)", cls="jar-still") }}
+        <figcaption><strong>Sunflower set.</strong>Printed and stacked in a jar by the beach.</figcaption>
       </figure>
       <figure>
         <video controls preload="none" playsinline poster="/img/poster-coaster-party.webp" aria-label="Coaster party: colorful coasters tumble onto a beach bar and drinks land on them"><source src="/video/coaster-party.mp4" type="video/mp4"></video>
@@ -174,7 +174,7 @@
     <div style="flex:1 1 380px;max-width:640px">
       <p class="eyebrow">Why we're built different</p>
       <h2 id="quality-h" style="margin:6px 0 10px">Quality by design.</h2>
-      <p style="margin:0;font-size:18px">We're a small studio that bakes in batches, not an assembly line.</p>
+      <p style="margin:0;font-size:18px">We're a small studio that prints in batches, not an assembly line.</p>
     </div>
     <figure style="flex:0 1 300px;margin:0;position:relative">
       {{ pic("img/flex-closeup.webp", "Hands flexing a pumpkin-orange coaster", sizes="300px", style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:14px") }}
@@ -182,11 +182,11 @@
   </div>
   <ul class="beats">
     <li><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M5 28h34l-3 7H8z"/><circle cx="13" cy="22" r="4.5"/><circle cx="22" cy="21" r="4.5"/><circle cx="31" cy="22" r="4.5"/></svg>
-      <div><strong>Small batches.</strong><span>Every tray is designed in-house, seasonal, and baked fresh. No assembly line.</span></div></li>
+      <div><strong>Small batches.</strong><span>Every tray is designed in-house, seasonal, and printed fresh. No assembly line.</span></div></li>
     <li><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M26 6l6 6-16 16-8 2 2-8z"/><path d="M22 10l6 6"/><path d="M5 37c4-4 7-4 10 0s7 4 10 0 7-4 10 0"/></svg>
       <div><strong>Designed in Jupiter.</strong><span>Our own design team builds every piece in a single color, tested on our own printers.</span></div></li>
     <li id="studio"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="7" y="6" width="30" height="32" rx="3"/><path d="M7 14h30"/><path d="M18 14v6h8v-6"/><path d="M13 32h18"/></svg>
-      <div><strong>Our own studio.</strong><span>A fleet of 30 printers — 10 Bambu P1S, 10 Qidi Max 4 and 10 Prusa Core One — baking every day in Jupiter.</span></div></li>
+      <div><strong>Our own studio.</strong><span>A fleet of 30 printers — 10 Bambu P1S, 10 Qidi Max 4 and 10 Prusa Core One — printing every day in Jupiter.</span></div></li>
     <li><svg viewBox="0 0 44 44" aria-hidden="true"><ellipse cx="20" cy="30" rx="15" ry="6"/><path d="M5 30v3c0 3.3 6.7 6 15 6s15-2.7 15-6v-3"/><path d="M32 5c3 4 5 7 5 9a5 5 0 0 1-10 0c0-2 2-5 5-9z"/></svg>
       <div><strong>Built to be used.</strong><span>Flexible. Washable, made for daily use.</span></div></li>
     <li><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M14 6h22v32H14L6 22z"/><circle cx="14" cy="22" r="2.5"/><path d="M21 22l4 4 7-8"/></svg>
@@ -220,7 +220,7 @@
 <section class="wrap section split reveal" aria-labelledby="rest-h">
   <div class="stack" style="gap:16px">
     <p class="eyebrow">For restaurants &amp; bars</p>
-    <h2 id="rest-h">Your logo, fresh baked.</h2>
+    <h2 id="rest-h">Your logo, fresh printed.</h2>
     <p style="margin:0;font-size:18px;max-width:32em">Custom bar coasters and restaurant coasters for Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and <a href="/palm-beach-county">Palm Beach County</a>.</p>
     <a href="/enterprise" style="font-weight:600;padding:10px 0;align-self:flex-start">Enterprise &amp; samples →</a>
     <figure style="margin:8px 0 0;position:relative">
@@ -240,7 +240,7 @@
   <div class="stack" style="flex:1 1 380px;min-width:0;gap:16px">
     <p class="eyebrow">Meet Mrs. Smash</p>
     <h2 id="dee-h">A little piece of our happy place.</h2>
-    <p style="margin:0;font-size:18px;max-width:32em">Dee is Mrs. Smash: mom of four, wife to one, and the heart of the studio. She and Smash bake every batch right here in Jupiter.</p>
+    <p style="margin:0;font-size:18px;max-width:32em">Dee is Mrs. Smash: mom of four, wife to one, and the heart of the studio. She and Smash print every batch right here in Jupiter.</p>
     <a href="/about" style="font-weight:600;padding:10px 0;align-self:flex-start">Meet Mrs. Smash →</a>
   </div>
 </section>

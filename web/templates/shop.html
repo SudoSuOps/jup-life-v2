@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% from "partials/_macros.html" import card, batch_board, short, pop_tray, swatch_list %}
 {% block title %}Shop Coasters in Jupiter, FL | JUP LIFE by Mrs. Smash{% endblock %}
-{% block description %}Shop coasters from JUP LIFE by Mrs. Smash in Jupiter, FL. Pop Coasters 6-Pack, $29. Flower Coaster Set with Case, $39. Readers is $21. Free U.S. shipping.{% endblock %}
+{% block description %}Shop coasters from JUP LIFE by Mrs. Smash in Jupiter, FL. Pop Coasters 6-Pack, $29. Flower Coaster Set with Case, $39. Free U.S. shipping.{% endblock %}
 {% block ogtitle %}Shop Coasters in Jupiter, FL{% endblock %}
 {% block ogdesc %}{{ self.description() }}{% endblock %}
 {% block head %}
@@ -17,23 +17,18 @@
 {{ product_ld(by_sku[sku]) }}
 </script>
 {% endfor %}
-{% if by_sku['readers'].price %}
-<script type="application/ld+json">
-{{ product_ld(by_sku['readers']) }}
-</script>
-{% endif %}
 {% endif %}
 {% endblock %}
 {% block content %}
-{% set tray_skus = ['pop-coasters-6', 'flower-set-case', 'readers'] %}
-{% set shelf_skus = ['half-dozen', 'bakers-dozen', 'six-set-case', 'tide-soap-dish', 'fall-pop-coasters'] %}
+{% set tray_skus = ['pop-coasters-6', 'flower-set-case'] %}
+{% set shelf_skus = ['half-dozen', 'six-set-case', 'fall-pop-coasters'] %}
 <section class="wrap page-hero" aria-labelledby="shop-h">
   <div class="notice" data-checkout-banner="success" hidden role="status" style="margin:0 0 24px">It's on the tray. Your order is in. A receipt is on its way to your inbox.</div>
   <div class="notice" data-checkout-banner="cancel" hidden role="status" style="margin:0 0 24px">No worries, your bag is saved.</div>
   <div class="split">
     <div class="stack" style="gap:18px">
       {% if catalog.show_legacy %}
-      <p class="eyebrow">The bakery case · Jupiter, FL</p>
+      <p class="eyebrow">The studio case · Jupiter, FL</p>
       <h1 id="shop-h">Shop 3D Printed Coasters in Jupiter, FL</h1>
       <p class="subhead">The Batch.</p>
       <p class="lede">3D printed coasters and custom bar coasters from the current tray, plus the always-on favorites. Restaurant coasters for <a href="/palm-beach-county">Palm Beach County</a> start on the enterprise counter.</p>
@@ -65,8 +60,8 @@
 
 <div class="wrap" style="padding-bottom:clamp(32px,4vw,56px)">
   <figure style="margin:0;position:relative">
-    <img src="/img/bakery-dome-800.webp" srcset="/img/bakery-dome-800.webp 800w, /img/bakery-dome-1600.webp 1600w" sizes="(min-width: 1248px) 1152px, 100vw" alt="The JUP LIFE Studio bakery counter: a glass dome over stacks of terracotta, sage and cream coasters, a wood tray beside kraft boxes, printers by the window" width="1600" height="900" decoding="async" style="width:100%;aspect-ratio:16/9;max-height:560px;object-fit:cover;object-position:60% 50%;border-radius:24px">
-    <figcaption>The bakery counter</figcaption>
+    <img src="/img/display-dome-800.webp" srcset="/img/display-dome-800.webp 800w, /img/display-dome-1600.webp 1600w" sizes="(min-width: 1248px) 1152px, 100vw" alt="The JUP LIFE Studio counter: a glass dome over stacks of terracotta, sage and cream coasters, a wood tray beside kraft boxes, printers by the window" width="1600" height="900" decoding="async" style="width:100%;aspect-ratio:16/9;max-height:560px;object-fit:cover;object-position:60% 50%;border-radius:24px">
+    <figcaption>The studio counter</figcaption>
   </figure>
 </div>
 
@@ -78,7 +73,7 @@
     <div>
       <p class="eyebrow">Today's tray</p>
       <h2 id="tray-h" style="margin-top:6px">{{ batch.tray }}.</h2>
-      <p>Seasonal colorways, baked in small batches. When the tray's gone, it's gone.</p>
+      <p>Seasonal colorways, printed in small batches. When the tray's gone, it's gone.</p>
     </div>
   </div>
   <figure style="margin:0">
@@ -97,22 +92,6 @@
           <figure class="pop-loop">
             <video muted autoplay loop playsinline poster="/img/poster-pop-coaster.webp" width="720" height="1280" aria-label="A Popsters coaster, printed by JUP LIFE">
               <source src="/video/pop-coaster.mp4" type="video/mp4">
-            </video>
-          </figure>
-        </div>
-      </div>
-      {% elif sku == 'readers' %}
-      <div class="pop-feature" id="readers">
-        <img class="readers-logo" src="/img/readers-wordmark-navy.png" alt="Readers by JUP LIFE" width="1200" height="444">
-        <div class="pop-feature-row">
-          {{ card(by_sku['readers'], shop=True) }}
-          {# VIDEO SLOT: Hollywood drops web/media/readers-short.mp4 later. Hidden until the file loads. #}
-          <figure class="pop-loop" data-readers-short hidden>
-            <video muted autoplay loop playsinline
-                   width="720" height="1280"
-                   aria-label="A short of Readers, by JUP LIFE"
-                   data-readers-short-video>
-              <source src="/media/readers-short.mp4" type="video/mp4">
             </video>
           </figure>
         </div>
@@ -146,7 +125,7 @@
   <div class="shelf-head">
     <div>
       <p class="eyebrow">Always on the shelf</p>
-      <h2 id="shelf-h" style="margin-top:6px">The everyday bakes.</h2>
+      <h2 id="shelf-h" style="margin-top:6px">The everyday prints.</h2>
       <p>Favorites we keep in the case all year.</p>
     </div>
   </div>
@@ -183,34 +162,25 @@
       {% endif %}
     {% endfor %}
   </div>
-  <div class="pop-feature" id="readers">
-    <img class="readers-logo" src="/img/readers-wordmark-navy.png" alt="Readers by JUP LIFE" width="1200" height="444">
-    <div class="pop-feature-row">
-      {{ card(by_sku['readers'], shop=True) }}
-      {# VIDEO SLOT: Hollywood drops web/media/readers-short.mp4 later. Hidden until the file loads. #}
-      <figure class="pop-loop" data-readers-short hidden>
-        <video muted autoplay loop playsinline
-               width="720" height="1280"
-               aria-label="A short of Readers, by JUP LIFE"
-               data-readers-short-video>
-          <source src="/media/readers-short.mp4" type="video/mp4">
-        </video>
-      </figure>
-    </div>
-  </div>
 </section>
 <script type="application/json" id="photo-book">{{ photo_book_json }}</script>
 {% endif %}
 
-<section class="oven" aria-labelledby="oven-h">
+<section class="cream-band" aria-labelledby="press-h">
   <div class="wrap section stack reveal" style="gap:28px">
     <div>
       <p class="eyebrow">Watch the batch</p>
-      <h2 id="oven-h" style="margin-top:6px">Out of the oven.</h2>
+      <h2 id="press-h" style="margin-top:6px">Off the printers.</h2>
     </div>
     <div class="video-grid">
-      {{ short('shop-baked-daily', 'Baked daily in Jupiter.', 'Fresh from the tray · 15 s', 'Baked daily in Jupiter: a hand in an oven mitt slides a tray of colorful coasters, with sunflower coasters, out of an oven') }}
-      {{ short('shop-fresh-out', 'Fresh out the oven.', 'Inside the studio · 15 s', 'Fresh out the oven: shelves of printers in a bright studio, a coaster printing on a plate') }}
+      <figure>
+        {{ pic("img/hibiscus-set-case-orange.webp", "Hibiscus coaster set with its matching case.", sizes="(min-width: 700px) 460px, calc(100vw - 32px)") }}
+        <figcaption><strong>Hibiscus set.</strong>Printed coasters with a matching case.</figcaption>
+      </figure>
+      <figure>
+        {{ pic("img/mint-wave-coaster.webp", "Mint coaster with a sun and wave design.", sizes="(min-width: 700px) 460px, calc(100vw - 32px)") }}
+        <figcaption><strong>Mint wave.</strong>A printed coaster with a sun and wave.</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -218,8 +188,8 @@
 <section class="wrap reveal" style="padding-block:clamp(48px,6vw,88px)" aria-labelledby="order-h">
   <div class="cta-strip">
     <div>
-      <p class="eyebrow" style="color:var(--cream-muted)">Baked to order</p>
-      <h3 id="order-h">Your logo, fresh baked.</h3>
+      <p class="eyebrow" style="color:var(--cream-muted)">Printed to order</p>
+      <h3 id="order-h">Your logo, fresh printed.</h3>
       <p>Custom logo coasters from 200 for restaurants and bars. Samples are available by request.</p>
     </div>
     <div class="btn-row">

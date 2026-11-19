@@ -13,13 +13,13 @@ Each shows on the page as visible terracotta `[[...]]` text (`.ph` class). `grep
 | Placeholder | Where | Needed from owner |
 |---|---|---|
 | `[[CONFIRM: hand-checked]]` | Quality by design, beat 5 | Confirm the claim wording |
-| `[[CONFIRM: top-rack / temperature guidance]]` | FAQ | Dishwasher guidance for TPU |
+| `[[CONFIRM: top-rack / temperature guidance]]` | FAQ | Wash guidance |
 | `[[CONFIRM: retail dispatch and wholesale lead times]]` | FAQ, Wholesale | Lead times |
 | `[[CONFIRM]]` logo setup / shipping terms | Wholesale price-board note | Terms |
 | `[[RESPONSE TIME]]` | Modal + form success | e.g. "1 business day" |
 | 561-581-8015 as texting line | Footer, contact strip | Confirm it's the text line |
 | Prices: Pop Coasters, Stack Bands, The Gigi, Tide Soap Dish, Tide Dispenser | Cards ("Ask about this batch") | Prices + Stripe Price IDs if they become buyable |
-| Materials: Stack Bands, The Gigi | Cards (no material line yet) | TPU? Dishwasher safe? |
+| Materials: Stack Bands, The Gigi | Cards (no material line yet) | Confirm before adding a material line. |
 | Real photos | All product cards | Real photos of 6-coaster set + case, The Readers, and the rest |
 | `[[PHOTO: The Readers]]` | Shop | Any photo |
 | Full-res originals | `tide-soap-dish`, `soapdish-*`, `tide-trio`, `tide-hotel-bath`, `gigi-earthtone-stack`, `pop-coasters-pumpkin`, `flex-closeup` | These were cut from contact sheets at ~380–400 px; swap in full-size files |

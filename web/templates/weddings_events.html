@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Weddings &amp; Events | JUP LIFE by Mrs. Smash{% endblock %}
+{% block description %}Custom coasters for weddings, parties and corporate events. 3D printed in Jupiter, FL, then hand painted by Dee. Washable. Special orders ship in 5–7 days.{% endblock %}
+{% block ogtitle %}Weddings &amp; Events{% endblock %}
+{% block ogdesc %}{{ self.description() }}{% endblock %}
+{% block content %}
+<div class="wrap">
+  <section class="hero" aria-labelledby="events-h">
+    <div class="hero-copy">
+      <p class="eyebrow">Jupiter, FL</p>
+      <h1 id="events-h">Weddings &amp; Events</h1>
+      <p class="lede">Custom coasters for weddings, parties and corporate events. 3D printed in Jupiter, FL, then hand painted by Dee. Washable. Tell us about your event and we'll get back to you.</p>
+      <p class="lede">Special orders ship in 5–7 days.</p>
+    </div>
+    <figure class="event-hero">
+      {{ pic("img/wedding-events-jar.webp", "Glass jar of custom coasters with a JUP Signature by Dee tag.", sizes="(min-width: 900px) 420px, calc(100vw - 32px)", lazy=False, priority=True) }}
+    </figure>
+  </section>
+</div>
+
+<section class="wrap section" aria-labelledby="inquiry-h">
+  <div class="form-card" data-form-box style="max-width:720px">
+    <div data-form-view>
+      <h2 id="inquiry-h">Send your event details</h2>
+      <p style="margin:8px 0 0">Tell us about your event and we'll get back to you.</p>
+      <form class="form" data-sample-form action="/api/sample-request" method="post" enctype="multipart/form-data" novalidate>
+        <div class="grid">
+          <label class="field">Name*<input name="name" required autocomplete="name"></label>
+          <label class="field">Email*<input name="email" type="email" required autocomplete="email"></label>
+          <label class="field">Phone*<input name="phone" type="tel" required autocomplete="tel"></label>
+          <label class="field">Event type*
+            <select name="event_type" required>
+              <option value="" selected disabled>Choose one</option>
+              <option>Wedding</option>
+              <option>Party</option>
+              <option>Corporate</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label class="field">Event date*<input name="event_date" type="date" required></label>
+          <label class="field">Quantity*<input name="quantity" type="number" min="1" step="1" required inputmode="numeric"></label>
+        </div>
+        <label class="field">Design ideas or colors*<textarea name="notes" rows="4" required></textarea></label>
+        <label class="field">Ship-to address*<textarea name="address" rows="3" required autocomplete="street-address"></textarea></label>
+        <input type="hidden" name="request_type" value="Weddings &amp; Events inquiry">
+        <input type="hidden" name="source_page" value="/weddings-events">
+        <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+        <p class="field" role="alert" data-form-error style="margin:0"></p>
+        <button type="submit" class="btn btn-primary" data-submit>Send your event details</button>
+      </form>
+    </div>
+    <div data-success-view hidden tabindex="-1">
+      <h2 style="font-size:34px;margin:8px 0 12px">Thanks! We got your event details and will be in touch.</h2>
+      <p style="margin:0">Special orders ship in 5–7 days.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap section" style="padding-top:0" aria-label="Event photos">
+  <figure class="event-banner">
+    {{ pic("img/wedding-table-centerpiece.webp", "Wedding table with a coaster centerpiece jar, flowers and coaster favor boxes.", sizes="(min-width: 900px) 1104px, calc(100vw - 32px)") }}
+  </figure>
+  <figure class="event-banner">
+    {{ pic("img/special-studio-scene-clean.webp", "Illustration of hibiscus, sunflower, ocean wave and jelly bean coasters on display.", sizes="(min-width: 900px) 1104px, calc(100vw - 32px)") }}
+  </figure>
+  <ul class="event-grid">
+    <li>
+      <figure>
+        {{ pic("img/special-handpainted-six.webp", "Six hand painted coasters: hibiscus, sunflower, sea turtle, shell, sunset wave and mangrove.", sizes="(min-width: 900px) 270px, 50vw") }}
+      </figure>
+    </li>
+    <li>
+      <figure>
+        {{ pic("img/special-hibiscus-case.webp", "Hibiscus coaster set with its case.", sizes="(min-width: 900px) 270px, 50vw") }}
+      </figure>
+    </li>
+    <li>
+      <figure>
+        {{ pic("img/sunflower-set-jar.webp", "Sunflower coaster set stacked in a glass jar by the beach.", sizes="(min-width: 900px) 270px, 50vw") }}
+      </figure>
+    </li>
+    <li>
+      <figure class="pos-egr">
+        {{ pic("img/special-jupiter-egret-poster.webp", "Life is better in Jupiter, Florida egret design.", sizes="(min-width: 900px) 270px, 50vw") }}
+      </figure>
+    </li>
+  </ul>
+</section>
+
+<section class="wrap section" style="padding-top:0" aria-labelledby="ways-h">
+  <h2 id="ways-h" style="font-size:clamp(28px,3vw,40px);margin:0 0 16px">Display ideas for your event</h2>
+  <figure class="event-ways">
+    {{ pic("img/centerpiece-three-ways.webp", "One centerpiece, three ways: Coastal Glow with a candle, Bloom Top with flowers, Gather & Serve with drinks and snacks.", sizes="(min-width: 900px) 1104px, calc(100vw - 32px)") }}
+  </figure>
+</section>
+{% endblock %}

@@ -95,8 +95,8 @@
         const COPY = {
           'Half Dozen order': ["We'll confirm details and pricing", 'Buy The Half Dozen ($29)', 'Send my order'],
           'Product question': ['Ask us anything', 'Ask about this batch', 'Send my question'],
-          'Custom order': ['Baked to order', 'Custom order', 'Send my request'],
-          Custom: ['Baked to order', 'Custom order', 'Send my request'],
+          'Custom order': ['Printed to order', 'Custom order', 'Send my request'],
+          Custom: ['Printed to order', 'Custom order', 'Send my request'],
         };
         const [eyebrow, title, label] = COPY[rt] || COPY['Product question'];
         const eye = $('[data-dlg-eyebrow]', dlg);
@@ -252,14 +252,8 @@
     $$('[data-add-to-bag]').forEach((b) => b.addEventListener('click', () => {
       if (b.disabled) return;
       // price shown client-side is display only; the server maps sku -> Stripe Price
-      let { sku, name, price } = b.dataset;
+      const { sku, name, price } = b.dataset;
       const opts = choiceFrom(b.closest('[data-coaster]'));
-      // Hibiscus on the flower card checks out as its own $39 product. Do not send flower metadata on that SKU.
-      if (sku === 'flower-set-case' && opts.flower === 'Hibiscus') {
-        sku = 'six-set-case';
-        name = 'The Hibiscus Set';
-        delete opts.flower;
-      }
       const item = { sku, name, price: Number(price), qty: 1, ...opts };
       const hit = bag.find((i) => lineId(i) === lineId(item));
       if (hit) hit.qty = Math.min(hit.qty + 1, 20); else bag.push(item);
