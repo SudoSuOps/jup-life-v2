@@ -2,6 +2,7 @@ import { requireAccess } from './access';
 import type { Env } from './env';
 import { text } from './http';
 import { log } from './log';
+import { backfillShopify, handleShopifyWebhook } from './shopify';
 import { backfillStripe, handleStripeWebhook } from './stripe';
 
 const WEBHOOKS = new Set(['/hook/stripe', '/hook/shopify']);
@@ -16,7 +17,7 @@ export default {
     }
     try {
       if (path === '/hook/stripe' && request.method === 'POST') return handleStripeWebhook(request, env);
-      if (path === '/hook/shopify' && request.method === 'POST') return text('Not implemented', 501);
+      if (path === '/hook/shopify' && request.method === 'POST') return handleShopifyWebhook(request, env);
       if (path === '/') return text('JUP LIFE ledger', 200, 'text/html; charset=utf-8');
       return text('Not found', 404);
     } catch (error) {
@@ -27,9 +28,14 @@ export default {
   async scheduled(controller: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
     const full = controller.cron === '15 12 * * 1';
     ctx.waitUntil(
-      backfillStripe(env, { full }).catch((error: unknown) => {
-        log('stripe_backfill_error', { message: error instanceof Error ? error.message : 'error' });
-      }),
+      (async () => {
+        await backfillStripe(env, { full }).catch((error: unknown) => {
+          log('stripe_backfill_error', { message: error instanceof Error ? error.message : 'error' });
+        });
+        await backfillShopify(env, { full }).catch((error: unknown) => {
+          log('shopify_backfill_error', { message: error instanceof Error ? error.message : 'error' });
+        });
+      })(),
     );
   },
 } satisfies ExportedHandler<Env>;
