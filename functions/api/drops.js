@@ -14,7 +14,7 @@ async function welcome(env, email, base) {
     eyebrow: 'JUP LIFE Drops',
     heading: "You're on the list.",
     paragraphs: [
-      "Thanks for joining JUP LIFE Drops. You'll be first in line when a new tray comes off the printers here in Jupiter: seasonal flavors, small-batch specials and the occasional surprise.",
+      "Thanks for joining JUP LIFE Drops. You'll be first in line when a new tray comes off the printers here in Jupiter: seasonal colors, small-batch specials and the occasional surprise.",
       "We only write when there's something fresh.",
     ],
     cta: { label: "See what's printing now", url: `${base}/shop` },
