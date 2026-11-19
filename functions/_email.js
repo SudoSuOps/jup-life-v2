@@ -42,7 +42,7 @@ export function brandedEmail({ base, preheader = '', eyebrow = '', heading, para
       ${signoff.map((l, i) => `<p style="margin:0 0 ${i === signoff.length - 1 ? 28 : 2}px;font:${i === 0 ? '400 italic' : '600'} 16px/1.5 ${i === 0 ? SERIF : SANS};color:${C.cocoa}">${esc(l)}</p>`).join('')}
     </td></tr>
     <tr><td style="background:${C.chalk};padding:22px 36px;text-align:center">
-      <p style="margin:0 0 6px;font:400 14px/1.5 ${SANS};color:#E9D9C2">Fresh baked. Built different.</p>
+      <p style="margin:0 0 6px;font:400 14px/1.5 ${SANS};color:#E9D9C2">Fresh printed. Built different.</p>
       <p style="margin:0;font:400 13px/1.6 ${SANS};color:#E9D9C2">JUP LIFE by Mrs. Smash · Jupiter, FL<br>
         <a href="mailto:hello@juplifestudio.com" style="color:#E9D9C2">hello@juplifestudio.com</a> · <a href="tel:+15615327120" style="color:#E9D9C2">561-532-7120</a></p>
       ${footnote ? `<p style="margin:12px 0 0;font:400 12px/1.5 ${SANS};color:#C9B8A0">${esc(footnote)}</p>` : ''}

@@ -18,8 +18,8 @@ Read in this order before writing code:
 | Sample-request modal (`<dialog>`) | ✅ Done. Posts to `/api/sample-request`. |
 | Bag + Stripe Checkout (client) | ✅ Done in `main.js` (localStorage bag → `POST /api/checkout` → redirect). |
 | API: checkout, webhook, sample intake | ✅ Done in `api/` (FastAPI, 5 passing tests). |
-| Shop `/shop` ("the bakery case") | ✅ Done in `web/shop.html`: Today's tray, Always on the shelf, Baked to order, checkout banners, Product JSON-LD. |
-| Wholesale & Samples `/wholesale` ("The Bakery Counter, for restaurants") | ✅ Done in `web/wholesale.html` per `docs/WHOLESALE_SPEC.md`: hero, Taste/Order/Delivered strip, price board with batch totals, Built for service, Your logo our oven, Who it's for, FAQ (+FAQPage JSON-LD), sample form with Address, sample modal. |
+| Shop `/shop` ("the studio case") | ✅ Done in `web/shop.html`: Today's tray, Always on the shelf, Printed to order, checkout banners, Product JSON-LD. |
+| Wholesale & Samples `/wholesale` ("The Print Counter, for restaurants") | ✅ Done in `web/wholesale.html` per `docs/WHOLESALE_SPEC.md`: hero, Taste/Order/Delivered strip, price board with batch totals, Built for service, Your logo, our printers, Who it's for, FAQ (+FAQPage JSON-LD), sample form with Address, sample modal. |
 | Shared header/footer/modal partials + build step | ⬜ **Build** |
 | Self-hosted fonts, OG image, sitemap, robots, redirects | ⬜ **Build** |
 | Stripe live config + webhook endpoint | ⬜ **Configure** (owner supplies keys/price IDs) |
@@ -46,7 +46,7 @@ juplife-site/
 ## Build tasks (in order)
 
 1. **Templates + build step.** The three pages currently duplicate header, footer and dialogs. Create `tools/build.py` (Jinja2) and `web/templates/`. Extract header, footer, both dialogs, the product card, the chalkboard board and the price board from `index.html` into partials. Output `dist/index.html` byte-for-byte equivalent in structure to the current page. Cards render from `products.json` (`home: true` for Home, `shop: true` for Shop).
-2. **Shop `/shop`**: ✅ built in `web/shop.html`; port into templates. Original spec for reference: (`<title>Shop the Batch | Washable TPU Coasters | JUP LIFE</title>`)
+2. **Shop `/shop`**: ✅ built in `web/shop.html`; port into templates. Original spec for reference: (`<title>Shop the Batch | Washable Coasters | JUP LIFE</title>`)
    - H1 "The Batch." Sub: "The current tray, plus the always-on favorites."
    - Current tray: the Fall flavor board image (`img/flavor-board-fall.webp`) + the Fall Tray Pop Coasters card (swatches from batch).
    - Always-on cards from `products.json` where `shop: true`, in file order, then the custom-logo CTA strip (opens the modal).
@@ -56,10 +56,10 @@ juplife-site/
    - `?checkout=success` → show a cream banner "It's on the tray. Your order is in." (bag already clears in JS). `?checkout=cancel` → "No worries, your bag is saved."
    - Product + Offer JSON-LD for the two priced items (6-Coaster Set + Case $29, The Readers $19).
    - Summer assets (`flavor-board-summer.webp`, `trio-peach-sage-cream.webp`) are **for the next tray swap**. Don't show them until batch.json says Summer.
-3. **Wholesale & Samples `/wholesale`**: ✅ built in `web/wholesale.html` (plus a "Who we bake for" section the owner asked for); port into templates. Original spec for reference: (`<title>Custom Logo Coasters for Restaurants | Palm Beach County</title>`)
-   1. Hero: H1 "Your logo, fresh baked." Sub "Washable, dishwasher-safe TPU 95A coasters with your logo, made in Jupiter, FL." + [Get a free Half Dozen]. Image: `restaurant-drink.webp`.
+3. **Wholesale & Samples `/wholesale`**: ✅ built in `web/wholesale.html` (plus a "Who we print for" section the owner asked for); port into templates. Original spec for reference: (`<title>Custom Logo Coasters for Restaurants | Palm Beach County</title>`)
+   1. Hero: H1 "Your logo, fresh printed." Sub "Washable coasters with your logo, made in Jupiter, FL." + [Get a free Half Dozen]. Image: `restaurant-drink.webp`.
    2. Price board (reuse partial). Note under it: "Logo setup, shipping and lead time: `[[CONFIRM]]`."
-   3. How it works, 4 numbered steps: Request a Half Dozen → Try it on your bar → Send your logo → We bake your batch ("bulk ships in closed kraft boxes", image `bulk-boxes.webp`).
+   3. How it works, 4 numbered steps: Request a Half Dozen → Try it on your bar → Send your logo → We print your batch ("bulk ships in closed kraft boxes", image `bulk-boxes.webp`).
    4. **Inline** request form (same fields/endpoint as the modal; reuse the partial in inline mode). Submit "Send my Half Dozen". Success "It's on the tray. We'll be in touch within `[[RESPONSE TIME]]`."
    5. Custom orders: "Something else in mind? Team colors, event gifts, monograms. Tell us the recipe." Same form with request type **Custom** + notes.
    6. Contact strip (exact contacts, see below).
@@ -72,7 +72,7 @@ juplife-site/
 ## Hard rules (from the brief; don't break)
 
 - **Contacts, exact.** Wholesale: call Smash, `561-532-7120` (`tel:+15615327120`). Say hello: `hello@juplifestudio.com`. Email Dee: `dee@juplifestudio.com`. **Text us: `561-581-8015`**: only ever labeled "Text us", only `sms:` links, never `tel:`. X: @juplifestudio. TikTok: @juplifestudio.
-- **Claims.** Allowed only: washable; dishwasher safe (**TPU parts only**); made in Jupiter, FL; "locally baked" (playful); the five "Quality by design" facts. No antimicrobial/antibacterial/hygienic/food-safe/health claims, no durability stats, no "lasts forever". Never call PLA or PETG dishwasher safe. Stack Bands and The Gigi have **no material line** until the owner confirms.
+- **Claims.** Allowed only: washable; made in Jupiter, FL; "locally printed" (playful); the five "Quality by design" facts. No antimicrobial/antibacterial/hygienic/food-safe/health claims, no durability stats, no "lasts forever". Don't name a filament grade or claim the pieces are machine-washable. Stack Bands and The Gigi have **no material line** until the owner confirms.
 - **No** other brands' names or marks, no metal-chain imagery, no fake reviews/testimonials/ratings/customer logos/counts, no invented prices/emails/phones/lead times/URLs.
 - **Scope**: exactly 3 pages + 1 modal (plus the existing Shipping & Returns and Privacy pages). No About/Drops/Hospitality/Weddings/blog/coming-soon. No carousels, no popups on load, no autoplay.
 - **Color**: site chrome uses only the six core tokens. Ingredient colors only on swatches/flavor tags, always next to the flavor name. No light text on kraft; cocoa on kraft only for large/bold text.
@@ -80,4 +80,4 @@ juplife-site/
 - **A11y**: AA contrast, real buttons/links, labeled inputs, visible focus, `prefers-reduced-motion` respected (already in CSS).
 
 ## Acceptance (ship gate)
-Copy `docs/BRIEF.md` §10 and tick each: 3 pages + modal · LCP < 2 s · Lighthouse ≥ 90 ×3 · "Get a free Half Dozen" above the fold at 375×667 · price board is live text (200/$2.00, 500/$1.90, 1,000/$1.75, samples free) · Today's Batch from JSON · "dishwasher safe" only on TPU items · contacts exact · `/restaurants` 301 works · LocalBusiness schema validates · AA contrast · reduced motion respected. Plus: Stripe test-mode purchase of the 6-Coaster Set completes end to end and the webhook logs the order.
+Copy `docs/BRIEF.md` §10 and tick each: 3 pages + modal · LCP < 2 s · Lighthouse ≥ 90 ×3 · "Get a free Half Dozen" above the fold at 375×667 · price board is live text (200/$2.00, 500/$1.90, 1,000/$1.75, samples free) · Today's Batch from JSON · no machine-wash claim · contacts exact · `/restaurants` 301 works · LocalBusiness schema validates · AA contrast · reduced motion respected. Plus: Stripe test-mode purchase of the 6-Coaster Set completes end to end and the webhook logs the order.
