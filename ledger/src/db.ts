@@ -89,11 +89,6 @@ export async function insertEntry(db: D1Database, row: EntryInput, importedAt: s
   return (result.meta.changes ?? 0) > 0;
 }
 
-export async function noteInsert(counts: IngestCounts, inserted: boolean): Promise<void> {
-  if (inserted) counts.stored += 1;
-  else counts.duplicate += 1;
-}
-
 export async function readCursor(db: D1Database, source: string): Promise<string | null> {
   const row = await db
     .prepare(`SELECT cursor FROM ingest_cursors WHERE source = ? ORDER BY id DESC LIMIT 1`)

@@ -124,7 +124,9 @@ export async function ingestShopifyOrder(db: D1Database, order: NormalizedOrder,
     .bind(order.id)
     .first<{ ok: number }>();
   const lineId = pending && feeKnown ? '_order_fee_settled' : '_order_fee';
-  if (!(lineId === '_order_fee' && !feeKnown && pending)) {
+  if (lineId === '_order_fee' && !feeKnown && pending) {
+    counts.duplicate += 1;
+  } else {
     await put(db, counts, {
       channel: 'shopify',
       source_id: order.id,

@@ -3,3 +3,4 @@ node_modules/
 .dev.vars
 dist/
 .vitest-pool/
+worker-configuration.d.ts

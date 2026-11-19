@@ -319,7 +319,10 @@ async function putOrderFee(
     .bind(input.sourceId)
     .first<{ shipping_charged_cents: number; tax_collected_cents: number; discounts_cents: number }>();
   const lineId = pending && input.processor !== null ? '_order_fee_settled' : '_order_fee';
-  if (lineId === '_order_fee' && input.processor === null && pending) return;
+  if (lineId === '_order_fee' && input.processor === null && pending) {
+    counts.duplicate += 1;
+    return;
+  }
   const shipping = input.shipping === 0 && pending ? pending.shipping_charged_cents : input.shipping;
   const tax = input.tax === 0 && pending ? pending.tax_collected_cents : input.tax;
   const extraDiscount = input.extraDiscount === 0 && pending ? pending.discounts_cents : input.extraDiscount;

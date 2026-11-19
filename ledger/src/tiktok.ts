@@ -88,10 +88,20 @@ function headerIndex(headers: string[]): Map<string, number> {
   return map;
 }
 
-function cell(map: Map<string, number>, row: string[], names: readonly string[]): string | null {
+function columnIndexes(map: Map<string, number>, names: readonly string[]): number[] {
+  const seen = new Set<number>();
+  const indexes: number[] = [];
   for (const name of names) {
     const index = map.get(name.toLowerCase());
-    if (index === undefined) continue;
+    if (index === undefined || seen.has(index)) continue;
+    seen.add(index);
+    indexes.push(index);
+  }
+  return indexes;
+}
+
+function cell(map: Map<string, number>, row: string[], names: readonly string[]): string | null {
+  for (const index of columnIndexes(map, names)) {
     const value = row[index]?.trim() ?? '';
     if (value) return value;
   }
@@ -101,9 +111,7 @@ function cell(map: Map<string, number>, row: string[], names: readonly string[])
 function sumMoney(map: Map<string, number>, row: string[], names: readonly string[]): number | null {
   let seen = false;
   let total = 0;
-  for (const name of names) {
-    const index = map.get(name.toLowerCase());
-    if (index === undefined) continue;
+  for (const index of columnIndexes(map, names)) {
     const cents = dollarsToCents(row[index] ?? '');
     if (cents === null) continue;
     seen = true;
