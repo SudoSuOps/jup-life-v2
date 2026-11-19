@@ -241,6 +241,7 @@ def llms_txt(site: dict, products: list, batch: dict, catalog: dict) -> str:
         f"- [Enterprise]({base}/enterprise): custom logo coasters for Palm Beach County restaurants, bars, hotels, rentals and events",
         f"- [About]({base}/about): Meet Mrs. Smash (Dee), the face of JUP LIFE by Mrs. Smash",
         f"- [Contact]({base}/contact): call +1-561-532-7120",
+        f"- [Weddings & Events]({base}/weddings-events): custom coasters for weddings, parties and corporate events, 3D printed in Jupiter, FL and hand painted by Dee",
         f"- [Palm Beach County]({base}/palm-beach-county): 3D printed coasters for Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County",
         f"- [Shipping & Returns]({base}/shipping-returns)",
         f"- [Privacy]({base}/privacy)", "", "## Products"]
@@ -337,6 +338,7 @@ def main() -> int:
         "enterprise.html": ("wholesale.html", {"path": "/enterprise", "nav": "enterprise"}),
         "about.html": ("about.html", {"path": "/about", "nav": "about"}),
         "contact.html": ("contact.html", {"path": "/contact", "nav": "contact"}),
+        "weddings-events.html": ("weddings_events.html", {"path": "/weddings-events", "nav": "events"}),
         "palm-beach-county.html": ("palm_beach_county.html", {"path": "/palm-beach-county", "nav": "palm"}),
         "privacy.html": ("privacy.html", {"path": "/privacy", "nav": ""}),
         "shipping-returns.html": ("shipping_returns.html", {"path": "/shipping-returns", "nav": ""}),
@@ -347,6 +349,7 @@ def main() -> int:
         "/enterprise": "Enterprise & Samples",
         "/about": "Meet Mrs. Smash",
         "/contact": "Contact",
+        "/weddings-events": "Weddings & Events",
         "/palm-beach-county": "Palm Beach County",
     }
     for out, (tpl, ctx) in pages.items():
@@ -356,7 +359,7 @@ def main() -> int:
     today = date.today().isoformat()
     urls = [(f"{site['site_url']}{p}", pr) for p, pr in (
         ("/", "1.0"), ("/shop", "0.9"), ("/enterprise", "0.9"), ("/about", "0.7"),
-        ("/contact", "0.6"), ("/palm-beach-county", "0.8"), ("/shipping-returns", "0.3"), ("/privacy", "0.2"))]
+        ("/contact", "0.6"), ("/weddings-events", "0.7"), ("/palm-beach-county", "0.8"), ("/shipping-returns", "0.3"), ("/privacy", "0.2"))]
     (DIST / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod><priority>{pr}</priority></url>\n" for u, pr in urls) + "</urlset>\n")

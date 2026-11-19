@@ -15,6 +15,8 @@ const LOGO = {
 };
 const SEGMENTS = new Set(['Restaurant or bar', 'Hotel or rental', 'Event or gifting', 'Custom', 'Just me']);
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EVENT_INQUIRY = 'Weddings & Events inquiry';
+const EVENT_TYPES = new Set(['Wedding', 'Party', 'Corporate', 'Other']);
 
 const clean = (v, n) => (typeof v === 'string' ? v.replace(/[\x00-\x08\x0b\x0c\x0e-\x1f]/g, '').trim().slice(0, n) : '');
 
@@ -22,6 +24,35 @@ function toBase64(bytes) {
   let s = '';
   for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
   return btoa(s);
+}
+
+function eventDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return '';
+  const [y, m, d] = value.split('-').map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d));
+  if (dt.getUTCFullYear() !== y || dt.getUTCMonth() !== m - 1 || dt.getUTCDate() !== d) return '';
+  return value;
+}
+
+// Same notify() path as samples. Hidden request_type marks the studio email.
+async function eventInquiry(env, rec, fd) {
+  const eventType = clean(fd.get('event_type'), 40);
+  const qtyRaw = clean(fd.get('quantity'), 8);
+  const qty = /^[1-9]\d*$/.test(qtyRaw) ? Number(qtyRaw) : 0;
+  rec.request_type = EVENT_INQUIRY;
+  rec.event_type = EVENT_TYPES.has(eventType) ? eventType : '';
+  rec.event_date = eventDate(clean(fd.get('event_date'), 20));
+  rec.quantity = qty ? String(qty) : '';
+  if (!rec.name || !EMAIL.test(rec.email) || !rec.phone || !rec.event_type || !rec.event_date || !qty || !rec.notes || !rec.address) {
+    return fail(422, 'Please fill in the required fields.');
+  }
+  const id = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14) + '-' + crypto.randomUUID().slice(0, 6);
+  const sent = await notify(env, {
+    subject: `[${EVENT_INQUIRY}] ${rec.name}`,
+    text: [`id: ${id}`, ...Object.entries(rec).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`)].join('\n'),
+    replyTo: rec.email,
+  });
+  return json({ ok: true, id, emailed: sent });
 }
 
 export async function onRequestPost({ request, env }) {
@@ -40,6 +71,7 @@ export async function onRequestPost({ request, env }) {
   };
   // Don't trust client sample_qty. Buyer type sets the quantity: retail 1, venue 6.
   const rt = clean(fd.get('request_type'), 80) || 'Sample';
+  if (rt === EVENT_INQUIRY) return eventInquiry(env, rec, fd);
   let buyer = clean(fd.get('buyer_type'), 20);
   if (!['retail', 'wholesale'].includes(buyer)) buyer = LEGACY[rt] || (rec.business ? 'wholesale' : 'retail');
   const qty = buyer === 'wholesale' ? 6 : 1;
