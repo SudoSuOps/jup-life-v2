@@ -1,6 +1,6 @@
 {
   "_note": "Display data for cards. Prices here are DISPLAY ONLY. Checkout charges come from Stripe Price IDs mapped server-side in functions/_lib.js. Never invent prices: null = 'Ask about this batch'.",
-  "_todo_primary_29": "Storefront list is web/data/catalog.json: Pop Coasters 6-Pack ($29) and Flower Coaster Set with Case ($39). Readers stays on the shop at $21 with img/readers-gold-crate.webp (REF-A1) and img/readers-gold-crate-coastal.webp (REF-A2). Prices below for older products stay as they were. Photos for the two coasters live in web/data/photos.json.",
+  "_todo_primary_29": "Storefront list is web/data/catalog.json: Pop Coasters 6-Pack ($29) and Flower Coaster Set with Case ($39). Prices below for older products stay as they were. Photos for the two coasters live in web/data/photos.json.",
   "products": [
     {
       "sku": "fall-pop-coasters",
@@ -206,7 +206,7 @@
       "material": "washable",
       "img": "img/readers-gold-crate.webp",
       "home": false,
-      "shop": true,
+      "shop": false,
       "alt": "A gold Readers thumb page holder resting in its crate, with an inset of the empty crate",
       "gallery": [
         {

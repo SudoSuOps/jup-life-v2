@@ -22,17 +22,25 @@ test('checkout: unpriced / unknown sku is rejected', async () => {
   }
 });
 
-test('readers checkout uses STRIPE_PRICE_READER_21 and ignores STRIPE_PRICE_READERS', async () => {
-  const oldOnly = { ...env, STRIPE_PRICE_READERS: 'price_19' };
-  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'readers', qty: 1 }] }), env: oldOnly })).status, 400);
-  let sent;
-  globalThis.fetch = async (url, init) => { sent = new URLSearchParams(init.body); return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/reader' }), { status: 200 }); };
-  const r = await checkout({ request: jsonReq({ items: [{ sku: 'readers', qty: 1 }] }), env: { ...oldOnly, STRIPE_PRICE_READER_21: 'price_reader_21' } });
-  assert.equal(r.status, 200);
-  assert.equal(sent.get('line_items[0][price]'), 'price_reader_21');
-  assert.equal(sent.get('line_items[0][quantity]'), '1');
-  assert.equal((await (await catalog({ env: oldOnly })).json()).skus.includes('readers'), false);
-  assert.equal((await (await catalog({ env: { ...oldOnly, STRIPE_PRICE_READER_21: 'price_reader_21' } })).json()).skus.includes('readers'), true);
+test('retired skus stay unsellable even when their price secrets are set', async () => {
+  const priced = {
+    ...env,
+    STRIPE_PRICE_READER_21: 'price_reader_21',
+    STRIPE_PRICE_READERS: 'price_19',
+    STRIPE_PRICE_GIGI: 'price_gigi',
+    STRIPE_PRICE_TIDE_SOAP_DISH: 'price_soap',
+    STRIPE_PRICE_TIDE_DISPENSER: 'price_disp',
+    STRIPE_PRICE_HALF_DOZEN: 'price_half',
+    STRIPE_PRICE_BAKERS_DOZEN: 'price_bakers',
+    STRIPE_PRICE_HIBISCUS_SET: 'price_hib',
+    STRIPE_PRICE_POP_COASTERS_6: 'price_pop',
+    STRIPE_PRICE_FLOWER_SET_CASE: 'price_flower',
+  };
+  for (const sku of ['readers', 'gigi', 'tide-soap-dish', 'tide-dispenser', 'half-dozen', 'bakers-dozen', 'six-set-case', 'fall-pop-coasters', 'pop-tray-1-season-colors']) {
+    assert.equal((await checkout({ request: jsonReq({ items: [{ sku, qty: 1 }] }), env: priced })).status, 400, sku);
+  }
+  const skus = (await (await catalog({ env: priced })).json()).skus;
+  assert.deepEqual([...skus].sort(), ['flower-set-case', 'pop-coasters-6']);
 });
 
 test('checkout: bad qty rejected, not configured -> 503', async () => {
@@ -40,29 +48,21 @@ test('checkout: bad qty rejected, not configured -> 503', async () => {
   assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'tide-soap-dish', qty: 1 }] }), env: {} })).status, 503);
 });
 
-test('hibiscus set uses STRIPE_PRICE_HIBISCUS_SET and falls back to the flower-set price', async () => {
-  const oldOnly = { ...env, STRIPE_PRICE_SIX_SET_CASE: 'price_29' };
+test('flower set uses its own price, and the retired hibiscus sku cannot be charged', async () => {
+  const oldOnly = { ...env, STRIPE_PRICE_SIX_SET_CASE: 'price_29', STRIPE_PRICE_HIBISCUS_SET: 'price_hibiscus_39' };
   assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: oldOnly })).status, 400);
-  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1 }] }), env: oldOnly })).status, 400);
+  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1, flower: 'Sunflower' }] }), env: oldOnly })).status, 400);
   let sent;
   globalThis.fetch = async (url, init) => { sent = new URLSearchParams(init.body); return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/flower' }), { status: 200 }); };
-  const fallback = { ...oldOnly, STRIPE_PRICE_FLOWER_SET_CASE: 'price_flower_39' };
-  const r = await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: fallback });
+  const own = { ...oldOnly, STRIPE_PRICE_FLOWER_SET_CASE: 'price_flower_39' };
+  const r = await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1, flower: 'Hibiscus' }] }), env: own });
   assert.equal(r.status, 200);
   assert.equal(sent.get('line_items[0][price]'), 'price_flower_39');
-  const own = { ...fallback, STRIPE_PRICE_HIBISCUS_SET: 'price_hibiscus_39' };
-  const r2 = await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: own });
-  assert.equal(r2.status, 200);
-  assert.equal(sent.get('line_items[0][price]'), 'price_hibiscus_39');
-  const r3 = await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1, flower: 'Sunflower' }] }), env: own });
-  assert.equal(r3.status, 200);
-  assert.equal(sent.get('line_items[0][price]'), 'price_flower_39');
-  const borrowed = { ...fallback, STRIPE_PRICE_HIBISCUS_SET: 'price_1UTVSJHYwaTbul7MyxtILxOz' };
-  const r4 = await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: borrowed });
-  assert.equal(r4.status, 200);
-  assert.equal(sent.get('line_items[0][price]'), 'price_flower_39');
-  assert.equal((await (await catalog({ env: own })).json()).skus.includes('six-set-case'), true);
-  assert.equal((await (await catalog({ env: oldOnly })).json()).skus.includes('six-set-case'), false);
+  assert.equal(sent.get('line_items[0][metadata][flower]'), 'Hibiscus');
+  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: own })).status, 400);
+  const skus = (await (await catalog({ env: own })).json()).skus;
+  assert.equal(skus.includes('six-set-case'), false);
+  assert.equal(skus.includes('flower-set-case'), true);
 });
 
 test('pop trays and the holiday tray use STRIPE_PRICE_POP_COASTERS_6 only', async () => {
@@ -73,24 +73,29 @@ test('pop trays and the holiday tray use STRIPE_PRICE_POP_COASTERS_6 only', asyn
   let sent;
   globalThis.fetch = async (url, init) => { sent = new URLSearchParams(init.body); return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/pop' }), { status: 200 }); };
   const priced = { ...wrong, STRIPE_PRICE_POP_COASTERS_6: 'price_pop_29' };
-  for (const sku of ['fall-pop-coasters', 'pop-tray-1-season-colors', 'pop-coasters-6']) {
-    const line = sku === 'pop-coasters-6' ? { sku, qty: 1, style: 'Flat', tray: 'Mixed' } : { sku, qty: 1, style: 'Flat' };
-    const r = await checkout({ request: jsonReq({ items: [line] }), env: priced });
-    assert.equal(r.status, 200, sku);
-    assert.equal(sent.get('line_items[0][price]'), 'price_pop_29', sku);
+  for (const sku of ['fall-pop-coasters', 'pop-tray-1-season-colors']) {
+    assert.equal((await checkout({ request: jsonReq({ items: [{ sku, qty: 1, style: 'Flat' }] }), env: priced })).status, 400, sku);
   }
+  const pop = await checkout({ request: jsonReq({ items: [{ sku: 'pop-coasters-6', qty: 1, style: 'Flat', tray: 'Mixed' }] }), env: priced });
+  assert.equal(pop.status, 200);
+  assert.equal(sent.get('line_items[0][price]'), 'price_pop_29');
 });
 
 test('checkout: sends only server-side price id to Stripe and returns the hosted url', async () => {
   let sent;
   globalThis.fetch = async (url, init) => { sent = { url, body: new URLSearchParams(init.body) }; return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/x' }), { status: 200 }); };
-  const r = await checkout({ request: jsonReq({ items: [{ sku: 'tide-soap-dish', qty: 2 }, { sku: 'tide-soap-dish', qty: 1 }], price: 1 }), env });
+  const priced = { ...env, STRIPE_PRICE_POP_COASTERS_6: 'price_pop_29' };
+  const r = await checkout({ request: jsonReq({ items: [
+    { sku: 'pop-coasters-6', qty: 2, style: 'Flat', tray: 'Mixed', price: 1 },
+    { sku: 'pop-coasters-6', qty: 1, style: 'Flat', tray: 'Mixed' },
+  ] }), env: priced });
   assert.equal(r.status, 200);
   assert.equal((await r.json()).url, 'https://checkout.stripe.com/c/x');
-  assert.equal(sent.body.get('line_items[0][price]'), 'price_six');
+  assert.equal(sent.body.get('line_items[0][price]'), 'price_pop_29');
   assert.equal(sent.body.get('line_items[0][quantity]'), '3');
   assert.equal(sent.body.get('success_url'), 'https://juplifestudio.com/shop?checkout=success&session_id={CHECKOUT_SESSION_ID}');
-  assert.equal(sent.body.get('line_items[0][metadata][style]'), null);
+  assert.equal(sent.body.get('line_items[0][metadata][style]'), 'Flat');
+  assert.equal(sent.body.get('line_items[0][metadata][tray]'), 'Mixed');
 });
 
 const BAKERS_PRICE = 'price_1UTVOYHYwaTbul7M7QJo4iye';
@@ -162,9 +167,7 @@ test('checkout: coaster options are separate line items with their own price and
     assert.equal((await checkout({ request: jsonReq({ items: [{ sku, qty: 1 }] }), env: popEnv })).status, 400, sku);
   }
   const pop = await checkout({ request: jsonReq({ items: [{ sku: 'pop-tray-1-season-colors', qty: 1, style: 'Edge' }] }), env: popEnv });
-  assert.equal(pop.status, 200);
-  assert.equal(sent.body.get('line_items[0][price]'), 'price_pop');
-  assert.equal(sent.body.get('line_items[0][metadata][style]'), 'Edge');
+  assert.equal(pop.status, 400);
   const open = await (await catalogApi({ env: priced })).json();
   assert.ok(open.skus.includes('pop-coasters-6'));
   assert.ok(open.skus.includes('flower-set-case'));
