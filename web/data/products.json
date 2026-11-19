@@ -23,7 +23,7 @@
           ]
         }
       ],
-      "material": "TPU 95A · washable · dishwasher safe",
+      "material": "Washable",
       "swatches": "batch",
       "img": "img/holiday-tray-pops-1600x900.webp",
       "home": true,
@@ -101,7 +101,7 @@
       "name": "The Hibiscus Set",
       "line": "Six Hibiscus line coasters with the case included.",
       "price": 39,
-      "material": "TPU 95A · washable · dishwasher safe",
+      "material": "Washable",
       "img": "img/six-set-case.webp",
       "home": true,
       "shop": true,
@@ -113,19 +113,19 @@
       "name": "The Half Dozen",
       "line": "Six assorted coasters in a windowed kraft box with a sage band, the Mrs. Smash tag and a Today's Batch card. Free U.S. shipping.",
       "price": 29,
-      "material": "TPU 95A · washable · dishwasher safe",
+      "material": "Washable",
       "img": "img/halfdozen-box.webp",
       "home": false,
       "shop": true,
       "render": false,
-      "alt": "The Half Dozen: a windowed kraft box of assorted coasters wrapped in a sage TPU band with the Mrs. Smash tag"
+      "alt": "The Half Dozen: a windowed kraft box of assorted coasters wrapped in a sage band with the Mrs. Smash tag"
     },
     {
       "sku": "bakers-dozen",
       "name": "The Baker's Dozen",
       "line": "Thirteen assorted coasters, one for everyone at the table and one to spare. Free U.S. shipping.",
       "price": 39,
-      "material": "TPU 95A · washable · dishwasher safe",
+      "material": "Washable",
       "img": "img/halfdozen-open.webp",
       "home": false,
       "shop": true,
@@ -179,9 +179,9 @@
     {
       "sku": "tide-dispenser",
       "name": "Tide Hand Soap Dispenser",
-      "line": "TPU housing, PETG refill bottle, square-wave base.",
+      "line": "Flexible housing, PETG refill bottle, square-wave base.",
       "price": 21,
-      "material": "TPU housing · PETG bottle: wash by hand",
+      "material": "Flexible housing · PETG bottle",
       "img": "img/tide-dispenser.webp",
       "gallery": [
         {
@@ -223,7 +223,7 @@
       "note": "Mix packs in one order.",
       "shipping": "Free U.S. shipping.",
       "price": 29,
-      "material": "TPU 95A · washable · dishwasher safe",
+      "material": "Washable",
       "img": "img/pop-coasters-pumpkin.webp",
       "alt": "A pumpkin Pop coaster",
       "options": [
@@ -292,12 +292,12 @@
     {
       "sku": "flower-set-case",
       "name": "Flower Coaster Set with Case",
-      "line": "Six coasters and a one-color PLA case. Sunflower or Hibiscus.",
+      "line": "Six coasters and a one-color case. Sunflower or Hibiscus.",
       "shipping": "Free U.S. shipping.",
       "price": 39,
-      "material": "TPU coasters · PLA case",
+      "material": "Washable coasters · one-color case",
       "img": "img/flower-sunflower-coaster.webp",
-      "alt": "A gold sunflower coaster, 3D printed in PLA, with a raised flower",
+      "alt": "A gold sunflower coaster with a raised flower",
       "options": [
         {
           "key": "flower",
@@ -327,7 +327,7 @@
       "short": "Season Colors",
       "line": "Six plain Pops, one of each season color. Flat or Edge.",
       "price": 29,
-      "material": "TPU 95A · washable · dishwasher safe",
+      "material": "Washable",
       "pops": [
         {
           "name": "Pumpkin",
@@ -361,7 +361,7 @@
         },
         {
           "img": "img/pop-tray-1-color-card.webp",
-          "alt": "Color card for JUP LIFE Pop Tray 1: Pumpkin #E8731E, Coconut frosted clear TPU, Rhubarb #C93A5B, Key Lime #A8D94A, Peach #FFB07C and Sea Salt #7FD1C2."
+          "alt": "Color card for JUP LIFE Pop Tray 1: Pumpkin #E8731E, Coconut frosted clear, Rhubarb #C93A5B, Key Lime #A8D94A, Peach #FFB07C and Sea Salt #7FD1C2."
         }
       ],
       "home": false,
@@ -375,7 +375,7 @@
       "short": "Pop Flowers",
       "line": "Six flower Pops. Flat or Edge.",
       "price": 29,
-      "material": "TPU 95A · washable · dishwasher safe",
+      "material": "Washable",
       "pops": [
         {
           "name": "Sunflower",
@@ -424,7 +424,7 @@
       "line": "Six coastal Pops. Flat or Edge.",
       "story": "Red Mangrove: mangroves produce floating seedlings, called propagules, that tides and storms carry to new shores.",
       "price": 29,
-      "material": "TPU 95A · washable · dishwasher safe",
+      "material": "Washable",
       "pops": [
         {
           "name": "Sea Glass",
