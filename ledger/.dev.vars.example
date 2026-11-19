@@ -1,0 +1,10 @@
+# Copy to .dev.vars for `wrangler dev --local`. Never commit .dev.vars.
+# Values below are local fakes, not live credentials.
+
+STRIPE_READ_KEY=rk_test_local_only
+STRIPE_WEBHOOK_SECRET=whsec_local_only
+SHOPIFY_ADMIN_TOKEN=shpat_local_only
+SHOPIFY_WEBHOOK_SECRET=shpss_local_only
+ACCESS_AUD=local-aud
+ACCESS_TEAM_DOMAIN=http://127.0.0.1:8791
+JUP_PRICE_IDS=price_local_jup_1

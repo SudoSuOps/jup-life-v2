@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jup-life-ledger",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-19",
+  "workers_dev": false,
+  // Attach a route only after the Cloudflare Access application exists.
+  // "routes": [
+  //   { "pattern": "ledger.juplifestudio.com", "custom_domain": true }
+  // ],
+  "observability": {
+    "enabled": true,
+    "traces": {
+      "enabled": true
+    }
+  },
+  "triggers": {
+    "crons": ["15 11 * * *", "15 12 * * 1"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "jup-life-ledger",
+      "database_id": "00000000-0000-4000-8000-000000000001",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "SHOPIFY_SHOP": "yvvpu5-3p.myshopify.com",
+    "SHOPIFY_API_VERSION": "2026-10",
+    "SHOPIFY_ON_STRIPE": "false"
+  }
+}
