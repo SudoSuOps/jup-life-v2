@@ -7,7 +7,7 @@ These override the brief where they conflict.
 
 ## Home page
 - **Today's Batch (Fall Tray) now has 6 flavors**: Pumpkin, Cinnamon, Cranberry, Maple, Rhubarb, **Sunflower ("the hero")**, matching the owner's Pop Coasters flavor board. Sunflower `#F6C21C` is the always-on hero in both Fall and Summer trays.
-- **Hero**: the cake-dome studio render (`hero-dome-*.webp`) sits softly blurred behind the board (desktop only). The "Fresh Baked Daily" seal sticker overlaps the board's top-left corner.
+- **Hero**: the cake-dome studio render (`hero-dome-*.webp`) sits softly blurred behind the board (desktop only). The "Fresh Print Daily" seal sticker overlaps the board's top-left corner.
 - **This week's tray** = 6 cards + a full-width custom-logo CTA strip:
   Fall Tray Pop Coasters · **Stack Bands** (new) · 6-Coaster Set + Case ($29) · **The Gigi** (new) · Tide Soap Dish · Tide Hand Soap Dispenser.
   **The Readers moved to Shop only** (brief caps Home at 6 cards; no photo yet).

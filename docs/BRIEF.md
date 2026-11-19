@@ -50,7 +50,7 @@ Divider: a rounded **sage TPU band** line (8 px, full pill shape) between sectio
 
 ### Page 1: Home `/` (one scroll)
 1. **Hero.** On mobile it stacks headline, then board, then CTAs. On desktop it's a split with copy on the left and the board on the right.
-   - Eyebrow: "FRESH BAKED DAILY · JUPITER, FL"
+   - Eyebrow: "FRESH PRINT DAILY · JUPITER, FL"
    - H1: **"Fresh baked. Built different."**
    - Sub: "Washable TPU coasters and coastal pieces, 3D-printed in small seasonal batches in Jupiter, FL."
    - CTAs: **[Shop the Batch]** (terracotta) → /shop · **[Get a free Half Dozen]** (outline) → modal
