@@ -324,3 +324,49 @@ test('sample: qty is 1 for retail, 6 for wholesale, legacy types map, spoofed sa
   assert.doesNotMatch(confirm[1].html, /free sample/i);
   assert.match(confirm[1].text, /We'll reach out about your logo within one business day\./);
 });
+
+test('sample: weddings inquiry emails event fields to Dee and skips the sample confirmation', async () => {
+  const sent = [];
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = async (_u, init) => { sent.push(JSON.parse(init.body)); return new Response('{}', { status: 200 }); };
+  const env = { RESEND_API_KEY: 'k' };
+  const fields = {
+    request_type: 'Weddings & Events inquiry',
+    business: '', city: '',
+    name: 'Ada', email: 'ada@example.com', phone: '561-555-0100',
+    event_type: 'Wedding', event_date: '2026-12-12', quantity: '80',
+    notes: 'Sage and cream', address: '1 Ocean Blvd, Jupiter, FL 33477',
+    source_page: '/weddings-events',
+  };
+  const ok = await sample({ request: form(fields), env });
+  assert.equal(ok.status, 200);
+  assert.equal((await ok.json()).emailed, true);
+  const quiet = await sample({ request: form(fields), env: {} });
+  assert.equal(quiet.status, 200);
+  assert.equal((await quiet.json()).emailed, false);
+  for (const bad of [
+    { phone: '' },
+    { event_type: 'Shower' },
+    { quantity: '0' },
+    { event_date: '2026-02-31' },
+    { notes: '' },
+    { address: '' },
+  ]) {
+    assert.equal((await sample({ request: form({ ...fields, ...bad }), env })).status, 422, JSON.stringify(bad));
+  }
+  globalThis.fetch = realFetch;
+  assert.equal(sent.length, 1);
+  assert.deepEqual(sent[0].to, ['hello@juplifestudio.com', 'dee@juplifestudio.com']);
+  assert.equal(sent[0].subject, '[Weddings & Events inquiry] Ada');
+  assert.equal(sent[0].reply_to, 'ada@example.com');
+  for (const bit of [
+    'request_type: Weddings & Events inquiry',
+    'event_type: Wedding',
+    'event_date: 2026-12-12',
+    'quantity: 80',
+    'notes: Sage and cream',
+    'address: 1 Ocean Blvd, Jupiter, FL 33477',
+    'phone: 561-555-0100',
+  ]) assert.ok(sent[0].text.includes(bit), bit);
+  assert.doesNotMatch(sent[0].text, /buyer_type|Sample request/);
+});
