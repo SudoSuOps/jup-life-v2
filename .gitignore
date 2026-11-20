@@ -6,3 +6,8 @@ __pycache__/
 .env
 tools/todays-batch/out/
 .wrangler/
+
+# filament app local state
+filament/.wrangler/
+filament/.dev.vars
+filament/node_modules/
