@@ -17,3 +17,4 @@
 - 2026-11-20 Process article names the 30-printer fleet and TPU 95A HF (owner-confirmed). https://juplifestudio.com/blog/how-custom-logo-coasters-are-made
 - 2026-11-20 Article: https://juplifestudio.com/blog/bar-coaster-materials (paper vs cork vs rubber vs TPU; vendor quotes verified 2026-11-20; TPU water behavior owner-confirmed). Linked from /enterprise FAQ, use-case FAQs, process article, blog index.
 - 2026-11-20 Sample copy restored to "free sample of your design, mailed to you" (owner-confirmed) across process article, use-case layout, events, hub, wedding article, social.
+- 2026-11-20 Materials + process articles name the filament (QIDI TECHNOLOGY TPU 95A High Flow) with the maker's wording, attributed; no spec numbers.
