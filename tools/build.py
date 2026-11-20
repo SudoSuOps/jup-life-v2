@@ -218,7 +218,7 @@ def robots_txt(base: str, indexable: bool) -> str:
     return f"User-agent: *\nAllow: /\nDisallow: /api/\n\n{bots}Sitemap: {base}/sitemap.xml\n"
 
 
-def llms_txt(site: dict, products: list, batch: dict, catalog: dict) -> str:
+def llms_txt(site: dict, products: list, batch: dict, catalog: dict, posts: list) -> str:
     base = site["site_url"]
     lines = [
         "# JUP LIFE by Mrs. Smash", "",
@@ -247,6 +247,8 @@ def llms_txt(site: dict, products: list, batch: dict, catalog: dict) -> str:
         f"- [Weddings]({base}/custom-coasters/weddings): custom wedding coasters with names, monogram or date",
         f"- [Events]({base}/custom-coasters/events): custom coasters for corporate events and parties",
         f"- [Airbnb hosts]({base}/custom-coasters/airbnb): custom coasters for Airbnb hosts and vacation rentals",
+        f"- [Blog]({base}/blog): guides from the studio",
+        *(f"- [{p['title']}]({base}/blog/{p['slug']}): {p['description']}" for p in posts),
         f"- [Shipping & Returns]({base}/shipping-returns)",
         f"- [Privacy]({base}/privacy)", "", "## Products"]
     by_sku = {p["sku"]: p for p in products}
@@ -311,6 +313,9 @@ def main() -> int:
             if card_shot.get("caption"):
                 p["caption"] = card_shot["caption"]
     photo_book = {sku: photo_products[sku] for sku in catalog.get("listed") or [] if sku in photo_products}
+    posts = load_json("posts.json")["posts"]
+    for p in posts:
+        p["date_label"] = date.fromisoformat(p["date"]).strftime("%B %-d, %Y")
     batch = load_batch()
     summer = "summer" in batch["tray"].lower()
     season = "summer" if summer else "fall"
@@ -355,7 +360,7 @@ def main() -> int:
             ld["image"] = [f"{site['site_url']}/{i}" for i in imgs]
         return Markup(json.dumps(ld, indent=2).replace("</", "<\\/"))
 
-    env.globals.update(shopify_store=shopify["store"], shopify_json=Markup(json.dumps({"store": shopify["store"], "products": {k: {"options": v["options"], "variants": v["variants"]} for k, v in shopify["products"].items()}}, ensure_ascii=False).replace("</", "<\\/")), pic=pic, product_ld=product_ld, by_sku={p['sku']: p for p in products}, flavor_hex=FLAVOR_HEX, indexable=indexable, ph=ph, site=site, batch=batch, batch_date=batch_date_label(batch["date"]),
+    env.globals.update(posts=posts, shopify_store=shopify["store"], shopify_json=Markup(json.dumps({"store": shopify["store"], "products": {k: {"options": v["options"], "variants": v["variants"]} for k, v in shopify["products"].items()}}, ensure_ascii=False).replace("</", "<\\/")), pic=pic, product_ld=product_ld, by_sku={p['sku']: p for p in products}, flavor_hex=FLAVOR_HEX, indexable=indexable, ph=ph, site=site, batch=batch, batch_date=batch_date_label(batch["date"]),
                        season=season, products=products, catalog=catalog, css_href=css_href, js_src=js_src,
                        site_url=site["site_url"], have_ph=lambda k: bool(site["placeholders"].get(k)),
                        batch_json=Markup(json.dumps(batch, indent=2, ensure_ascii=False).replace("</", "<\\/")),
@@ -371,6 +376,8 @@ def main() -> int:
         "south-florida.html": ("south_florida.html", {"path": "/south-florida", "nav": "palm"}),
         "custom-coasters.html": ("custom_coasters.html", {"path": "/custom-coasters", "nav": "enterprise"}),
         **{f"custom-coasters/{s}.html": (f"use/{s}.html", {"path": f"/custom-coasters/{s}", "nav": "enterprise"}) for s in USE_CASES},
+        "blog.html": ("blog_index.html", {"path": "/blog", "nav": "blog"}),
+        **{f"blog/{p['slug']}.html": (f"blog/{p['slug']}.html", {"path": f"/blog/{p['slug']}", "nav": "blog"}) for p in posts},
         "privacy.html": ("privacy.html", {"path": "/privacy", "nav": ""}),
         "shipping-returns.html": ("shipping_returns.html", {"path": "/shipping-returns", "nav": ""}),
         "404.html": ("not_found.html", {"path": "/404", "nav": ""}),
@@ -384,9 +391,12 @@ def main() -> int:
         "/south-florida": "South Florida",
         "/custom-coasters": "Custom Coasters",
         **{f"/custom-coasters/{s}": [("Custom Coasters", "/custom-coasters"), (name, f"/custom-coasters/{s}")] for s, name in USE_CASES.items()},
+        "/blog": "Blog",
+        **{f"/blog/{p['slug']}": [("Blog", "/blog"), (p["title"], f"/blog/{p['slug']}")] for p in posts},
     }
     for out, (tpl, ctx) in pages.items():
-        page_html = env.get_template(tpl).render(page=ctx)
+        post = next((p for p in posts if ctx["path"] == f"/blog/{p['slug']}"), None)
+        page_html = env.get_template(tpl).render(page=ctx, post=post)
         (DIST / out).parent.mkdir(parents=True, exist_ok=True)
         (DIST / out).write_text(add_ld(page_html, ctx["path"], site["site_url"], crumbs))
 
@@ -394,12 +404,13 @@ def main() -> int:
     urls = [(f"{site['site_url']}{p}", pr) for p, pr in (
         ("/", "1.0"), ("/shop", "0.9"), ("/enterprise", "0.9"), ("/about", "0.7"),
         ("/contact", "0.6"), ("/palm-beach-county", "0.8"), ("/south-florida", "0.8"), ("/custom-coasters", "0.8"),
-        *((f"/custom-coasters/{s}", "0.8") for s in USE_CASES), ("/shipping-returns", "0.3"), ("/privacy", "0.2"))]
+        *((f"/custom-coasters/{s}", "0.8") for s in USE_CASES), ("/blog", "0.6"),
+        *((f"/blog/{p['slug']}", "0.7") for p in posts), ("/shipping-returns", "0.3"), ("/privacy", "0.2"))]
     (DIST / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod><priority>{pr}</priority></url>\n" for u, pr in urls) + "</urlset>\n")
     (DIST / "robots.txt").write_text(robots_txt(site["site_url"], indexable))
-    (DIST / "llms.txt").write_text(llms_txt(site, products, batch, catalog))
+    (DIST / "llms.txt").write_text(llms_txt(site, products, batch, catalog, posts))
     shutil.copytree(WEB / "root", DIST, dirs_exist_ok=True)  # favicon, touch icons, manifest
     shutil.copy(WEB / "_headers", DIST / "_headers")
     shutil.copy(WEB / "_redirects", DIST / "_redirects")
