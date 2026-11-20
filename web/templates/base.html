@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}{% endblock %}</title>
 <meta name="description" content="{% block description %}{% endblock %}">
-<link rel="canonical" href="{{ site_url }}{{ page.path if page.path != '/404' else '/' }}">
+{% if page.path != '/404' %}<link rel="canonical" href="{{ site_url }}{{ page.path }}">{% endif %}
 {% if page.path == '/404' or not indexable %}<meta name="robots" content="noindex">{% endif %}
 <!-- TODO(owner): paste the Bing Webmaster msvalidate.01 content value, then uncomment.
 <meta name="msvalidate.01" content="">

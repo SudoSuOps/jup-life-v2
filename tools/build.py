@@ -329,6 +329,11 @@ def main() -> int:
                                       "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "US"},
                                       "deliveryTime": {"@type": "ShippingDeliveryTime",
                                                        "handlingTime": {"@type": "QuantitativeValue", "minValue": 2, "maxValue": 3, "unitCode": "DAY"}}},
+                  # Mirrors the visible policy on /shipping-returns: 7 days from delivery, by mail, customer pays postage.
+                  "hasMerchantReturnPolicy": {"@type": "MerchantReturnPolicy", "applicableCountry": "US",
+                                              "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+                                              "merchantReturnDays": 7, "returnMethod": "https://schema.org/ReturnByMail",
+                                              "returnFees": "https://schema.org/ReturnFeesCustomerResponsibility"},
                   "url": f"{site['site_url']}/shop"}
         # Checkout is Shopify; listed coasters are made to order and always buyable.
         offers["availability"] = "https://schema.org/InStock"
