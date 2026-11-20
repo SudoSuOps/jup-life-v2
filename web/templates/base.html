@@ -100,13 +100,14 @@
   </div>
 </dialog>
 
+<script type="application/json" id="shopify-map">{{ shopify_json }}</script>
 <dialog id="bag-dlg" aria-labelledby="bag-h">
   <button type="button" class="dlg-close" data-close aria-label="Close"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#5A3E2B" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16"/></svg></button>
   <h2 id="bag-h" style="font-size:34px;margin:4px 0 16px">Your bag</h2>
   <ul class="bag-list" data-bag-list></ul>
   <p data-bag-empty style="margin:0 0 16px">Nothing on the tray yet.</p>
   <p style="display:flex;justify-content:space-between;font-weight:600;margin:0 0 16px"><span>Subtotal</span><span data-bag-subtotal>$0.00</span></p>
-  <p style="font-size:13px;margin:0 0 16px">Free shipping on all U.S. orders.</p>
+  <p style="font-size:13px;margin:0 0 16px">Free shipping on all U.S. orders. Checkout opens on our Shopify store, shop.juplifestudio.com.</p>
   <p role="alert" data-bag-error style="margin:0 0 8px;color:#9B1B30;font-weight:600"></p>
   <button type="button" class="btn btn-primary" data-checkout style="width:100%">Checkout</button>
 </dialog>

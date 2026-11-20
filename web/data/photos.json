@@ -3,75 +3,114 @@
   "products": {
     "pop-coasters-6": {
       "card": {
-        "img": "img/pop-tray-1-season-colors.webp",
-        "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+        "img": "img/pop-6-hibiscus-trio.webp",
+        "alt": "Pop coasters with a raised hibiscus, stacked in peach, sage and cream on a cooling rack with fresh peaches",
         "render": false
       },
       "style": {
         "Flat": {
-          "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "img": "img/pop-6-hibiscus-trio.webp",
+          "alt": "Pop coasters with a raised hibiscus, stacked in peach, sage and cream on a cooling rack with fresh peaches",
           "render": false
         },
         "Edge": {
-          "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "img": "img/pop-6-hibiscus-trio.webp",
+          "alt": "Pop coasters with a raised hibiscus, stacked in peach, sage and cream on a cooling rack with fresh peaches",
           "render": false
         }
       },
       "tray": {
         "Mixed": {
-          "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "img": "img/pop-6-hibiscus-trio.webp",
+          "alt": "Pop coasters with a raised hibiscus, stacked in peach, sage and cream on a cooling rack with fresh peaches",
           "render": false
         },
         "Pumpkin": {
-          "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "img": "img/pop-6-hibiscus-trio.webp",
+          "alt": "Pop coasters with a raised hibiscus, stacked in peach, sage and cream on a cooling rack with fresh peaches",
           "render": false
         },
         "Coconut (clear)": {
-          "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "img": "img/pop-6-hibiscus-trio.webp",
+          "alt": "Pop coasters with a raised hibiscus, stacked in peach, sage and cream on a cooling rack with fresh peaches",
           "render": false
         },
         "Rhubarb": {
-          "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "img": "img/pop-6-hibiscus-trio.webp",
+          "alt": "Pop coasters with a raised hibiscus, stacked in peach, sage and cream on a cooling rack with fresh peaches",
           "render": false
         },
         "Key Lime": {
-          "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "img": "img/pop-6-hibiscus-trio.webp",
+          "alt": "Pop coasters with a raised hibiscus, stacked in peach, sage and cream on a cooling rack with fresh peaches",
           "render": false
         },
         "Peach": {
-          "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "img": "img/pop-6-hibiscus-trio.webp",
+          "alt": "Pop coasters with a raised hibiscus, stacked in peach, sage and cream on a cooling rack with fresh peaches",
           "render": false
         },
         "Sea Salt": {
-          "img": "img/pop-tray-1-season-colors.webp",
-          "alt": "JUP LIFE Pop Tray 1, Season Colors: six flat Pop Round coasters in Pumpkin, Coconut (frosted clear), Rhubarb, Key Lime, Peach and Sea Salt in a sand tray.",
+          "img": "img/pop-6-hibiscus-trio.webp",
+          "alt": "Pop coasters with a raised hibiscus, stacked in peach, sage and cream on a cooling rack with fresh peaches",
           "render": false
         }
       }
     },
     "flower-set-case": {
       "card": {
-        "img": "img/flower-sunflower-coaster.webp",
-        "alt": "A gold sunflower coaster with a raised flower",
+        "img": "img/flower-sunflower-real.webp",
+        "alt": "A gold Sunflower coaster with a raised flower",
         "render": false
       },
       "flower": {
         "Sunflower": {
-          "img": "img/flower-sunflower-coaster.webp",
-          "alt": "A gold sunflower coaster with a raised flower",
+          "img": "img/flower-sunflower-real.webp",
+          "alt": "A gold Sunflower coaster with a raised flower",
           "render": false
         },
         "Hibiscus": {
-          "img": "img/pop-tray-2-pop-flowers.webp",
-          "alt": "Pop Tray 2, Pop Flowers: six flower Pop Round coasters on a wood tray, Sunflower, Hibiscus and Orchid in back, Plumeria, Bird of Paradise and Bougainvillea in front",
+          "img": "img/flower-hibiscus-orange-set.webp",
+          "alt": "Six orange Hibiscus coasters with raised flowers, stacked in their matching round case",
+          "render": false
+        }
+      }
+    },
+    "coastal-6": {
+      "card": {
+        "img": "img/coastal-6-table.webp",
+        "alt": "Coastal Pop coasters in Sea Glass, Shell, Dunes, Red Mangrove, Banyan and Sea Turtle on a light wood table, a coffee cup on one",
+        "render": false
+      },
+      "design": {
+        "Sea Glass": {
+          "img": "img/coastal-6-table.webp",
+          "alt": "Coastal Pop coasters in Sea Glass, Shell, Dunes, Red Mangrove, Banyan and Sea Turtle on a light wood table, a coffee cup on one",
+          "render": false
+        },
+        "Shell": {
+          "img": "img/coastal-6-table.webp",
+          "alt": "Coastal Pop coasters in Sea Glass, Shell, Dunes, Red Mangrove, Banyan and Sea Turtle on a light wood table, a coffee cup on one",
+          "render": false
+        },
+        "Dunes": {
+          "img": "img/coastal-6-table.webp",
+          "alt": "Coastal Pop coasters in Sea Glass, Shell, Dunes, Red Mangrove, Banyan and Sea Turtle on a light wood table, a coffee cup on one",
+          "render": false
+        },
+        "Red Mangrove": {
+          "img": "img/coastal-6-table.webp",
+          "alt": "Coastal Pop coasters in Sea Glass, Shell, Dunes, Red Mangrove, Banyan and Sea Turtle on a light wood table, a coffee cup on one",
+          "render": false
+        },
+        "Banyan": {
+          "img": "img/coastal-6-table.webp",
+          "alt": "Coastal Pop coasters in Sea Glass, Shell, Dunes, Red Mangrove, Banyan and Sea Turtle on a light wood table, a coffee cup on one",
+          "render": false
+        },
+        "Sea Turtle": {
+          "img": "img/coastal-6-table.webp",
+          "alt": "Coastal Pop coasters in Sea Glass, Shell, Dunes, Red Mangrove, Banyan and Sea Turtle on a light wood table, a coffee cup on one",
           "render": false
         }
       }

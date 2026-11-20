@@ -1,7 +1,7 @@
 /* JUP LIFE site JS. Vanilla, no deps, target < 10 KB minified.
    - Today's Batch board from JSON
    - Sample request <dialog> (+ "Product question" preselect)
-   - Bag (localStorage) -> POST /api/checkout -> Stripe Checkout redirect
+   - Bag (localStorage) -> Shopify cart permalink on shop.juplifestudio.com (checkout lives in Shopify)
    - One-time fade-up on sections (respects prefers-reduced-motion via CSS)
 */
 (() => {
@@ -199,13 +199,22 @@
     });
   }
 
-  /* ---------- Bag + Stripe Checkout ---------- */
-  const BAG_KEY = 'jup_bag_v1';
+  /* ---------- Bag -> Shopify checkout ---------- */
+  // Variant IDs come from web/data/shopify.json (embedded as #shopify-map). The site never charges anything:
+  // Checkout builds a Shopify cart permalink, /cart/<variant>:<qty>,..., and Shopify takes it from there.
+  const BAG_KEY = 'jup_bag_v2';
   const loadBag = () => { try { return JSON.parse(localStorage.getItem(BAG_KEY)) || []; } catch { return []; } };
   const saveBag = (bag) => { try { localStorage.setItem(BAG_KEY, JSON.stringify(bag)); } catch { /* private mode: bag lives in memory */ } };
+  try { localStorage.removeItem('jup_bag_v1'); } catch { /* old Stripe-era bag */ }
   let bag = loadBag();
+  let shop = null;
+  try { shop = JSON.parse($('#shopify-map')?.textContent || 'null'); } catch { shop = null; }
 
-  const lineId = (i) => [i.sku, i.style || '', i.tray || '', i.flower || ''].join('\u0000');
+  const variantFor = (sku, opts) => {
+    const entry = shop?.products?.[sku];
+    if (!entry) return null;
+    return entry.variants[entry.options.map((k) => opts[k] || '').join('|')] || null;
+  };
   function renderBag() {
     const count = bag.reduce((n, i) => n + i.qty, 0);
     $$('[data-bag-count]').forEach((el) => { el.textContent = count; });
@@ -217,21 +226,20 @@
       li.innerHTML = `<span><strong></strong><br><span class="sub"></span></span>
         <span class="qty"><button type="button" aria-label="One fewer">−</button><span aria-live="polite"></span><button type="button" aria-label="One more">+</button></span>`;
       $('strong', li).textContent = i.name;
-      const detail = [i.style, i.tray, i.flower].filter(Boolean).join(' · ');
+      const detail = Object.values(i.opts || {}).filter(Boolean).join(' · ');
       $('.sub', li).textContent = detail ? `${detail} · ${money(i.price)}` : money(i.price);
       $('.qty span', li).textContent = i.qty;
       const [minus, plus] = $$('button', li);
-      const id = lineId(i);
-      minus.addEventListener('click', () => setQty(id, i.qty - 1));
-      plus.addEventListener('click', () => setQty(id, i.qty + 1));
+      minus.addEventListener('click', () => setQty(i.variant, i.qty - 1));
+      plus.addEventListener('click', () => setQty(i.variant, i.qty + 1));
       return li;
     }));
     $('[data-bag-empty]').hidden = bag.length > 0;
     $('[data-checkout]').disabled = bag.length === 0;
     $('[data-bag-subtotal]').textContent = money(bag.reduce((s, i) => s + i.price * i.qty, 0));
   }
-  function setQty(id, qty) {
-    bag = bag.map((i) => (lineId(i) === id ? { ...i, qty: Math.min(qty, 20) } : i)).filter((i) => i.qty > 0);
+  function setQty(variant, qty) {
+    bag = bag.map((i) => (i.variant === variant ? { ...i, qty: Math.min(qty, 20) } : i)).filter((i) => i.qty > 0);
     saveBag(bag); renderBag();
   }
   function choiceFrom(card) {
@@ -243,54 +251,33 @@
     });
     return opts;
   }
+  const cartUrl = (items) => `${shop.store}/cart/${items.map((i) => `${i.variant}:${i.qty}`).join(',')}?attributes[source]=juplifestudio.com`;
 
   function initBag() {
     const dlg = $('#bag-dlg');
     if (!dlg) return;
     wireClose(dlg);
+    // drop anything saved before a variant changed in shopify.json
+    if (shop) bag = bag.filter((i) => i.variant && variantFor(i.sku, i.opts || {}) === i.variant);
     $$('[data-open-bag]').forEach((b) => b.addEventListener('click', () => openDlg(dlg)));
     $$('[data-add-to-bag]').forEach((b) => b.addEventListener('click', () => {
-      if (b.disabled) return;
-      // price shown client-side is display only; the server maps sku -> Stripe Price
-      let { sku, name, price } = b.dataset;
+      const { sku, name, price } = b.dataset;
       const opts = choiceFrom(b.closest('[data-coaster]'));
-      // Hibiscus on the flower card checks out as its own $39 product. Do not send flower metadata on that SKU.
-      if (sku === 'flower-set-case' && opts.flower === 'Hibiscus') {
-        sku = 'six-set-case';
-        name = 'The Hibiscus Set';
-        delete opts.flower;
-      }
-      const item = { sku, name, price: Number(price), qty: 1, ...opts };
-      const hit = bag.find((i) => lineId(i) === lineId(item));
-      if (hit) hit.qty = Math.min(hit.qty + 1, 20); else bag.push(item);
+      const variant = variantFor(sku, opts);
+      if (!variant) { b.textContent = 'Unavailable'; b.disabled = true; return; }
+      const hit = bag.find((i) => i.variant === variant);
+      if (hit) hit.qty = Math.min(hit.qty + 1, 20); else bag.push({ sku, name, price: Number(price), qty: 1, opts, variant });
       saveBag(bag); renderBag(); openDlg(dlg);
     }));
-    $('[data-checkout]', dlg).addEventListener('click', async (e) => {
-      const btn = e.currentTarget; const err = $('[data-bag-error]', dlg);
-      err.textContent = ''; btn.disabled = true; btn.textContent = 'One moment…';
-      try {
-        const res = await fetch(`${API}/checkout`, {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: bag.map(({ sku, qty, style, tray, flower }) => {
-            const line = { sku, qty };
-            if (style) line.style = style;
-            if (tray) line.tray = tray;
-            if (flower) line.flower = flower;
-            return line;
-          }) }),
-        });
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok || !data.url) throw new Error(data.detail || 'Checkout is unavailable right now.');
-        location.assign(data.url);
-      } catch (ex) {
-        err.textContent = `${ex.message} You can also call 561-532-7120.`;
-        btn.disabled = false; btn.textContent = 'Checkout';
-      }
+    $('[data-checkout]', dlg).addEventListener('click', (e) => {
+      const btn = e.currentTarget;
+      if (!bag.length || !shop?.store) return;
+      btn.disabled = true; btn.textContent = 'Opening checkout…';
+      const url = cartUrl(bag);
+      // Shopify now holds the cart; clear ours so a return visit starts fresh.
+      bag = []; saveBag(bag);
+      location.assign(url);
     });
-    // Returning from Stripe: success clears the bag; show the matching banner if the page has one
-    const status = new URLSearchParams(location.search).get('checkout');
-    if (status === 'success') { bag = []; saveBag(bag); }
-    if (status) { const b = $(`[data-checkout-banner="${status}"]`); if (b) b.hidden = false; }
     renderBag();
   }
 
@@ -380,41 +367,5 @@
     });
   }
 
-  async function initSellable() {
-    let skus = [];
-    try {
-      const res = await fetch(`${API}/catalog`);
-      if (res.ok) skus = (await res.json()).skus || [];
-    } catch { /* leave the button on Coming soon */ }
-    const ok = new Set(skus);
-    $$('[data-sellable]').forEach((b) => {
-      if (!ok.has(b.dataset.sellable)) return;
-      b.disabled = false;
-      b.textContent = 'Add to bag';
-    });
-  }
-
-  // VIDEO SLOT: Readers short stays hidden until /media/readers-short.mp4 actually loads.
-  function initReadersShort() {
-    $$('[data-readers-short]').forEach((figure) => {
-      const video = $('[data-readers-short-video]', figure);
-      if (!video) return;
-      let alive = true;
-      const show = () => { if (alive) figure.hidden = false; };
-      const hide = () => { alive = false; figure.hidden = true; };
-      video.addEventListener('loadeddata', show);
-      video.addEventListener('canplay', show);
-      video.addEventListener('error', hide);
-      const source = $('source', video);
-      if (source) source.addEventListener('error', hide);
-      const src = source?.getAttribute('src');
-      if (!src) { hide(); return; }
-      fetch(src, { method: 'HEAD' }).then((res) => {
-        if (!res.ok) hide();
-        else video.load();
-      }).catch(() => { /* a failed probe stays hidden until a real load event */ });
-    });
-  }
-
-  renderBatch(); initSample(); initPhotos(); initBag(); initSellable(); initDrops(); initReveal(); initReadersShort();
+  renderBatch(); initSample(); initPhotos(); initBag(); initDrops(); initReveal();
 })();

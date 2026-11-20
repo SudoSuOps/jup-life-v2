@@ -6,57 +6,6 @@
 </ul>
 {% endmacro %}
 
-{% macro concept_fig(src, alt, sizes) %}
-<figure class="pop-shot">
-  {{ pic(src, alt, sizes=sizes) }}
-</figure>
-{% endmacro %}
-
-{% macro pop_tray(p) %}
-<article class="pop-tray" id="{{ p.sku }}" data-coaster="{{ p.sku }}" aria-labelledby="{{ p.sku }}-h">
-  <div class="pop-tray-copy">
-    <p class="eyebrow">{{ p.kicker }}</p>
-    <h3 class="serif" id="{{ p.sku }}-h">{{ p.short }}</h3>
-    <p>{{ p.line }}</p>
-    <ul class="swatches" aria-label="Six Pops on {{ p.short }}">
-      {% for f in p.pops %}<li><i{% if f.name.startswith('Coconut') %} class="swatch-clear" title="Clear / transparent"{% endif %} style="background:{{ f.hex }}"></i>{{ f.name }}</li>{% endfor %}
-    </ul>
-    {% if p.story %}<p class="pop-story">{{ p.story }}</p>{% endif %}
-    {% if p.material %}<p class="material">{{ p.material }}</p>{% endif %}
-    <fieldset class="opt" data-option="style">
-      <legend>Style</legend>
-      <label><input type="radio" name="{{ p.sku }}-style" value="Flat" checked> Flat</label>
-      <label><input type="radio" name="{{ p.sku }}-style" value="Edge"> Edge</label>
-    </fieldset>
-    <div class="buy">
-      <span class="price">$29</span>
-      <button type="button" class="btn btn-primary btn-sm" data-add-to-bag data-sellable="{{ p.sku }}" data-sku="{{ p.sku }}" data-name="{{ p.name }}" data-price="29" disabled>Coming soon</button>
-    </div>
-  </div>
-  <div class="pop-tray-shots">
-    {% for s in p.shots %}{{ concept_fig(s.img, s.alt, "(min-width: 900px) 640px, calc(100vw - 48px)") }}{% endfor %}
-  </div>
-</article>
-{% endmacro %}
-
-{% macro pop_tease() %}
-{% for p in products if p.pop_tray %}
-{% if loop.first %}
-<section class="wrap pop-tease reveal" aria-labelledby="pop-tease-h">
-  <div class="pop-tease-in">
-    <div class="copy">
-      <p class="eyebrow">Pop Trays</p>
-      <h2 id="pop-tease-h">Six to a tray.</h2>
-      <p>Season Colors, Pop Flowers, and Coastal. Flat or Edge. Six on every tray.</p>
-      <a href="/shop#pop-trays" style="font-weight:600;padding:10px 0;align-self:flex-start">See the Pop Trays →</a>
-    </div>
-    {{ concept_fig(p.shots[0].img, p.shots[0].alt, "(min-width: 800px) 560px, calc(100vw - 64px)") }}
-  </div>
-</section>
-{% endif %}
-{% endfor %}
-{% endmacro %}
-
 {% macro card(p, shop=False) %}
 <article class="card" data-coaster="{{ p.sku }}">
   <div class="tag" aria-hidden="true"></div>
@@ -69,8 +18,6 @@
   {% if shop and p.gallery %}
   <div class="thumbs">{% for g in p.gallery %}{{ pic(g.img, g.alt, sizes="64px") }}{% endfor %}</div>
   {% endif %}
-  {% elif p.sku == 'readers' and have_ph('readers_photo') %}
-  <figure>{{ pic(site.placeholders.readers_photo, "A Readers thumb page holder and crate", sizes="360px") }}</figure>
   {% else %}
   <div class="well"><span class="ph">{{ p.photo_placeholder }}</span></div>
   {% endif %}
@@ -78,9 +25,6 @@
     {% if p.swatches == 'batch' %}{{ swatch_list(batch.flavors) }}{% endif %}
     <h3 class="serif">{{ p.name }}</h3>
     <p>{{ p.line }}</p>
-    {% if shop and p.combos_now %}
-    <ul class="combos" aria-label="{{ season | capitalize }} 3-pack combos">{% for c in p.combos_now %}<li><b>{{ c.name }}</b>{% for f in c.flavors %}<i style="background:{{ flavor_hex[f] }}"></i>{{ f }} {% endfor %}</li>{% endfor %}</ul>
-    {% endif %}
     {% if p.material %}<p class="material">{{ p.material }}</p>{% endif %}
     {% if p.options %}
     {% for opt in p.options %}
@@ -95,17 +39,45 @@
     </fieldset>
     {% endfor %}
     {% endif %}
+    {% if p.story %}<p class="note">{{ p.story }}</p>{% endif %}
     {% if p.note %}<p class="note">{{ p.note }}</p>{% endif %}
     {% if p.shipping %}<p class="note">{{ p.shipping }}</p>{% endif %}
     <div class="buy">
       {% if p.price %}
-      <span class="price">${{ p.price }}</span><button type="button" class="btn btn-primary btn-sm" data-add-to-bag data-sellable="{{ p.sku }}" data-sku="{{ p.sku }}" data-name="{{ p.name }}" data-price="{{ p.price }}" disabled>Coming soon</button>
+      <span class="price">${{ p.price }}</span><button type="button" class="btn btn-primary btn-sm" data-add-to-bag data-sku="{{ p.sku }}" data-name="{{ p.name }}" data-price="{{ p.price }}">Add to bag</button>
       {% else %}
       <button type="button" class="btn btn-outline btn-sm" data-open-sample data-type="Product question" data-product="{{ p.name }}">Ask about this batch</button>
       {% endif %}
     </div>
   </div>
 </article>
+{% endmacro %}
+
+{% macro coaster_lineup() %}
+{# The three listed coasters (web/data/catalog.json). Pop gets the Popsters wordmark and its loop video. #}
+<div class="coaster-grid">
+  {% for sku in catalog.listed %}
+  {% if sku == 'pop-coasters-6' %}
+  <div class="pop-feature">
+    <div class="pop-brand">
+      <img class="popsters-logo" src="/img/popsters-logo.png" alt="Popsters by JUP LIFE" width="1185" height="402">
+      {{ pic("img/mrs-smash-tag-badge.webp", "The Mrs. Smash tag: two beach chairs under a wave", sizes="120px", cls="pop-tag") }}
+    </div>
+    <div class="pop-feature-row">
+      {{ card(by_sku[sku], shop=True) }}
+      <figure class="pop-loop">
+        <video muted autoplay loop playsinline preload="metadata" poster="/img/poster-pop-coaster.webp" width="720" height="1280" aria-label="A Popsters coaster, printed by JUP LIFE">
+          <source src="/video/pop-coaster.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
+  </div>
+  {% else %}
+  {{ card(by_sku[sku], shop=True) }}
+  {% endif %}
+  {% endfor %}
+</div>
+<script type="application/json" id="photo-book">{{ photo_book_json }}</script>
 {% endmacro %}
 
 {% macro cta_strip() %}

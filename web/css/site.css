@@ -96,7 +96,7 @@ h2 { margin: 0; font-size: clamp(34px, 4vw, 52px); line-height: 1.1; }
 .card .buy { margin-top: auto; padding-top: 8px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
 .card .note { font-size: 14px; }
 .card .well[hidden], .card figure img[hidden], .render-cap[hidden] { display: none; }
-.coaster-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px 24px; }
+.coaster-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap: 32px 24px; }
 .hero-still { position: relative; z-index: 1; margin: 0; }
 .hero-still img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 14px; }
 .opt { border: 0; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
@@ -127,7 +127,10 @@ h2 { margin: 0; font-size: clamp(34px, 4vw, 52px); line-height: 1.1; }
 .video-grid figcaption { margin-top: 10px; display: flex; flex-direction: column; font-size: 13px; }
 .video-grid figcaption strong { font-size: 16px; }
 .pop-feature { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 16px; }
-.popsters-logo, .readers-logo { width: min(100%, 520px); height: auto; display: block; }
+.popsters-logo { width: min(100%, 520px); height: auto; display: block; }
+.pop-brand { display: flex; align-items: center; gap: 12px 20px; }
+.pop-brand .popsters-logo { flex: 0 1 520px; min-width: 0; }
+.pop-tag { flex: 0 0 auto; width: clamp(72px, 10vw, 120px); height: auto; transform: rotate(6deg); filter: drop-shadow(0 6px 12px rgba(90,62,43,.25)); }
 .pop-feature-row { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(160px, 280px); gap: 24px; align-items: start; }
 .pop-loop { margin: 0; }
 .pop-loop video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: var(--radius-card); background: var(--chalkboard); display: block; }
