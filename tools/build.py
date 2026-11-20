@@ -381,7 +381,7 @@ def main() -> int:
     shutil.copytree(WEB / "root", DIST, dirs_exist_ok=True)  # favicon, touch icons, manifest
     shutil.copy(WEB / "_headers", DIST / "_headers")
     shutil.copy(WEB / "_redirects", DIST / "_redirects")
-    (DIST / "_routes.json").write_text(json.dumps({"version": 1, "include": ["/api/*"], "exclude": []}))
+    (DIST / "_routes.json").write_text(json.dumps({"version": 1, "include": ["/api/*", "/google05d7f4db1ec67c25.html"], "exclude": []}))
 
     left = sorted(f.name for f in DIST.glob("*.html") if "[[" in f.read_text())
     print(f"site_url={site['site_url']} indexable={indexable}")
