@@ -1,0 +1,9 @@
+[Unit]
+Description=Nightly filament shelf backup
+
+[Timer]
+OnCalendar=*-*-* 02:17
+Persistent=true
+
+[Install]
+WantedBy=timers.target

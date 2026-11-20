@@ -1,0 +1,6 @@
+# Only if your tunnel is run from a local config file (~/.cloudflared/config.yml or /etc/cloudflared/config.yml).
+# If the tunnel is managed in the Cloudflare dashboard, add a Public Hostname there instead (see README).
+# Add this rule ABOVE the final catch-all (http_status:404) in the ingress list, then: sudo systemctl restart cloudflared
+ingress:
+  - hostname: filament.juplifestudio.com
+    service: http://127.0.0.1:8790

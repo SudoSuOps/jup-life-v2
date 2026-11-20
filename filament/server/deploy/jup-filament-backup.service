@@ -1,0 +1,10 @@
+[Unit]
+Description=Back up the filament shelf database
+
+[Service]
+Type=oneshot
+User=jupfilament
+EnvironmentFile=/etc/jup-filament.env
+ExecStart=/opt/jup-filament-venv/bin/python /opt/jup-life-v2/filament/server/scripts/backup.py
+ProtectSystem=strict
+ReadWritePaths=/var/backups/jup-filament /var/lib/jup-filament

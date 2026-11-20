@@ -14,7 +14,9 @@ filament/
 └── wrangler.jsonc     Pages project "jup-filament", D1 binding DB
 ```
 
-It's a separate Cloudflare Pages project from the main site, built from the same repo with **root directory `filament`**.
+**We run it on the rig: see [`server/README.md`](server/README.md)** (FastAPI + SQLite behind the Cloudflare Tunnel, data stays local).
+
+The rest of this file is the alternative: a separate Cloudflare Pages project with D1, built from the same repo with **root directory `filament`**. Both serve the same page and the same API.
 
 ## One-time setup (Cloudflare dashboard)
 

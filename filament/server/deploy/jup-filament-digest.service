@@ -1,0 +1,9 @@
+[Unit]
+Description=Post the filament order list to Mattermost
+
+[Service]
+Type=oneshot
+User=jupfilament
+EnvironmentFile=/etc/jup-filament.env
+WorkingDirectory=/opt/jup-life-v2/filament/server
+ExecStart=/opt/jup-filament-venv/bin/python scripts/order_digest.py
