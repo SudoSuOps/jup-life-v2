@@ -1,8 +1,14 @@
 // JUP LIFE filament shelf: talks to /api/* (D1). Sign-in is handled by Cloudflare Access in front of the site.
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
-  const GROUPS = ['Pop', 'Flower', 'Coastal', 'Other'];
-  const GROUP_LABEL = { Pop: 'Pop Coasters', Flower: 'Flower Coasters', Coastal: 'Coastal Coasters', Other: 'Cases & other' };
+  const GROUPS = ['Stock', 'Pop', 'Flower', 'Coastal', 'Other'];
+  const GROUP_LABEL = { Stock: 'Spools on the shelf', Pop: 'Pop Coasters', Flower: 'Flower Coasters', Coastal: 'Coastal Coasters', Other: 'Cases & other' };
+  // Manufacturer print temps (°C). Filled into a color when you pick its maker and the temps are blank.
+  const PRESETS = {
+    'SUNLU': { nozzle: '190-210', bed: '50-60', product: 'SUNLU High Speed TPU 95A', note: '210-230 °C if printing 80-120 mm/s' },
+    'QIDI': { nozzle: '210-230', bed: '20-50', product: 'QIDI TPU 95A HF' },
+    'Bambu Lab': { nozzle: '220-240', bed: '30-36', product: 'Bambu TPU 95A HF' },
+  };
   let filaments = [], deals = [], settings = { spoolG: 1000, lowSpools: 1, targetSpools: 3 }, filter = 'all';
   const pending = new Map();
 
@@ -49,6 +55,7 @@
     const c = calc(f);
     const reelCls = !f.hex ? 'reel none' : f.clear ? 'reel clear' : 'reel';
     const mats = ['', 'TPU', 'PLA', 'PETG', 'Other'].map((m) => `<option ${f.material === m ? 'selected' : ''} value="${m}">${m || '–'}</option>`).join('');
+    const makers = ['', 'SUNLU', 'QIDI', 'Bambu Lab', 'Other'].map((m) => `<option ${f.maker === m ? 'selected' : ''} value="${m}">${m || '–'}</option>`).join('');
     const id = esc(f.id);
     return `<article class="spool ${c.status === 'order' ? 'order' : ''}" data-id="${id}">
       <div class="${reelCls}" style="--sw:${esc(f.hex || 'transparent')}" aria-hidden="true"></div>
@@ -56,8 +63,11 @@
       <div class="fields">
         <label for="full-${id}">Full spools<input id="full-${id}" type="number" min="0" step="1" inputmode="numeric" data-k="full" value="${esc(f.full ?? '')}"></label>
         <label for="part-${id}">Open spool (g left)<input id="part-${id}" type="number" min="0" step="10" inputmode="numeric" data-k="partialG" value="${esc(f.partialG ?? '')}"></label>
+        <label for="maker-${id}">Maker<select id="maker-${id}" data-k="maker">${makers}</select></label>
         <label for="mat-${id}">Material<select id="mat-${id}" data-k="material">${mats}</select></label>
-        <label for="brand-${id}">Brand / product<input id="brand-${id}" type="text" data-k="brand" value="${esc(f.brand || '')}" placeholder="Brand, line, color code"></label>
+        <label for="brand-${id}" class="span2">Product / color code<input id="brand-${id}" type="text" data-k="brand" value="${esc(f.brand || '')}" placeholder="e.g. SUNLU TPU 95A, Orange"></label>
+        <label for="noz-${id}">Print temp (°C)<input id="noz-${id}" type="text" inputmode="numeric" data-k="nozzle" value="${esc(f.nozzle || '')}" placeholder="210-230"></label>
+        <label for="bed-${id}">Bed temp (°C)<input id="bed-${id}" type="text" inputmode="numeric" data-k="bed" value="${esc(f.bed || '')}" placeholder="30-36"></label>
       </div>
       <div class="tally">${tallyHTML(c)}</div>
       <form class="log" data-log="${id}"><label for="use-${id}">Log a print (g used)<input id="use-${id}" type="number" min="1" step="1" inputmode="numeric" placeholder="e.g. 84"></label><button class="btn ghost small" type="submit">Log</button></form>
@@ -125,7 +135,21 @@
     const id = card.dataset.id, k = el.dataset.k;
     let v = el.value; if (k === 'full' || k === 'partialG') v = v === '' ? null : Math.max(0, parseFloat(v) || 0);
     const f = filaments.find((x) => x.id === id); if (!f) return;
-    f[k] = v; queueWrite(id, { [k]: v }); renderSummary(); refreshCard(card, f);
+    if (k === 'nozzle' || k === 'bed') {
+      v = v.trim().replace(/\s+/g, '').replace(/[–—]/g, '-').replace(/°?c$/i, '');
+      const okT = v === '' || /^\d{2,3}(-\d{2,3})?$/.test(v);
+      el.setCustomValidity(okT ? '' : 'Use a number or a range, like 215 or 210-230');
+      if (!okT) return;
+    }
+    const patch = { [k]: v }; f[k] = v;
+    if (k === 'maker' && PRESETS[v]) {
+      const p = PRESETS[v];
+      for (const [fk, pv] of [['nozzle', p.nozzle], ['bed', p.bed], ['brand', p.product]]) {
+        if (!f[fk]) { f[fk] = pv; patch[fk] = pv; const inp = card.querySelector(`[data-k="${fk}"]`); if (inp) inp.value = pv; }
+      }
+      if (!f.material) { f.material = 'TPU'; patch.material = 'TPU'; const s = card.querySelector('[data-k="material"]'); if (s) s.value = 'TPU'; }
+    }
+    queueWrite(id, patch); renderSummary(); refreshCard(card, f);
   });
   document.addEventListener('change', (ev) => { if (ev.target.closest?.('.spool') && ev.target.tagName === 'SELECT') ev.target.dispatchEvent(new Event('input', { bubbles: true })); });
 
