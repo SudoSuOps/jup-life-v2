@@ -1,7 +1,7 @@
 /* JUP LIFE site JS. Vanilla, no deps, target < 10 KB minified.
    - Today's Batch board from JSON
    - Sample request <dialog> (+ "Product question" preselect)
-   - Bag (localStorage) -> POST /api/checkout -> Stripe Checkout redirect
+   - Bag (localStorage) -> Shopify cart permalink on shop.juplifestudio.com (checkout lives in Shopify)
    - One-time fade-up on sections (respects prefers-reduced-motion via CSS)
 */
 (() => {
@@ -65,84 +65,23 @@
     dlg.addEventListener('close', () => lastFocus?.focus?.());
   }
 
-  /* ---------- Sample request (modal + any inline [data-sample-form]) ---------- */
-  // Hidden sample_qty stays 1 for retail and 6 for a venue. The form does not promise a free count.
-  // "The Half Dozen" is only the $29 box.
-  function bindBuyer(form, dlg) {
-    const apply = () => {
-      const buyer = form.querySelector('[name=buyer_type]:checked')?.value === 'wholesale' ? 'wholesale' : 'retail';
-      const qty = form.querySelector('[data-sample-qty]');
-      if (qty) qty.value = buyer === 'wholesale' ? '6' : '1';
-      const wholesale = buyer === 'wholesale';
-      $$('[data-wholesale-only]', form).forEach((el) => {
-        el.hidden = !wholesale;
-        $$('input, textarea, select', el).forEach((i) => { i.disabled = !wholesale; });
-      });
-      $$('[data-retail-only]', form).forEach((el) => {
-        el.hidden = wholesale;
-        $$('input, textarea, select', el).forEach((i) => { i.disabled = wholesale; });
-      });
-      const rt = form.request_type?.value || 'Sample';
-      const submit = $('[data-submit]', form);
-      const sampleType = rt === 'Sample' || rt === 'Half Dozen sample' || rt === 'Free sample (1 coaster)';
-      if (dlg && sampleType) {
-        const eye = $('[data-dlg-eyebrow]', dlg);
-        if (eye) eye.textContent = 'Samples available by request';
-        const title = $('[data-dlg-title]', dlg);
-        if (title) title.textContent = 'Request samples';
-        if (submit) submit.textContent = 'Request samples';
-      } else if (dlg) {
-        const COPY = {
-          'Half Dozen order': ["We'll confirm details and pricing", 'Buy The Half Dozen ($29)', 'Send my order'],
-          'Product question': ['Ask us anything', 'Ask about this batch', 'Send my question'],
-          'Custom order': ['Baked to order', 'Custom order', 'Send my request'],
-          Custom: ['Baked to order', 'Custom order', 'Send my request'],
-        };
-        const [eyebrow, title, label] = COPY[rt] || COPY['Product question'];
-        const eye = $('[data-dlg-eyebrow]', dlg);
-        if (eye) eye.textContent = eyebrow;
-        const h = $('[data-dlg-title]', dlg);
-        if (h) h.textContent = title;
-        if (submit) submit.textContent = label;
-      } else if (submit && sampleType) {
-        submit.textContent = 'Request samples';
-      }
-    };
-    $$('[name=buyer_type]', form).forEach((r) => r.addEventListener('change', apply));
-    if (form.request_type && form.request_type.tagName === 'SELECT') {
-      form.request_type.addEventListener('change', () => {
-        const rt = form.request_type.value;
-        const want = rt === 'Half Dozen sample' ? 'wholesale' : (rt === 'Sample' || rt === 'Free sample (1 coaster)' ? 'retail' : '');
-        if (want) {
-          const radio = form.querySelector(`[name=buyer_type][value="${want}"]`);
-          if (radio) radio.checked = true;
-        }
-        apply();
-      });
-    }
-    apply();
-    form._applyBuyer = apply;
+  /* ---------- Free sample request (modal + any inline [data-sample-form]) ---------- */
+  // One form: name, company, email, phone, ship to. The modal heading follows the button that opened it.
+  const DLG_COPY = {
+    Sample: ['Free samples · by request', 'Request a free sample', 'Send my free sample'],
+    'Product question': ['Ask us anything', 'Ask about a coaster', 'Send my question'],
+    Custom: ['Baked to order', 'Custom order', 'Send my request'],
+  };
+  function setDialogCopy(dlg, form) {
+    const [eyebrow, title, label] = DLG_COPY[form.request_type?.value] || DLG_COPY.Sample;
+    const eye = $('[data-dlg-eyebrow]', dlg); if (eye) eye.textContent = eyebrow;
+    const h = $('[data-dlg-title]', dlg); if (h) h.textContent = title;
+    const submit = $('[data-submit]', form); if (submit) submit.textContent = label;
   }
 
   function initSample() {
     // every form with [data-sample-form] lives inside a container holding [data-form-view] + [data-success-view]
-    $$('[data-sample-form]').forEach((form) => {
-      wireForm(form);
-      bindBuyer(form, form.closest('dialog'));
-    });
-
-    // inline-form shortcuts: <a data-fill-form="#request" data-type="Custom" data-segment="Event">
-    $$('[data-fill-form]').forEach((a) => a.addEventListener('click', () => {
-      const form = $(`${a.dataset.fillForm} [data-sample-form]`) || $(a.dataset.fillForm);
-      if (!form) return;
-      if (a.dataset.type && form.request_type) form.request_type.value = a.dataset.type;
-      if (a.dataset.segment && form.segment) form.segment.value = a.dataset.segment;
-      if (a.dataset.buyer === 'retail' || a.dataset.buyer === 'wholesale') {
-        const radio = form.querySelector(`[name=buyer_type][value="${a.dataset.buyer}"]`);
-        if (radio) radio.checked = true;
-      }
-      form._applyBuyer?.();
-    }));
+    $$('[data-sample-form]').forEach(wireForm);
 
     const dlg = $('#sample-dlg');
     if (!dlg) return;
@@ -151,16 +90,10 @@
     $$('[data-open-sample]').forEach((btn) => btn.addEventListener('click', () => {
       $('[data-form-view]', dlg).hidden = false; $('[data-success-view]', dlg).hidden = true;
       $('[data-form-error]', dlg).textContent = '';
-      const type = btn.dataset.type || 'Sample';
-      form.request_type.value = type;
-      let buyer = btn.dataset.buyer;
-      if (buyer !== 'wholesale' && buyer !== 'retail') buyer = type === 'Half Dozen sample' ? 'wholesale' : 'retail';
-      const radio = form.querySelector(`[name=buyer_type][value="${buyer}"]`);
-      if (radio) radio.checked = true;
-      form._applyBuyer?.();
+      form.request_type.value = DLG_COPY[btn.dataset.type] ? btn.dataset.type : 'Sample';
       form.product.value = btn.dataset.product || '';
-      if (form.segment && btn.dataset.segment) form.segment.value = btn.dataset.segment;
       if (btn.dataset.product && !form.notes.value) form.notes.value = `About: ${btn.dataset.product}`;
+      setDialogCopy(dlg, form);
       openDlg(dlg);
     }));
   }
@@ -190,7 +123,6 @@
         if (!res.ok) throw new Error((await res.json().catch(() => ({}))).detail || 'Something went wrong.');
         form.reset();
         form.source_page.value = location.pathname;
-        form._applyBuyer?.();
         formView.hidden = true; okView.hidden = false;
         ($('[data-close]', okView) || okView).focus?.();
       } catch (ex) {
@@ -199,13 +131,22 @@
     });
   }
 
-  /* ---------- Bag + Stripe Checkout ---------- */
-  const BAG_KEY = 'jup_bag_v1';
+  /* ---------- Bag -> Shopify checkout ---------- */
+  // Variant IDs come from web/data/shopify.json (embedded as #shopify-map). The site never charges anything:
+  // Checkout builds a Shopify cart permalink, /cart/<variant>:<qty>,..., and Shopify takes it from there.
+  const BAG_KEY = 'jup_bag_v2';
   const loadBag = () => { try { return JSON.parse(localStorage.getItem(BAG_KEY)) || []; } catch { return []; } };
   const saveBag = (bag) => { try { localStorage.setItem(BAG_KEY, JSON.stringify(bag)); } catch { /* private mode: bag lives in memory */ } };
+  try { localStorage.removeItem('jup_bag_v1'); } catch { /* old Stripe-era bag */ }
   let bag = loadBag();
+  let shop = null;
+  try { shop = JSON.parse($('#shopify-map')?.textContent || 'null'); } catch { shop = null; }
 
-  const lineId = (i) => [i.sku, i.style || '', i.tray || '', i.flower || ''].join('\u0000');
+  const variantFor = (sku, opts) => {
+    const entry = shop?.products?.[sku];
+    if (!entry) return null;
+    return entry.variants[entry.options.map((k) => opts[k] || '').join('|')] || null;
+  };
   function renderBag() {
     const count = bag.reduce((n, i) => n + i.qty, 0);
     $$('[data-bag-count]').forEach((el) => { el.textContent = count; });
@@ -217,21 +158,20 @@
       li.innerHTML = `<span><strong></strong><br><span class="sub"></span></span>
         <span class="qty"><button type="button" aria-label="One fewer">−</button><span aria-live="polite"></span><button type="button" aria-label="One more">+</button></span>`;
       $('strong', li).textContent = i.name;
-      const detail = [i.style, i.tray, i.flower].filter(Boolean).join(' · ');
+      const detail = Object.values(i.opts || {}).filter(Boolean).join(' · ');
       $('.sub', li).textContent = detail ? `${detail} · ${money(i.price)}` : money(i.price);
       $('.qty span', li).textContent = i.qty;
       const [minus, plus] = $$('button', li);
-      const id = lineId(i);
-      minus.addEventListener('click', () => setQty(id, i.qty - 1));
-      plus.addEventListener('click', () => setQty(id, i.qty + 1));
+      minus.addEventListener('click', () => setQty(i.variant, i.qty - 1));
+      plus.addEventListener('click', () => setQty(i.variant, i.qty + 1));
       return li;
     }));
     $('[data-bag-empty]').hidden = bag.length > 0;
     $('[data-checkout]').disabled = bag.length === 0;
     $('[data-bag-subtotal]').textContent = money(bag.reduce((s, i) => s + i.price * i.qty, 0));
   }
-  function setQty(id, qty) {
-    bag = bag.map((i) => (lineId(i) === id ? { ...i, qty: Math.min(qty, 20) } : i)).filter((i) => i.qty > 0);
+  function setQty(variant, qty) {
+    bag = bag.map((i) => (i.variant === variant ? { ...i, qty: Math.min(qty, 20) } : i)).filter((i) => i.qty > 0);
     saveBag(bag); renderBag();
   }
   function choiceFrom(card) {
@@ -243,54 +183,33 @@
     });
     return opts;
   }
+  const cartUrl = (items) => `${shop.store}/cart/${items.map((i) => `${i.variant}:${i.qty}`).join(',')}?attributes[source]=juplifestudio.com`;
 
   function initBag() {
     const dlg = $('#bag-dlg');
     if (!dlg) return;
     wireClose(dlg);
+    // drop anything saved before a variant changed in shopify.json
+    if (shop) bag = bag.filter((i) => i.variant && variantFor(i.sku, i.opts || {}) === i.variant);
     $$('[data-open-bag]').forEach((b) => b.addEventListener('click', () => openDlg(dlg)));
     $$('[data-add-to-bag]').forEach((b) => b.addEventListener('click', () => {
-      if (b.disabled) return;
-      // price shown client-side is display only; the server maps sku -> Stripe Price
-      let { sku, name, price } = b.dataset;
+      const { sku, name, price } = b.dataset;
       const opts = choiceFrom(b.closest('[data-coaster]'));
-      // Hibiscus on the flower card checks out as its own $39 product. Do not send flower metadata on that SKU.
-      if (sku === 'flower-set-case' && opts.flower === 'Hibiscus') {
-        sku = 'six-set-case';
-        name = 'The Hibiscus Set';
-        delete opts.flower;
-      }
-      const item = { sku, name, price: Number(price), qty: 1, ...opts };
-      const hit = bag.find((i) => lineId(i) === lineId(item));
-      if (hit) hit.qty = Math.min(hit.qty + 1, 20); else bag.push(item);
+      const variant = variantFor(sku, opts);
+      if (!variant) { b.textContent = 'Unavailable'; b.disabled = true; return; }
+      const hit = bag.find((i) => i.variant === variant);
+      if (hit) hit.qty = Math.min(hit.qty + 1, 20); else bag.push({ sku, name, price: Number(price), qty: 1, opts, variant });
       saveBag(bag); renderBag(); openDlg(dlg);
     }));
-    $('[data-checkout]', dlg).addEventListener('click', async (e) => {
-      const btn = e.currentTarget; const err = $('[data-bag-error]', dlg);
-      err.textContent = ''; btn.disabled = true; btn.textContent = 'One moment…';
-      try {
-        const res = await fetch(`${API}/checkout`, {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: bag.map(({ sku, qty, style, tray, flower }) => {
-            const line = { sku, qty };
-            if (style) line.style = style;
-            if (tray) line.tray = tray;
-            if (flower) line.flower = flower;
-            return line;
-          }) }),
-        });
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok || !data.url) throw new Error(data.detail || 'Checkout is unavailable right now.');
-        location.assign(data.url);
-      } catch (ex) {
-        err.textContent = `${ex.message} You can also call 561-532-7120.`;
-        btn.disabled = false; btn.textContent = 'Checkout';
-      }
+    $('[data-checkout]', dlg).addEventListener('click', (e) => {
+      const btn = e.currentTarget;
+      if (!bag.length || !shop?.store) return;
+      btn.disabled = true; btn.textContent = 'Opening checkout…';
+      const url = cartUrl(bag);
+      // Shopify now holds the cart; clear ours so a return visit starts fresh.
+      bag = []; saveBag(bag);
+      location.assign(url);
     });
-    // Returning from Stripe: success clears the bag; show the matching banner if the page has one
-    const status = new URLSearchParams(location.search).get('checkout');
-    if (status === 'success') { bag = []; saveBag(bag); }
-    if (status) { const b = $(`[data-checkout-banner="${status}"]`); if (b) b.hidden = false; }
     renderBag();
   }
 
@@ -380,41 +299,5 @@
     });
   }
 
-  async function initSellable() {
-    let skus = [];
-    try {
-      const res = await fetch(`${API}/catalog`);
-      if (res.ok) skus = (await res.json()).skus || [];
-    } catch { /* leave the button on Coming soon */ }
-    const ok = new Set(skus);
-    $$('[data-sellable]').forEach((b) => {
-      if (!ok.has(b.dataset.sellable)) return;
-      b.disabled = false;
-      b.textContent = 'Add to bag';
-    });
-  }
-
-  // VIDEO SLOT: Readers short stays hidden until /media/readers-short.mp4 actually loads.
-  function initReadersShort() {
-    $$('[data-readers-short]').forEach((figure) => {
-      const video = $('[data-readers-short-video]', figure);
-      if (!video) return;
-      let alive = true;
-      const show = () => { if (alive) figure.hidden = false; };
-      const hide = () => { alive = false; figure.hidden = true; };
-      video.addEventListener('loadeddata', show);
-      video.addEventListener('canplay', show);
-      video.addEventListener('error', hide);
-      const source = $('source', video);
-      if (source) source.addEventListener('error', hide);
-      const src = source?.getAttribute('src');
-      if (!src) { hide(); return; }
-      fetch(src, { method: 'HEAD' }).then((res) => {
-        if (!res.ok) hide();
-        else video.load();
-      }).catch(() => { /* a failed probe stays hidden until a real load event */ });
-    });
-  }
-
-  renderBatch(); initSample(); initPhotos(); initBag(); initSellable(); initDrops(); initReveal(); initReadersShort();
+  renderBatch(); initSample(); initPhotos(); initBag(); initDrops(); initReveal();
 })();

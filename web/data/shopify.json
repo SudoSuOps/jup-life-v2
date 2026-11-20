@@ -1,0 +1,53 @@
+{
+  "_note": "Checkout lives on Shopify (shop.juplifestudio.com). The site bag sends people to a Shopify cart permalink built from these variant IDs. Keys join the card's option values in `options` order with '|'. Prices and stock are set in Shopify; prices in products.json are display only. When you add or change a variant in Shopify, update its ID here and rebuild. tests/catalog.test.mjs checks every card choice has a variant.",
+  "store": "https://shop.juplifestudio.com",
+  "products": {
+    "pop-coasters-6": {
+      "handle": "pop-coasters-6-pack",
+      "options": [
+        "style",
+        "tray"
+      ],
+      "variants": {
+        "Flat|Mixed": "50851712630946",
+        "Edge|Mixed": "50851712663714",
+        "Flat|Pumpkin": "50851712696482",
+        "Edge|Pumpkin": "50851712729250",
+        "Flat|Coconut (clear)": "50851712762018",
+        "Edge|Coconut (clear)": "50851712794786",
+        "Flat|Rhubarb": "50851712827554",
+        "Edge|Rhubarb": "50851712860322",
+        "Flat|Key Lime": "50851712893090",
+        "Edge|Key Lime": "50851712925858",
+        "Flat|Peach": "50851712958626",
+        "Edge|Peach": "50851712991394",
+        "Flat|Sea Salt": "50851713024162",
+        "Edge|Sea Salt": "50851713056930"
+      }
+    },
+    "flower-set-case": {
+      "handle": "flower-coaster-set-with-case",
+      "options": [
+        "flower"
+      ],
+      "variants": {
+        "Sunflower": "50851713876130",
+        "Hibiscus": "50851713908898"
+      }
+    },
+    "coastal-6": {
+      "handle": "coastal-coasters-6-pack",
+      "options": [
+        "design"
+      ],
+      "variants": {
+        "Sea Glass": "50727893270690",
+        "Shell": "50727893303458",
+        "Dunes": "50727893336226",
+        "Red Mangrove": "50727893368994",
+        "Banyan": "50727893401762",
+        "Sea Turtle": "50727893434530"
+      }
+    }
+  }
+}

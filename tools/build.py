@@ -175,10 +175,6 @@ def build_assets() -> tuple[str, str]:
     (DIST / "js" / jname).write_bytes(js)
     shutil.copytree(WEB / "fonts", DIST / "fonts", dirs_exist_ok=True)
     shutil.copytree(WEB / "video", DIST / "video", dirs_exist_ok=True)
-    # Hollywood drops web/media/readers-short.mp4 later. Copy only when the folder exists.
-    media = WEB / "media"
-    if media.exists():
-        shutil.copytree(media, DIST / "media", dirs_exist_ok=True)
     return f"/css/{cname}", f"/js/{jname}"
 
 
@@ -223,21 +219,21 @@ def llms_txt(site: dict, products: list, batch: dict, catalog: dict) -> str:
     base = site["site_url"]
     lines = [
         "# JUP LIFE by Mrs. Smash", "",
-        "> JUP LIFE by Mrs. Smash prints coasters in Jupiter, Florida. The shop sells Pop Coasters ($29) and Flower Coasters ($39), and Readers ($21). "
+        "> JUP LIFE by Mrs. Smash prints coasters in Jupiter, Florida. The shop sells Pop Coasters ($29, six with a case), Flower Coasters ($39, six with a case) and Coastal Coasters ($39, six). "
         "Enterprise logo coasters are made for restaurants, bars, boutique hotels, rentals and event hosts in Palm Beach County and beyond.", "",
         "## Key facts",
         "- Location: Jupiter, FL (serves Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County; ships within the US)",
         "- Material: flexible and washable",
         "- Shipping: free on all U.S. orders; orders leave the studio within 2-3 business days",
         "- Samples: samples are available by request on the Enterprise page. A sample print is made for approval before a logo batch is printed",
-        "- Enterprise: custom logo coasters and restaurant coasters from 200 pieces. The Half Dozen is the $29 retail box only, and a logo batch ships within 10 days of approval",
+        "- Enterprise: custom logo coasters and restaurant coasters from 200 pieces. A logo batch ships within 10 days of sample approval",
         "- Returns: within 7 days of delivery if you're not 100% happy, no questions asked",
         f"- Current tray: {batch.get('tray', '')}",
         "- Contact: hello@juplifestudio.com, call +1-561-532-7120, text 561-581-8015",
         "- TikTok: https://www.tiktok.com/@juplifestudio", "",
         "## Pages",
         f"- [Home]({base}/): the coaster printers, Jupiter FL",
-        f"- [Shop]({base}/shop): Pop Coasters, Flower Coasters, and Readers, with checkout",
+        f"- [Shop]({base}/shop): Pop Coasters, Flower Coasters and Coastal Coasters, with checkout on our Shopify store (shop.juplifestudio.com)",
         f"- [Enterprise]({base}/enterprise): custom logo coasters for Palm Beach County restaurants, bars, hotels, rentals and events",
         f"- [About]({base}/about): Meet Mrs. Smash (Dee), the face of JUP LIFE by Mrs. Smash",
         f"- [Contact]({base}/contact): call +1-561-532-7120",
@@ -245,12 +241,7 @@ def llms_txt(site: dict, products: list, batch: dict, catalog: dict) -> str:
         f"- [Shipping & Returns]({base}/shipping-returns)",
         f"- [Privacy]({base}/privacy)", "", "## Products"]
     by_sku = {p["sku"]: p for p in products}
-    skus = list(catalog.get("listed") or [])
-    if "readers" not in skus and by_sku.get("readers", {}).get("shop"):
-        skus.append("readers")
-    if catalog.get("show_legacy"):
-        skus += [p["sku"] for p in products if p.get("shop") and p["sku"] not in skus]
-    for sku in skus:
+    for sku in catalog.get("listed") or []:
         p = by_sku.get(sku)
         if not p:
             continue
@@ -258,6 +249,28 @@ def llms_txt(site: dict, products: list, batch: dict, catalog: dict) -> str:
         lines.append(f"- {p['name']} ({price}): {p['line']}")
     lines += ["", "## Enterprise price tiers (per coaster)"] + [f"- {t['qty']}: {t['price']}" for t in site.get("tiers", [])]
     return "\n".join(lines) + "\n"
+
+
+# ------------------------------------------------------------------ shopify
+def check_shopify(products: list, catalog: dict, shopify: dict) -> list:
+    """Every option combination on a listed card must map to a Shopify variant ID."""
+    from itertools import product as combos
+    by_sku = {p["sku"]: p for p in products}
+    problems = []
+    for sku in catalog.get("listed") or []:
+        card, entry = by_sku.get(sku), (shopify.get("products") or {}).get(sku)
+        if not card or not entry:
+            problems.append(f"{sku}: missing from products.json or shopify.json")
+            continue
+        opts = {o["key"]: [c["value"] for c in o["choices"]] for o in card.get("options") or []}
+        if list(opts) != entry.get("options", []):
+            problems.append(f"{sku}: option order {list(opts)} != shopify.json {entry.get('options')}")
+            continue
+        for combo in combos(*opts.values()):
+            key = "|".join(combo)
+            if not str(entry["variants"].get(key, "")).isdigit():
+                problems.append(f"{sku}: {key}")
+    return problems
 
 
 # ------------------------------------------------------------------ render
@@ -272,6 +285,11 @@ def main() -> int:
     products = load_json("products.json")["products"]
     catalog = load_json("catalog.json")
     photo_products = load_json("photos.json").get("products") or {}
+    shopify = load_json("shopify.json")
+    bad = check_shopify(products, catalog, shopify)
+    if bad:
+        print("build failed: card choices without a Shopify variant in web/data/shopify.json:\n  " + "\n  ".join(bad))
+        return 1
     listed = set(catalog.get("listed") or [])
     for p in products:
         p["listed"] = p["sku"] in listed
@@ -312,10 +330,8 @@ def main() -> int:
                                       "deliveryTime": {"@type": "ShippingDeliveryTime",
                                                        "handlingTime": {"@type": "QuantitativeValue", "minValue": 2, "maxValue": 3, "unitCode": "DAY"}}},
                   "url": f"{site['site_url']}/shop"}
-        # Coasters that need a Stripe price secret are not marked in stock here. The buy button
-        # stays "Coming soon" until that secret is set, so the page does not claim they can be bought.
-        if not p.get("options"):
-            offers["availability"] = "https://schema.org/InStock"
+        # Checkout is Shopify; listed coasters are made to order and always buyable.
+        offers["availability"] = "https://schema.org/InStock"
         ld = {"@context": "https://schema.org", "@type": "Product", "name": p["name"], "description": p["line"], "sku": p["sku"],
               "brand": {"@type": "Brand", "name": "JUP LIFE Studio"}, "category": "Home & Garden",
               "manufacturer": {"@type": "Organization", "name": "JUP LIFE by Mrs. Smash"},
@@ -325,7 +341,7 @@ def main() -> int:
             ld["image"] = [f"{site['site_url']}/{i}" for i in imgs]
         return Markup(json.dumps(ld, indent=2).replace("</", "<\\/"))
 
-    env.globals.update(pic=pic, product_ld=product_ld, by_sku={p['sku']: p for p in products}, flavor_hex=FLAVOR_HEX, indexable=indexable, ph=ph, site=site, batch=batch, batch_date=batch_date_label(batch["date"]),
+    env.globals.update(shopify_store=shopify["store"], shopify_json=Markup(json.dumps({"store": shopify["store"], "products": {k: {"options": v["options"], "variants": v["variants"]} for k, v in shopify["products"].items()}}, ensure_ascii=False).replace("</", "<\\/")), pic=pic, product_ld=product_ld, by_sku={p['sku']: p for p in products}, flavor_hex=FLAVOR_HEX, indexable=indexable, ph=ph, site=site, batch=batch, batch_date=batch_date_label(batch["date"]),
                        season=season, products=products, catalog=catalog, css_href=css_href, js_src=js_src,
                        site_url=site["site_url"], have_ph=lambda k: bool(site["placeholders"].get(k)),
                        batch_json=Markup(json.dumps(batch, indent=2, ensure_ascii=False).replace("</", "<\\/")),

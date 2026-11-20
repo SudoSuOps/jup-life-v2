@@ -1,197 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import crypto from 'node:crypto';
-import { onRequestPost as checkout } from '../functions/api/checkout.js';
-import { onRequestGet as catalogApi } from '../functions/api/catalog.js';
-import { onRequestPost as webhook, verifyStripe, orderEmail } from '../functions/api/stripe/webhook.js';
 import { onRequestPost as drops } from '../functions/api/drops.js';
 import { onRequestPost as sample } from '../functions/api/sample-request.js';
-import { onRequestGet as catalog } from '../functions/api/catalog.js';
 import { resetThrottle } from '../functions/_lib.js';
 
-const env = { STRIPE_SECRET_KEY: 'sk_test_x', STRIPE_PRICE_TIDE_SOAP_DISH: 'price_six', STRIPE_PRICE_READERS: '', SITE_URL: 'https://juplifestudio.com' };
+const env = { SITE_URL: 'https://juplifestudio.com' };
 const post = (url, body, headers = {}) => new Request(`https://x.test${url}`, { method: 'POST', body, headers });
-const jsonReq = (b) => post('/api/checkout', JSON.stringify(b), { 'Content-Type': 'application/json' });
 
 test.beforeEach(() => resetThrottle());
-
-test('checkout: unpriced / unknown sku is rejected', async () => {
-  for (const sku of ['gigi', 'readers', '__proto__']) {
-    const r = await checkout({ request: jsonReq({ items: [{ sku, qty: 1 }] }), env });
-    assert.equal(r.status, 400, sku);
-  }
-});
-
-test('readers checkout uses STRIPE_PRICE_READER_21 and ignores STRIPE_PRICE_READERS', async () => {
-  const oldOnly = { ...env, STRIPE_PRICE_READERS: 'price_19' };
-  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'readers', qty: 1 }] }), env: oldOnly })).status, 400);
-  let sent;
-  globalThis.fetch = async (url, init) => { sent = new URLSearchParams(init.body); return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/reader' }), { status: 200 }); };
-  const r = await checkout({ request: jsonReq({ items: [{ sku: 'readers', qty: 1 }] }), env: { ...oldOnly, STRIPE_PRICE_READER_21: 'price_reader_21' } });
-  assert.equal(r.status, 200);
-  assert.equal(sent.get('line_items[0][price]'), 'price_reader_21');
-  assert.equal(sent.get('line_items[0][quantity]'), '1');
-  assert.equal((await (await catalog({ env: oldOnly })).json()).skus.includes('readers'), false);
-  assert.equal((await (await catalog({ env: { ...oldOnly, STRIPE_PRICE_READER_21: 'price_reader_21' } })).json()).skus.includes('readers'), true);
-});
-
-test('checkout: bad qty rejected, not configured -> 503', async () => {
-  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'tide-soap-dish', qty: 0 }] }), env })).status, 400);
-  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'tide-soap-dish', qty: 1 }] }), env: {} })).status, 503);
-});
-
-test('hibiscus set uses STRIPE_PRICE_HIBISCUS_SET and falls back to the flower-set price', async () => {
-  const oldOnly = { ...env, STRIPE_PRICE_SIX_SET_CASE: 'price_29' };
-  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: oldOnly })).status, 400);
-  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1 }] }), env: oldOnly })).status, 400);
-  let sent;
-  globalThis.fetch = async (url, init) => { sent = new URLSearchParams(init.body); return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/flower' }), { status: 200 }); };
-  const fallback = { ...oldOnly, STRIPE_PRICE_FLOWER_SET_CASE: 'price_flower_39' };
-  const r = await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: fallback });
-  assert.equal(r.status, 200);
-  assert.equal(sent.get('line_items[0][price]'), 'price_flower_39');
-  const own = { ...fallback, STRIPE_PRICE_HIBISCUS_SET: 'price_hibiscus_39' };
-  const r2 = await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: own });
-  assert.equal(r2.status, 200);
-  assert.equal(sent.get('line_items[0][price]'), 'price_hibiscus_39');
-  const r3 = await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1, flower: 'Sunflower' }] }), env: own });
-  assert.equal(r3.status, 200);
-  assert.equal(sent.get('line_items[0][price]'), 'price_flower_39');
-  const borrowed = { ...fallback, STRIPE_PRICE_HIBISCUS_SET: 'price_1UTVSJHYwaTbul7MyxtILxOz' };
-  const r4 = await checkout({ request: jsonReq({ items: [{ sku: 'six-set-case', qty: 1 }] }), env: borrowed });
-  assert.equal(r4.status, 200);
-  assert.equal(sent.get('line_items[0][price]'), 'price_flower_39');
-  assert.equal((await (await catalog({ env: own })).json()).skus.includes('six-set-case'), true);
-  assert.equal((await (await catalog({ env: oldOnly })).json()).skus.includes('six-set-case'), false);
-});
-
-test('pop trays and the holiday tray use STRIPE_PRICE_POP_COASTERS_6 only', async () => {
-  const wrong = { ...env, STRIPE_PRICE_FALL_POP_COASTERS: 'price_fall', STRIPE_PRICE_HALF_DOZEN: 'price_1UTVSJHYwaTbul7MyxtILxOz' };
-  for (const sku of ['fall-pop-coasters', 'pop-tray-1-season-colors', 'pop-tray-2-pop-flowers', 'pop-tray-3-coastal', 'pop-coasters-6']) {
-    assert.equal((await checkout({ request: jsonReq({ items: [{ sku, qty: 1 }] }), env: wrong })).status, 400, sku);
-  }
-  let sent;
-  globalThis.fetch = async (url, init) => { sent = new URLSearchParams(init.body); return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/pop' }), { status: 200 }); };
-  const priced = { ...wrong, STRIPE_PRICE_POP_COASTERS_6: 'price_pop_29' };
-  for (const sku of ['fall-pop-coasters', 'pop-tray-1-season-colors', 'pop-coasters-6']) {
-    const line = sku === 'pop-coasters-6' ? { sku, qty: 1, style: 'Flat', tray: 'Mixed' } : { sku, qty: 1, style: 'Flat' };
-    const r = await checkout({ request: jsonReq({ items: [line] }), env: priced });
-    assert.equal(r.status, 200, sku);
-    assert.equal(sent.get('line_items[0][price]'), 'price_pop_29', sku);
-  }
-});
-
-test('checkout: sends only server-side price id to Stripe and returns the hosted url', async () => {
-  let sent;
-  globalThis.fetch = async (url, init) => { sent = { url, body: new URLSearchParams(init.body) }; return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/x' }), { status: 200 }); };
-  const r = await checkout({ request: jsonReq({ items: [{ sku: 'tide-soap-dish', qty: 2 }, { sku: 'tide-soap-dish', qty: 1 }], price: 1 }), env });
-  assert.equal(r.status, 200);
-  assert.equal((await r.json()).url, 'https://checkout.stripe.com/c/x');
-  assert.equal(sent.body.get('line_items[0][price]'), 'price_six');
-  assert.equal(sent.body.get('line_items[0][quantity]'), '3');
-  assert.equal(sent.body.get('success_url'), 'https://juplifestudio.com/shop?checkout=success&session_id={CHECKOUT_SESSION_ID}');
-  assert.equal(sent.body.get('line_items[0][metadata][style]'), null);
-});
-
-const BAKERS_PRICE = 'price_1UTVOYHYwaTbul7M7QJo4iye';
-const HALF_PRICE = 'price_1UTVSJHYwaTbul7MyxtILxOz';
-
-test('new coasters are not for sale without their own price, and never borrow the Baker\'s Dozen price', async () => {
-  const realFetch = globalThis.fetch;
-  let sent = false;
-  globalThis.fetch = async () => { sent = true; return new Response('{}', { status: 500 }); };
-  const borrowed = {
-    STRIPE_SECRET_KEY: 'sk_test_x',
-    STRIPE_PRICE_BAKERS_DOZEN: BAKERS_PRICE,
-    STRIPE_PRICE_HALF_DOZEN: HALF_PRICE,
-    STRIPE_PRICE_POP_COASTERS_6: BAKERS_PRICE,
-    STRIPE_PRICE_FLOWER_SET_CASE: HALF_PRICE,
-    SITE_URL: 'https://juplifestudio.com',
-  };
-  for (const body of [
-    { items: [{ sku: 'pop-coasters-6', qty: 1, style: 'Flat', tray: 'Mixed' }] },
-    { items: [{ sku: 'flower-set-case', qty: 1, flower: 'Hibiscus' }] },
-    { items: [{ sku: 'pop-coasters-6', qty: 1, style: 'Edge', tray: 'Pumpkin' }] },
-  ]) {
-    assert.equal((await checkout({ request: jsonReq(body), env: borrowed })).status, 400);
-  }
-  const missing = { STRIPE_SECRET_KEY: 'sk_test_x', STRIPE_PRICE_BAKERS_DOZEN: BAKERS_PRICE };
-  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1, flower: 'Sunflower' }] }), env: missing })).status, 400);
-  assert.equal(sent, false);
-  const listed = await (await catalogApi({ env: borrowed })).json();
-  assert.equal(listed.skus.includes('pop-coasters-6'), false);
-  assert.equal(listed.skus.includes('flower-set-case'), false);
-  assert.equal(JSON.stringify(listed).includes('price_'), false);
-  globalThis.fetch = realFetch;
-});
-
-test('checkout: coaster options are separate line items with their own price and metadata', async () => {
-  const realFetch = globalThis.fetch;
-  let sent;
-  globalThis.fetch = async (url, init) => { sent = { body: new URLSearchParams(init.body) }; return new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/x' }), { status: 200 }); };
-  const priced = {
-    ...env,
-    STRIPE_PRICE_POP_COASTERS_6: 'price_pop',
-    STRIPE_PRICE_FLOWER_SET_CASE: 'price_flower',
-    STRIPE_PRICE_BAKERS_DOZEN: BAKERS_PRICE,
-  };
-  const r = await checkout({ request: jsonReq({ items: [
-    { sku: 'pop-coasters-6', qty: 1, style: 'Flat', tray: 'Mixed' },
-    { sku: 'pop-coasters-6', qty: 2, style: 'Flat', tray: 'Mixed' },
-    { sku: 'pop-coasters-6', qty: 1, style: 'Edge', tray: 'Coconut (clear)' },
-    { sku: 'flower-set-case', qty: 1, flower: 'Hibiscus' },
-  ] }), env: priced });
-  assert.equal(r.status, 200);
-  assert.equal(sent.body.get('line_items[0][price]'), 'price_pop');
-  assert.equal(sent.body.get('line_items[0][quantity]'), '3');
-  assert.equal(sent.body.get('line_items[0][metadata][style]'), 'Flat');
-  assert.equal(sent.body.get('line_items[0][metadata][tray]'), 'Mixed');
-  assert.equal(sent.body.get('line_items[1][price]'), 'price_pop');
-  assert.equal(sent.body.get('line_items[1][metadata][style]'), 'Edge');
-  assert.equal(sent.body.get('line_items[1][metadata][tray]'), 'Coconut (clear)');
-  assert.equal(sent.body.get('line_items[2][price]'), 'price_flower');
-  assert.equal(sent.body.get('line_items[2][metadata][flower]'), 'Hibiscus');
-  assert.equal(sent.body.get('line_items[2][metadata][style]'), null);
-  for (const [k, v] of sent.body) assert.equal(v === BAKERS_PRICE, false, k);
-  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'pop-coasters-6', qty: 1, style: 'Flat', tray: 'Cranberry' }] }), env: priced })).status, 400);
-  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1 }] }), env: priced })).status, 400);
-  assert.equal((await checkout({ request: jsonReq({ items: [{ sku: 'flower-set-case', qty: 1, flower: 'Orchid' }] }), env: priced })).status, 400);
-  const popEnv = { ...priced, STRIPE_PRICE_FALL_POP_COASTERS: 'price_fall', STRIPE_PRICE_HALF_DOZEN: HALF_PRICE };
-  for (const sku of ['fall-pop-coasters', 'pop-tray-1-season-colors', 'pop-tray-2-pop-flowers', 'pop-tray-3-coastal']) {
-    assert.equal((await checkout({ request: jsonReq({ items: [{ sku, qty: 1, style: 'Flat' }] }), env: { ...popEnv, STRIPE_PRICE_POP_COASTERS_6: '' } })).status, 400, sku);
-    assert.equal((await checkout({ request: jsonReq({ items: [{ sku, qty: 1 }] }), env: popEnv })).status, 400, sku);
-  }
-  const pop = await checkout({ request: jsonReq({ items: [{ sku: 'pop-tray-1-season-colors', qty: 1, style: 'Edge' }] }), env: popEnv });
-  assert.equal(pop.status, 200);
-  assert.equal(sent.body.get('line_items[0][price]'), 'price_pop');
-  assert.equal(sent.body.get('line_items[0][metadata][style]'), 'Edge');
-  const open = await (await catalogApi({ env: priced })).json();
-  assert.ok(open.skus.includes('pop-coasters-6'));
-  assert.ok(open.skus.includes('flower-set-case'));
-  assert.equal(JSON.stringify(open).includes('price_pop'), false);
-  assert.equal(JSON.stringify(open).includes('price_flower'), false);
-  globalThis.fetch = realFetch;
-});
-
-const sign = (payload, secret, t) => `t=${t},v1=${crypto.createHmac('sha256', secret).update(`${t}.${payload}`).digest('hex')}`;
-
-test('webhook: signature verification', async () => {
-  const now = Math.floor(Date.now() / 1000);
-  const p = '{"a":1}';
-  assert.equal(await verifyStripe(p, sign(p, 'whsec_a', now), 'whsec_a'), true);
-  assert.equal(await verifyStripe(p, sign(p, 'whsec_b', now), 'whsec_a'), false);
-  assert.equal(await verifyStripe(p + ' ', sign(p, 'whsec_a', now), 'whsec_a'), false);
-  assert.equal(await verifyStripe(p, sign(p, 'whsec_a', now - 1000), 'whsec_a'), false);
-  assert.equal(await verifyStripe(p, '', 'whsec_a'), false);
-});
-
-test('webhook: bad signature 400, good signature 200', async () => {
-  const p = JSON.stringify({ type: 'checkout.session.completed', data: { object: { id: 'cs_1', amount_total: 2900, currency: 'usd', customer_details: { email: 'a@b.co' } } } });
-  const e = { STRIPE_WEBHOOK_SECRET: 'whsec_t' };
-  assert.equal((await webhook({ request: post('/api/stripe/webhook', p, { 'stripe-signature': 't=1,v1=00' }), env: e })).status, 400);
-  const ok = await webhook({ request: post('/api/stripe/webhook', p, { 'stripe-signature': sign(p, 'whsec_t', Math.floor(Date.now() / 1000)) }), env: e });
-  assert.equal(ok.status, 200);
-});
 
 function form(o = {}, file) {
   const fd = new FormData();
@@ -263,26 +79,6 @@ test('drops: validates email, honeypot, adds to audience and notifies', async ()
   assert.ok(mails.some((m) => /Drops signup/.test(m.subject)), 'studio notification');
 });
 
-test('order email: lists items, ship-to name, total and a dashboard link', () => {
-  const s = { id: 'cs_1', amount_total: 900, currency: 'usd', livemode: true, payment_intent: 'pi_9', customer_details: { name: 'Buyer', email: 'b@x.co', phone: '+15615550000' },
-    shipping_details: { name: 'Gift Person', address: { line1: '1 Main St', city: 'Jupiter', state: 'FL', postal_code: '33469', country: 'US' } } };
-  const { subject, text } = orderEmail(s, [{ quantity: 1, description: 'The Gigi', amount_total: 900 }]);
-  assert.match(subject, /The Gigi · 9\.00 USD/);
-  for (const bit of ['1 x The Gigi', 'Gift Person', '1 Main St', 'Jupiter, FL 33469', '+15615550000', 'dashboard.stripe.com/payments/pi_9']) assert.ok(text.includes(bit), bit);
-  assert.ok(orderEmail(s, []).text.includes('line items unavailable'));
-});
-
-test('order email: style, tray and flower metadata ride along with the line', () => {
-  const s = { id: 'cs_2', amount_total: 6800, currency: 'usd', livemode: false, customer_details: { email: 'b@x.co' } };
-  const items = [
-    { quantity: 1, description: 'Pop Coasters 6-Pack', amount_total: 2900, metadata: { style: 'Flat', tray: 'Mixed' } },
-    { quantity: 1, description: 'Flower Coaster Set with Case', amount_total: 3900, metadata: { flower: 'Hibiscus' } },
-  ];
-  const { text } = orderEmail(s, items);
-  assert.match(text, /style: Flat, tray: Mixed/);
-  assert.match(text, /flower: Hibiscus/);
-});
-
 test('sample: retail Sample needs an address (no business), business types still need business + city', async () => {
   assert.equal((await sample({ request: form({ request_type: 'Sample', business: '', city: '', address: '1 Main St, Jupiter, FL 33469' }), env: {} })).status, 200);
   assert.equal((await sample({ request: form({ request_type: 'Sample', business: '', city: '', address: '' }), env: {} })).status, 422);
@@ -320,7 +116,30 @@ test('sample: qty is 1 for retail, 6 for wholesale, legacy types map, spoofed sa
   assert.match(studio[3].text, /qty: 1/);
   assert.match(confirm[0].html, /Your sample request is in\./);
   assert.match(confirm[1].html, /Your sample request is in\./);
-  assert.doesNotMatch(confirm[0].html, /free sample/i);
-  assert.doesNotMatch(confirm[1].html, /free sample/i);
+  // Samples are free, by request (owner, Nov 2026).
+  assert.match(confirm[0].html, /Free samples · by request/);
+  assert.match(confirm[1].html, /Free samples · by request/);
+  assert.match(confirm[0].text, /Fresh print daily\. Built different\./);
   assert.match(confirm[1].text, /We'll reach out about your logo within one business day\./);
+});
+
+test('free sample form: name, company (optional), email, phone, ship to', async () => {
+  const send = (o) => {
+    const fd = new FormData();
+    for (const [k, v] of Object.entries({ name: 'Dee', email: 'dee@example.com', phone: '561-555-0100', address: '1 Ocean Way, Jupiter, FL 33477', request_type: 'Sample', source_page: '/', ...o })) fd.set(k, v);
+    return sample({ request: post('/api/sample-request', fd), env: {} });
+  };
+  let logged = '';
+  const orig = console.log;
+  console.log = (...a) => { logged += a.join(' '); };
+  try {
+    assert.equal((await send({})).status, 200);
+    assert.match(logged, /Sample request: Retail \(1\)/);
+    logged = '';
+    assert.equal((await send({ business: 'Square Grouper' })).status, 200);
+    assert.match(logged, /Sample request: Venue \(6\)/);
+    assert.match(logged, /business: Square Grouper/);
+    assert.equal((await send({ address: '' })).status, 422);
+    assert.equal((await send({ business: 'Square Grouper', address: '' })).status, 422);
+  } finally { console.log = orig; }
 });

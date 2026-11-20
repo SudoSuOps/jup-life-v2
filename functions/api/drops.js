@@ -18,7 +18,7 @@ async function welcome(env, email, base) {
       "We only write when there's something fresh.",
     ],
     cta: { label: "See what's baking now", url: `${base}/shop` },
-    signoff: ['Fresh baked, built different.', 'Mrs. Smash'],
+    signoff: ['Fresh print daily. Built different.', 'Mrs. Smash'],
     footnote: 'You joined the Drops list on our website. Changed your mind? Just reply "unsubscribe" and we will take you off.',
   });
   try {
@@ -53,7 +53,8 @@ export async function onRequestPost({ request, env }) {
   if (env.RESEND_API_KEY) {
     // Resend contacts are global now; RESEND_SEGMENT_ID (optional) also files the contact in a segment.
     const body = { email, unsubscribed: false };
-    if (env.RESEND_SEGMENT_ID) body.segments = [{ id: env.RESEND_SEGMENT_ID }];
+    const segment = env.RESEND_SEGMENT_ID || env.RESEND_AUDIENCE_ID; // Cloudflare has RESEND_AUDIENCE_ID
+    if (segment) body.segments = [{ id: segment }];
     try {
       const r = await fetch('https://api.resend.com/contacts', {
         method: 'POST',
