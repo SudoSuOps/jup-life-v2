@@ -4,13 +4,13 @@
     {
       "sku": "pop-coasters-6",
       "name": "Pop Coasters 6-Pack",
-      "line": "Six Pop coasters and a case. Flat or Edge. A mixed tray, or one color.",
+      "line": "Six round Pop coasters and a case, $29. Flat or Edge. A mixed tray, or one color.",
       "note": "Mix packs in one order.",
       "shipping": "Free U.S. shipping.",
       "price": 29,
       "material": "Washable · six coasters + case",
-      "img": "img/pop-6-hibiscus-trio.webp",
-      "alt": "Pop coasters with a raised hibiscus, stacked in peach, sage and cream on a cooling rack with fresh peaches",
+      "img": "img/pop-round-lineup.webp",
+      "alt": "Pop coasters lineup: round Pop coasters in Fall Tray colors Pumpkin, Cinnamon, Cranberry, Maple, Rhubarb and Sunflower, and Summer Tray colors Blueberry, Peach, Key Lime, Watermelon, Coconut and Sunflower, on two wood trays",
       "options": [
         {
           "key": "style",
@@ -41,11 +41,19 @@
               "hex": "#E8731E"
             },
             {
-              "value": "Coconut (clear)",
-              "label": "Coconut",
-              "note": "clear",
-              "hex": "#F4EFE3",
-              "frosted": true
+              "value": "Cinnamon",
+              "label": "Cinnamon",
+              "hex": "#A0522D"
+            },
+            {
+              "value": "Cranberry",
+              "label": "Cranberry",
+              "hex": "#9B1B30"
+            },
+            {
+              "value": "Maple",
+              "label": "Maple",
+              "hex": "#C8862A"
             },
             {
               "value": "Rhubarb",
@@ -53,9 +61,14 @@
               "hex": "#C93A5B"
             },
             {
-              "value": "Key Lime",
-              "label": "Key Lime",
-              "hex": "#A8D94A"
+              "value": "Sunflower",
+              "label": "Sunflower",
+              "hex": "#F6C21C"
+            },
+            {
+              "value": "Blueberry",
+              "label": "Blueberry",
+              "hex": "#3F5BB8"
             },
             {
               "value": "Peach",
@@ -63,9 +76,21 @@
               "hex": "#FFB07C"
             },
             {
-              "value": "Sea Salt",
-              "label": "Sea Salt",
-              "hex": "#7FD1C2"
+              "value": "Key Lime",
+              "label": "Key Lime",
+              "hex": "#A8D94A"
+            },
+            {
+              "value": "Watermelon",
+              "label": "Watermelon",
+              "hex": "#F2546B"
+            },
+            {
+              "value": "Coconut (clear)",
+              "label": "Coconut",
+              "note": "clear",
+              "hex": "#F4EFE3",
+              "frosted": true
             }
           ]
         }
