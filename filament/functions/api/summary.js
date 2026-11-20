@@ -5,7 +5,7 @@ export async function onRequestGet({ env }) {
   const s = await getSettings(env.DB);
   const { results } = await env.DB.prepare('SELECT * FROM filaments ORDER BY sort, name').all();
   const all = results.map((r) => { const f = rowToFilament(r); return { ...f, stock: stock(f, s) }; });
-  const order = all.filter((f) => f.stock.status === 'order').map((f) => ({ id: f.id, name: f.name, group: f.group, grams: f.stock.grams, toOrder: f.stock.toOrder, brand: f.brand, material: f.material }));
+  const order = all.filter((f) => f.stock.status === 'order').map((f) => ({ id: f.id, name: f.name, group: f.group, grams: f.stock.grams, toOrder: f.stock.toOrder, maker: f.maker, brand: f.brand, material: f.material, nozzle: f.nozzle, bed: f.bed }));
   const today = new Date().toISOString().slice(0, 10);
   const deals = (await env.DB.prepare('SELECT supplier, what, material, price, size_g, min_qty, expires, link FROM deals').all()).results
     .filter((d) => !d.expires || d.expires >= today)

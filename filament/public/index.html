@@ -113,6 +113,14 @@ dialog::backdrop { background: rgba(0,0,0,.35); }
 .log label { flex: 1; display: flex; flex-direction: column; gap: 3px; font-size: 11px; font-weight: 600; color: var(--muted); }
 .log input { width: 100%; }
 .who { font-size: 12px; }
+.fields .span2 { grid-column: 1 / -1; }
+.fields input:invalid { border-color: var(--accent); }
+.presets { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px; }
+.preset { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; font-size: 13px; }
+.preset strong { font-size: 15px; }
+.preset .t { font-variant-numeric: tabular-nums; font-size: 14px; }
+.preset .src { font-size: 11px; color: var(--muted); }
+.preset a { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -140,6 +148,15 @@ dialog::backdrop { background: rgba(0,0,0,.35); }
     <label for="set-low">Reorder below (spools)<input id="set-low" type="number" min="0" step="0.5"></label>
     <label for="set-target">Order up to (spools)<input id="set-target" type="number" min="0" step="1"></label>
     <span class="muted" style="font-size:12px;max-width:44ch">A color turns ORDER when full spools + partial grams fall under the reorder line. Spools to order fills it back up to the target.</span>
+  </section>
+
+  <section class="group" aria-labelledby="makers-h">
+    <div class="toolbar"><h2 id="makers-h">Makers we use</h2><span class="muted" style="font-size:13px">Pick a color's maker and its blank temps fill in from here. Your own numbers on a color always win.</span></div>
+    <div class="presets">
+      <div class="preset"><strong>SUNLU High Speed TPU 95A</strong><span class="t">Print 190–210 °C · Bed 50–60 °C</span><span class="muted">210–230 °C when printing fast (80–120 mm/s). We buy the 10 kg, 10-color pack.</span><span class="src">Source: <a href="https://www.sunlu.com/products/tpu-95a-flexible-filament" target="_blank" rel="noopener">SUNLU product page</a></span></div>
+      <div class="preset"><strong>QIDI TPU 95A HF</strong><span class="t">Print 210–230 °C · Bed 20–50 °C</span><span class="muted">Comes in Transparent</span><span class="src">Source: <a href="https://simplyprint.io/filaments/qidi-tech/tpu-95a-hf" target="_blank" rel="noopener">QIDI via Open Filament Database</a></span></div>
+      <div class="preset"><strong>Bambu Lab TPU 95A HF</strong><span class="t">Print 220–240 °C · Bed 30–36 °C</span><span class="muted">Check this is the Bambu TPU you buy</span><span class="src">Source: <a href="https://simplyprint.io/filaments/bambu-lab/tpu-95a-hf" target="_blank" rel="noopener">Bambu via Open Filament Database</a></span></div>
+    </div>
   </section>
 
   <section class="group" aria-labelledby="chart-h">
@@ -185,7 +202,7 @@ dialog::backdrop { background: rgba(0,0,0,.35); }
     <label for="c-name" style="display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600">Name<input id="c-name" type="text" required></label>
     <label for="c-hex" style="display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600">Color<input id="c-hex" type="color" value="#C9A67A"></label>
     <label for="c-used" style="display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600">Used in<input id="c-used" type="text" placeholder="e.g. Cases"></label>
-    <label for="c-group" style="display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600">Group<select id="c-group"><option>Pop</option><option>Flower</option><option>Coastal</option><option selected>Other</option></select></label>
+    <label for="c-group" style="display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600">Group<select id="c-group"><option value="Stock">Spools on the shelf</option><option>Pop</option><option>Flower</option><option>Coastal</option><option selected>Other</option></select></label>
     <label style="display:flex;gap:8px;align-items:center;font-size:13px"><input id="c-clear" type="checkbox"> Clear / translucent</label>
     <div style="display:flex;gap:8px;justify-content:end"><button class="btn ghost" value="cancel" formnovalidate>Cancel</button><button class="btn" value="ok" id="c-save">Add color</button></div>
   </form>

@@ -1,4 +1,4 @@
-import { json, bad, body, rowToFilament, getSettings, stock, str, optNum, GROUPS, MATERIALS } from '../_lib.js';
+import { json, bad, body, rowToFilament, getSettings, stock, str, optNum, temp, GROUPS, MATERIALS, MAKERS } from '../_lib.js';
 
 const FIELDS = {
   name: ['name', (v) => { const s = str(v, 80).trim(); return s || undefined; }],
@@ -10,7 +10,10 @@ const FIELDS = {
   full: ['full', (v) => { const n = optNum(v); return n === null ? null : n === undefined ? undefined : Math.floor(n); }],
   partialG: ['partial_g', optNum],
   material: ['material', (v) => (MATERIALS.includes(v) ? v : undefined)],
+  maker: ['maker', (v) => (MAKERS.includes(v) ? v : undefined)],
   brand: ['brand', (v) => str(v)],
+  nozzle: ['nozzle', temp],
+  bed: ['bed', temp],
   note: ['note', (v) => str(v, 400)],
 };
 

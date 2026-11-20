@@ -50,3 +50,13 @@ test('Access JWT: wrong audience, expired, tampered, or unconfigured all fail', 
   const other = await makeJwt(good);
   assert.equal(await verifyAccessJwt(j.token, env, async () => other.keys), null);
 });
+
+import { temp } from '../functions/api/_lib.js';
+test('temps accept a number or a range, normalised', () => {
+  assert.equal(temp('210-230'), '210-230');
+  assert.equal(temp(' 215 °C '), '215');
+  assert.equal(temp('210–230'), '210-230');
+  assert.equal(temp(''), '');
+  assert.equal(temp('hot'), undefined);
+  assert.equal(temp('2100'), undefined);
+});

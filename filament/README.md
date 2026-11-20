@@ -18,7 +18,7 @@ It's a separate Cloudflare Pages project from the main site, built from the same
 
 ## One-time setup (Cloudflare dashboard)
 
-1. **D1 database.** Workers & Pages → D1 → Create → name `jup-filament`. Open it → Console, paste all of `schema.sql`, run; then paste all of `seed.sql`, run. Copy the **Database ID** and put it in `wrangler.jsonc` (`database_id`), or send it to Claude to commit.
+1. **D1 database.** Workers & Pages → D1 → Create → name `jup-filament`. Open it → Console, paste all of `schema.sql`, run; then paste all of `seed.sql`, run. (Already ran an older `schema.sql`? Also run `migrations/0002_maker_temps.sql`.) Copy the **Database ID** and put it in `wrangler.jsonc` (`database_id`), or send it to Claude to commit.
 2. **Pages project.** Workers & Pages → Create → Pages → Connect to Git → `SudoSuOps/jup-life-v2`.
    - Project name `jup-filament` · Production branch `main`
    - Framework preset: None · Build command: *(empty)* · Build output directory: `public` · **Root directory: `filament`**
@@ -63,14 +63,16 @@ curl -s -X PATCH $B/filaments/sunflower -H "$H" -H 'content-type: application/js
 |---|---|
 | `GET /api/filaments` | all colors with stock status and settings |
 | `POST /api/filaments` | add a color `{name, hex, usedIn, group, clear}` |
-| `GET/PATCH/DELETE /api/filaments/:id` | one color; PATCH any of `full, partialG, material, brand, note, name, hex, usedIn, group, order, clear` |
+| `GET/PATCH/DELETE /api/filaments/:id` | one color; PATCH any of `full, partialG, material, maker, brand, nozzle, bed, note, name, hex, usedIn, group, order, clear` (`maker`: SUNLU, QIDI, Bambu Lab, Other; temps like `210-230`) |
 | `POST /api/usage` | log grams used; open spool first, then cracks sealed spools; uncounted colors are logged but not deducted |
 | `GET /api/usage?filament=&limit=` | recent print log |
 | `GET /api/summary` | colors/spools to order, not-counted list, kg on shelf, cheapest live deal |
 | `GET/POST /api/deals`, `DELETE /api/deals/:id` | bulk offers |
 | `GET/PUT /api/settings` | `spoolG`, `lowSpools`, `targetSpools` |
 
-Color ids: `pumpkin cinnamon cranberry maple rhubarb sunflower blueberry peach key-lime watermelon coconut sage cream ruby frost sea-glass shell dunes red-mangrove banyan sea-turtle case`.
+Shelf spool ids (SUNLU 10-pack): `sunlu-black sunlu-white sunlu-grey sunlu-red sunlu-orange sunlu-light-blue sunlu-green sunlu-blue sunlu-purple sunlu-clear`.
+
+Sale color ids: `pumpkin cinnamon cranberry maple rhubarb sunflower blueberry peach key-lime watermelon coconut sage cream ruby frost sea-glass shell dunes red-mangrove banyan sea-turtle case`.
 
 ## Local dev
 

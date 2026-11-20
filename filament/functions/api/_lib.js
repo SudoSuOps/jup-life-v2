@@ -7,12 +7,15 @@ export async function body(request) {
   try { const b = await request.json(); return b && typeof b === 'object' && !Array.isArray(b) ? b : null; } catch { return null; }
 }
 
-export const GROUPS = ['Pop', 'Flower', 'Coastal', 'Other'];
+export const GROUPS = ['Stock', 'Pop', 'Flower', 'Coastal', 'Other'];
 export const MATERIALS = ['', 'TPU', 'PLA', 'PETG', 'Other'];
+export const MAKERS = ['', 'SUNLU', 'QIDI', 'Bambu Lab', 'Other'];
+// temps as text ranges in °C: "210-230" or "215"
+export const temp = (v) => { const s = String(v ?? '').trim().replace(/\s+/g, '').replace(/[–—]/g, '-').replace(/°?c$/i, ''); return s === '' || /^\d{2,3}(-\d{2,3})?$/.test(s) ? s : undefined; };
 
 export function rowToFilament(r) {
   return { id: r.id, name: r.name, hex: r.hex, usedIn: r.used_in, group: r.grp, order: r.sort, clear: !!r.clear,
-    full: r.full, partialG: r.partial_g, material: r.material, brand: r.brand, note: r.note, updatedAt: r.updated_at };
+    full: r.full, partialG: r.partial_g, material: r.material, maker: r.maker, brand: r.brand, nozzle: r.nozzle, bed: r.bed, note: r.note, updatedAt: r.updated_at };
 }
 export function rowToDeal(r) {
   return { id: r.id, supplier: r.supplier, what: r.what, material: r.material, price: r.price, sizeG: r.size_g,

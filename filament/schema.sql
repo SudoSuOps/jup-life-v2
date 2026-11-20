@@ -10,7 +10,10 @@ CREATE TABLE IF NOT EXISTS filaments (
   full       INTEGER,            -- sealed spools on the shelf; NULL = not counted
   partial_g  REAL,               -- grams left on open spools; NULL = not counted
   material   TEXT NOT NULL DEFAULT '',
-  brand      TEXT NOT NULL DEFAULT '',
+  maker      TEXT NOT NULL DEFAULT '',  -- SUNLU, QIDI, Bambu Lab, Other
+  brand      TEXT NOT NULL DEFAULT '',  -- product line / color code
+  nozzle     TEXT NOT NULL DEFAULT '',  -- print temp, e.g. 210-230
+  bed        TEXT NOT NULL DEFAULT '',  -- bed temp, e.g. 30-36
   note       TEXT NOT NULL DEFAULT '',
   updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
 );
