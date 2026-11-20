@@ -49,7 +49,8 @@ Listed SKUs and their order are set in web/data/catalog.json.
 - IndexNow: tools/indexnow.py.
 - Google Search Console: verified in #35/#36 on 2026-11-20. No query data pulled yet.
 - **Prices are hard-coded** in copy (besides site.json tiers): web/templates/use/*.html, custom_coasters.html, south_florida.html, blog/how-many-wedding-coasters.html, use/airbnb.html (shop prices), seo/social/*. Grep `\$2.00|\$1.90|\$1.75|\$29|\$39` after any price change.
-- **Sample wording:** "we print a sample for your approval" (site.json logo_terms) and "free samples, by request" are separate facts. Don't claim the custom-design sample is free or mailed until the owner confirms.
+- **Sample:** the sample of the customer's own design is free and mailed to them [owner, 2026-11-20].
+- **Water:** TPU coasters don't absorb; condensation beads on top [owner, 2026-11-20, from use].
 
 ## Competitors (who shows up for the buyer queries, 2026-11-20 web search)
 Source: four WebSearch queries run 2026-11-20 ("custom logo coasters restaurant Palm Beach County", "3D printed coasters Jupiter FL", "custom 3D printed logo coasters for bars wholesale", brand name).
