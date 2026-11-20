@@ -94,10 +94,30 @@
           "alt": "A gold Sunflower coaster with a raised flower",
           "render": false
         },
-        "Hibiscus": {
+        "Hibiscus Peach": {
           "img": "img/flower-hibiscus-orange-set.webp",
-          "alt": "Six orange Hibiscus coasters with raised flowers, stacked in their matching round case",
+          "alt": "Six Hibiscus coasters with raised flowers, stacked in their matching round case",
           "render": false
+        },
+        "Hibiscus Sage": {
+          "img": "img/flower-trio-peach-sage-cream.webp",
+          "alt": "Hibiscus Flower Coasters in peach, sage and cream, stacked on a cooling rack with fresh peaches",
+          "render": true
+        },
+        "Hibiscus Cream": {
+          "img": "img/flower-trio-peach-sage-cream.webp",
+          "alt": "Hibiscus Flower Coasters in peach, sage and cream, stacked on a cooling rack with fresh peaches",
+          "render": true
+        },
+        "Hibiscus Ruby": {
+          "img": "img/flower-trio-peach-sage-cream.webp",
+          "alt": "Hibiscus Flower Coasters in peach, sage and cream, stacked on a cooling rack with fresh peaches",
+          "render": true
+        },
+        "Hibiscus Frost (clear)": {
+          "img": "img/flower-trio-peach-sage-cream.webp",
+          "alt": "Hibiscus Flower Coasters in peach, sage and cream, stacked on a cooling rack with fresh peaches",
+          "render": true
         }
       }
     },

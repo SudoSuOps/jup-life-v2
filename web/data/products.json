@@ -102,7 +102,7 @@
     {
       "sku": "flower-set-case",
       "name": "Flower Coaster Set with Case",
-      "line": "Six flower coasters and a matching case. Sunflower or Hibiscus.",
+      "line": "Six flower coasters and a matching case. Sunflower, or Hibiscus in Peach, Sage, Cream, Ruby or Frost.",
       "shipping": "Free U.S. shipping.",
       "price": 39,
       "material": "Washable · six coasters + case",
@@ -119,9 +119,31 @@
               "hex": "#F6C21C"
             },
             {
-              "value": "Hibiscus",
-              "label": "Hibiscus",
-              "hex": "#E0325F"
+              "value": "Hibiscus Peach",
+              "label": "Hibiscus Peach",
+              "hex": "#FFB07C"
+            },
+            {
+              "value": "Hibiscus Sage",
+              "label": "Hibiscus Sage",
+              "hex": "#9CAF88"
+            },
+            {
+              "value": "Hibiscus Cream",
+              "label": "Hibiscus Cream",
+              "hex": "#EFE6D2"
+            },
+            {
+              "value": "Hibiscus Ruby",
+              "label": "Hibiscus Ruby",
+              "hex": "#9B111E"
+            },
+            {
+              "value": "Hibiscus Frost (clear)",
+              "label": "Hibiscus Frost",
+              "note": "clear",
+              "hex": "#E8EEF2",
+              "frosted": true
             }
           ]
         }
