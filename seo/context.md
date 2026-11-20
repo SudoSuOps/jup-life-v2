@@ -7,7 +7,7 @@ Built 2026-11-20 from the repo and the live site. Every line cites its source. I
 - Two buyers:
   1. **Retail and gift buyers** purchase coaster sets online, and checkout runs on Shopify at shop.juplifestudio.com. [README.md; web/data/shopify.json]
   2. **Enterprise buyers** are restaurants, bars, boutique hotels, Airbnb hosts and event hosts ordering custom logo coasters. [docs/AMENDMENTS.md "Who it's for"; https://juplifestudio.com/enterprise]
-- **Conversion:** the owner counts a call, text or email, or a free sample request (`POST /api/sample-request`, sent from the modal and the Enterprise form). [owner, 2026-11-20; functions/api/sample-request.js]
+- **Conversion:** a call, text or email, as the owner chose on 2026-11-20. The site's stated goal is also a free sample request (BRIEF §1), sent through `POST /api/sample-request` from the modal and the Enterprise form [functions/api/sample-request.js].
 
 ## Products and prices (display prices; Shopify charges)
 | SKU | Name | Price | Line | Source |
@@ -35,7 +35,7 @@ Listed SKUs and their order are set in web/data/catalog.json.
 ## Claims guardrails (hard rules)
 - **Material and care:** the only care claim is "washable". Make no dishwasher, TPU or material claims, because the live care copy was cut back to "washable" (commit 180686b) and the live product lines say only "Washable".
 - **Banned claims:** antimicrobial, food-safe, health, durability statistics, "lasts forever", other brands' marks, and fake reviews, ratings, customer logos or counts. [docs/BRIEF.md §8]
-- **"Doesn't chip":** the owner confirmed it (commit 9e28991, 2026-10-22).
+- **"Doesn't chip":** live on /enterprise ("Doesn't chip. No cracked corners after a Friday rush.", web/templates/wholesale.html:111). The owner confirmed it in commit 9e28991 (2026-10-22). Reuse only this wording.
 - Never invent prices, lead times, emails or URLs. [docs/BRIEF.md §8]
 - **Page scope:** the brief §8 bans blog, About, Weddings and similar pages. /about and /palm-beach-county now exist, so the owner has relaxed this, but articles and comparison pages still need explicit owner approval.
 
@@ -48,7 +48,8 @@ Listed SKUs and their order are set in web/data/catalog.json.
 - Google Search Console: verified in #35/#36 on 2026-11-20. No data yet.
 
 ## Competitors (who shows up for the buyer queries, 2026-11-20 web search)
-- **National promotional printers:** 4imprint, Custom Ink, Vistaprint, Rush Order Tees, CustomCoastersNow. They print on paper, cork and stone. None of them sells 3D printed coasters.
+Source: four WebSearch queries run 2026-11-20 ("custom logo coasters restaurant Palm Beach County", "3D printed coasters Jupiter FL", "custom 3D printed logo coasters for bars wholesale", brand name).
+- **National promotional printers:** 4imprint, Custom Ink, Vistaprint, Rush Order Tees and CustomCoastersNow ranked for the logo-coaster queries. The pages returned offered paper, cork and stone coasters. No 3D printed product appeared in those results; that does not establish that they don't sell one.
 - **Florida print shop:** icustomlabel.com says it prints and quality-checks in Florida and offers bulk pricing for bars and hotels.
-- **Marketplaces:** Etsy and Faire, where 3D printed coaster makers sell.
-- **Positioning gap:** none of these competitors appears for "3D printed coasters" with a local Palm Beach County angle. Those results are design-file sites (makerworld, thangs, all3dp).
+- **Faire:** appeared once, with a stone logo coaster ($150 minimum).
+- **"3D printed coasters Jupiter FL":** returned design-file sites (makerworld, thangs, all3dp) and no local seller. No seller result paired 3D printed coasters with Palm Beach County.
