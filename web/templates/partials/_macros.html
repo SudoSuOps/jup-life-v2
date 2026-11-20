@@ -72,6 +72,21 @@
       </figure>
     </div>
   </div>
+  {% elif sku == 'flower-set-case' %}
+  {% set f = by_sku[sku] %}
+  <div class="flower-banner">
+    <div class="flower-banner-copy">
+      <p class="eyebrow">Flower Coasters</p>
+      <h3 class="serif">{{ f.name }}</h3>
+      <p>{{ f.line }}</p>
+      <p class="flower-banner-price">${{ f.price }}</p>
+    </div>
+    <figure>
+      {{ pic("img/flower-trio-peach-sage-cream.webp", "Flower Coasters in peach, sage and cream, stacked on a cooling rack with fresh peaches", sizes="(min-width: 900px) 640px, 100vw") }}
+      <figcaption>Studio rendering</figcaption>
+    </figure>
+  </div>
+  {{ card(by_sku[sku], shop=True) }}
   {% else %}
   {{ card(by_sku[sku], shop=True) }}
   {% endif %}
