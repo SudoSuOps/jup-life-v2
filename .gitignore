@@ -11,3 +11,9 @@ tools/todays-batch/out/
 filament/.wrangler/
 filament/.dev.vars
 filament/node_modules/
+
+# filament server local state
+filament/server/.venv/
+filament/server/data/
+__pycache__/
+.pytest_cache/
