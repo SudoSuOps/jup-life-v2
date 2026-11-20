@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Custom Coasters for Miami &amp; Fort Lauderdale | JUP LIFE{% endblock %}
+{% block description %}Custom logo coasters for Miami, Fort Lauderdale, Boca Raton and South Florida restaurants, hotels and events. Printed in Jupiter, FL. Free samples.{% endblock %}
+{% block ogtitle %}Custom Coasters for Miami, Fort Lauderdale and South Florida{% endblock %}
+{% block ogdesc %}{{ self.description() }}{% endblock %}
+{% block content %}
+<div class="wrap section prose">
+  <p class="eyebrow">Service area</p>
+  <h1>Custom Coasters for Miami, Fort Lauderdale and South Florida</h1>
+  <p class="subhead">Printed in Jupiter, FL. Shipped to your door.</p>
+  <p>JUP LIFE prints custom logo coasters in Jupiter, FL for restaurants, bars, hotels, weddings and events across South Florida, from 200 coasters at $2.00 each. Shipping is free, and samples are free, by request.</p>
+  <figure style="margin:8px 0;position:relative">
+    {{ pic("img/restaurant-drink.webp", "A lemon spritz on a sage coaster beside a cinnamon coaster, on a beachside table at golden hour", sizes="(min-width: 800px) 720px, calc(100vw - 32px)", style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px") }}
+  </figure>
+
+  <h2>Miami</h2>
+  <p>Miami bars, restaurants and hotels can order custom coasters with a logo as a raised relief, in colorways named after ingredients. You approve a sample print, and the batch ships within 10 days of approval.</p>
+
+  <h2>Fort Lauderdale</h2>
+  <p>Fort Lauderdale venues get the same washable, flexible coasters we bake for our Jupiter neighbors. They don't chip, and they bend instead of breaking.</p>
+
+  <h2>Boca Raton and Delray Beach</h2>
+  <p>Between Palm Beach County and Broward, Boca Raton and Delray Beach restaurants, wedding venues and event planners can start with a free sample and order from 200 coasters.</p>
+
+  <h2>Beyond South Florida</h2>
+  <p>We print in Jupiter and ship anywhere in the U.S. U.S. shipping is free. Closer to the studio? See <a href="/palm-beach-county">Palm Beach County</a>.</p>
+
+  <p>Custom coasters for <a href="/enterprise">restaurants and bars</a>, <a href="/custom-coasters/hotels">hotels</a>, <a href="/custom-coasters/weddings">weddings</a>, <a href="/custom-coasters/events">events</a> and <a href="/custom-coasters/airbnb">Airbnb hosts</a>.</p>
+
+  <div class="btn-row">
+    <button type="button" class="btn btn-primary" data-open-sample data-type="Sample">Request a free sample</button>
+    <a class="btn btn-outline" href="/shop">Shop the coasters</a>
+    <a class="btn btn-outline" href="/contact">Contact</a>
+  </div>
+</div>
+{% endblock %}

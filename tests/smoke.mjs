@@ -13,7 +13,7 @@ page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
 const ok = (name) => console.log('ok  -', name);
 
 // redirects
-for (const [from, to] of [['/restaurants', '/enterprise'], ['/wholesale', '/enterprise'], ['/collection/hibiscus', '/shop'], ['/weddings', '/shop'], ['/coming-soon', '/shop']]) {
+for (const [from, to] of [['/restaurants', '/enterprise'], ['/wholesale', '/enterprise'], ['/collection/hibiscus', '/shop'], ['/weddings', '/custom-coasters/weddings'], ['/coming-soon', '/shop']]) {
   const r = await fetch(BASE + from, { redirect: 'manual' });
   assert.equal(r.status, 301, from); assert.ok(r.headers.get('location').endsWith(to), from);
 }

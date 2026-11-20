@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Custom Coasters for Businesses, Weddings &amp; Events | JUP LIFE{% endblock %}
+{% block description %}Custom logo coasters for restaurants, hotels, weddings, events and Airbnb hosts. 3D printed in Jupiter, FL, from 200 at $2.00 each, shipped nationwide.{% endblock %}
+{% block ogtitle %}Custom Coasters, Baked to Order{% endblock %}
+{% block ogdesc %}{{ self.description() }}{% endblock %}
+{% block content %}
+<div class="wrap section prose">
+  <p class="eyebrow">Custom coasters</p>
+  <h1>Custom Coasters, Baked to Order</h1>
+  <p class="subhead">Your logo, fresh baked.</p>
+  <p>JUP LIFE prints custom coasters with your logo, names or art, from 200 coasters at $2.00 each. We print in Jupiter, FL and ship anywhere in the U.S., and every order starts with a free sample.</p>
+
+  <h2><a href="/enterprise">Restaurants and bars</a></h2>
+  <p>Washable bar coasters that bend instead of breaking, with your logo as a raised relief.</p>
+
+  <h2><a href="/custom-coasters/hotels">Hotels and hospitality</a></h2>
+  <p>One design for every outlet, from the lobby bar to the pool deck, or a colorway for each.</p>
+
+  <h2><a href="/custom-coasters/weddings">Weddings</a></h2>
+  <p>Your names, monogram or date on a favor guests take home and use.</p>
+
+  <h2><a href="/custom-coasters/events">Events and parties</a></h2>
+  <p>Corporate events, launches, fundraisers and parties: under every drink on the night, on a desk afterward.</p>
+
+  <h2><a href="/custom-coasters/airbnb">Airbnb hosts and vacation rentals</a></h2>
+  <p>Your rental's name on the table, made for turnover day.</p>
+
+  <h2>Where we ship</h2>
+  <p>Anywhere in the U.S., free. Local to <a href="/palm-beach-county">Palm Beach County</a> and <a href="/south-florida">South Florida</a>.</p>
+
+  <div class="btn-row">
+    <button type="button" class="btn btn-primary" data-open-sample data-type="Sample">Request a free sample</button>
+    <a class="btn btn-outline" href="/enterprise#price-board">See the price board</a>
+  </div>
+</div>
+{% endblock %}
