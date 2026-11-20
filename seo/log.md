@@ -15,3 +15,5 @@
 - 2026-11-20 Sample wording toned to match site.json (sample print for approval; free samples by request) across process article, use-case layout, events, hub, wedding article, social drafts.
 - 2026-11-20 Material now stated sitewide: TPU 95A (owner-confirmed), "bends, won't break", "rinse and repeat", Product schema material, home/enterprise/use-case FAQ "What are they made of?"; always-free U.S. shipping incl. logo batches.
 - 2026-11-20 Process article names the 30-printer fleet and TPU 95A HF (owner-confirmed). https://juplifestudio.com/blog/how-custom-logo-coasters-are-made
+- 2026-11-20 Article: https://juplifestudio.com/blog/bar-coaster-materials (paper vs cork vs rubber vs TPU; vendor quotes verified 2026-11-20; TPU water behavior owner-confirmed). Linked from /enterprise FAQ, use-case FAQs, process article, blog index.
+- 2026-11-20 Sample copy restored to "free sample of your design, mailed to you" (owner-confirmed) across process article, use-case layout, events, hub, wedding article, social.

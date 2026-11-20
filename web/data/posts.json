@@ -2,10 +2,19 @@
   "_note": "Blog posts, newest first. Body template: web/templates/blog/<slug>.html. Facts only from seo/context.md or cited sources; every outside claim gets a link and an as-of date.",
   "posts": [
     {
+      "slug": "bar-coaster-materials",
+      "title": "Bar Coaster Materials: Paper vs Cork vs TPU",
+      "h1": "Coaster materials for bars and restaurants: paper, cork, rubber and TPU",
+      "description": "Paper soaks up the most and costs least but is single-use. Cork and rubber are reusable. TPU doesn't absorb, but it washes and bends. Pick by use.",
+      "date": "2026-11-20",
+      "img": "img/flex-closeup.webp",
+      "alt": "Hands flexing a pumpkin-orange coaster"
+    },
+    {
       "slug": "how-custom-logo-coasters-are-made",
       "title": "How Custom Logo Coasters Are Made, Step by Step",
       "h1": "How custom logo coasters are made, from your art to a finished batch",
-      "description": "Many printers approve a digital proof. We print a sample of your design for approval first, and your batch ships within 10 days. Here's each step.",
+      "description": "Many printers approve a digital proof. We mail you a free printed sample of your design first, and your batch ships within 10 days. Here's each step.",
       "date": "2026-11-20",
       "img": "img/ws-logo-mockup-example.webp",
       "alt": "Example design: a cream coaster with a raised fork-and-spoon emblem, stacked on a bar"

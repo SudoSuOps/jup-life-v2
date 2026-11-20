@@ -1,0 +1,52 @@
+{% extends "blog/_post.html" %}
+{# Competitor-material claims: verbatim from the linked pages, fetched 2026-11-20. TPU row: owner-confirmed (TPU 95A, washable, bends and won't break, water beads on top). #}
+{% block body %}
+  <p class="lede">Pulpboard (paper) soaks up the most water and costs the least, but it's single-use. Cork and rubber are reusable. Our TPU 95A coasters don't absorb water at all; they wash clean and bend instead of breaking. For a one-night event, paper is hard to beat. For a bar that wants coasters it can use every night, pick a reusable one.</p>
+
+  <h2>The short version</h2>
+  <div style="overflow-x:auto;max-width:100%">
+  <table style="border-collapse:collapse;width:100%;min-width:520px">
+    <thead><tr>
+      <th style="text-align:left;padding:8px;border-bottom:1.5px solid var(--kraft)">Material</th>
+      <th style="text-align:left;padding:8px;border-bottom:1.5px solid var(--kraft)">Soaks up water?</th>
+      <th style="text-align:left;padding:8px;border-bottom:1.5px solid var(--kraft)">Reusable?</th>
+      <th style="text-align:left;padding:8px;border-bottom:1.5px solid var(--kraft)">Cost</th>
+    </tr></thead>
+    <tbody>
+      <tr><td style="padding:8px">Pulpboard (paper)</td><td style="padding:8px">Yes, the most</td><td style="padding:8px">No, single or limited use</td><td style="padding:8px">Lowest</td></tr>
+      <tr><td style="padding:8px">Cork</td><td style="padding:8px">Sources disagree</td><td style="padding:8px">Yes</td><td style="padding:8px">Mid-range</td></tr>
+      <tr><td style="padding:8px">Rubber</td><td style="padding:8px">No</td><td style="padding:8px">Yes, the most durable</td><td style="padding:8px">Higher upfront</td></tr>
+      <tr><td style="padding:8px">TPU 95A (ours)</td><td style="padding:8px">No, water beads on top</td><td style="padding:8px">Yes, washable</td><td style="padding:8px">From $1.75 to $2.00 each with your logo</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:14px">Sources for paper, cork and rubber: the vendor guides quoted below, as of November 2026. Most of these guides come from coaster sellers, so read them with that in mind, ours included.</p>
+
+  <h2>Pulpboard: the absorbent, disposable default</h2>
+  <p>Pulpboard is what most bars hand out. Coaster Factory says "pulpboard coasters provide excellent moisture absorption, soaking up drips and keeping tables dry," and that it "is intended for single or limited use, making it best for promotions or events" (<a href="https://www.coasterfactory.com/blog/comparing-pulpboard,-cork,-and-rubber-coasters" rel="nofollow">Coaster Factory</a>). It is also the cheapest way to get a logo on the table: businesses on a budget pick it "because it delivers professional branding at the lowest cost."</p>
+  <p>The tradeoff is waste. Washington Beer Blog notes that in the longer term pulpboard "could create more waste than cork since it is generally single-use" (<a href="https://washingtonbeerblog.com/cork-vs-pulpboard-coasters-which-one-performs-better-for-bars-and-events/" rel="nofollow">Washington Beer Blog</a>, June 2026).</p>
+
+  <h2>Cork: reusable, and the sources disagree on water</h2>
+  <p>Everyone agrees cork lasts longer than paper: "Cork coasters are reusable and maintain their look over multiple uses" (Coaster Factory). Whether it absorbs is another matter. Coaster Factory says cork has "a natural ability to absorb moisture and prevent water rings." Washington Beer Blog says the opposite: "Cork coasters will not absorb water; pulpboard coasters will absorb water." If absorbency matters to you, ask for a sample and test it under a cold glass.</p>
+
+  <h2>Rubber: the most durable, doesn't absorb</h2>
+  <p>Coaster Factory calls rubber "the most durable of all, capable of lasting for years with minimal wear," and notes rubber coasters "do not absorb liquid but protect surfaces through raised edges and non-slip texture." The catch is price: "rubber requires a higher upfront investment."</p>
+
+  <h2>TPU 95A: ours, and where it fits</h2>
+  <p>We print our coasters in TPU 95A, a flexible filament. Here's what that means at the bar:</p>
+  <ul>
+    <li><strong>It doesn't absorb.</strong> Condensation beads up on top instead of soaking in. That's the honest tradeoff against pulpboard: the coaster stays clean, but you wipe it.</li>
+    <li><strong>It washes.</strong> Rinse and repeat. No soggy coasters going in the trash at close.</li>
+    <li><strong>It bends, it won't break, and it doesn't chip.</strong> A dropped stack is a stack to pick up.</li>
+    <li><strong>Your logo is raised.</strong> We bake it into the coaster as a relief.</li>
+  </ul>
+  {{ pic(post.img, post.alt, sizes="(min-width: 800px) 720px, calc(100vw - 32px)", style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px") }}
+  <p>Logo batches start at 200 coasters at $2.00 each, then $1.90 at 500 and $1.75 at 1,000. U.S. shipping is always free, and we mail you a free sample of your design first. See <a href="/blog/how-custom-logo-coasters-are-made">how custom logo coasters are made</a>.</p>
+
+  <h2>Which one should you pick?</h2>
+  <ul>
+    <li><strong>A one-night event or festival:</strong> pulpboard. It's cheap and absorbent, and nobody needs it tomorrow.</li>
+    <li><strong>Daily bar or restaurant service, where you'd rather wash than reorder:</strong> a reusable coaster. Pick cork, rubber or <a href="/enterprise">TPU</a>.</li>
+    <li><strong>Favors guests take home, like at a <a href="/custom-coasters/weddings">wedding</a> or <a href="/custom-coasters/events">event</a>:</strong> something worth keeping. That's a reusable coaster too.</li>
+  </ul>
+{% endblock %}
