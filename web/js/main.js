@@ -124,6 +124,7 @@
         form.reset();
         form.source_page.value = location.pathname;
         formView.hidden = true; okView.hidden = false;
+        document.dispatchEvent(new CustomEvent('jup:sample-sent', { detail: { source_page: location.pathname } }));
         ($('[data-close]', okView) || okView).focus?.();
       } catch (ex) {
         err.textContent = typeof ex.message === 'string' ? ex.message : 'Something went wrong. Try again or email hello@juplifestudio.com.';

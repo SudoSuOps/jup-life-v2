@@ -116,5 +116,10 @@
 </dialog>
 
 <script src="{{ js_src }}" defer></script>
+{% if gtag_src %}
+<script type="application/json" id="gtag-config">{{ gtag_json }}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ gtag_loader_id }}"></script>
+<script src="{{ gtag_src }}" defer></script>
+{% endif %}
 </body>
 </html>

@@ -47,6 +47,7 @@ Listed SKUs and their order are set in web/data/catalog.json.
 - Production build: `INDEXABLE=1 SITE_URL=https://juplifestudio.com python tools/build.py`. Tests: `npm test`.
 - Structured data: LocalBusiness+Store (home), Product+Offer (shop), OfferCatalog+FAQPage (enterprise), FAQPage (home), MerchantReturnPolicy (shipping-returns), BreadcrumbList.
 - IndexNow: tools/indexnow.py.
+- **Google tag (GA4 + Ads):** code in web/js/gtag.js, switched on by site.json `google_tag` (ga4_id G-…, ads_id AW-…, sample_label, call_label). Events: `generate_lead` on sample form success, `click_to_call` / `click_to_text`, Ads conversions with the labels. CSP widens only when an id is set (tools/build.py GTAG_CSP, from Google's CSP guide). GA4 property 565352711 is linked to Ads account 971-276-5425 (owner email, 2026-11-20); measurement ID not yet provided.
 - Google Search Console: verified in #35/#36 on 2026-11-20. No query data pulled yet.
 - **Prices are hard-coded** in copy (besides site.json tiers): web/templates/use/*.html, custom_coasters.html, south_florida.html, blog/how-many-wedding-coasters.html, use/airbnb.html (shop prices), seo/social/*. Grep `\$2.00|\$1.90|\$1.75|\$29|\$39` after any price change.
 - **Sample:** the sample of the customer's own design is free and mailed to them [owner, 2026-11-20].
