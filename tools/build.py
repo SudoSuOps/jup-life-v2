@@ -230,7 +230,7 @@ def llms_txt(site: dict, products: list, batch: dict, catalog: dict) -> str:
         "- Returns: within 7 days of delivery if you're not 100% happy, no questions asked",
         f"- Current tray: {batch.get('tray', '')}",
         "- Contact: hello@juplifestudio.com, call +1-561-532-7120, text 561-581-8015",
-        "- TikTok: https://www.tiktok.com/@juplifestudio", "",
+        "- TikTok: https://www.tiktok.com/@juplifestudios", "",
         "## Pages",
         f"- [Home]({base}/): the coaster printers, Jupiter FL",
         f"- [Shop]({base}/shop): Pop Coasters, Flower Coasters and Coastal Coasters, with checkout on our Shopify store (shop.juplifestudio.com)",
