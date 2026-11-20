@@ -23,7 +23,7 @@ Listed SKUs and their order are set in web/data/catalog.json.
 - Process: you send the art, the studio prints a sample for approval, and the batch ships within 10 days of approval. [web/data/site.json placeholders.logo_terms]
 
 ## Shipping and returns
-- U.S. shipping is free with no minimum. Orders leave the studio within 2–3 business days. [web/templates/shipping_returns.html; site.json lead_times]
+- U.S. shipping is always free, including custom logo batches [owner, 2026-11-20]; no minimum. Orders leave the studio within 2–3 business days. [web/templates/shipping_returns.html; site.json lead_times]
 - Returns are accepted within 7 days of delivery. The customer pays return postage; the studio pays for damaged or incorrect orders. [web/templates/shipping_returns.html]
 - The guarantee is labelled "100% Satisfaction Guarantee". [site.json guarantee]
 
@@ -33,7 +33,7 @@ Listed SKUs and their order are set in web/data/catalog.json.
 - TikTok: @juplifestudios. [commit ae3b12f]
 
 ## Claims guardrails (hard rules)
-- **Material and care:** the only care claim is "washable". Make no dishwasher, TPU or material claims, because the live care copy was cut back to "washable" (commit 180686b) and the live product lines say only "Washable".
+- **Material and care (owner-confirmed 2026-11-20):** coasters are TPU 95A (all colors, filament/seed.sql). Allowed: "washable", "rinse and repeat", "flexible, bends, won't break", "doesn't chip". Still no dishwasher, food-safe or durability-statistic claims. Owner says the coasters use **TPU 95A HF** (high-flow grade; likely Bambu Lab, the studio runs Bambu P1S printers — confirm). Spec numbers (elongation, tensile) only from the manufacturer TDS: bambulab.com and wiki.bambulab.com blocked automated fetches on 2026-11-20, so get the TDS PDF from the owner.
 - **Banned claims:** antimicrobial, food-safe, health, durability statistics, "lasts forever", other brands' marks, and fake reviews, ratings, customer logos or counts. [docs/BRIEF.md §8]
 - **"Doesn't chip":** live on /enterprise ("Doesn't chip. No cracked corners after a Friday rush.", web/templates/wholesale.html:111). The owner confirmed it in commit 9e28991 (2026-10-22). Reuse only this wording.
 - Never invent prices, lead times, emails or URLs. [docs/BRIEF.md §8]

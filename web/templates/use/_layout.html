@@ -2,7 +2,8 @@
 {% from "partials/_macros.html" import sample_form, sample_success, price_board %}
 {# Shared layout for /custom-coasters/<slug> use-case pages.
    Facts allowed here: seo/context.md only (tiers from site.json, 10 days from approval, free U.S. shipping,
-   washable / flexible / doesn't chip, raised-relief logo, ingredient colorways). No material or dishwasher claims. #}
+   washable / rinse and repeat / flexible TPU 95A that bends and won't break / doesn't chip, raised-relief logo, ingredient colorways).
+   No dishwasher, food-safe or durability-stat claims. #}
 {% block ogdesc %}{{ self.description() }}{% endblock %}
 {% if false %}{% block segment %}Event or gifting{% endblock %}{% endif %}{# form segment; must be in SEGMENTS in functions/api/sample-request.js #}
 {% block content %}
@@ -41,8 +42,9 @@
   {% block faq %}{% endblock %}
   <details><summary>Is there a minimum?</summary><p>Logo batches start at 200 coasters: 200 at $2.00 each ($400), 500 at $1.90 ($950), 1,000 at $1.75 ($1,750).</p></details>
   <details><summary>How long does a batch take?</summary><p>Your batch ships within 10 days of approving the sample print. Carrier transit time is on top of that.</p></details>
-  <details><summary>Do you ship outside Florida?</summary><p>Yes. We print in Jupiter, FL and ship anywhere in the U.S. U.S. shipping is free.</p></details>
-  <details><summary>Can I wash them?</summary><p>Yes. They're washable.</p></details>
+  <details><summary>Do you ship outside Florida?</summary><p>Yes. We print in Jupiter, FL and ship anywhere in the U.S., and U.S. shipping is always free.</p></details>
+  <details><summary>What are they made of?</summary><p>TPU 95A, a flexible printed filament. It bends instead of breaking, so a dropped stack is just a stack to pick up.</p></details>
+  <details><summary>Can I wash them?</summary><p>Yes. They're washable. Rinse and repeat.</p></details>
 </section>
 
 <section id="request" class="oven" style="scroll-margin-top:16px" aria-labelledby="use-req-h">
