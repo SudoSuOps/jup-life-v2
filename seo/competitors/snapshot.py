@@ -3,6 +3,10 @@
 
     python seo/competitors/snapshot.py        # writes seo/competitors/<domain>.txt
 
+Coverage limits (2026-11-20): Custom Ink lists three sitemaps in robots.txt and only custom.xml is fetched.
+Sitemap indexes are capped at 60 child sitemaps, which may cut 4imprint short. Vistaprint has no
+sitemap at /sitemap.xml or in robots.txt, so it is not tracked.
+
 Large catalogs are filtered to URLs containing "coaster" so the diff stays readable.
 """
 import gzip, re, sys, urllib.request
@@ -15,7 +19,6 @@ SITES = {
     "customcoastersnow.com": ["https://www.customcoastersnow.com/sitemap.xml"],
     "customink.com": ["https://www.customink.com/sitemaps/custom.xml"],
     "4imprint.com": ["https://www.4imprint.com/sitemap.xml"],
-    "vistaprint.com": ["https://www.vistaprint.com/sitemap.xml"],
 }
 
 
