@@ -39,7 +39,7 @@ Listed SKUs and their order are set in web/data/catalog.json.
 - Never invent prices, lead times, emails or URLs. [docs/BRIEF.md §8]
 - **Page scope:** the owner approved a blog and use-case pages on 2026-11-20 (hotels, events, weddings, Airbnb/hospitality), overriding brief §8.
 - **Service area:** national orders, shipped anywhere in the U.S. Local focus is Palm Beach County plus South Florida (Miami, Fort Lauderdale). [owner, 2026-11-20]
-- **Search Console:** the owner says the site is set up and the sitemap is submitted (2026-11-20).
+- **Search Console:** owner said 2026-11-20: "i have the site index with search google is done". Indexing still not verified by me.
 
 ## Site facts
 - Jinja static build: web/templates + web/data, built to dist/ by tools/build.py, served on Cloudflare Pages with Functions under /api/*. [README.md]
@@ -47,7 +47,9 @@ Listed SKUs and their order are set in web/data/catalog.json.
 - Production build: `INDEXABLE=1 SITE_URL=https://juplifestudio.com python tools/build.py`. Tests: `npm test`.
 - Structured data: LocalBusiness+Store (home), Product+Offer (shop), OfferCatalog+FAQPage (enterprise), FAQPage (home), MerchantReturnPolicy (shipping-returns), BreadcrumbList.
 - IndexNow: tools/indexnow.py.
-- Google Search Console: verified in #35/#36 on 2026-11-20. The owner reports indexing is set up. No query data pulled yet.
+- Google Search Console: verified in #35/#36 on 2026-11-20. No query data pulled yet.
+- **Prices are hard-coded** in copy (besides site.json tiers): web/templates/use/*.html, custom_coasters.html, south_florida.html, blog/how-many-wedding-coasters.html, use/airbnb.html (shop prices), seo/social/*. Grep `\$2.00|\$1.90|\$1.75|\$29|\$39` after any price change.
+- **Sample wording:** "we print a sample for your approval" (site.json logo_terms) and "free samples, by request" are separate facts. Don't claim the custom-design sample is free or mailed until the owner confirms.
 
 ## Competitors (who shows up for the buyer queries, 2026-11-20 web search)
 Source: four WebSearch queries run 2026-11-20 ("custom logo coasters restaurant Palm Beach County", "3D printed coasters Jupiter FL", "custom 3D printed logo coasters for bars wholesale", brand name).
