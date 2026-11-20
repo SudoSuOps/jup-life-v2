@@ -1,0 +1,33 @@
+{% extends "blog/_post.html" %}
+{% block body %}
+  <p class="lede">Many coaster printers have you approve a digital proof, then print. We print a real sample of your design and send it to you first, and your batch ships within 10 days of your approval. Here is every step, and what to have ready at each one.</p>
+
+  <h2>1. Send your art</h2>
+  <p>A logo file is enough to start: PNG, JPG, SVG or PDF, up to 4 MB, through the sample form. A clean vector file (SVG or PDF) gives the sharpest edges. Your logo isn't printed as ink on the surface; we bake it into the coaster as a raised relief, so bold shapes and clear outlines read best.</p>
+
+  <h2>2. Pick your colors</h2>
+  <p>Our colorways are named after ingredients, like pumpkin, coconut, peach, sage and key lime, and they change with the season's batch. Tell us your brand colors and we'll tell you what fits before we print the sample.</p>
+
+  <h2>3. Approve a printed sample, not just a screen proof</h2>
+  <p>This is the step that differs most from paper coaster printers. Many approve a design on screen: Coaster Factory, for example, says it "will create a digital proof and send it to you for your approval" (<a href="https://www.coasterfactory.com/faqs" rel="nofollow">Coaster Factory FAQ</a>, as of November 2026). A screen proof shows the artwork. It can't show how a raised logo feels in your hand or how a color reads in your room.</p>
+  <p>We print your actual design and send it. You hold it, set a glass on it and flex it before you commit. Samples are free, by request.</p>
+  <figure style="margin:8px 0;position:relative">
+    {{ pic(post.img, post.alt, sizes="(min-width: 800px) 720px, calc(100vw - 32px)", style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px") }}
+    <figcaption class="cap-plain">Example design, not a client.</figcaption>
+  </figure>
+
+  <h2>4. We bake your batch</h2>
+  <p>Once you approve the sample, your batch ships within 10 days. U.S. shipping is free, and we ship anywhere in the country.</p>
+  <p>To be fair about speed: Coaster Factory says its Value Pack coasters are "normally ready to ship approximately 2 weeks from proof approval" and its Short Run coasters ship in about 3 to 5 business days from approval (<a href="https://www.coasterfactory.com/faqs" rel="nofollow">Coaster Factory FAQ</a>, as of November 2026). If you need paper coasters in days, a short-run paper printer is faster. Our extra step is the printed sample, so you see the real thing before the batch.</p>
+
+  <h2>What it costs</h2>
+  <p>Logo batches start at 200 coasters. The price per coaster drops as the batch grows:</p>
+  <ul>
+    {% for t in site.tiers %}<li>{{ t.qty }}{{ '' if 'coaster' in t.qty else ' coasters' }}: {{ t.price }} ({{ t.total }})</li>
+    {% endfor %}
+  </ul>
+
+  <h2>What you get</h2>
+  <p>Coasters that are washable and flexible and don't chip. They bend instead of breaking, so a dropped stack on a busy night is just a stack to pick up.</p>
+  <p>Ordering for a specific setting? See custom coasters for <a href="/enterprise">restaurants and bars</a>, <a href="/custom-coasters/hotels">hotels</a>, <a href="/custom-coasters/weddings">weddings</a> (and <a href="/blog/how-many-wedding-coasters">how many to order</a>), <a href="/custom-coasters/events">events</a> and <a href="/custom-coasters/airbnb">Airbnb hosts</a>.</p>
+{% endblock %}
