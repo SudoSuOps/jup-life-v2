@@ -106,7 +106,8 @@
         <img class="readers-logo" src="/img/readers-wordmark-navy.png" alt="Readers by JUP LIFE" width="1200" height="444">
         <div class="pop-feature-row">
           {{ card(by_sku['readers'], shop=True) }}
-          {# VIDEO SLOT: Hollywood drops web/media/readers-short.mp4 later. Hidden until the file loads. #}
+          {# VIDEO SLOT: drop web/media/readers-short.mp4 and rebuild. Rendered only when the file exists. #}
+          {% if readers_short %}
           <figure class="pop-loop" data-readers-short hidden>
             <video muted autoplay loop playsinline
                    width="720" height="1280"
@@ -115,6 +116,7 @@
               <source src="/media/readers-short.mp4" type="video/mp4">
             </video>
           </figure>
+          {% endif %}
         </div>
       </div>
       {% else %}
@@ -160,8 +162,8 @@
   <div class="shelf-head">
     <div>
       <p class="eyebrow">In the shop</p>
-      <h2 id="coasters-h" style="margin-top:6px">Two coasters.</h2>
-      <p>Choose a style, a tray, or a flower. Mix Pop Coaster packs in one order. Free U.S. shipping.</p>
+      <h2 id="coasters-h" style="margin-top:6px">On the shelf.</h2>
+      <p>Choose a style, a tray, or a flower. Mix packs in one order. Free U.S. shipping.</p>
     </div>
   </div>
   <div class="coaster-grid">
@@ -187,7 +189,8 @@
     <img class="readers-logo" src="/img/readers-wordmark-navy.png" alt="Readers by JUP LIFE" width="1200" height="444">
     <div class="pop-feature-row">
       {{ card(by_sku['readers'], shop=True) }}
-      {# VIDEO SLOT: Hollywood drops web/media/readers-short.mp4 later. Hidden until the file loads. #}
+      {# VIDEO SLOT: drop web/media/readers-short.mp4 and rebuild. Rendered only when the file exists. #}
+      {% if readers_short %}
       <figure class="pop-loop" data-readers-short hidden>
         <video muted autoplay loop playsinline
                width="720" height="1280"
@@ -196,6 +199,7 @@
           <source src="/media/readers-short.mp4" type="video/mp4">
         </video>
       </figure>
+      {% endif %}
     </div>
   </div>
 </section>
