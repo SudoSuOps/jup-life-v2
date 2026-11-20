@@ -11,3 +11,5 @@
 - 2026-11-20 Blog launched: https://juplifestudio.com/blog with BlogPosting schema, breadcrumbs, sitemap and llms.txt entries; footer link on every page.
 - 2026-11-20 Article: https://juplifestudio.com/blog/how-custom-logo-coasters-are-made (printed sample vs digital proof; Coaster Factory claims quoted from its FAQ, verified 2026-11-20). Linked from /enterprise, every use-case page and the hub.
 - 2026-11-20 Article: https://juplifestudio.com/blog/how-many-wedding-coasters (one per guest +10-15%, sourced to 4OVER4). Linked from /custom-coasters/weddings, /custom-coasters and the process article.
+- 2026-11-20 IndexNow pings after PR #39 (14 URLs) and PR #40 (17 URLs), HTTP 200.
+- 2026-11-20 Sample wording toned to match site.json (sample print for approval; free samples by request) across process article, use-case layout, events, hub, wedding article, social drafts.
