@@ -21,7 +21,7 @@ CHROME=/path/to/chrome npm run smoke     # browser smoke test against the runnin
 | Name | Notes |
 |---|---|
 | `RESEND_API_KEY` | secret. Empty = sample requests and Drops signups are only logged. Needs Full access to save Drops signups as contacts |
-| `RESEND_SEGMENT_ID` | optional. Resend segment (Contacts > Segments) to file Drops signups in |
+| `RESEND_AUDIENCE_ID` (or `RESEND_SEGMENT_ID`) | optional. Resend audience/segment to file Drops signups in |
 | `NOTIFY_TO`, `NOTIFY_FROM` | defaults in `wrangler.jsonc` |
 | `SITE_URL` | **build + runtime.** The domain this deploy lives on. Drives canonicals, sitemap and OG. Unset = Pages URL / request origin |
 | `INDEXABLE` | **build.** Unset = every page is `noindex` and robots.txt blocks all crawlers. **Production must have `INDEXABLE=1` and `SITE_URL=https://juplifestudio.com`**, or Google can't index the site |

@@ -65,84 +65,23 @@
     dlg.addEventListener('close', () => lastFocus?.focus?.());
   }
 
-  /* ---------- Sample request (modal + any inline [data-sample-form]) ---------- */
-  // Hidden sample_qty stays 1 for retail and 6 for a venue. The form does not promise a free count.
-  // "The Half Dozen" is only the $29 box.
-  function bindBuyer(form, dlg) {
-    const apply = () => {
-      const buyer = form.querySelector('[name=buyer_type]:checked')?.value === 'wholesale' ? 'wholesale' : 'retail';
-      const qty = form.querySelector('[data-sample-qty]');
-      if (qty) qty.value = buyer === 'wholesale' ? '6' : '1';
-      const wholesale = buyer === 'wholesale';
-      $$('[data-wholesale-only]', form).forEach((el) => {
-        el.hidden = !wholesale;
-        $$('input, textarea, select', el).forEach((i) => { i.disabled = !wholesale; });
-      });
-      $$('[data-retail-only]', form).forEach((el) => {
-        el.hidden = wholesale;
-        $$('input, textarea, select', el).forEach((i) => { i.disabled = wholesale; });
-      });
-      const rt = form.request_type?.value || 'Sample';
-      const submit = $('[data-submit]', form);
-      const sampleType = rt === 'Sample' || rt === 'Half Dozen sample' || rt === 'Free sample (1 coaster)';
-      if (dlg && sampleType) {
-        const eye = $('[data-dlg-eyebrow]', dlg);
-        if (eye) eye.textContent = 'Samples available by request';
-        const title = $('[data-dlg-title]', dlg);
-        if (title) title.textContent = 'Request samples';
-        if (submit) submit.textContent = 'Request samples';
-      } else if (dlg) {
-        const COPY = {
-          'Half Dozen order': ["We'll confirm details and pricing", 'Buy The Half Dozen ($29)', 'Send my order'],
-          'Product question': ['Ask us anything', 'Ask about this batch', 'Send my question'],
-          'Custom order': ['Baked to order', 'Custom order', 'Send my request'],
-          Custom: ['Baked to order', 'Custom order', 'Send my request'],
-        };
-        const [eyebrow, title, label] = COPY[rt] || COPY['Product question'];
-        const eye = $('[data-dlg-eyebrow]', dlg);
-        if (eye) eye.textContent = eyebrow;
-        const h = $('[data-dlg-title]', dlg);
-        if (h) h.textContent = title;
-        if (submit) submit.textContent = label;
-      } else if (submit && sampleType) {
-        submit.textContent = 'Request samples';
-      }
-    };
-    $$('[name=buyer_type]', form).forEach((r) => r.addEventListener('change', apply));
-    if (form.request_type && form.request_type.tagName === 'SELECT') {
-      form.request_type.addEventListener('change', () => {
-        const rt = form.request_type.value;
-        const want = rt === 'Half Dozen sample' ? 'wholesale' : (rt === 'Sample' || rt === 'Free sample (1 coaster)' ? 'retail' : '');
-        if (want) {
-          const radio = form.querySelector(`[name=buyer_type][value="${want}"]`);
-          if (radio) radio.checked = true;
-        }
-        apply();
-      });
-    }
-    apply();
-    form._applyBuyer = apply;
+  /* ---------- Free sample request (modal + any inline [data-sample-form]) ---------- */
+  // One form: name, company, email, phone, ship to. The modal heading follows the button that opened it.
+  const DLG_COPY = {
+    Sample: ['Free samples · by request', 'Request a free sample', 'Send my free sample'],
+    'Product question': ['Ask us anything', 'Ask about a coaster', 'Send my question'],
+    Custom: ['Baked to order', 'Custom order', 'Send my request'],
+  };
+  function setDialogCopy(dlg, form) {
+    const [eyebrow, title, label] = DLG_COPY[form.request_type?.value] || DLG_COPY.Sample;
+    const eye = $('[data-dlg-eyebrow]', dlg); if (eye) eye.textContent = eyebrow;
+    const h = $('[data-dlg-title]', dlg); if (h) h.textContent = title;
+    const submit = $('[data-submit]', form); if (submit) submit.textContent = label;
   }
 
   function initSample() {
     // every form with [data-sample-form] lives inside a container holding [data-form-view] + [data-success-view]
-    $$('[data-sample-form]').forEach((form) => {
-      wireForm(form);
-      bindBuyer(form, form.closest('dialog'));
-    });
-
-    // inline-form shortcuts: <a data-fill-form="#request" data-type="Custom" data-segment="Event">
-    $$('[data-fill-form]').forEach((a) => a.addEventListener('click', () => {
-      const form = $(`${a.dataset.fillForm} [data-sample-form]`) || $(a.dataset.fillForm);
-      if (!form) return;
-      if (a.dataset.type && form.request_type) form.request_type.value = a.dataset.type;
-      if (a.dataset.segment && form.segment) form.segment.value = a.dataset.segment;
-      if (a.dataset.buyer === 'retail' || a.dataset.buyer === 'wholesale') {
-        const radio = form.querySelector(`[name=buyer_type][value="${a.dataset.buyer}"]`);
-        if (radio) radio.checked = true;
-      }
-      form._applyBuyer?.();
-    }));
+    $$('[data-sample-form]').forEach(wireForm);
 
     const dlg = $('#sample-dlg');
     if (!dlg) return;
@@ -151,16 +90,10 @@
     $$('[data-open-sample]').forEach((btn) => btn.addEventListener('click', () => {
       $('[data-form-view]', dlg).hidden = false; $('[data-success-view]', dlg).hidden = true;
       $('[data-form-error]', dlg).textContent = '';
-      const type = btn.dataset.type || 'Sample';
-      form.request_type.value = type;
-      let buyer = btn.dataset.buyer;
-      if (buyer !== 'wholesale' && buyer !== 'retail') buyer = type === 'Half Dozen sample' ? 'wholesale' : 'retail';
-      const radio = form.querySelector(`[name=buyer_type][value="${buyer}"]`);
-      if (radio) radio.checked = true;
-      form._applyBuyer?.();
+      form.request_type.value = DLG_COPY[btn.dataset.type] ? btn.dataset.type : 'Sample';
       form.product.value = btn.dataset.product || '';
-      if (form.segment && btn.dataset.segment) form.segment.value = btn.dataset.segment;
       if (btn.dataset.product && !form.notes.value) form.notes.value = `About: ${btn.dataset.product}`;
+      setDialogCopy(dlg, form);
       openDlg(dlg);
     }));
   }
@@ -190,7 +123,6 @@
         if (!res.ok) throw new Error((await res.json().catch(() => ({}))).detail || 'Something went wrong.');
         form.reset();
         form.source_page.value = location.pathname;
-        form._applyBuyer?.();
         formView.hidden = true; okView.hidden = false;
         ($('[data-close]', okView) || okView).focus?.();
       } catch (ex) {

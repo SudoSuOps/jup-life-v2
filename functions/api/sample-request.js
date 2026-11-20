@@ -88,10 +88,10 @@ async function confirmSample(env, request, rec) {
   const { html, text } = brandedEmail({
     base,
     preheader: copy.heading,
-    eyebrow: 'Samples available by request',
+    eyebrow: 'Free samples · by request',
     heading: copy.heading,
     paragraphs: copy.paragraphs,
-    signoff: ['Fresh baked, built different.', 'Mrs. Smash'],
+    signoff: ['Fresh print daily. Built different.', 'Mrs. Smash'],
   });
   try {
     const r = await fetch('https://api.resend.com/emails', {

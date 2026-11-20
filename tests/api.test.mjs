@@ -116,7 +116,30 @@ test('sample: qty is 1 for retail, 6 for wholesale, legacy types map, spoofed sa
   assert.match(studio[3].text, /qty: 1/);
   assert.match(confirm[0].html, /Your sample request is in\./);
   assert.match(confirm[1].html, /Your sample request is in\./);
-  assert.doesNotMatch(confirm[0].html, /free sample/i);
-  assert.doesNotMatch(confirm[1].html, /free sample/i);
+  // Samples are free, by request (owner, Nov 2026).
+  assert.match(confirm[0].html, /Free samples · by request/);
+  assert.match(confirm[1].html, /Free samples · by request/);
+  assert.match(confirm[0].text, /Fresh print daily\. Built different\./);
   assert.match(confirm[1].text, /We'll reach out about your logo within one business day\./);
+});
+
+test('free sample form: name, company (optional), email, phone, ship to', async () => {
+  const send = (o) => {
+    const fd = new FormData();
+    for (const [k, v] of Object.entries({ name: 'Dee', email: 'dee@example.com', phone: '561-555-0100', address: '1 Ocean Way, Jupiter, FL 33477', request_type: 'Sample', source_page: '/', ...o })) fd.set(k, v);
+    return sample({ request: post('/api/sample-request', fd), env: {} });
+  };
+  let logged = '';
+  const orig = console.log;
+  console.log = (...a) => { logged += a.join(' '); };
+  try {
+    assert.equal((await send({})).status, 200);
+    assert.match(logged, /Sample request: Retail \(1\)/);
+    logged = '';
+    assert.equal((await send({ business: 'Square Grouper' })).status, 200);
+    assert.match(logged, /Sample request: Venue \(6\)/);
+    assert.match(logged, /business: Square Grouper/);
+    assert.equal((await send({ address: '' })).status, 422);
+    assert.equal((await send({ business: 'Square Grouper', address: '' })).status, 422);
+  } finally { console.log = orig; }
 });

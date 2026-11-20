@@ -354,3 +354,7 @@ fieldset.buyer-type input { width: 20px; height: 20px; min-height: 0; margin-top
 .site-footer .guarantee b { font-weight: 600; }
 .site-footer .guarantee span { font-size: 13px; font-weight: 400; }
 .hero-note { margin: 0; align-self: center; font-weight: 600; color: var(--terracotta); }
+
+/* text-style button (opens the free sample form) */
+.linkish { background: none; border: 0; padding: 10px 0; font: 600 15px var(--font-sans); color: var(--terracotta); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.linkish:hover { color: var(--terracotta-hover); }

@@ -35,52 +35,51 @@ for (const path of ['/', '/shop', '/enterprise']) {
   ok(`modal opens/Esc closes/focus returns on ${path} (${n} openers)`);
 }
 
-// "Ask about this batch" preselects Product question + product
+// "Ask about a coaster" preselects Product question + product
 await page.goto(BASE + '/shop', { waitUntil: 'networkidle0' });
-await page.click('[data-type="Product question"][data-product="Pop Coasters 6-Pack"]');
+await page.click('[data-type="Product question"][data-product="Coasters"]');
 assert.equal(await page.$eval('#sample-dlg [name=request_type]', (e) => e.value), 'Product question');
-assert.equal(await page.$eval('#sample-dlg [name=product]', (e) => e.value), 'Pop Coasters 6-Pack');
-// retail sample = one coaster + shipping address; wholesale keeps business/city/logo
+assert.equal(await page.$eval('#sample-dlg [name=product]', (e) => e.value), 'Coasters');
 await page.keyboard.press('Escape');
+// free sample form: name, company, email, phone, ship to
 await page.click('.site-header [data-open-sample]');
 assert.equal(await page.$eval('#sample-dlg [name=request_type]', (e) => e.value), 'Sample');
-assert.match(await page.$eval('#sample-dlg [data-dlg-title]', (e) => e.textContent), /request samples/i);
-assert.equal(await page.$eval('#sample-dlg [name=address]', (e) => !e.disabled && e.offsetParent !== null), true);
-assert.equal(await page.$eval('#sample-dlg [name=business]', (e) => e.disabled && e.offsetParent === null), true);
-ok('retail sample modal shows address, hides business');
-await page.keyboard.press('Escape');
-await page.click('[data-type="Product question"][data-product="Pop Coasters 6-Pack"]');
-// required validation
+assert.match(await page.$eval('#sample-dlg [data-dlg-title]', (e) => e.textContent), /free sample/i);
+for (const f of ['name', 'business', 'email', 'phone', 'address']) {
+  assert.equal(await page.$eval(`#sample-dlg [name=${f}]`, (e) => !e.disabled && e.offsetParent !== null), true, f);
+}
 await page.click('#sample-dlg [type=submit]');
 assert.match(await page.$eval('#sample-dlg [data-form-error]', (e) => e.textContent), /required/i);
-ok('ask-about preselect + required validation');
+ok('free sample form: five fields, required check fires');
 await page.keyboard.press('Escape');
 
-// bag + checkout (mocked)
+// bag -> Shopify cart permalink (navigation intercepted)
 await page.setRequestInterception(true);
-let posted;
-page.on('request', (r) => {
-  if (r.url().endsWith('/api/checkout')) { posted = JSON.parse(r.postData()); r.respond({ status: 200, contentType: 'application/json', body: JSON.stringify({ url: BASE + '/shop?checkout=success' }) }); }
-  else if (r.url().endsWith('/api/catalog')) r.respond({ status: 200, contentType: 'application/json', body: JSON.stringify({ skus: ['pop-coasters-6', 'flower-set-case'] }) });
+let cart;
+const intercept = (r) => {
+  if (r.url().startsWith('https://shop.juplifestudio.com/cart/')) { cart = r.url(); r.respond({ status: 200, contentType: 'text/plain', body: 'shopify' }); }
   else r.continue();
-});
+};
+page.on('request', intercept);
 await page.goto(BASE + '/shop', { waitUntil: 'networkidle0' });
-await page.waitForSelector('[data-sku="pop-coasters-6"]:not([disabled])');
 await page.click('[data-sku="pop-coasters-6"]');
 await page.click('#bag-dlg [aria-label="One more"]');
 assert.equal(await page.$eval('[data-bag-count]', (e) => e.textContent), '2');
 await Promise.all([page.waitForNavigation(), page.click('[data-checkout]')]);
-assert.deepEqual(posted, { items: [{ sku: 'pop-coasters-6', qty: 2, style: 'Flat', tray: 'Mixed' }] });
-assert.equal(await page.$eval('[data-checkout-banner="success"]', (e) => !e.hidden), true);
+assert.match(cart, /\/cart\/50851712630946:2\?/); // Flat / Mixed 6 colors
+await page.goto(BASE + '/shop', { waitUntil: 'networkidle0' });
 assert.equal(await page.$eval('[data-bag-count]', (e) => e.textContent), '0');
-ok('bag add/qty/checkout POST (only sku+qty), success banner, bag cleared');
+ok('bag add/qty -> Shopify cart permalink, bag cleared');
+page.off('request', intercept);
+await page.setRequestInterception(false);
 
-// wholesale inline form: address required, hidden segment/type
+// enterprise inline form: same free sample form, segment preset, logo allowed
 await page.goto(BASE + '/enterprise', { waitUntil: 'networkidle0' });
 assert.equal(await page.$eval('#request [name=segment]', (e) => e.value), 'Restaurant or bar');
+assert.equal(await page.$eval('#request [name=logo]', (e) => e.type), 'file');
 await page.click('#request [type=submit]');
 assert.match(await page.$eval('#request [data-form-error]', (e) => e.textContent), /required/i);
-ok('wholesale form: required check fires, segment preset');
+ok('enterprise form: required check fires, segment preset');
 
 // above the fold at 375x667
 await page.goto(BASE + '/', { waitUntil: 'networkidle0' });

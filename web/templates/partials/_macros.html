@@ -85,9 +85,9 @@
   <div>
     <p class="eyebrow" style="color:var(--cream-muted)">Custom logo coasters</p>
     <h3>Your logo, fresh baked.</h3>
-    <p>From 200 coasters. Samples are available by request.</p>
+    <p>From 200 coasters. Free samples, by request.</p>
   </div>
-  <button type="button" class="btn btn-primary" data-open-sample data-type="Half Dozen sample" data-buyer="wholesale">Request samples</button>
+  <button type="button" class="btn btn-primary" data-open-sample data-type="Sample">Request a free sample</button>
 </div>
 {% endmacro %}
 
@@ -134,61 +134,34 @@
   <dl>
     {% for t in site.tiers %}<div class="row"><dt>{{ t.qty }}</dt><span class="leader" aria-hidden="true"></span><dd>{{ t.price }}</dd></div>
     {% endfor %}
-    <div class="row"><dt>Samples</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">available by request</dd></div>
+    <div class="row"><dt>Samples</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">free, by request</dd></div>
   </dl>
   <p class="foot">Locally baked in Jupiter, FL.</p>
 </section>
 {% endmacro %}
 
-{% macro sample_form(type='Sample', buyer='retail', select=False, submit=None, notes_ph='Product, quantity, colors, anything else', segment=False) %}
-{% set label = submit or 'Request samples' %}
+{% macro sample_form(type='Sample', source='/', logo=False, segment=None, submit='Send my free sample') %}
+{# Free sample, by request. Company is optional: with a company the studio treats it as a venue sample. #}
 <form class="form" data-sample-form action="/api/sample-request" method="post" enctype="multipart/form-data" novalidate>
-  <fieldset class="field buyer-type" data-buyer-type>
-    <legend>I'm buying for</legend>
-    <label><input type="radio" name="buyer_type" value="retail" {% if buyer == 'retail' %}checked{% endif %}> Myself</label>
-    <label><input type="radio" name="buyer_type" value="wholesale" {% if buyer == 'wholesale' %}checked{% endif %}> My restaurant, bar or venue</label>
-  </fieldset>
-  <input type="hidden" name="sample_qty" value="{{ 6 if buyer == 'wholesale' else 1 }}" data-sample-qty>
-  {% if select %}
-  <label class="field">Request type
-    <select name="request_type">
-      <option value="Sample">Sample request</option>
-      <option value="Half Dozen order">Order a Half Dozen</option>
-      <option value="Half Dozen sample">Sample request for a restaurant, bar or venue</option>
-      <option>Product question</option>
-      <option value="Custom">Custom order</option>
-    </select>
-  </label>
-  {% else %}
-  <input type="hidden" name="request_type" value="{{ type }}">
-  {% endif %}
   <div class="grid">
-    {% if segment %}
-    <label class="field">Who's it for?
-      <select name="segment">
-        <option>Restaurant or bar</option>
-        <option>Hotel or rental</option>
-        <option>Event or gifting</option>
-        <option>Custom</option>
-        <option>Just me</option>
-      </select>
-    </label>
-    {% endif %}
     <label class="field">Name*<input name="name" required autocomplete="name"></label>
-    <label class="field" data-wholesale-only {% if buyer != 'wholesale' %}hidden{% endif %}>Business*<input name="business" required autocomplete="organization" {% if buyer != 'wholesale' %}disabled{% endif %}></label>
-    <label class="field" data-retail-only {% if buyer == 'wholesale' %}hidden{% endif %}>Shipping address*<input name="address" required autocomplete="street-address" placeholder="Street, city, state, ZIP" {% if buyer == 'wholesale' %}disabled{% endif %}></label>
+    <label class="field">Company<input name="business" autocomplete="organization" placeholder="Optional"></label>
     <label class="field">Email*<input name="email" type="email" required autocomplete="email"></label>
     <label class="field">Phone<input name="phone" type="tel" autocomplete="tel"></label>
-    <label class="field" data-wholesale-only {% if buyer != 'wholesale' %}hidden{% endif %}>Logo (optional)<input name="logo" type="file" accept=".png,.jpg,.jpeg,.svg,.pdf,image/png,image/jpeg,image/svg+xml,application/pdf" style="padding:10px" {% if buyer != 'wholesale' %}disabled{% endif %}></label>
   </div>
-  <label class="field" data-wholesale-only {% if buyer != 'wholesale' %}hidden{% endif %}>Venue address*<input name="address" required autocomplete="street-address" placeholder="Venue address" {% if buyer != 'wholesale' %}disabled{% endif %}></label>
-  <label class="field">Notes<textarea name="notes" rows="3" placeholder="{{ notes_ph }}"></textarea></label>
-  <span style="font-size:13px" data-wholesale-only {% if buyer != 'wholesale' %}hidden{% endif %}>Logo: PNG, JPG, SVG or PDF, up to 4 MB.</span>
-  <input type="hidden" name="source_page" value="/">
+  <label class="field">Ship to*<input name="address" required autocomplete="street-address" placeholder="Street, city, state, ZIP"></label>
+  {% if logo %}
+  <label class="field">Logo (optional)<input name="logo" type="file" accept=".png,.jpg,.jpeg,.svg,.pdf,image/png,image/jpeg,image/svg+xml,application/pdf" style="padding:10px"></label>
+  <span style="font-size:13px">PNG, JPG, SVG or PDF, up to 4 MB.</span>
+  {% endif %}
+  <label class="field" data-notes>Notes<textarea name="notes" rows="2" placeholder="Optional: a color, a design, a question"></textarea></label>
+  <input type="hidden" name="request_type" value="{{ type }}">
+  {% if segment %}<input type="hidden" name="segment" value="{{ segment }}">{% endif %}
+  <input type="hidden" name="source_page" value="{{ source }}">
   <input type="hidden" name="product" value="">
   <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
   <p class="field" role="alert" data-form-error style="margin:0"></p>
-  <button type="submit" class="btn btn-primary" style="margin-top:6px" data-submit>{{ label }}</button>
+  <button type="submit" class="btn btn-primary" style="margin-top:6px" data-submit>{{ submit }}</button>
 </form>
 {% endmacro %}
 
