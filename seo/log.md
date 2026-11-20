@@ -18,3 +18,5 @@
 - 2026-11-20 Article: https://juplifestudio.com/blog/bar-coaster-materials (paper vs cork vs rubber vs TPU; vendor quotes verified 2026-11-20; TPU water behavior owner-confirmed). Linked from /enterprise FAQ, use-case FAQs, process article, blog index.
 - 2026-11-20 Sample copy restored to "free sample of your design, mailed to you" (owner-confirmed) across process article, use-case layout, events, hub, wedding article, social.
 - 2026-11-20 Materials + process articles name the filament (QIDI TECHNOLOGY TPU 95A High Flow) with the maker's wording, attributed; no spec numbers.
+- 2026-11-20 Owner added Cloudflare 301s: www.juplifestudio.com, juplifestudios.com, www.juplifestudios.com -> https://juplifestudio.com (path + query preserved). Verified.
+- 2026-11-20 Owner set up Google Business Profile and a Google Ads campaign. Site has no ad tag yet (CSP script-src 'self'; privacy page says no ad pixels).

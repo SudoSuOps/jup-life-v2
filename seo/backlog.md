@@ -2,8 +2,7 @@
 
 Volume and position data: none yet (no Search Console data, no Ahrefs/DataForSEO). Re-rank once Search Console has two weeks of data.
 
-1. **Duplicate hosts (owner, Cloudflare):** juplifestudios.com and www.juplifestudios.com also serve a full copy (200, canonical to apex) as of 2026-11-20; add a Redirect Rule in that zone too.
-   **www duplicate host:** www.juplifestudio.com serves 200 instead of 301 to apex. Its canonical already points to apex, so the damage is limited. Fix: Cloudflare Bulk Redirect or Redirect Rule `www.* -> https://juplifestudio.com/$1` (301). A Pages `_redirects` file can't match on host.
+1. **Duplicate hosts: DONE 2026-11-20.** www.juplifestudio.com, juplifestudios.com and www.juplifestudios.com all 301 to https://juplifestudio.com with path and query kept (verified by curl).
 2. **Submit the sitemap in Search Console (owner):** then run `tools/indexnow.py --sitemap dist/sitemap.xml` after each deploy. Indexing is not verified: the brand search on 2026-11-20 returned no juplifestudio.com result.
 3. **Use-case pages shipped 2026-11-20.** Next: real photos for each (a hotel bar, a wedding table, an event, a rental) to replace the stock studio shots.
 4. **Proof on /enterprise:** a real photo of a logo batch on a bar, once a client agrees (the current mockup is captioned "Example design, not a client"). Ask the owner.
