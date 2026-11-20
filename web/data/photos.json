@@ -30,7 +30,17 @@
           "alt": "Pop coasters lineup: round Pop coasters in Fall Tray colors Pumpkin, Cinnamon, Cranberry, Maple, Rhubarb and Sunflower, and Summer Tray colors Blueberry, Peach, Key Lime, Watermelon, Coconut and Sunflower, on two wood trays",
           "render": false
         },
-        "Coconut (clear)": {
+        "Cinnamon": {
+          "img": "img/pop-round-lineup.webp",
+          "alt": "Pop coasters lineup: round Pop coasters in Fall Tray colors Pumpkin, Cinnamon, Cranberry, Maple, Rhubarb and Sunflower, and Summer Tray colors Blueberry, Peach, Key Lime, Watermelon, Coconut and Sunflower, on two wood trays",
+          "render": false
+        },
+        "Cranberry": {
+          "img": "img/pop-round-lineup.webp",
+          "alt": "Pop coasters lineup: round Pop coasters in Fall Tray colors Pumpkin, Cinnamon, Cranberry, Maple, Rhubarb and Sunflower, and Summer Tray colors Blueberry, Peach, Key Lime, Watermelon, Coconut and Sunflower, on two wood trays",
+          "render": false
+        },
+        "Maple": {
           "img": "img/pop-round-lineup.webp",
           "alt": "Pop coasters lineup: round Pop coasters in Fall Tray colors Pumpkin, Cinnamon, Cranberry, Maple, Rhubarb and Sunflower, and Summer Tray colors Blueberry, Peach, Key Lime, Watermelon, Coconut and Sunflower, on two wood trays",
           "render": false
@@ -40,7 +50,12 @@
           "alt": "Pop coasters lineup: round Pop coasters in Fall Tray colors Pumpkin, Cinnamon, Cranberry, Maple, Rhubarb and Sunflower, and Summer Tray colors Blueberry, Peach, Key Lime, Watermelon, Coconut and Sunflower, on two wood trays",
           "render": false
         },
-        "Key Lime": {
+        "Sunflower": {
+          "img": "img/pop-round-lineup.webp",
+          "alt": "Pop coasters lineup: round Pop coasters in Fall Tray colors Pumpkin, Cinnamon, Cranberry, Maple, Rhubarb and Sunflower, and Summer Tray colors Blueberry, Peach, Key Lime, Watermelon, Coconut and Sunflower, on two wood trays",
+          "render": false
+        },
+        "Blueberry": {
           "img": "img/pop-round-lineup.webp",
           "alt": "Pop coasters lineup: round Pop coasters in Fall Tray colors Pumpkin, Cinnamon, Cranberry, Maple, Rhubarb and Sunflower, and Summer Tray colors Blueberry, Peach, Key Lime, Watermelon, Coconut and Sunflower, on two wood trays",
           "render": false
@@ -50,7 +65,17 @@
           "alt": "Pop coasters lineup: round Pop coasters in Fall Tray colors Pumpkin, Cinnamon, Cranberry, Maple, Rhubarb and Sunflower, and Summer Tray colors Blueberry, Peach, Key Lime, Watermelon, Coconut and Sunflower, on two wood trays",
           "render": false
         },
-        "Sea Salt": {
+        "Key Lime": {
+          "img": "img/pop-round-lineup.webp",
+          "alt": "Pop coasters lineup: round Pop coasters in Fall Tray colors Pumpkin, Cinnamon, Cranberry, Maple, Rhubarb and Sunflower, and Summer Tray colors Blueberry, Peach, Key Lime, Watermelon, Coconut and Sunflower, on two wood trays",
+          "render": false
+        },
+        "Watermelon": {
+          "img": "img/pop-round-lineup.webp",
+          "alt": "Pop coasters lineup: round Pop coasters in Fall Tray colors Pumpkin, Cinnamon, Cranberry, Maple, Rhubarb and Sunflower, and Summer Tray colors Blueberry, Peach, Key Lime, Watermelon, Coconut and Sunflower, on two wood trays",
+          "render": false
+        },
+        "Coconut (clear)": {
           "img": "img/pop-round-lineup.webp",
           "alt": "Pop coasters lineup: round Pop coasters in Fall Tray colors Pumpkin, Cinnamon, Cranberry, Maple, Rhubarb and Sunflower, and Summer Tray colors Blueberry, Peach, Key Lime, Watermelon, Coconut and Sunflower, on two wood trays",
           "render": false
