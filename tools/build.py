@@ -155,6 +155,32 @@ def make_og(site_url: str) -> None:
 
 
 # ------------------------------------------------------------------ css / js
+# Google's documented CSP hosts for GA4 (with Ads features) + Google Ads conversions
+# (https://developers.google.com/tag-platform/security/guides/csp, read 2026-11-20). US site: google.com TLD only.
+GTAG_CSP = {
+    "script-src": "https://www.googletagmanager.com https://www.googleadservices.com https://www.google.com",
+    "img-src": "https://www.googletagmanager.com https://www.googleadservices.com https://*.google-analytics.com "
+               "https://*.google.com https://*.g.doubleclick.net https://pagead2.googlesyndication.com",
+    "connect-src": "https://www.googletagmanager.com https://www.googleadservices.com https://*.google-analytics.com "
+                   "https://*.google.com https://*.g.doubleclick.net https://pagead2.googlesyndication.com https://ad.doubleclick.net",
+    "frame-src": "https://www.googletagmanager.com",
+}
+
+
+def add_gtag_csp(headers: str) -> str:
+    def widen(m: re.Match) -> str:
+        parts = [d.strip() for d in m.group(1).split(";")]
+        seen = set()
+        for i, d in enumerate(parts):
+            name = d.split(" ", 1)[0]
+            if name in GTAG_CSP:
+                parts[i] = f"{d} {GTAG_CSP[name]}"
+                seen.add(name)
+        parts += [f"{k} 'self' {v}" for k, v in GTAG_CSP.items() if k not in seen]
+        return "Content-Security-Policy: " + "; ".join(parts)
+    return re.sub(r"Content-Security-Policy: ([^\n]+)", widen, headers, count=1)
+
+
 def short_hash(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()[:10]
 
@@ -322,6 +348,19 @@ def main() -> int:
 
     process_images()
     css_href, js_src = build_assets()
+    tag = site.get("google_tag") or {}
+    for k in ("ga4_id", "ads_id", "sample_label", "call_label"):
+        tag[k] = os.environ.get(f"GTAG_{k.upper()}") or tag.get(k, "")  # env override is for local testing only
+    site["google_tag"] = tag
+    for k, pat in (("ga4_id", r"G-[A-Z0-9]+"), ("ads_id", r"AW-\d+")):
+        if tag[k] and not re.fullmatch(pat, tag[k]):
+            print(f"build failed: google_tag.{k} {tag[k]!r} doesn't look like {pat}")
+            return 1
+    gtag_src = ""
+    if tag["ga4_id"] or tag["ads_id"]:
+        js = (WEB / "js" / "gtag.js").read_bytes()
+        gtag_src = f"/js/gtag.{short_hash(js)}.js"
+        (DIST / gtag_src.lstrip("/")).write_bytes(js)
     make_og(site["site_url"])
 
     for p in products:
@@ -360,7 +399,7 @@ def main() -> int:
             ld["image"] = [f"{site['site_url']}/{i}" for i in imgs]
         return Markup(json.dumps(ld, indent=2).replace("</", "<\\/"))
 
-    env.globals.update(posts=posts, shopify_store=shopify["store"], shopify_json=Markup(json.dumps({"store": shopify["store"], "products": {k: {"options": v["options"], "variants": v["variants"]} for k, v in shopify["products"].items()}}, ensure_ascii=False).replace("</", "<\\/")), pic=pic, product_ld=product_ld, by_sku={p['sku']: p for p in products}, flavor_hex=FLAVOR_HEX, indexable=indexable, ph=ph, site=site, batch=batch, batch_date=batch_date_label(batch["date"]),
+    env.globals.update(gtag_src=gtag_src, gtag_loader_id=tag["ga4_id"] or tag["ads_id"], gtag_json=Markup(json.dumps({k: tag[k] for k in ("ga4_id", "ads_id", "sample_label", "call_label")}).replace("</", "<\\/")), posts=posts, shopify_store=shopify["store"], shopify_json=Markup(json.dumps({"store": shopify["store"], "products": {k: {"options": v["options"], "variants": v["variants"]} for k, v in shopify["products"].items()}}, ensure_ascii=False).replace("</", "<\\/")), pic=pic, product_ld=product_ld, by_sku={p['sku']: p for p in products}, flavor_hex=FLAVOR_HEX, indexable=indexable, ph=ph, site=site, batch=batch, batch_date=batch_date_label(batch["date"]),
                        season=season, products=products, catalog=catalog, css_href=css_href, js_src=js_src,
                        site_url=site["site_url"], have_ph=lambda k: bool(site["placeholders"].get(k)),
                        batch_json=Markup(json.dumps(batch, indent=2, ensure_ascii=False).replace("</", "<\\/")),
@@ -412,7 +451,10 @@ def main() -> int:
     (DIST / "robots.txt").write_text(robots_txt(site["site_url"], indexable))
     (DIST / "llms.txt").write_text(llms_txt(site, products, batch, catalog, posts))
     shutil.copytree(WEB / "root", DIST, dirs_exist_ok=True)  # favicon, touch icons, manifest
-    shutil.copy(WEB / "_headers", DIST / "_headers")
+    headers = (WEB / "_headers").read_text()
+    if gtag_src:
+        headers = add_gtag_csp(headers)
+    (DIST / "_headers").write_text(headers)
     shutil.copy(WEB / "_redirects", DIST / "_redirects")
     (DIST / "_routes.json").write_text(json.dumps({"version": 1, "include": ["/api/*", "/google05d7f4db1ec67c25.html"], "exclude": []}))
 

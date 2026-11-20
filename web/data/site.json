@@ -1,6 +1,13 @@
 {
   "_note": "Open placeholders. Empty string = still open: the page shows a visible [[...]] marker. Fill a value and rebuild; the marker disappears. Launch gate: zero '[[' in dist/.",
   "site_url": "https://juplifestudio.com",
+  "google_tag": {
+    "_note": "GA4 measurement ID (G-...), Google Ads ID (AW-...) and Ads conversion labels. All empty = no tag, no CSP change. Rebuild after editing.",
+    "ga4_id": "",
+    "ads_id": "",
+    "sample_label": "",
+    "call_label": ""
+  },
   "home_shipping_line": "Shipping included",
   "guarantee": {
     "label": "100% Satisfaction Guarantee",
