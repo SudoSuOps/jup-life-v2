@@ -5,3 +5,6 @@
 - 2026-11-20 Product Offer schema on /shop gains hasMerchantReturnPolicy (7 days, by mail, customer pays postage), matching the visible /shipping-returns copy. https://juplifestudio.com/shop
 - 2026-11-20 404 page no longer declares a canonical pointing to the home page (it stays noindex).
 - 2026-11-20 IndexNow ping for the 8 sitemap URLs (tools/indexnow.py, HTTP 200) after PR #37 went live.
+- 2026-11-20 New use-case pages, each with price board, process, FAQ (FAQPage), breadcrumbs and inline sample form: https://juplifestudio.com/custom-coasters/hotels https://juplifestudio.com/custom-coasters/weddings https://juplifestudio.com/custom-coasters/events https://juplifestudio.com/custom-coasters/airbnb plus hub https://juplifestudio.com/custom-coasters
+- 2026-11-20 New https://juplifestudio.com/south-florida (Miami, Fort Lauderdale, Boca Raton/Delray). LocalBusiness areaServed adds them plus United States.
+- 2026-11-20 /enterprise retargeted nationwide: title "Custom Logo Coasters for Restaurants & Bars | JUP LIFE", H1 drops Palm Beach County, "Who it's for" chips now link to the use-case pages. /weddings 301 now goes to /custom-coasters/weddings (was /shop).

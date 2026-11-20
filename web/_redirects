@@ -6,8 +6,8 @@
 /collection/* /shop 301
 /collections /shop 301
 /collections/* /shop 301
-/weddings /shop 301
-/weddings/* /shop 301
+/weddings /custom-coasters/weddings 301
+/weddings/* /custom-coasters/weddings 301
 /coming-soon /shop 301
 /coming-soon/* /shop 301
 /success /shop 301

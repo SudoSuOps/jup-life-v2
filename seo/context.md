@@ -37,7 +37,9 @@ Listed SKUs and their order are set in web/data/catalog.json.
 - **Banned claims:** antimicrobial, food-safe, health, durability statistics, "lasts forever", other brands' marks, and fake reviews, ratings, customer logos or counts. [docs/BRIEF.md §8]
 - **"Doesn't chip":** live on /enterprise ("Doesn't chip. No cracked corners after a Friday rush.", web/templates/wholesale.html:111). The owner confirmed it in commit 9e28991 (2026-10-22). Reuse only this wording.
 - Never invent prices, lead times, emails or URLs. [docs/BRIEF.md §8]
-- **Page scope:** the brief §8 bans blog, About, Weddings and similar pages. /about and /palm-beach-county now exist, so the owner has relaxed this, but articles and comparison pages still need explicit owner approval.
+- **Page scope:** the owner approved a blog and use-case pages on 2026-11-20 (hotels, events, weddings, Airbnb/hospitality), overriding brief §8.
+- **Service area:** national orders, shipped anywhere in the U.S. Local focus is Palm Beach County plus South Florida (Miami, Fort Lauderdale). [owner, 2026-11-20]
+- **Search Console:** the owner says the site is set up and the sitemap is submitted (2026-11-20).
 
 ## Site facts
 - Jinja static build: web/templates + web/data, built to dist/ by tools/build.py, served on Cloudflare Pages with Functions under /api/*. [README.md]
@@ -45,7 +47,7 @@ Listed SKUs and their order are set in web/data/catalog.json.
 - Production build: `INDEXABLE=1 SITE_URL=https://juplifestudio.com python tools/build.py`. Tests: `npm test`.
 - Structured data: LocalBusiness+Store (home), Product+Offer (shop), OfferCatalog+FAQPage (enterprise), FAQPage (home), MerchantReturnPolicy (shipping-returns), BreadcrumbList.
 - IndexNow: tools/indexnow.py.
-- Google Search Console: verified in #35/#36 on 2026-11-20. No data yet.
+- Google Search Console: verified in #35/#36 on 2026-11-20. The owner reports indexing is set up. No query data pulled yet.
 
 ## Competitors (who shows up for the buyer queries, 2026-11-20 web search)
 Source: four WebSearch queries run 2026-11-20 ("custom logo coasters restaurant Palm Beach County", "3D printed coasters Jupiter FL", "custom 3D printed logo coasters for bars wholesale", brand name).

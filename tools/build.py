@@ -33,6 +33,8 @@ HAS_AVIF = features.check("avif")
 FLAVOR_HEX = {"Pumpkin": "#E8731E", "Cinnamon": "#A0522D", "Cranberry": "#9B1B30", "Maple": "#C8862A", "Rhubarb": "#C93A5B",
               "Blueberry": "#3F5BB8", "Peach": "#FFB07C", "Key Lime": "#A8D94A", "Watermelon": "#F2546B", "Coconut": "#F4EEE3",
               "Sea Salt": "#7FD1C2", "Sunflower": "#F6C21C"}
+# /custom-coasters/<slug> use-case pages: slug -> breadcrumb name. Templates live in web/templates/use/.
+USE_CASES = {"hotels": "Hotels", "weddings": "Weddings", "events": "Events", "airbnb": "Airbnb Hosts"}
 PIXEL = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
 
 
@@ -190,9 +192,10 @@ def add_ld(page_html: str, path: str, base: str, crumbs: dict) -> str:
     if path == "/":
         blocks.append(_ld({"@context": "https://schema.org", "@type": "WebSite", "name": "JUP LIFE by Mrs. Smash", "url": f"{base}/"}))
     if path in crumbs:
+        trail = crumbs[path] if isinstance(crumbs[path], list) else [(crumbs[path], path)]
+        items = [("Home", "/")] + trail
         blocks.append(_ld({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{base}/"},
-            {"@type": "ListItem", "position": 2, "name": crumbs[path], "item": f"{base}{path}"}]}))
+            {"@type": "ListItem", "position": i, "name": n, "item": f"{base}{p}"} for i, (n, p) in enumerate(items, 1)]}))
     qa = []
     for q, a in re.findall(r"<details><summary>(.*?)</summary><p>(.*?)</p></details>", page_html, re.S):
         if "[[" in a or "[[" in q:
@@ -220,9 +223,9 @@ def llms_txt(site: dict, products: list, batch: dict, catalog: dict) -> str:
     lines = [
         "# JUP LIFE by Mrs. Smash", "",
         "> JUP LIFE by Mrs. Smash prints coasters in Jupiter, Florida. The shop sells Pop Coasters ($29, six with a case), Flower Coasters ($39, six with a case) and Coastal Coasters ($39, six). "
-        "Enterprise logo coasters are made for restaurants, bars, boutique hotels, rentals and event hosts in Palm Beach County and beyond.", "",
+        "Custom logo coasters are made for restaurants, bars, hotels, weddings, events and vacation rentals, printed in Jupiter and shipped anywhere in the U.S.", "",
         "## Key facts",
-        "- Location: Jupiter, FL (serves Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County; ships within the US)",
+        "- Location: Jupiter, FL. Ships anywhere in the U.S.; local to Palm Beach County and South Florida (Boca Raton, Fort Lauderdale, Miami)",
         "- Material: flexible and washable",
         "- Shipping: free on all U.S. orders; orders leave the studio within 2-3 business days",
         "- Samples: samples are available by request on the Enterprise page. A sample print is made for approval before a logo batch is printed",
@@ -234,10 +237,16 @@ def llms_txt(site: dict, products: list, batch: dict, catalog: dict) -> str:
         "## Pages",
         f"- [Home]({base}/): the coaster printers, Jupiter FL",
         f"- [Shop]({base}/shop): Pop Coasters, Flower Coasters and Coastal Coasters, with checkout on our Shopify store (shop.juplifestudio.com)",
-        f"- [Enterprise]({base}/enterprise): custom logo coasters for Palm Beach County restaurants, bars, hotels, rentals and events",
+        f"- [Enterprise]({base}/enterprise): custom logo coasters for restaurants and bars, shipped anywhere in the U.S.",
         f"- [About]({base}/about): Meet Mrs. Smash (Dee), the face of JUP LIFE by Mrs. Smash",
         f"- [Contact]({base}/contact): call +1-561-532-7120",
         f"- [Palm Beach County]({base}/palm-beach-county): 3D printed coasters for Jupiter, Tequesta, Juno Beach, Palm Beach Gardens, West Palm Beach and Palm Beach County",
+        f"- [South Florida]({base}/south-florida): custom coasters for Miami, Fort Lauderdale, Boca Raton and Delray Beach",
+        f"- [Custom coasters]({base}/custom-coasters): custom logo coasters by use",
+        f"- [Hotels]({base}/custom-coasters/hotels): custom coasters for hotels and hospitality",
+        f"- [Weddings]({base}/custom-coasters/weddings): custom wedding coasters with names, monogram or date",
+        f"- [Events]({base}/custom-coasters/events): custom coasters for corporate events and parties",
+        f"- [Airbnb hosts]({base}/custom-coasters/airbnb): custom coasters for Airbnb hosts and vacation rentals",
         f"- [Shipping & Returns]({base}/shipping-returns)",
         f"- [Privacy]({base}/privacy)", "", "## Products"]
     by_sku = {p["sku"]: p for p in products}
@@ -359,6 +368,9 @@ def main() -> int:
         "about.html": ("about.html", {"path": "/about", "nav": "about"}),
         "contact.html": ("contact.html", {"path": "/contact", "nav": "contact"}),
         "palm-beach-county.html": ("palm_beach_county.html", {"path": "/palm-beach-county", "nav": "palm"}),
+        "south-florida.html": ("south_florida.html", {"path": "/south-florida", "nav": "palm"}),
+        "custom-coasters.html": ("custom_coasters.html", {"path": "/custom-coasters", "nav": "enterprise"}),
+        **{f"custom-coasters/{s}.html": (f"use/{s}.html", {"path": f"/custom-coasters/{s}", "nav": "enterprise"}) for s in USE_CASES},
         "privacy.html": ("privacy.html", {"path": "/privacy", "nav": ""}),
         "shipping-returns.html": ("shipping_returns.html", {"path": "/shipping-returns", "nav": ""}),
         "404.html": ("not_found.html", {"path": "/404", "nav": ""}),
@@ -369,15 +381,20 @@ def main() -> int:
         "/about": "Meet Mrs. Smash",
         "/contact": "Contact",
         "/palm-beach-county": "Palm Beach County",
+        "/south-florida": "South Florida",
+        "/custom-coasters": "Custom Coasters",
+        **{f"/custom-coasters/{s}": [("Custom Coasters", "/custom-coasters"), (name, f"/custom-coasters/{s}")] for s, name in USE_CASES.items()},
     }
     for out, (tpl, ctx) in pages.items():
         page_html = env.get_template(tpl).render(page=ctx)
+        (DIST / out).parent.mkdir(parents=True, exist_ok=True)
         (DIST / out).write_text(add_ld(page_html, ctx["path"], site["site_url"], crumbs))
 
     today = date.today().isoformat()
     urls = [(f"{site['site_url']}{p}", pr) for p, pr in (
         ("/", "1.0"), ("/shop", "0.9"), ("/enterprise", "0.9"), ("/about", "0.7"),
-        ("/contact", "0.6"), ("/palm-beach-county", "0.8"), ("/shipping-returns", "0.3"), ("/privacy", "0.2"))]
+        ("/contact", "0.6"), ("/palm-beach-county", "0.8"), ("/south-florida", "0.8"), ("/custom-coasters", "0.8"),
+        *((f"/custom-coasters/{s}", "0.8") for s in USE_CASES), ("/shipping-returns", "0.3"), ("/privacy", "0.2"))]
     (DIST / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod><priority>{pr}</priority></url>\n" for u, pr in urls) + "</urlset>\n")
