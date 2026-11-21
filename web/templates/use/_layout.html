@@ -2,8 +2,8 @@
 {% from "partials/_macros.html" import sample_form, sample_success, price_board %}
 {# Shared layout for /custom-coasters/<slug> use-case pages.
    Facts allowed here: seo/context.md only (tiers from site.json, 10 days from approval, free U.S. shipping,
-   washable / rinse and repeat / flexible TPU 95A that bends and won't break / doesn't chip, raised-relief logo, ingredient colorways).
-   No dishwasher, food-safe or durability-stat claims. #}
+   washable / flexible, bends and won't break / doesn't chip, raised-relief logo, ingredient colorways).
+   No food-safe or durability-stat claims. Washable is the only care word. #}
 {% block ogdesc %}{{ self.description() }}{% endblock %}
 {% if false %}{% block segment %}Event or gifting{% endblock %}{% endif %}{# form segment; must be in SEGMENTS in functions/api/sample-request.js #}
 {% block content %}
@@ -32,8 +32,8 @@
   <ol style="margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:8px">
     <li><strong>Request a free sample.</strong> Tell us where to send it.</li>
     <li><strong>Send your art.</strong> PNG, JPG, SVG or PDF, up to 4 MB.</li>
-    <li><strong>Approve a sample print.</strong> We bake your design into a sample coaster as a raised relief and mail it to you, free.</li>
-    <li><strong>We bake your batch.</strong> It ships within 10 days of your approval. U.S. shipping is free.</li>
+    <li><strong>Approve a sample print.</strong> We print your design into a sample coaster as a raised relief and mail it to you, free.</li>
+    <li><strong>We print your batch.</strong> It ships within 10 days of your approval. U.S. shipping is free.</li>
   </ol>
 </div>
 
@@ -43,11 +43,11 @@
   <details><summary>Is there a minimum?</summary><p>Logo batches start at 200 coasters: 200 at $2.00 each ($400), 500 at $1.90 ($950), 1,000 at $1.75 ($1,750).</p></details>
   <details><summary>How long does a batch take?</summary><p>Your batch ships within 10 days of approving the sample print. Carrier transit time is on top of that.</p></details>
   <details><summary>Do you ship outside Florida?</summary><p>Yes. We print in Jupiter, FL and ship anywhere in the U.S., and U.S. shipping is always free.</p></details>
-  <details><summary>What are they made of?</summary><p>TPU 95A, a flexible printed filament. It bends instead of breaking, so a dropped stack is just a stack to pick up. <a href="/blog/bar-coaster-materials">How it compares to paper and cork.</a></p></details>
-  <details><summary>Can I wash them?</summary><p>Yes. They're washable. Rinse and repeat.</p></details>
+  <details><summary>What are they made of?</summary><p>They're flexible. They bend instead of breaking, so a dropped stack is just a stack to pick up. Washable. <a href="/blog/bar-coaster-materials">How ours compare to paper and cork.</a></p></details>
+  <details><summary>Can I wash them?</summary><p>Yes. They're washable.</p></details>
 </section>
 
-<section id="request" class="oven" style="scroll-margin-top:16px" aria-labelledby="use-req-h">
+<section id="request" class="band-deep" style="scroll-margin-top:16px" aria-labelledby="use-req-h">
   <div class="wrap section">
     <div class="split" style="align-items:flex-start">
       <div class="stack" style="gap:18px;flex:1 1 340px">
@@ -58,7 +58,7 @@
           <li>Text us: <a href="sms:+15615818015">561-581-8015</a> <span style="font-weight:400">(texting only)</span></li>
           <li>Call Smash: <a href="tel:+15615327120">561-532-7120</a></li>
         </ul>
-        <p style="margin:0">More ways we bake to order: {% for href, label in [('/enterprise', 'Restaurants and bars'), ('/custom-coasters/hotels', 'Hotels'), ('/custom-coasters/weddings', 'Weddings'), ('/custom-coasters/events', 'Events'), ('/custom-coasters/airbnb', 'Airbnb hosts')] if href != page.path %}<a href="{{ href }}">{{ label }}</a>{{ ', ' if not loop.last else '.' }}{% endfor %}</p>
+        <p style="margin:0">More ways we print to order: {% for href, label in [('/enterprise', 'Restaurants and bars'), ('/custom-coasters/hotels', 'Hotels'), ('/custom-coasters/weddings', 'Weddings'), ('/custom-coasters/events', 'Events'), ('/custom-coasters/airbnb', 'Airbnb hosts')] if href != page.path %}<a href="{{ href }}">{{ label }}</a>{{ ', ' if not loop.last else '.' }}{% endfor %}</p>
       </div>
       <div class="form-card" data-form-box style="flex:1 1 520px">
         <div data-form-view>

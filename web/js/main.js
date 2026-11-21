@@ -70,7 +70,7 @@
   const DLG_COPY = {
     Sample: ['Free samples · by request', 'Request a free sample', 'Send my free sample'],
     'Product question': ['Ask us anything', 'Ask about a coaster', 'Send my question'],
-    Custom: ['Baked to order', 'Custom order', 'Send my request'],
+    Custom: ['Made to order', 'Custom order', 'Send my request'],
   };
   function setDialogCopy(dlg, form) {
     const [eyebrow, title, label] = DLG_COPY[form.request_type?.value] || DLG_COPY.Sample;

@@ -252,7 +252,7 @@ def llms_txt(site: dict, products: list, batch: dict, catalog: dict, posts: list
         "Custom logo coasters are made for restaurants, bars, hotels, weddings, events and vacation rentals, printed in Jupiter and shipped anywhere in the U.S.", "",
         "## Key facts",
         "- Location: Jupiter, FL. Ships anywhere in the U.S.; local to Palm Beach County and South Florida (Boca Raton, Fort Lauderdale, Miami)",
-        "- Material: TPU 95A (owner-confirmed): flexible, bends and won't break; washable, rinse and repeat",
+        "- Coasters: flexible, they bend and won't break; washable",
         "- Shipping: always free on U.S. orders, including custom logo batches; shop orders leave the studio within 2-3 business days",
         "- Samples: samples are available by request on the Enterprise page. A sample print is made for approval before a logo batch is printed",
         "- Enterprise: custom logo coasters and restaurant coasters from 200 pieces. A logo batch ships within 10 days of sample approval",
@@ -392,7 +392,7 @@ def main() -> int:
                   "url": f"{site['site_url']}/shop"}
         # Checkout is Shopify; listed coasters are made to order and always buyable.
         offers["availability"] = "https://schema.org/InStock"
-        ld = {"@context": "https://schema.org", "@type": "Product", "name": p["name"], "description": p["line"], "sku": p["sku"], "material": "TPU 95A",
+        ld = {"@context": "https://schema.org", "@type": "Product", "name": p["name"], "description": p["line"], "sku": p["sku"],
               "brand": {"@type": "Brand", "name": "JUP LIFE Studio"}, "category": "Home & Garden",
               "manufacturer": {"@type": "Organization", "name": "JUP LIFE by Mrs. Smash"},
               "offers": offers}
