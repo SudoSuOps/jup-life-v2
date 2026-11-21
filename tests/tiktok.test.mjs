@@ -5,8 +5,12 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const ROOT = new URL('..', import.meta.url).pathname;
-const BAD = /tiktok\.com\/@juplifestudio(?!s)/;
-const GOOD = 'https://www.tiktok.com/@juplifestudios';
+const BAD = /tiktok\.com\/@juplifestudio(?!s)|x\.com\/juplifestudio(?!s)|instagram\.com\/juplifestudios/;
+const SOCIALS = [
+  'https://www.tiktok.com/@juplifestudios',
+  'https://www.instagram.com/juplifestudio/',
+  'https://x.com/juplifestudios',
+];
 
 function filesUnder(dir) {
   const out = [];
@@ -26,8 +30,8 @@ test('built site and functions use the TikTok handle @juplifestudios', () => {
     const text = readFileSync(path).toString('latin1');
     if (BAD.test(text)) hits.push(path.slice(ROOT.length));
   }
-  assert.deepEqual(hits, [], `old TikTok handle in ${hits.join(', ')}`);
+  assert.deepEqual(hits, [], `wrong social URL in ${hits.join(', ')}`);
   const home = readFileSync(join(ROOT, 'dist/index.html'), 'utf8');
   const footer = home.slice(home.indexOf('<footer'), home.indexOf('</footer>'));
-  assert.ok(footer.includes(GOOD), 'footer is missing https://www.tiktok.com/@juplifestudios');
+  for (const url of SOCIALS) assert.ok(footer.includes(url), `footer is missing ${url}`);
 });
