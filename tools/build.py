@@ -8,6 +8,9 @@
   A same-stem PNG next to a WebP is the <img> fallback (width, height, lazy-load stay on the img).
 - CSS/JS are concatenated, lightly minified and content-hashed.
 - Writes sitemap.xml, robots.txt, _headers, _redirects, _routes.json and img/og-hero.jpg.
+
+The private sales ledger in ledger/ is a separate Worker. This Pages build never
+reads that tree and drops dist/ledger if it ever appears in the artifact.
 """
 from __future__ import annotations
 
@@ -28,6 +31,8 @@ from PIL import Image, ImageDraw, features
 ROOT = Path(__file__).resolve().parent.parent
 WEB = ROOT / "web"
 DIST = ROOT / "dist"
+# Storefront sources are web/ only. ledger/ is a separate Worker and must not ship with Pages.
+PAGES_SKIP = ("ledger",)
 WIDTHS = (400, 800, 1200, 1600)
 HAS_AVIF = features.check("avif")
 FLAVOR_HEX = {"Pumpkin": "#E8731E", "Cinnamon": "#A0522D", "Cranberry": "#9B1B30", "Maple": "#C8862A", "Rhubarb": "#C93A5B",
@@ -476,6 +481,10 @@ def main() -> int:
     if blank_batch:
         print("build failed: placeholder ____ still in dist: " + ", ".join(blank_batch))
         return 1
+    for name in PAGES_SKIP:
+        skipped = DIST / name
+        if skipped.exists():
+            shutil.rmtree(skipped)
     return 0
 
 
