@@ -5,10 +5,10 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const ROOT = new URL('..', import.meta.url).pathname;
-const BAD = /tiktok\.com\/@juplifestudio(?!s)|x\.com\/juplifestudio(?!s)|instagram\.com\/juplifestudios/;
+const BAD = /tiktok\.com\/@juplifestudio(?!s)|x\.com\/juplifestudio(?!s)|instagram\.com\/juplifestudio(?!s)/;
 const SOCIALS = [
   'https://www.tiktok.com/@juplifestudios',
-  'https://www.instagram.com/juplifestudio/',
+  'https://www.instagram.com/juplifestudios/',
   'https://x.com/juplifestudios',
 ];
 
