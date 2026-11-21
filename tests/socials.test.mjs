@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { withBuiltDist } from './dist-build.mjs';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const BAD = /tiktok\.com\/@juplifestudio(?!s)|x\.com\/juplifestudio(?!s)|instagram\.com\/juplifestudios/;
@@ -22,14 +22,15 @@ function filesUnder(dir) {
   return out;
 }
 
-test('home footer lists TikTok, Instagram and X', () => {
-  execFileSync('python3', ['tools/build.py'], { cwd: ROOT, stdio: 'pipe' });
-  const hits = [];
-  for (const path of filesUnder(join(ROOT, 'dist'))) {
-    if (BAD.test(readFileSync(path).toString('latin1'))) hits.push(path.slice(ROOT.length));
-  }
-  assert.deepEqual(hits, [], `wrong social URL in ${hits.join(', ')}`);
-  const home = readFileSync(join(ROOT, 'dist/index.html'), 'utf8');
-  const footer = home.slice(home.indexOf('<footer'), home.indexOf('</footer>'));
-  for (const url of SOCIALS) assert.ok(footer.includes(url), `footer is missing ${url}`);
+test('home footer lists TikTok, Instagram and X', { timeout: 180_000 }, () => {
+  withBuiltDist(ROOT, () => {
+    const hits = [];
+    for (const path of filesUnder(join(ROOT, 'dist'))) {
+      if (BAD.test(readFileSync(path).toString('latin1'))) hits.push(path.slice(ROOT.length));
+    }
+    assert.deepEqual(hits, [], `wrong social URL in ${hits.join(', ')}`);
+    const home = readFileSync(join(ROOT, 'dist/index.html'), 'utf8');
+    const footer = home.slice(home.indexOf('<footer'), home.indexOf('</footer>'));
+    for (const url of SOCIALS) assert.ok(footer.includes(url), `footer is missing ${url}`);
+  });
 });

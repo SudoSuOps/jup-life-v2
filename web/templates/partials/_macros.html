@@ -99,7 +99,7 @@
 <div class="cta-strip">
   <div>
     <p class="eyebrow" style="color:var(--cream-muted)">Custom logo coasters</p>
-    <h3>Your logo, fresh baked.</h3>
+    <h3>Your logo, made to order.</h3>
     <p>From 200 coasters. Free samples, by request.</p>
   </div>
   <button type="button" class="btn btn-primary" data-open-sample data-type="Sample">Request a free sample</button>
@@ -112,7 +112,7 @@
     <div class="drops-copy">
       <p class="eyebrow" style="color:var(--cream-muted)">JUP LIFE Studio Drops</p>
       <h2 id="drops-h">First dibs on the next batch.</h2>
-      <p>New trays, seasonal flavors and small-batch specials, straight from the oven. A note when something's fresh. No spam, unsubscribe anytime.</p>
+      <p>New trays, seasonal flavors and small-batch specials, printed in Jupiter. A note when something's fresh. No spam, unsubscribe anytime.</p>
     </div>
     <form class="drops-form" data-drops-form action="/api/drops" method="post" novalidate>
       <label class="sr" for="drops-email">Email address</label>
@@ -132,12 +132,12 @@
   {% if batch.chefs_special %}<div class="ribbon">Chef's Special: {{ batch.chefs_special }}</div>{% endif %}
   <p class="eyebrow muted">{% if batch_date %}<span data-batch-date>{{ batch_date }}</span>{% endif %}{% if batch.batch_no %}{% if batch_date %} · {% endif %}Batch #<span data-batch-no>{{ batch.batch_no }}</span>{% endif %}</p>
   <h2 id="batch-h">Today's Batch</h2>
-  <p class="muted" style="margin:0 0 18px;font-size:16px"><span data-batch-tray>{{ batch.tray }}</span> is out of the oven.</p>
+  <p class="muted" style="margin:0 0 18px;font-size:16px"><span data-batch-tray>{{ batch.tray }}</span> is printed in Jupiter.</p>
   <ul class="rows" data-batch-rows>
     {% for f in batch.flavors[:6] %}<li class="row"><span class="swatch{% if f.name.startswith('Coconut') %} swatch-clear{% endif %}" style="background:{{ f.hex }}" aria-hidden="true"></span><span class="name">{{ f.name }}</span><span class="leader" aria-hidden="true"></span><span class="muted" style="font-style:italic">{{ f.note }}</span></li>
     {% endfor %}
   </ul>
-  <p class="foot">Locally baked in Jupiter, FL.</p>
+  <p class="foot">Printed locally in Jupiter, FL.</p>
 </section>
 {% endmacro %}
 
@@ -151,7 +151,7 @@
     {% endfor %}
     <div class="row"><dt>Samples</dt><span class="leader" aria-hidden="true"></span><dd style="font-style:italic;color:#F1C9A0">free, by request</dd></div>
   </dl>
-  <p class="foot">Locally baked in Jupiter, FL.</p>
+  <p class="foot">Printed locally in Jupiter, FL.</p>
 </section>
 {% endmacro %}
 

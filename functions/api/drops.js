@@ -10,14 +10,14 @@ async function welcome(env, email, base) {
   if (!env.RESEND_API_KEY) return;
   const { html, text } = brandedEmail({
     base,
-    preheader: "You'll be first in line when the next tray comes out of the oven.",
+    preheader: "You'll be first in line when the next tray is printed in Jupiter.",
     eyebrow: 'JUP LIFE Drops',
     heading: "You're on the list.",
     paragraphs: [
-      "Thanks for joining JUP LIFE Drops. You'll be first in line when a new tray comes out of the oven here in Jupiter: seasonal flavors, small-batch specials and the occasional surprise.",
+      "Thanks for joining JUP LIFE Drops. You'll be first in line when a new tray is printed here in Jupiter: seasonal flavors, small-batch specials and the occasional surprise.",
       "We only write when there's something fresh.",
     ],
-    cta: { label: "See what's baking now", url: `${base}/shop` },
+    cta: { label: "See what's printing now", url: `${base}/shop` },
     signoff: ['Fresh print daily. Built different.', 'Mrs. Smash'],
     footnote: 'You joined the Drops list on our website. Changed your mind? Just reply "unsubscribe" and we will take you off.',
   });
