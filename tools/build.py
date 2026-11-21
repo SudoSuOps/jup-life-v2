@@ -260,7 +260,7 @@ def llms_txt(site: dict, products: list, batch: dict, catalog: dict, posts: list
         f"- Current tray: {batch.get('tray', '')}",
         "- Contact: hello@juplifestudio.com, call +1-561-532-7120, text 561-581-8015",
         "- TikTok: https://www.tiktok.com/@juplifestudios",
-        "- Instagram: https://www.instagram.com/juplifestudio/",
+        "- Instagram: https://www.instagram.com/juplifestudios/",
         "- X: https://x.com/juplifestudios", "",
         "## Pages",
         f"- [Home]({base}/): the coaster printers, Jupiter FL",
