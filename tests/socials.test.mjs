@@ -5,10 +5,10 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const ROOT = new URL('..', import.meta.url).pathname;
-const BAD = /tiktok\.com\/@juplifestudio(?!s)|x\.com\/juplifestudio(?!s)|instagram\.com\/juplifestudios/;
+const BAD = /tiktok\.com\/@juplifestudio(?!s)|x\.com\/juplifestudio(?!s)|instagram\.com\/juplifestudio(?!s)/;
 const SOCIALS = [
   'https://www.tiktok.com/@juplifestudios',
-  'https://www.instagram.com/juplifestudio/',
+  'https://www.instagram.com/juplifestudios/',
   'https://x.com/juplifestudios',
 ];
 
@@ -25,8 +25,11 @@ function filesUnder(dir) {
 test('home footer lists TikTok, Instagram and X', () => {
   execFileSync('python3', ['tools/build.py'], { cwd: ROOT, stdio: 'pipe' });
   const hits = [];
-  for (const path of filesUnder(join(ROOT, 'dist'))) {
-    if (BAD.test(readFileSync(path).toString('latin1'))) hits.push(path.slice(ROOT.length));
+  const wrongTikTok = /tiktok\.com\/@(?!juplifestudios\b)[A-Za-z0-9_.]+|TikTok[\s:.,\-–—]{0,24}@juplifestudio(?!s)|@juplifestudio(?!s)[\s:.,\-–—]{0,24}TikTok|vm\.tiktok\.com/g;
+  for (const path of [...filesUnder(join(ROOT, 'dist')), ...filesUnder(join(ROOT, 'functions'))]) {
+    const text = readFileSync(path).toString('latin1');
+    if (BAD.test(text) || wrongTikTok.test(text)) hits.push(path.slice(ROOT.length));
+    wrongTikTok.lastIndex = 0;
   }
   assert.deepEqual(hits, [], `wrong social URL in ${hits.join(', ')}`);
   const home = readFileSync(join(ROOT, 'dist/index.html'), 'utf8');
